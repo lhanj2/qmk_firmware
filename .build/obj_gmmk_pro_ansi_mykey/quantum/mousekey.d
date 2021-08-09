@@ -126,8 +126,8 @@
  lib/chibios/os/hal/include/hal_serial_usb.h \
  tmk_core/common/host_driver.h quantum/led.h tmk_core/common/timer.h \
  tmk_core/common/chibios/_timer.h quantum/logging/print.h quantum/util.h \
- quantum/bitwise.h quantum/logging/sendchar.h quantum/logging/debug.h \
- quantum/mousekey.h
+ quantum/bitwise.h quantum/logging/sendchar.h lib/printf/printf.h \
+ quantum/logging/debug.h quantum/mousekey.h
 platforms/chibios/GENERIC_STM32_F303XC/configs/bootloader_defs.h:
 keyboards/gmmk/pro/config.h:
 quantum/config_common.h:
@@ -278,5 +278,6 @@ quantum/logging/print.h:
 quantum/util.h:
 quantum/bitwise.h:
 quantum/logging/sendchar.h:
+lib/printf/printf.h:
 quantum/logging/debug.h:
 quantum/mousekey.h:

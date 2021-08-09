@@ -1151,24 +1151,24 @@
  606              		.file 13 "quantum/sequencer/sequencer.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keymap_common.c
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:18     .text.action_get_macro:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:26     .text.action_get_macro:0000000000000000 action_get_macro
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:45     .text.action_function:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:52     .text.action_function:0000000000000000 action_function
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:66     .text.keymap_key_to_keycode:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:73     .text.keymap_key_to_keycode:0000000000000000 keymap_key_to_keycode
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:105    .text.keymap_key_to_keycode:000000000000001c $d
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:110    .text.keymap_function_id_to_action:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:117    .text.keymap_function_id_to_action:0000000000000000 keymap_function_id_to_action
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:135    .text.keymap_function_id_to_action:0000000000000008 $d
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:593    .rodata.fn_actions:0000000000000000 fn_actions
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:140    .text.action_for_keycode:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:147    .text.action_for_keycode:0000000000000000 action_for_keycode
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:514    .text.action_for_keycode:0000000000000194 $d
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:519    .text.action_for_key:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:526    .text.action_for_key:0000000000000000 action_for_key
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:561    .rodata.CSWTCH.7:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\cc85uJvM.s:565    .rodata.CSWTCH.7:0000000000000000 CSWTCH.7
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:18     .text.action_get_macro:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:26     .text.action_get_macro:0000000000000000 action_get_macro
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:45     .text.action_function:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:52     .text.action_function:0000000000000000 action_function
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:66     .text.keymap_key_to_keycode:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:73     .text.keymap_key_to_keycode:0000000000000000 keymap_key_to_keycode
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:105    .text.keymap_key_to_keycode:000000000000001c $d
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:110    .text.keymap_function_id_to_action:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:117    .text.keymap_function_id_to_action:0000000000000000 keymap_function_id_to_action
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:135    .text.keymap_function_id_to_action:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:593    .rodata.fn_actions:0000000000000000 fn_actions
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:140    .text.action_for_keycode:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:147    .text.action_for_keycode:0000000000000000 action_for_keycode
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:514    .text.action_for_keycode:0000000000000194 $d
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:519    .text.action_for_key:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:526    .text.action_for_key:0000000000000000 action_for_key
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:561    .rodata.CSWTCH.7:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:565    .rodata.CSWTCH.7:0000000000000000 CSWTCH.7
 
 UNDEFINED SYMBOLS
 keymaps

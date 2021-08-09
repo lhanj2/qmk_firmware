@@ -127,12 +127,12 @@
  lib/chibios/os/hal/include/hal_serial_usb.h \
  tmk_core/common/host_driver.h quantum/led.h quantum/logging/debug.h \
  quantum/logging/print.h quantum/util.h quantum/bitwise.h \
- quantum/logging/sendchar.h tmk_core/common/action_util.h \
- tmk_core/common/action_layer.h tmk_core/common/keyboard.h \
- tmk_core/common/action.h tmk_core/common/action_code.h \
- tmk_core/common/action_macro.h tmk_core/common/timer.h \
- tmk_core/common/chibios/_timer.h quantum/keycode_config.h \
- tmk_core/common/eeconfig.h
+ quantum/logging/sendchar.h lib/printf/printf.h \
+ tmk_core/common/action_util.h tmk_core/common/action_layer.h \
+ tmk_core/common/keyboard.h tmk_core/common/action.h \
+ tmk_core/common/action_code.h tmk_core/common/action_macro.h \
+ tmk_core/common/timer.h tmk_core/common/chibios/_timer.h \
+ quantum/keycode_config.h tmk_core/common/eeconfig.h
 platforms/chibios/GENERIC_STM32_F303XC/configs/bootloader_defs.h:
 keyboards/gmmk/pro/config.h:
 quantum/config_common.h:
@@ -282,6 +282,7 @@ quantum/logging/print.h:
 quantum/util.h:
 quantum/bitwise.h:
 quantum/logging/sendchar.h:
+lib/printf/printf.h:
 tmk_core/common/action_util.h:
 tmk_core/common/action_layer.h:
 tmk_core/common/keyboard.h:

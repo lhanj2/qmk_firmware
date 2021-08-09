@@ -419,19 +419,19 @@
  283              		.file 7 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 memstreams.c
-C:\Users\lhanj\AppData\Local\Temp\ccabrh6v.s:18     .text._put:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccabrh6v.s:25     .text._put:0000000000000000 _put
-C:\Users\lhanj\AppData\Local\Temp\ccabrh6v.s:62     .text._get:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccabrh6v.s:68     .text._get:0000000000000000 _get
-C:\Users\lhanj\AppData\Local\Temp\ccabrh6v.s:105    .text._reads:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccabrh6v.s:111    .text._reads:0000000000000000 _reads
-C:\Users\lhanj\AppData\Local\Temp\ccabrh6v.s:166    .text._writes:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccabrh6v.s:172    .text._writes:0000000000000000 _writes
-C:\Users\lhanj\AppData\Local\Temp\ccabrh6v.s:223    .text.msObjectInit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccabrh6v.s:230    .text.msObjectInit:0000000000000000 msObjectInit
-C:\Users\lhanj\AppData\Local\Temp\ccabrh6v.s:261    .text.msObjectInit:0000000000000014 $d
-C:\Users\lhanj\AppData\Local\Temp\ccabrh6v.s:266    .rodata.vmt:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccabrh6v.s:270    .rodata.vmt:0000000000000000 vmt
+C:\Users\lhanj\AppData\Local\Temp\ccKxIOvp.s:18     .text._put:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKxIOvp.s:25     .text._put:0000000000000000 _put
+C:\Users\lhanj\AppData\Local\Temp\ccKxIOvp.s:62     .text._get:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKxIOvp.s:68     .text._get:0000000000000000 _get
+C:\Users\lhanj\AppData\Local\Temp\ccKxIOvp.s:105    .text._reads:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKxIOvp.s:111    .text._reads:0000000000000000 _reads
+C:\Users\lhanj\AppData\Local\Temp\ccKxIOvp.s:166    .text._writes:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKxIOvp.s:172    .text._writes:0000000000000000 _writes
+C:\Users\lhanj\AppData\Local\Temp\ccKxIOvp.s:223    .text.msObjectInit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKxIOvp.s:230    .text.msObjectInit:0000000000000000 msObjectInit
+C:\Users\lhanj\AppData\Local\Temp\ccKxIOvp.s:261    .text.msObjectInit:0000000000000014 $d
+C:\Users\lhanj\AppData\Local\Temp\ccKxIOvp.s:266    .rodata.vmt:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccKxIOvp.s:270    .rodata.vmt:0000000000000000 vmt
 
 UNDEFINED SYMBOLS
 memcpy

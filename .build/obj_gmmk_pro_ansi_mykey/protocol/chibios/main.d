@@ -131,7 +131,7 @@
  tmk_core/common/action_util.h quantum/mousekey.h \
  quantum/logging/sendchar.h quantum/logging/debug.h \
  quantum/logging/print.h quantum/util.h quantum/bitwise.h \
- tmk_core/common/suspend.h tmk_core/common/wait.h \
+ lib/printf/printf.h tmk_core/common/suspend.h tmk_core/common/wait.h \
  tmk_core/common/chibios/_wait.h tmk_core/common/chibios/wait.c
 platforms/chibios/GENERIC_STM32_F303XC/configs/bootloader_defs.h:
 keyboards/gmmk/pro/config.h:
@@ -289,6 +289,7 @@ quantum/logging/debug.h:
 quantum/logging/print.h:
 quantum/util.h:
 quantum/bitwise.h:
+lib/printf/printf.h:
 tmk_core/common/suspend.h:
 tmk_core/common/wait.h:
 tmk_core/common/chibios/_wait.h:

@@ -630,15 +630,15 @@
  375              		.file 8 "quantum/quantum_keycodes.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 process_magic.c
-C:\Users\lhanj\AppData\Local\Temp\ccpnC2j0.s:18     .text.process_magic:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccpnC2j0.s:26     .text.process_magic:0000000000000000 process_magic
-C:\Users\lhanj\AppData\Local\Temp\ccpnC2j0.s:102    .text.process_magic:000000000000005c $d
-C:\Users\lhanj\AppData\Local\Temp\ccpnC2j0.s:132    .text.process_magic:0000000000000084 $d
-C:\Users\lhanj\AppData\Local\Temp\ccpnC2j0.s:363    .text.process_magic:00000000000001b0 $d
-C:\Users\lhanj\AppData\Local\Temp\ccpnC2j0.s:121    .text.process_magic:000000000000006f $d
-C:\Users\lhanj\AppData\Local\Temp\ccpnC2j0.s:121    .text.process_magic:0000000000000070 $t
-C:\Users\lhanj\AppData\Local\Temp\ccpnC2j0.s:141    .text.process_magic:000000000000008d $d
-C:\Users\lhanj\AppData\Local\Temp\ccpnC2j0.s:141    .text.process_magic:000000000000008e $t
+C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:18     .text.process_magic:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:26     .text.process_magic:0000000000000000 process_magic
+C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:102    .text.process_magic:000000000000005c $d
+C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:132    .text.process_magic:0000000000000084 $d
+C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:363    .text.process_magic:00000000000001b0 $d
+C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:121    .text.process_magic:000000000000006f $d
+C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:121    .text.process_magic:0000000000000070 $t
+C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:141    .text.process_magic:000000000000008d $d
+C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:141    .text.process_magic:000000000000008e $t
 
 UNDEFINED SYMBOLS
 eeconfig_read_keymap

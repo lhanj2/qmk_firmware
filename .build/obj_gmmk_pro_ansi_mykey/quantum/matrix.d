@@ -131,7 +131,7 @@
  lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.h \
  tmk_core/common/host.h tmk_core/common/host_driver.h quantum/led.h \
  quantum/logging/debug.h quantum/logging/print.h \
- quantum/logging/sendchar.h quantum/keycode_config.h \
+ quantum/logging/sendchar.h lib/printf/printf.h quantum/keycode_config.h \
  tmk_core/common/eeconfig.h quantum/quantum_keycodes.h \
  quantum/sequencer/sequencer.h tmk_core/common/timer.h \
  tmk_core/common/chibios/_timer.h quantum/rgb_matrix/rgb_matrix.h \
@@ -351,6 +351,7 @@ quantum/led.h:
 quantum/logging/debug.h:
 quantum/logging/print.h:
 quantum/logging/sendchar.h:
+lib/printf/printf.h:
 quantum/keycode_config.h:
 tmk_core/common/eeconfig.h:
 quantum/quantum_keycodes.h:

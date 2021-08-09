@@ -3301,31 +3301,31 @@
  835              		.file 19 "./lib/chibios/os/oslib/include/chmemcore.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 chsys.c
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:18     .text._idle_thread:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:25     .text._idle_thread:0000000000000000 _idle_thread
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:49     .text.chSysInit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:56     .text.chSysInit:0000000000000000 chSysInit
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:179    .text.chSysInit:0000000000000038 $d
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:187    .text.chSysHalt:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:194    .text.chSysHalt:0000000000000000 chSysHalt
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:239    .text.chSysHalt:0000000000000008 $d
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:244    .text.chSysIntegrityCheckI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:251    .text.chSysIntegrityCheckI:0000000000000000 chSysIntegrityCheckI
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:408    .text.chSysIntegrityCheckI:0000000000000054 $d
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:413    .text.chSysTimerHandlerI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:420    .text.chSysTimerHandlerI:0000000000000000 chSysTimerHandlerI
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:435    .text.chSysGetStatusAndLockX:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:442    .text.chSysGetStatusAndLockX:0000000000000000 chSysGetStatusAndLockX
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:552    .text.chSysRestoreStatusX:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:559    .text.chSysRestoreStatusX:0000000000000000 chSysRestoreStatusX
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:707    .text.chSysIsCounterWithinX:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:714    .text.chSysIsCounterWithinX:0000000000000000 chSysIsCounterWithinX
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:739    .text.chSysPolledDelayX:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:746    .text.chSysPolledDelayX:0000000000000000 chSysPolledDelayX
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:800    .text.chSysPolledDelayX:0000000000000010 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:18     .text._idle_thread:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:25     .text._idle_thread:0000000000000000 _idle_thread
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:49     .text.chSysInit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:56     .text.chSysInit:0000000000000000 chSysInit
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:179    .text.chSysInit:0000000000000038 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:187    .text.chSysHalt:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:194    .text.chSysHalt:0000000000000000 chSysHalt
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:239    .text.chSysHalt:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:244    .text.chSysIntegrityCheckI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:251    .text.chSysIntegrityCheckI:0000000000000000 chSysIntegrityCheckI
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:408    .text.chSysIntegrityCheckI:0000000000000054 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:413    .text.chSysTimerHandlerI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:420    .text.chSysTimerHandlerI:0000000000000000 chSysTimerHandlerI
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:435    .text.chSysGetStatusAndLockX:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:442    .text.chSysGetStatusAndLockX:0000000000000000 chSysGetStatusAndLockX
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:552    .text.chSysRestoreStatusX:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:559    .text.chSysRestoreStatusX:0000000000000000 chSysRestoreStatusX
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:707    .text.chSysIsCounterWithinX:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:714    .text.chSysIsCounterWithinX:0000000000000000 chSysIsCounterWithinX
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:739    .text.chSysPolledDelayX:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:746    .text.chSysPolledDelayX:0000000000000000 chSysPolledDelayX
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:800    .text.chSysPolledDelayX:0000000000000010 $d
                             *COM*:0000000000000140 ch_idle_thread_wa
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:809    .rodata.idle_descriptor.0:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccfshY1P.s:813    .rodata.idle_descriptor.0:0000000000000000 idle_descriptor.0
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:809    .rodata.idle_descriptor.0:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGu71Ic.s:813    .rodata.idle_descriptor.0:0000000000000000 idle_descriptor.0
 
 UNDEFINED SYMBOLS
 _scheduler_init

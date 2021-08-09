@@ -1532,299 +1532,360 @@
  1015              	.LVL86:
  1016              		.cfi_endproc
  1017              	.LFE301:
- 1019              		.section	.text.process_record_quantum,"ax",%progbits
- 1020              		.align	1
- 1021              		.global	process_record_quantum
- 1022              		.syntax unified
- 1023              		.thumb
- 1024              		.thumb_func
- 1025              		.fpu fpv4-sp-d16
- 1027              	process_record_quantum:
- 1028              	.LVL87:
- 1029              	.LFB306:
+ 1019              		.section	.rodata.process_record_quantum.str1.1,"aMS",%progbits,1
+ 1020              	.LC0:
+ 1021 0000 44454255 		.ascii	"DEBUG: enabled.\012\000"
+ 1021      473A2065 
+ 1021      6E61626C 
+ 1021      65642E0A 
+ 1021      00
+ 1022              	.LC1:
+ 1023 0011 44454255 		.ascii	"DEBUG: disabled.\012\000"
+ 1023      473A2064 
+ 1023      69736162 
+ 1023      6C65642E 
+ 1023      0A00
+ 1024              		.section	.text.process_record_quantum,"ax",%progbits
+ 1025              		.align	1
+ 1026              		.global	process_record_quantum
+ 1027              		.syntax unified
+ 1028              		.thumb
+ 1029              		.thumb_func
+ 1030              		.fpu fpv4-sp-d16
+ 1032              	process_record_quantum:
+ 1033              	.LVL87:
+ 1034              	.LFB306:
  199:quantum/quantum.c ****     uint16_t keycode = get_record_keycode(record, true);
- 1030              		.loc 1 199 50 is_stmt 1 view -0
- 1031              		.cfi_startproc
- 1032              		@ args = 0, pretend = 0, frame = 0
- 1033              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1035              		.loc 1 199 50 is_stmt 1 view -0
+ 1036              		.cfi_startproc
+ 1037              		@ args = 0, pretend = 0, frame = 0
+ 1038              		@ frame_needed = 0, uses_anonymous_args = 0
  200:quantum/quantum.c **** 
- 1034              		.loc 1 200 5 view .LVU227
+ 1039              		.loc 1 200 5 view .LVU227
  199:quantum/quantum.c ****     uint16_t keycode = get_record_keycode(record, true);
- 1035              		.loc 1 199 50 is_stmt 0 view .LVU228
- 1036 0000 38B5     		push	{r3, r4, r5, lr}
- 1037              		.cfi_def_cfa_offset 16
- 1038              		.cfi_offset 3, -16
- 1039              		.cfi_offset 4, -12
- 1040              		.cfi_offset 5, -8
- 1041              		.cfi_offset 14, -4
+ 1040              		.loc 1 199 50 is_stmt 0 view .LVU228
+ 1041 0000 38B5     		push	{r3, r4, r5, lr}
+ 1042              		.cfi_def_cfa_offset 16
+ 1043              		.cfi_offset 3, -16
+ 1044              		.cfi_offset 4, -12
+ 1045              		.cfi_offset 5, -8
+ 1046              		.cfi_offset 14, -4
  200:quantum/quantum.c **** 
- 1042              		.loc 1 200 24 view .LVU229
- 1043 0002 0121     		movs	r1, #1
+ 1047              		.loc 1 200 24 view .LVU229
+ 1048 0002 0121     		movs	r1, #1
  199:quantum/quantum.c ****     uint16_t keycode = get_record_keycode(record, true);
- 1044              		.loc 1 199 50 view .LVU230
- 1045 0004 0546     		mov	r5, r0
+ 1049              		.loc 1 199 50 view .LVU230
+ 1050 0004 0546     		mov	r5, r0
  200:quantum/quantum.c **** 
- 1046              		.loc 1 200 24 view .LVU231
- 1047 0006 FFF7FEFF 		bl	get_record_keycode
- 1048              	.LVL88:
+ 1051              		.loc 1 200 24 view .LVU231
+ 1052 0006 FFF7FEFF 		bl	get_record_keycode
+ 1053              	.LVL88:
  223:quantum/quantum.c **** #endif
- 1049              		.loc 1 223 5 view .LVU232
- 1050 000a 2946     		mov	r1, r5
+ 1054              		.loc 1 223 5 view .LVU232
+ 1055 000a 2946     		mov	r1, r5
  200:quantum/quantum.c **** 
- 1051              		.loc 1 200 24 view .LVU233
- 1052 000c 0446     		mov	r4, r0
- 1053              	.LVL89:
+ 1056              		.loc 1 200 24 view .LVU233
+ 1057 000c 0446     		mov	r4, r0
+ 1058              	.LVL89:
  223:quantum/quantum.c **** #endif
- 1054              		.loc 1 223 5 is_stmt 1 view .LVU234
- 1055 000e FFF7FEFF 		bl	preprocess_tap_dance
- 1056              	.LVL90:
+ 1059              		.loc 1 223 5 is_stmt 1 view .LVU234
+ 1060 000e FFF7FEFF 		bl	preprocess_tap_dance
+ 1061              	.LVL90:
  226:quantum/quantum.c **** #if defined(KEY_LOCK_ENABLE)
- 1057              		.loc 1 226 5 view .LVU235
+ 1062              		.loc 1 226 5 view .LVU235
  233:quantum/quantum.c **** #endif
- 1058              		.loc 1 233 13 is_stmt 0 view .LVU236
- 1059 0012 2946     		mov	r1, r5
- 1060 0014 2046     		mov	r0, r4
- 1061 0016 FFF7FEFF 		bl	process_dynamic_macro
- 1062              	.LVL91:
+ 1063              		.loc 1 233 13 is_stmt 0 view .LVU236
+ 1064 0012 2946     		mov	r1, r5
+ 1065 0014 2046     		mov	r0, r4
+ 1066 0016 FFF7FEFF 		bl	process_dynamic_macro
+ 1067              	.LVL91:
  291:quantum/quantum.c **** #endif
- 1063              		.loc 1 291 48 view .LVU237
- 1064 001a 08B9     		cbnz	r0, .L79
- 1065              	.L113:
- 322:quantum/quantum.c **** #ifdef VELOCIKEY_ENABLE
- 1066              		.loc 1 322 17 is_stmt 1 view .LVU238
- 322:quantum/quantum.c **** #ifdef VELOCIKEY_ENABLE
- 1067              		.loc 1 322 24 is_stmt 0 view .LVU239
- 1068 001c 0020     		movs	r0, #0
- 1069              	.L80:
+ 1068              		.loc 1 291 48 view .LVU237
+ 1069 001a 08B9     		cbnz	r0, .L79
+ 1070              	.LVL92:
+ 1071              	.L115:
+ 319:quantum/quantum.c ****             case EEPROM_RESET:
+ 1072              		.loc 1 319 24 view .LVU238
+ 1073 001c 0020     		movs	r0, #0
+ 1074              	.L80:
  354:quantum/quantum.c **** 
- 1070              		.loc 1 354 1 view .LVU240
- 1071 001e 38BD     		pop	{r3, r4, r5, pc}
- 1072              	.LVL92:
- 1073              	.L79:
+ 1075              		.loc 1 354 1 view .LVU239
+ 1076 001e 38BD     		pop	{r3, r4, r5, pc}
+ 1077              	.LVL93:
+ 1078              	.L79:
  242:quantum/quantum.c **** #endif
- 1074              		.loc 1 242 13 view .LVU241
- 1075 0020 2946     		mov	r1, r5
- 1076 0022 2046     		mov	r0, r4
- 1077 0024 FFF7FEFF 		bl	process_record_via
- 1078              	.LVL93:
+ 1079              		.loc 1 242 13 view .LVU240
+ 1080 0020 2946     		mov	r1, r5
+ 1081 0022 2046     		mov	r0, r4
+ 1082 0024 FFF7FEFF 		bl	process_record_via
+ 1083              	.LVL94:
  233:quantum/quantum.c **** #endif
- 1079              		.loc 1 233 52 view .LVU242
- 1080 0028 0028     		cmp	r0, #0
- 1081 002a F7D0     		beq	.L113
+ 1084              		.loc 1 233 52 view .LVU241
+ 1085 0028 0028     		cmp	r0, #0
+ 1086 002a F7D0     		beq	.L115
  244:quantum/quantum.c **** #if defined(SEQUENCER_ENABLE)
- 1082              		.loc 1 244 13 view .LVU243
- 1083 002c 2946     		mov	r1, r5
- 1084 002e 2046     		mov	r0, r4
- 1085 0030 FFF7FEFF 		bl	process_record_kb
- 1086              	.LVL94:
+ 1087              		.loc 1 244 13 view .LVU242
+ 1088 002c 2946     		mov	r1, r5
+ 1089 002e 2046     		mov	r0, r4
+ 1090 0030 FFF7FEFF 		bl	process_record_kb
+ 1091              	.LVL95:
  242:quantum/quantum.c **** #endif
- 1087              		.loc 1 242 49 view .LVU244
- 1088 0034 0028     		cmp	r0, #0
- 1089 0036 F1D0     		beq	.L113
+ 1092              		.loc 1 242 49 view .LVU243
+ 1093 0034 0028     		cmp	r0, #0
+ 1094 0036 F1D0     		beq	.L115
  267:quantum/quantum.c **** #endif
- 1090              		.loc 1 267 13 view .LVU245
- 1091 0038 2946     		mov	r1, r5
- 1092 003a 2046     		mov	r0, r4
- 1093 003c FFF7FEFF 		bl	process_tap_dance
- 1094              	.LVL95:
+ 1095              		.loc 1 267 13 view .LVU244
+ 1096 0038 2946     		mov	r1, r5
+ 1097 003a 2046     		mov	r0, r4
+ 1098 003c FFF7FEFF 		bl	process_tap_dance
+ 1099              	.LVL96:
  244:quantum/quantum.c **** #if defined(SEQUENCER_ENABLE)
- 1095              		.loc 1 244 48 view .LVU246
- 1096 0040 0028     		cmp	r0, #0
- 1097 0042 EBD0     		beq	.L113
+ 1100              		.loc 1 244 48 view .LVU245
+ 1101 0040 0028     		cmp	r0, #0
+ 1102 0042 EBD0     		beq	.L115
  285:quantum/quantum.c **** #endif
- 1098              		.loc 1 285 13 view .LVU247
- 1099 0044 2946     		mov	r1, r5
- 1100 0046 2046     		mov	r0, r4
- 1101 0048 FFF7FEFF 		bl	process_space_cadet
- 1102              	.LVL96:
+ 1103              		.loc 1 285 13 view .LVU246
+ 1104 0044 2946     		mov	r1, r5
+ 1105 0046 2046     		mov	r0, r4
+ 1106 0048 FFF7FEFF 		bl	process_space_cadet
+ 1107              	.LVL97:
  267:quantum/quantum.c **** #endif
- 1103              		.loc 1 267 48 view .LVU248
- 1104 004c 0028     		cmp	r0, #0
- 1105 004e E5D0     		beq	.L113
+ 1108              		.loc 1 267 48 view .LVU247
+ 1109 004c 0028     		cmp	r0, #0
+ 1110 004e E5D0     		beq	.L115
  288:quantum/quantum.c **** #endif
- 1106              		.loc 1 288 13 view .LVU249
- 1107 0050 2946     		mov	r1, r5
- 1108 0052 2046     		mov	r0, r4
- 1109 0054 FFF7FEFF 		bl	process_magic
- 1110              	.LVL97:
+ 1111              		.loc 1 288 13 view .LVU248
+ 1112 0050 2946     		mov	r1, r5
+ 1113 0052 2046     		mov	r0, r4
+ 1114 0054 FFF7FEFF 		bl	process_magic
+ 1115              	.LVL98:
  285:quantum/quantum.c **** #endif
- 1111              		.loc 1 285 50 view .LVU250
- 1112 0058 0028     		cmp	r0, #0
- 1113 005a DFD0     		beq	.L113
+ 1116              		.loc 1 285 50 view .LVU249
+ 1117 0058 0028     		cmp	r0, #0
+ 1118 005a DFD0     		beq	.L115
  291:quantum/quantum.c **** #endif
- 1114              		.loc 1 291 13 view .LVU251
- 1115 005c 2946     		mov	r1, r5
- 1116 005e 2046     		mov	r0, r4
- 1117 0060 FFF7FEFF 		bl	process_grave_esc
- 1118              	.LVL98:
+ 1119              		.loc 1 291 13 view .LVU250
+ 1120 005c 2946     		mov	r1, r5
+ 1121 005e 2046     		mov	r0, r4
+ 1122 0060 FFF7FEFF 		bl	process_grave_esc
+ 1123              	.LVL99:
  288:quantum/quantum.c **** #endif
- 1119              		.loc 1 288 44 view .LVU252
- 1120 0064 0028     		cmp	r0, #0
- 1121 0066 D9D0     		beq	.L113
+ 1124              		.loc 1 288 44 view .LVU251
+ 1125 0064 0028     		cmp	r0, #0
+ 1126 0066 D9D0     		beq	.L115
  294:quantum/quantum.c **** #endif
- 1122              		.loc 1 294 13 discriminator 2 view .LVU253
- 1123 0068 2946     		mov	r1, r5
- 1124 006a 2046     		mov	r0, r4
- 1125 006c FFF7FEFF 		bl	process_rgb
- 1126              	.LVL99:
+ 1127              		.loc 1 294 13 discriminator 2 view .LVU252
+ 1128 0068 2946     		mov	r1, r5
+ 1129 006a 2046     		mov	r0, r4
+ 1130 006c FFF7FEFF 		bl	process_rgb
+ 1131              	.LVL100:
  291:quantum/quantum.c **** #endif
- 1127              		.loc 1 291 48 discriminator 2 view .LVU254
- 1128 0070 0028     		cmp	r0, #0
- 1129 0072 D3D0     		beq	.L113
+ 1132              		.loc 1 291 48 discriminator 2 view .LVU253
+ 1133 0070 0028     		cmp	r0, #0
+ 1134 0072 D3D0     		beq	.L115
  303:quantum/quantum.c ****         switch (keycode) {
- 1130              		.loc 1 303 5 is_stmt 1 view .LVU255
+ 1135              		.loc 1 303 5 is_stmt 1 view .LVU254
  303:quantum/quantum.c ****         switch (keycode) {
- 1131              		.loc 1 303 8 is_stmt 0 view .LVU256
- 1132 0074 AB78     		ldrb	r3, [r5, #2]	@ zero_extendqisi2
- 1133 0076 5BB1     		cbz	r3, .L82
+ 1136              		.loc 1 303 8 is_stmt 0 view .LVU255
+ 1137 0074 AB78     		ldrb	r3, [r5, #2]	@ zero_extendqisi2
+ 1138 0076 7BB1     		cbz	r3, .L82
  304:quantum/quantum.c **** #ifndef NO_RESET
- 1134              		.loc 1 304 9 is_stmt 1 view .LVU257
- 1135 0078 45F65A53 		movw	r3, #23898
- 1136 007c 9C42     		cmp	r4, r3
- 1137 007e 1CD0     		beq	.L83
- 1138 0080 0AD8     		bhi	.L84
- 1139 0082 B4F5B84F 		cmp	r4, #23552
- 1140 0086 12D0     		beq	.L85
- 1141 0088 45F6DE43 		movw	r3, #23774
- 1142 008c 9C42     		cmp	r4, r3
- 1143 008e 11D0     		beq	.L86
- 1144              	.L82:
+ 1139              		.loc 1 304 9 is_stmt 1 view .LVU256
+ 1140 0078 45F65A53 		movw	r3, #23898
+ 1141 007c 9C42     		cmp	r4, r3
+ 1142 007e 32D0     		beq	.L83
+ 1143 0080 0ED8     		bhi	.L84
+ 1144 0082 45F60143 		movw	r3, #23553
+ 1145 0086 9C42     		cmp	r4, r3
+ 1146 0088 18D0     		beq	.L85
+ 1147 008a 45F6DE43 		movw	r3, #23774
+ 1148 008e 9C42     		cmp	r4, r3
+ 1149 0090 26D0     		beq	.L86
+ 1150 0092 B4F5B84F 		cmp	r4, #23552
+ 1151 0096 0ED0     		beq	.L87
+ 1152              	.L82:
  353:quantum/quantum.c **** }
- 1145              		.loc 1 353 5 view .LVU258
+ 1153              		.loc 1 353 5 view .LVU257
  353:quantum/quantum.c **** }
- 1146              		.loc 1 353 12 is_stmt 0 view .LVU259
- 1147 0090 2846     		mov	r0, r5
- 1148 0092 FFF7FEFF 		bl	process_action_kb
- 1149              	.LVL100:
- 1150 0096 C2E7     		b	.L80
- 1151              	.L84:
+ 1154              		.loc 1 353 12 is_stmt 0 view .LVU258
+ 1155 0098 2846     		mov	r0, r5
+ 1156 009a FFF7FEFF 		bl	process_action_kb
+ 1157              	.LVL101:
+ 1158 009e BEE7     		b	.L80
+ 1159              	.L84:
  304:quantum/quantum.c **** #ifndef NO_RESET
- 1152              		.loc 1 304 9 view .LVU260
- 1153 0098 45F65B53 		movw	r3, #23899
- 1154 009c 9C42     		cmp	r4, r3
- 1155 009e 0FD0     		beq	.L87
- 1156 00a0 45F65C53 		movw	r3, #23900
- 1157 00a4 9C42     		cmp	r4, r3
- 1158 00a6 F3D1     		bne	.L82
+ 1160              		.loc 1 304 9 view .LVU259
+ 1161 00a0 45F65B53 		movw	r3, #23899
+ 1162 00a4 9C42     		cmp	r4, r3
+ 1163 00a6 21D0     		beq	.L88
+ 1164 00a8 45F65C53 		movw	r3, #23900
+ 1165 00ac 9C42     		cmp	r4, r3
+ 1166 00ae F3D1     		bne	.L82
  341:quantum/quantum.c ****                 break;
- 1159              		.loc 1 341 17 is_stmt 1 view .LVU261
- 1160 00a8 FFF7FEFF 		bl	oneshot_toggle
- 1161              	.LVL101:
+ 1167              		.loc 1 341 17 is_stmt 1 view .LVU260
+ 1168 00b0 FFF7FEFF 		bl	oneshot_toggle
+ 1169              	.LVL102:
  342:quantum/quantum.c ****             case ONESHOT_ENABLE:
- 1162              		.loc 1 342 17 view .LVU262
- 1163 00ac F0E7     		b	.L82
- 1164              	.L85:
+ 1170              		.loc 1 342 17 view .LVU261
+ 1171 00b4 F0E7     		b	.L82
+ 1172              	.L87:
  307:quantum/quantum.c ****                 return false;
- 1165              		.loc 1 307 17 view .LVU263
- 1166 00ae FFF7FEFF 		bl	reset_keyboard
- 1167              	.LVL102:
+ 1173              		.loc 1 307 17 view .LVU262
+ 1174 00b6 FFF7FEFF 		bl	reset_keyboard
+ 1175              	.LVL103:
  308:quantum/quantum.c **** #endif
- 1168              		.loc 1 308 17 view .LVU264
- 1169 00b2 B3E7     		b	.L113
- 1170              	.L86:
+ 1176              		.loc 1 308 17 view .LVU263
+ 1177 00ba AFE7     		b	.L115
+ 1178              	.L85:
+ 312:quantum/quantum.c ****                 if (debug_enable) {
+ 1179              		.loc 1 312 17 view .LVU264
+ 312:quantum/quantum.c ****                 if (debug_enable) {
+ 1180              		.loc 1 312 30 is_stmt 0 view .LVU265
+ 1181 00bc 0D4A     		ldr	r2, .L117
+ 1182 00be 1078     		ldrb	r0, [r2]	@ zero_extendqisi2
+ 1183 00c0 C0F30003 		ubfx	r3, r0, #0, #1
+ 1184 00c4 83F00103 		eor	r3, r3, #1
+ 1185 00c8 63F30000 		bfi	r0, r3, #0, #1
+ 313:quantum/quantum.c ****                     print("DEBUG: enabled.\n");
+ 1186              		.loc 1 313 20 view .LVU266
+ 1187 00cc 10F00104 		ands	r4, r0, #1
+ 1188              	.LVL104:
+ 312:quantum/quantum.c ****                 if (debug_enable) {
+ 1189              		.loc 1 312 30 view .LVU267
+ 1190 00d0 1070     		strb	r0, [r2]
+ 313:quantum/quantum.c ****                     print("DEBUG: enabled.\n");
+ 1191              		.loc 1 313 17 is_stmt 1 view .LVU268
+ 313:quantum/quantum.c ****                     print("DEBUG: enabled.\n");
+ 1192              		.loc 1 313 20 is_stmt 0 view .LVU269
+ 1193 00d2 03D0     		beq	.L90
+ 314:quantum/quantum.c ****                 } else {
+ 1194              		.loc 1 314 21 is_stmt 1 view .LVU270
+ 1195 00d4 0848     		ldr	r0, .L117+4
+ 1196              	.L116:
+ 1197 00d6 FFF7FEFF 		bl	printf_
+ 1198              	.LVL105:
+ 1199 00da 9FE7     		b	.L115
+ 1200              	.L90:
+ 316:quantum/quantum.c ****                 }
+ 1201              		.loc 1 316 21 view .LVU271
+ 1202 00dc 0748     		ldr	r0, .L117+8
+ 1203 00de FAE7     		b	.L116
+ 1204              	.LVL106:
+ 1205              	.L86:
  321:quantum/quantum.c ****                 return false;
- 1171              		.loc 1 321 17 view .LVU265
- 1172 00b4 FFF7FEFF 		bl	eeconfig_init
- 1173              	.LVL103:
- 1174 00b8 B0E7     		b	.L113
- 1175              	.L83:
+ 1206              		.loc 1 321 17 view .LVU272
+ 1207 00e0 FFF7FEFF 		bl	eeconfig_init
+ 1208              	.LVL107:
+ 322:quantum/quantum.c **** #ifdef VELOCIKEY_ENABLE
+ 1209              		.loc 1 322 17 view .LVU273
+ 1210 00e4 9AE7     		b	.L115
+ 1211              	.L83:
  344:quantum/quantum.c ****                 break;
- 1176              		.loc 1 344 17 view .LVU266
- 1177 00ba FFF7FEFF 		bl	oneshot_enable
- 1178              	.LVL104:
+ 1212              		.loc 1 344 17 view .LVU274
+ 1213 00e6 FFF7FEFF 		bl	oneshot_enable
+ 1214              	.LVL108:
  345:quantum/quantum.c ****             case ONESHOT_DISABLE:
- 1179              		.loc 1 345 17 view .LVU267
- 1180 00be E7E7     		b	.L82
- 1181              	.L87:
+ 1215              		.loc 1 345 17 view .LVU275
+ 1216 00ea D5E7     		b	.L82
+ 1217              	.L88:
  347:quantum/quantum.c ****                 break;
- 1182              		.loc 1 347 17 view .LVU268
- 1183 00c0 FFF7FEFF 		bl	oneshot_disable
- 1184              	.LVL105:
+ 1218              		.loc 1 347 17 view .LVU276
+ 1219 00ec FFF7FEFF 		bl	oneshot_disable
+ 1220              	.LVL109:
  348:quantum/quantum.c **** #endif
- 1185              		.loc 1 348 17 view .LVU269
- 1186 00c4 E4E7     		b	.L82
- 1187              		.cfi_endproc
- 1188              	.LFE306:
- 1190              		.text
- 1191              	.Letext0:
- 1192              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
- 1193              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
- 1194              		.file 4 "./lib/chibios/os/rt/include/chtime.h"
- 1195              		.file 5 "tmk_core/common/keyboard.h"
- 1196              		.file 6 "tmk_core/common/action.h"
- 1197              		.file 7 "tmk_core/common/keycode.h"
- 1198              		.file 8 "quantum/quantum_keycodes.h"
- 1199              		.file 9 "tmk_core/common/action_layer.h"
- 1200              		.file 10 "quantum/process_keycode/process_tap_dance.h"
- 1201              		.file 11 "quantum/matrix.h"
- 1202              		.file 12 "quantum/bootmagic/magic.h"
- 1203              		.file 13 "quantum/led.h"
- 1204              		.file 14 "quantum/rgb_matrix/rgb_matrix.h"
- 1205              		.file 15 "tmk_core/common/eeconfig.h"
- 1206              		.file 16 "quantum/process_keycode/process_dynamic_macro.h"
- 1207              		.file 17 "quantum/via.h"
- 1208              		.file 18 "quantum/process_keycode/process_space_cadet.h"
- 1209              		.file 19 "quantum/process_keycode/process_magic.h"
- 1210              		.file 20 "quantum/process_keycode/process_grave_esc.h"
- 1211              		.file 21 "quantum/process_keycode/process_rgb.h"
- 1212              		.file 22 "tmk_core/common/action_util.h"
- 1213              		.file 23 "quantum/keymap.h"
- 1214              		.file 24 "./lib/chibios/os/rt/include/chthreads.h"
- 1215              		.file 25 "tmk_core/common/bootloader.h"
+ 1221              		.loc 1 348 17 view .LVU277
+ 1222 00f0 D2E7     		b	.L82
+ 1223              	.L118:
+ 1224 00f2 00BF     		.align	2
+ 1225              	.L117:
+ 1226 00f4 00000000 		.word	debug_config
+ 1227 00f8 00000000 		.word	.LC0
+ 1228 00fc 11000000 		.word	.LC1
+ 1229              		.cfi_endproc
+ 1230              	.LFE306:
+ 1232              		.text
+ 1233              	.Letext0:
+ 1234              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1235              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1236              		.file 4 "./lib/chibios/os/rt/include/chtime.h"
+ 1237              		.file 5 "tmk_core/common/keyboard.h"
+ 1238              		.file 6 "tmk_core/common/action.h"
+ 1239              		.file 7 "quantum/logging/debug.h"
+ 1240              		.file 8 "tmk_core/common/keycode.h"
+ 1241              		.file 9 "quantum/quantum_keycodes.h"
+ 1242              		.file 10 "tmk_core/common/action_layer.h"
+ 1243              		.file 11 "quantum/process_keycode/process_tap_dance.h"
+ 1244              		.file 12 "quantum/matrix.h"
+ 1245              		.file 13 "quantum/bootmagic/magic.h"
+ 1246              		.file 14 "quantum/led.h"
+ 1247              		.file 15 "quantum/rgb_matrix/rgb_matrix.h"
+ 1248              		.file 16 "tmk_core/common/eeconfig.h"
+ 1249              		.file 17 "quantum/process_keycode/process_dynamic_macro.h"
+ 1250              		.file 18 "quantum/via.h"
+ 1251              		.file 19 "quantum/process_keycode/process_space_cadet.h"
+ 1252              		.file 20 "quantum/process_keycode/process_magic.h"
+ 1253              		.file 21 "quantum/process_keycode/process_grave_esc.h"
+ 1254              		.file 22 "quantum/process_keycode/process_rgb.h"
+ 1255              		.file 23 "tmk_core/common/action_util.h"
+ 1256              		.file 24 "lib/printf/printf.h"
+ 1257              		.file 25 "quantum/keymap.h"
+ 1258              		.file 26 "./lib/chibios/os/rt/include/chthreads.h"
+ 1259              		.file 27 "tmk_core/common/bootloader.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 quantum.c
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:18     .text.extract_mod_bits:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:26     .text.extract_mod_bits:0000000000000000 extract_mod_bits
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:149    .text.do_code16:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:155    .text.do_code16:0000000000000000 do_code16
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:189    .text.register_code16:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:196    .text.register_code16:0000000000000000 register_code16
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:246    .text.register_code16:0000000000000024 $d
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:252    .text.unregister_code16:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:259    .text.unregister_code16:0000000000000000 unregister_code16
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:310    .text.unregister_code16:0000000000000024 $d
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:316    .text.tap_code16:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:323    .text.tap_code16:0000000000000000 tap_code16
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:362    .text.process_action_kb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:369    .text.process_action_kb:0000000000000000 process_action_kb
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:387    .text.process_record_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:394    .text.process_record_user:0000000000000000 process_record_user
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:412    .text.process_record_kb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:419    .text.process_record_kb:0000000000000000 process_record_kb
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:441    .text.post_process_record_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:448    .text.post_process_record_user:0000000000000000 post_process_record_user
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:462    .text.post_process_record_kb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:469    .text.post_process_record_kb:0000000000000000 post_process_record_kb
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:491    .text.get_event_keycode:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:498    .text.get_event_keycode:0000000000000000 get_event_keycode
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:590    .text.get_event_keycode:0000000000000048 $d
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:595    .text.get_record_keycode:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:602    .text.get_record_keycode:0000000000000000 get_record_keycode
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:628    .text.pre_process_record_quantum:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:635    .text.pre_process_record_quantum:0000000000000000 pre_process_record_quantum
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:654    .text.post_process_record_quantum:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:661    .text.post_process_record_quantum:0000000000000000 post_process_record_quantum
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:692    .text.set_single_persistent_default_layer:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:699    .text.set_single_persistent_default_layer:0000000000000000 set_single_persistent_default_layer
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:736    .text.update_tri_layer_state:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:743    .text.update_tri_layer_state:0000000000000000 update_tri_layer_state
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:789    .text.update_tri_layer:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:796    .text.update_tri_layer:0000000000000000 update_tri_layer
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:835    .text.update_tri_layer:0000000000000018 $d
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:840    .text.matrix_init_quantum:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:847    .text.matrix_init_quantum:0000000000000000 matrix_init_quantum
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:881    .text.matrix_scan_quantum:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:888    .text.matrix_scan_quantum:0000000000000000 matrix_scan_quantum
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:916    .text.api_send_unicode:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:923    .text.api_send_unicode:0000000000000000 api_send_unicode
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:937    .text.startup_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:944    .text.startup_user:0000000000000000 startup_user
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:957    .text.shutdown_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:964    .text.shutdown_user:0000000000000000 shutdown_user
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:975    .text.reset_keyboard:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:982    .text.reset_keyboard:0000000000000000 reset_keyboard
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:1020   .text.process_record_quantum:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccGUYfK2.s:1027   .text.process_record_quantum:0000000000000000 process_record_quantum
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:18     .text.extract_mod_bits:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:26     .text.extract_mod_bits:0000000000000000 extract_mod_bits
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:149    .text.do_code16:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:155    .text.do_code16:0000000000000000 do_code16
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:189    .text.register_code16:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:196    .text.register_code16:0000000000000000 register_code16
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:246    .text.register_code16:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:252    .text.unregister_code16:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:259    .text.unregister_code16:0000000000000000 unregister_code16
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:310    .text.unregister_code16:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:316    .text.tap_code16:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:323    .text.tap_code16:0000000000000000 tap_code16
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:362    .text.process_action_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:369    .text.process_action_kb:0000000000000000 process_action_kb
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:387    .text.process_record_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:394    .text.process_record_user:0000000000000000 process_record_user
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:412    .text.process_record_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:419    .text.process_record_kb:0000000000000000 process_record_kb
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:441    .text.post_process_record_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:448    .text.post_process_record_user:0000000000000000 post_process_record_user
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:462    .text.post_process_record_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:469    .text.post_process_record_kb:0000000000000000 post_process_record_kb
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:491    .text.get_event_keycode:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:498    .text.get_event_keycode:0000000000000000 get_event_keycode
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:590    .text.get_event_keycode:0000000000000048 $d
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:595    .text.get_record_keycode:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:602    .text.get_record_keycode:0000000000000000 get_record_keycode
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:628    .text.pre_process_record_quantum:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:635    .text.pre_process_record_quantum:0000000000000000 pre_process_record_quantum
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:654    .text.post_process_record_quantum:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:661    .text.post_process_record_quantum:0000000000000000 post_process_record_quantum
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:692    .text.set_single_persistent_default_layer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:699    .text.set_single_persistent_default_layer:0000000000000000 set_single_persistent_default_layer
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:736    .text.update_tri_layer_state:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:743    .text.update_tri_layer_state:0000000000000000 update_tri_layer_state
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:789    .text.update_tri_layer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:796    .text.update_tri_layer:0000000000000000 update_tri_layer
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:835    .text.update_tri_layer:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:840    .text.matrix_init_quantum:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:847    .text.matrix_init_quantum:0000000000000000 matrix_init_quantum
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:881    .text.matrix_scan_quantum:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:888    .text.matrix_scan_quantum:0000000000000000 matrix_scan_quantum
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:916    .text.api_send_unicode:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:923    .text.api_send_unicode:0000000000000000 api_send_unicode
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:937    .text.startup_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:944    .text.startup_user:0000000000000000 startup_user
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:957    .text.shutdown_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:964    .text.shutdown_user:0000000000000000 shutdown_user
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:975    .text.reset_keyboard:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:982    .text.reset_keyboard:0000000000000000 reset_keyboard
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:1025   .text.process_record_quantum:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:1032   .text.process_record_quantum:0000000000000000 process_record_quantum
+C:\Users\lhanj\AppData\Local\Temp\ccvXNXHt.s:1226   .text.process_record_quantum:00000000000000f4 $d
 
 UNDEFINED SYMBOLS
 register_code
@@ -1860,6 +1921,8 @@ process_magic
 process_grave_esc
 process_rgb
 oneshot_toggle
+printf_
 eeconfig_init
 oneshot_enable
 oneshot_disable
+debug_config

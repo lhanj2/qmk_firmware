@@ -65,7 +65,7 @@
   47              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 sendchar.c
-C:\Users\lhanj\AppData\Local\Temp\ccv7oEA0.s:18     .text.sendchar:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccv7oEA0.s:26     .text.sendchar:0000000000000000 sendchar
+C:\Users\lhanj\AppData\Local\Temp\ccCFHWrz.s:18     .text.sendchar:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccCFHWrz.s:26     .text.sendchar:0000000000000000 sendchar
 
 NO UNDEFINED SYMBOLS

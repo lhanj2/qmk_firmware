@@ -135,16 +135,16 @@
  tmk_core/common/chibios/platform_deps.h \
  tmk_core/common/chibios/chibios_config.h quantum/keymap.h \
  quantum/logging/debug.h quantum/logging/print.h quantum/util.h \
- quantum/bitwise.h quantum/logging/sendchar.h quantum/keycode_config.h \
- tmk_core/common/eeconfig.h quantum/quantum_keycodes.h \
- quantum/sequencer/sequencer.h tmk_core/common/timer.h \
- tmk_core/common/chibios/_timer.h tmk_core/common/action_layer.h \
- tmk_core/common/bootloader.h quantum/bootmagic/bootmagic.h \
- quantum/bootmagic/bootmagic_lite.h tmk_core/common/sync_timer.h \
- tmk_core/common/gpio.h tmk_core/common/chibios/gpio.h \
- tmk_core/common/atomic_util.h tmk_core/common/chibios/atomic_util.h \
- tmk_core/common/action_tapping.h quantum/send_string.h \
- quantum/send_string_keycodes.h \
+ quantum/bitwise.h quantum/logging/sendchar.h lib/printf/printf.h \
+ quantum/keycode_config.h tmk_core/common/eeconfig.h \
+ quantum/quantum_keycodes.h quantum/sequencer/sequencer.h \
+ tmk_core/common/timer.h tmk_core/common/chibios/_timer.h \
+ tmk_core/common/action_layer.h tmk_core/common/bootloader.h \
+ quantum/bootmagic/bootmagic.h quantum/bootmagic/bootmagic_lite.h \
+ tmk_core/common/sync_timer.h tmk_core/common/gpio.h \
+ tmk_core/common/chibios/gpio.h tmk_core/common/atomic_util.h \
+ tmk_core/common/chibios/atomic_util.h tmk_core/common/action_tapping.h \
+ quantum/send_string.h quantum/send_string_keycodes.h \
  quantum/process_keycode/process_tap_dance.h \
  quantum/process_keycode/process_terminal_nop.h \
  quantum/process_keycode/process_space_cadet.h \
@@ -357,6 +357,7 @@ quantum/logging/print.h:
 quantum/util.h:
 quantum/bitwise.h:
 quantum/logging/sendchar.h:
+lib/printf/printf.h:
 quantum/keycode_config.h:
 tmk_core/common/eeconfig.h:
 quantum/quantum_keycodes.h:

@@ -151,16 +151,23 @@
  121 0000 7047     		bx	lr
  122              		.cfi_endproc
  123              	.LFE302:
- 125              		.section	.text.dynamic_macro_record_start,"ax",%progbits
- 126              		.align	1
- 127              		.global	dynamic_macro_record_start
- 128              		.syntax unified
- 129              		.thumb
- 130              		.thumb_func
- 131              		.fpu fpv4-sp-d16
- 133              	dynamic_macro_record_start:
- 134              	.LVL2:
- 135              	.LFB296:
+ 125              		.section	.rodata.dynamic_macro_record_start.str1.1,"aMS",%progbits,1
+ 126              	.LC0:
+ 127 0000 64796E61 		.ascii	"dynamic macro recording: started\015\012\000"
+ 127      6D696320 
+ 127      6D616372 
+ 127      6F207265 
+ 127      636F7264 
+ 128              		.section	.text.dynamic_macro_record_start,"ax",%progbits
+ 129              		.align	1
+ 130              		.global	dynamic_macro_record_start
+ 131              		.syntax unified
+ 132              		.thumb
+ 133              		.thumb_func
+ 134              		.fpu fpv4-sp-d16
+ 136              	dynamic_macro_record_start:
+ 137              	.LVL2:
+ 138              	.LFB296:
   37:quantum/process_keycode/process_dynamic_macro.c **** 
   38:quantum/process_keycode/process_dynamic_macro.c **** __attribute__((weak)) void dynamic_macro_record_end_user(int8_t direction) { dynamic_macro_led_blin
   39:quantum/process_keycode/process_dynamic_macro.c **** 
@@ -178,59 +185,86 @@
   51:quantum/process_keycode/process_dynamic_macro.c ****  * @param[in]  macro_buffer  The macro buffer used to initialize macro_pointer.
   52:quantum/process_keycode/process_dynamic_macro.c ****  */
   53:quantum/process_keycode/process_dynamic_macro.c **** void dynamic_macro_record_start(keyrecord_t **macro_pointer, keyrecord_t *macro_buffer) {
- 136              		.loc 1 53 89 is_stmt 1 view -0
- 137              		.cfi_startproc
- 138              		@ args = 0, pretend = 0, frame = 0
- 139              		@ frame_needed = 0, uses_anonymous_args = 0
+ 139              		.loc 1 53 89 is_stmt 1 view -0
+ 140              		.cfi_startproc
+ 141              		@ args = 0, pretend = 0, frame = 0
+ 142              		@ frame_needed = 0, uses_anonymous_args = 0
   54:quantum/process_keycode/process_dynamic_macro.c ****     dprintln("dynamic macro recording: started");
- 140              		.loc 1 54 49 view .LVU15
+ 143              		.loc 1 54 5 view .LVU15
+ 144              		.loc 1 54 5 view .LVU16
+  53:quantum/process_keycode/process_dynamic_macro.c ****     dprintln("dynamic macro recording: started");
+ 145              		.loc 1 53 89 is_stmt 0 view .LVU17
+ 146 0000 38B5     		push	{r3, r4, r5, lr}
+ 147              		.cfi_def_cfa_offset 16
+ 148              		.cfi_offset 3, -16
+ 149              		.cfi_offset 4, -12
+ 150              		.cfi_offset 5, -8
+ 151              		.cfi_offset 14, -4
+ 152              		.loc 1 54 5 view .LVU18
+ 153 0002 084B     		ldr	r3, .L11
+ 154 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 155 0006 DB07     		lsls	r3, r3, #31
+  53:quantum/process_keycode/process_dynamic_macro.c ****     dprintln("dynamic macro recording: started");
+ 156              		.loc 1 53 89 view .LVU19
+ 157 0008 0446     		mov	r4, r0
+ 158 000a 0D46     		mov	r5, r1
+ 159              		.loc 1 54 5 view .LVU20
+ 160 000c 02D5     		bpl	.L7
+ 161              		.loc 1 54 5 is_stmt 1 discriminator 1 view .LVU21
+ 162 000e 0648     		ldr	r0, .L11+4
+ 163              	.LVL3:
+ 164              		.loc 1 54 5 is_stmt 0 discriminator 1 view .LVU22
+ 165 0010 FFF7FEFF 		bl	printf_
+ 166              	.LVL4:
+ 167              	.L7:
+ 168              		.loc 1 54 5 is_stmt 1 discriminator 3 view .LVU23
   55:quantum/process_keycode/process_dynamic_macro.c **** 
   56:quantum/process_keycode/process_dynamic_macro.c ****     dynamic_macro_record_start_user();
- 141              		.loc 1 56 5 view .LVU16
-  53:quantum/process_keycode/process_dynamic_macro.c ****     dprintln("dynamic macro recording: started");
- 142              		.loc 1 53 89 is_stmt 0 view .LVU17
- 143 0000 38B5     		push	{r3, r4, r5, lr}
- 144              		.cfi_def_cfa_offset 16
- 145              		.cfi_offset 3, -16
- 146              		.cfi_offset 4, -12
- 147              		.cfi_offset 5, -8
- 148              		.cfi_offset 14, -4
-  53:quantum/process_keycode/process_dynamic_macro.c ****     dprintln("dynamic macro recording: started");
- 149              		.loc 1 53 89 view .LVU18
- 150 0002 0446     		mov	r4, r0
- 151 0004 0D46     		mov	r5, r1
- 152              		.loc 1 56 5 view .LVU19
- 153 0006 FFF7FEFF 		bl	dynamic_macro_record_start_user
- 154              	.LVL3:
+ 169              		.loc 1 56 5 discriminator 3 view .LVU24
+ 170 0014 FFF7FEFF 		bl	dynamic_macro_record_start_user
+ 171              	.LVL5:
   57:quantum/process_keycode/process_dynamic_macro.c **** 
   58:quantum/process_keycode/process_dynamic_macro.c ****     clear_keyboard();
- 155              		.loc 1 58 5 is_stmt 1 view .LVU20
- 156 000a FFF7FEFF 		bl	clear_keyboard
- 157              	.LVL4:
+ 172              		.loc 1 58 5 discriminator 3 view .LVU25
+ 173 0018 FFF7FEFF 		bl	clear_keyboard
+ 174              	.LVL6:
   59:quantum/process_keycode/process_dynamic_macro.c ****     layer_clear();
- 158              		.loc 1 59 5 view .LVU21
- 159 000e FFF7FEFF 		bl	layer_clear
- 160              	.LVL5:
+ 175              		.loc 1 59 5 discriminator 3 view .LVU26
+ 176 001c FFF7FEFF 		bl	layer_clear
+ 177              	.LVL7:
   60:quantum/process_keycode/process_dynamic_macro.c ****     *macro_pointer = macro_buffer;
- 161              		.loc 1 60 5 view .LVU22
- 162              		.loc 1 60 20 is_stmt 0 view .LVU23
- 163 0012 2560     		str	r5, [r4]
+ 178              		.loc 1 60 5 discriminator 3 view .LVU27
+ 179              		.loc 1 60 20 is_stmt 0 discriminator 3 view .LVU28
+ 180 0020 2560     		str	r5, [r4]
   61:quantum/process_keycode/process_dynamic_macro.c **** }
- 164              		.loc 1 61 1 view .LVU24
- 165 0014 38BD     		pop	{r3, r4, r5, pc}
- 166              		.loc 1 61 1 view .LVU25
- 167              		.cfi_endproc
- 168              	.LFE296:
- 170              		.section	.text.dynamic_macro_play,"ax",%progbits
- 171              		.align	1
- 172              		.global	dynamic_macro_play
- 173              		.syntax unified
- 174              		.thumb
- 175              		.thumb_func
- 176              		.fpu fpv4-sp-d16
- 178              	dynamic_macro_play:
- 179              	.LVL6:
- 180              	.LFB297:
+ 181              		.loc 1 61 1 discriminator 3 view .LVU29
+ 182 0022 38BD     		pop	{r3, r4, r5, pc}
+ 183              	.LVL8:
+ 184              	.L12:
+ 185              		.loc 1 61 1 discriminator 3 view .LVU30
+ 186              		.align	2
+ 187              	.L11:
+ 188 0024 00000000 		.word	debug_config
+ 189 0028 00000000 		.word	.LC0
+ 190              		.cfi_endproc
+ 191              	.LFE296:
+ 193              		.section	.rodata.dynamic_macro_play.str1.1,"aMS",%progbits,1
+ 194              	.LC1:
+ 195 0000 64796E61 		.ascii	"dynamic macro: slot %d playback\012\000"
+ 195      6D696320 
+ 195      6D616372 
+ 195      6F3A2073 
+ 195      6C6F7420 
+ 196              		.section	.text.dynamic_macro_play,"ax",%progbits
+ 197              		.align	1
+ 198              		.global	dynamic_macro_play
+ 199              		.syntax unified
+ 200              		.thumb
+ 201              		.thumb_func
+ 202              		.fpu fpv4-sp-d16
+ 204              	dynamic_macro_play:
+ 205              	.LVL9:
+ 206              	.LFB297:
   62:quantum/process_keycode/process_dynamic_macro.c **** 
   63:quantum/process_keycode/process_dynamic_macro.c **** /**
   64:quantum/process_keycode/process_dynamic_macro.c ****  * Play the dynamic macro.
@@ -240,112 +274,148 @@
   68:quantum/process_keycode/process_dynamic_macro.c ****  * @param direction[in]    Either +1 or -1, which way to iterate the buffer.
   69:quantum/process_keycode/process_dynamic_macro.c ****  */
   70:quantum/process_keycode/process_dynamic_macro.c **** void dynamic_macro_play(keyrecord_t *macro_buffer, keyrecord_t *macro_end, int8_t direction) {
- 181              		.loc 1 70 94 is_stmt 1 view -0
- 182              		.cfi_startproc
- 183              		@ args = 0, pretend = 0, frame = 0
- 184              		@ frame_needed = 0, uses_anonymous_args = 0
+ 207              		.loc 1 70 94 is_stmt 1 view -0
+ 208              		.cfi_startproc
+ 209              		@ args = 0, pretend = 0, frame = 0
+ 210              		@ frame_needed = 0, uses_anonymous_args = 0
   71:quantum/process_keycode/process_dynamic_macro.c ****     dprintf("dynamic macro: slot %d playback\n", DYNAMIC_MACRO_CURRENT_SLOT());
- 185              		.loc 1 71 79 view .LVU27
+ 211              		.loc 1 71 5 view .LVU32
+ 212              		.loc 1 71 5 view .LVU33
+  70:quantum/process_keycode/process_dynamic_macro.c ****     dprintf("dynamic macro: slot %d playback\n", DYNAMIC_MACRO_CURRENT_SLOT());
+ 213              		.loc 1 70 94 is_stmt 0 view .LVU34
+ 214 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 215              		.cfi_def_cfa_offset 32
+ 216              		.cfi_offset 3, -32
+ 217              		.cfi_offset 4, -28
+ 218              		.cfi_offset 5, -24
+ 219              		.cfi_offset 6, -20
+ 220              		.cfi_offset 7, -16
+ 221              		.cfi_offset 8, -12
+ 222              		.cfi_offset 9, -8
+ 223              		.cfi_offset 14, -4
+ 224              		.loc 1 71 5 view .LVU35
+ 225 0004 134B     		ldr	r3, .L22
+ 226 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 227 0008 DB07     		lsls	r3, r3, #31
+  70:quantum/process_keycode/process_dynamic_macro.c ****     dprintf("dynamic macro: slot %d playback\n", DYNAMIC_MACRO_CURRENT_SLOT());
+ 228              		.loc 1 70 94 view .LVU36
+ 229 000a 0446     		mov	r4, r0
+ 230 000c 0E46     		mov	r6, r1
+ 231 000e 1546     		mov	r5, r2
+ 232              		.loc 1 71 5 view .LVU37
+ 233 0010 06D5     		bpl	.L14
+ 234              		.loc 1 71 5 is_stmt 1 discriminator 1 view .LVU38
+ 235 0012 002A     		cmp	r2, #0
+ 236 0014 1048     		ldr	r0, .L22+4
+ 237              	.LVL10:
+ 238              		.loc 1 71 5 is_stmt 0 discriminator 1 view .LVU39
+ 239 0016 CCBF     		ite	gt
+ 240 0018 0121     		movgt	r1, #1
+ 241              	.LVL11:
+ 242              		.loc 1 71 5 discriminator 1 view .LVU40
+ 243 001a 0221     		movle	r1, #2
+ 244 001c FFF7FEFF 		bl	printf_
+ 245              	.LVL12:
+ 246              	.L14:
+ 247              		.loc 1 71 5 is_stmt 1 discriminator 7 view .LVU41
   72:quantum/process_keycode/process_dynamic_macro.c **** 
   73:quantum/process_keycode/process_dynamic_macro.c ****     layer_state_t saved_layer_state = layer_state;
- 186              		.loc 1 73 5 view .LVU28
-  70:quantum/process_keycode/process_dynamic_macro.c ****     dprintf("dynamic macro: slot %d playback\n", DYNAMIC_MACRO_CURRENT_SLOT());
- 187              		.loc 1 70 94 is_stmt 0 view .LVU29
- 188 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
- 189              		.cfi_def_cfa_offset 32
- 190              		.cfi_offset 3, -32
- 191              		.cfi_offset 4, -28
- 192              		.cfi_offset 5, -24
- 193              		.cfi_offset 6, -20
- 194              		.cfi_offset 7, -16
- 195              		.cfi_offset 8, -12
- 196              		.cfi_offset 9, -8
- 197              		.cfi_offset 14, -4
- 198              		.loc 1 73 19 view .LVU30
- 199 0004 0D4F     		ldr	r7, .L10
-  70:quantum/process_keycode/process_dynamic_macro.c ****     dprintf("dynamic macro: slot %d playback\n", DYNAMIC_MACRO_CURRENT_SLOT());
- 200              		.loc 1 70 94 view .LVU31
- 201 0006 1546     		mov	r5, r2
- 202 0008 0446     		mov	r4, r0
- 203 000a 0E46     		mov	r6, r1
- 204              		.loc 1 73 19 view .LVU32
- 205 000c 97F80080 		ldrb	r8, [r7]	@ zero_extendqisi2
- 206              	.LVL7:
+ 248              		.loc 1 73 5 discriminator 7 view .LVU42
+ 249              		.loc 1 73 19 is_stmt 0 discriminator 7 view .LVU43
+ 250 0020 0E4F     		ldr	r7, .L22+8
+ 251 0022 97F80080 		ldrb	r8, [r7]	@ zero_extendqisi2
+ 252              	.LVL13:
   74:quantum/process_keycode/process_dynamic_macro.c **** 
   75:quantum/process_keycode/process_dynamic_macro.c ****     clear_keyboard();
- 207              		.loc 1 75 5 is_stmt 1 view .LVU33
- 208 0010 FFF7FEFF 		bl	clear_keyboard
- 209              	.LVL8:
+ 253              		.loc 1 75 5 is_stmt 1 discriminator 7 view .LVU44
+ 254 0026 FFF7FEFF 		bl	clear_keyboard
+ 255              	.LVL14:
   76:quantum/process_keycode/process_dynamic_macro.c ****     layer_clear();
- 210              		.loc 1 76 5 view .LVU34
- 211 0014 FFF7FEFF 		bl	layer_clear
- 212              	.LVL9:
+ 256              		.loc 1 76 5 discriminator 7 view .LVU45
+ 257 002a FFF7FEFF 		bl	layer_clear
+ 258              	.LVL15:
   77:quantum/process_keycode/process_dynamic_macro.c **** 
   78:quantum/process_keycode/process_dynamic_macro.c ****     while (macro_buffer != macro_end) {
- 213              		.loc 1 78 5 view .LVU35
+ 259              		.loc 1 78 5 discriminator 7 view .LVU46
   79:quantum/process_keycode/process_dynamic_macro.c ****         process_record(macro_buffer);
   80:quantum/process_keycode/process_dynamic_macro.c ****         macro_buffer += direction;
- 214              		.loc 1 80 22 is_stmt 0 view .LVU36
- 215 0018 4FEAC509 		lsl	r9, r5, #3
- 216              	.L8:
+ 260              		.loc 1 80 22 is_stmt 0 discriminator 7 view .LVU47
+ 261 002e 4FEAC509 		lsl	r9, r5, #3
+ 262              	.L16:
   78:quantum/process_keycode/process_dynamic_macro.c ****         process_record(macro_buffer);
- 217              		.loc 1 78 11 is_stmt 1 view .LVU37
- 218 001c B442     		cmp	r4, r6
- 219 001e 08D1     		bne	.L9
+ 263              		.loc 1 78 11 is_stmt 1 view .LVU48
+ 264 0032 B442     		cmp	r4, r6
+ 265 0034 08D1     		bne	.L17
   81:quantum/process_keycode/process_dynamic_macro.c ****     }
   82:quantum/process_keycode/process_dynamic_macro.c **** 
   83:quantum/process_keycode/process_dynamic_macro.c ****     clear_keyboard();
- 220              		.loc 1 83 5 view .LVU38
- 221 0020 FFF7FEFF 		bl	clear_keyboard
- 222              	.LVL10:
+ 266              		.loc 1 83 5 view .LVU49
+ 267 0036 FFF7FEFF 		bl	clear_keyboard
+ 268              	.LVL16:
   84:quantum/process_keycode/process_dynamic_macro.c **** 
   85:quantum/process_keycode/process_dynamic_macro.c ****     layer_state = saved_layer_state;
- 223              		.loc 1 85 5 view .LVU39
+ 269              		.loc 1 85 5 view .LVU50
   86:quantum/process_keycode/process_dynamic_macro.c **** 
   87:quantum/process_keycode/process_dynamic_macro.c ****     dynamic_macro_play_user(direction);
- 224              		.loc 1 87 5 is_stmt 0 view .LVU40
- 225 0024 2846     		mov	r0, r5
+ 270              		.loc 1 87 5 is_stmt 0 view .LVU51
+ 271 003a 2846     		mov	r0, r5
   85:quantum/process_keycode/process_dynamic_macro.c **** 
- 226              		.loc 1 85 17 view .LVU41
- 227 0026 87F80080 		strb	r8, [r7]
- 228              		.loc 1 87 5 is_stmt 1 view .LVU42
- 229 002a FFF7FEFF 		bl	dynamic_macro_play_user
- 230              	.LVL11:
+ 272              		.loc 1 85 17 view .LVU52
+ 273 003c 87F80080 		strb	r8, [r7]
+ 274              		.loc 1 87 5 is_stmt 1 view .LVU53
+ 275 0040 FFF7FEFF 		bl	dynamic_macro_play_user
+ 276              	.LVL17:
   88:quantum/process_keycode/process_dynamic_macro.c **** }
- 231              		.loc 1 88 1 is_stmt 0 view .LVU43
- 232 002e BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
- 233              	.LVL12:
- 234              	.L9:
+ 277              		.loc 1 88 1 is_stmt 0 view .LVU54
+ 278 0044 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 279              	.LVL18:
+ 280              	.L17:
   79:quantum/process_keycode/process_dynamic_macro.c ****         macro_buffer += direction;
- 235              		.loc 1 79 9 is_stmt 1 view .LVU44
- 236 0032 2046     		mov	r0, r4
- 237 0034 FFF7FEFF 		bl	process_record
- 238              	.LVL13:
+ 281              		.loc 1 79 9 is_stmt 1 view .LVU55
+ 282 0048 2046     		mov	r0, r4
+ 283 004a FFF7FEFF 		bl	process_record
+ 284              	.LVL19:
   80:quantum/process_keycode/process_dynamic_macro.c ****     }
- 239              		.loc 1 80 9 view .LVU45
+ 285              		.loc 1 80 9 view .LVU56
   80:quantum/process_keycode/process_dynamic_macro.c ****     }
- 240              		.loc 1 80 22 is_stmt 0 view .LVU46
- 241 0038 4C44     		add	r4, r4, r9
- 242              	.LVL14:
+ 286              		.loc 1 80 22 is_stmt 0 view .LVU57
+ 287 004e 4C44     		add	r4, r4, r9
+ 288              	.LVL20:
   80:quantum/process_keycode/process_dynamic_macro.c ****     }
- 243              		.loc 1 80 22 view .LVU47
- 244 003a EFE7     		b	.L8
- 245              	.L11:
- 246              		.align	2
- 247              	.L10:
- 248 003c 00000000 		.word	layer_state
- 249              		.cfi_endproc
- 250              	.LFE297:
- 252              		.section	.text.dynamic_macro_record_key,"ax",%progbits
- 253              		.align	1
- 254              		.global	dynamic_macro_record_key
- 255              		.syntax unified
- 256              		.thumb
- 257              		.thumb_func
- 258              		.fpu fpv4-sp-d16
- 260              	dynamic_macro_record_key:
- 261              	.LVL15:
- 262              	.LFB298:
+ 289              		.loc 1 80 22 view .LVU58
+ 290 0050 EFE7     		b	.L16
+ 291              	.L23:
+ 292 0052 00BF     		.align	2
+ 293              	.L22:
+ 294 0054 00000000 		.word	debug_config
+ 295 0058 00000000 		.word	.LC1
+ 296 005c 00000000 		.word	layer_state
+ 297              		.cfi_endproc
+ 298              	.LFE297:
+ 300              		.section	.rodata.dynamic_macro_record_key.str1.1,"aMS",%progbits,1
+ 301              	.LC2:
+ 302 0000 64796E61 		.ascii	"dynamic macro: ignoring a leading key-up event\015\012"
+ 302      6D696320 
+ 302      6D616372 
+ 302      6F3A2069 
+ 302      676E6F72 
+ 303 0030 00       		.ascii	"\000"
+ 304              	.LC3:
+ 305 0031 64796E61 		.ascii	"dynamic macro: slot %d length: %d/%d\012\000"
+ 305      6D696320 
+ 305      6D616372 
+ 305      6F3A2073 
+ 305      6C6F7420 
+ 306              		.section	.text.dynamic_macro_record_key,"ax",%progbits
+ 307              		.align	1
+ 308              		.global	dynamic_macro_record_key
+ 309              		.syntax unified
+ 310              		.thumb
+ 311              		.thumb_func
+ 312              		.fpu fpv4-sp-d16
+ 314              	dynamic_macro_record_key:
+ 315              	.LVL21:
+ 316              	.LFB298:
   89:quantum/process_keycode/process_dynamic_macro.c **** 
   90:quantum/process_keycode/process_dynamic_macro.c **** /**
   91:quantum/process_keycode/process_dynamic_macro.c ****  * Record a single key in a dynamic macro.
@@ -357,36 +427,54 @@
   97:quantum/process_keycode/process_dynamic_macro.c ****  * @param record[in]     The current keypress.
   98:quantum/process_keycode/process_dynamic_macro.c ****  */
   99:quantum/process_keycode/process_dynamic_macro.c **** void dynamic_macro_record_key(keyrecord_t *macro_buffer, keyrecord_t **macro_pointer, keyrecord_t *
- 263              		.loc 1 99 151 is_stmt 1 view -0
- 264              		.cfi_startproc
- 265              		@ args = 4, pretend = 0, frame = 0
- 266              		@ frame_needed = 0, uses_anonymous_args = 0
+ 317              		.loc 1 99 151 is_stmt 1 view -0
+ 318              		.cfi_startproc
+ 319              		@ args = 4, pretend = 0, frame = 0
+ 320              		@ frame_needed = 0, uses_anonymous_args = 0
  100:quantum/process_keycode/process_dynamic_macro.c ****     /* If we've just started recording, ignore all the key releases. */
  101:quantum/process_keycode/process_dynamic_macro.c ****     if (!record->event.pressed && *macro_pointer == macro_buffer) {
- 267              		.loc 1 101 5 view .LVU49
+ 321              		.loc 1 101 5 view .LVU60
   99:quantum/process_keycode/process_dynamic_macro.c ****     /* If we've just started recording, ignore all the key releases. */
- 268              		.loc 1 99 151 is_stmt 0 view .LVU50
- 269 0000 70B5     		push	{r4, r5, r6, lr}
- 270              		.cfi_def_cfa_offset 16
- 271              		.cfi_offset 4, -16
- 272              		.cfi_offset 5, -12
- 273              		.cfi_offset 6, -8
- 274              		.cfi_offset 14, -4
+ 322              		.loc 1 99 151 is_stmt 0 view .LVU61
+ 323 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 324              		.cfi_def_cfa_offset 24
+ 325              		.cfi_offset 4, -24
+ 326              		.cfi_offset 5, -20
+ 327              		.cfi_offset 6, -16
+ 328              		.cfi_offset 7, -12
+ 329              		.cfi_offset 8, -8
+ 330              		.cfi_offset 14, -4
   99:quantum/process_keycode/process_dynamic_macro.c ****     /* If we've just started recording, ignore all the key releases. */
- 275              		.loc 1 99 151 view .LVU51
- 276 0002 0D46     		mov	r5, r1
- 277 0004 0499     		ldr	r1, [sp, #16]
- 278              	.LVL16:
- 279              		.loc 1 101 35 view .LVU52
- 280 0006 2C68     		ldr	r4, [r5]
- 281              		.loc 1 101 8 view .LVU53
- 282 0008 8E78     		ldrb	r6, [r1, #2]	@ zero_extendqisi2
- 283 000a 0EB9     		cbnz	r6, .L13
- 284              		.loc 1 101 32 discriminator 1 view .LVU54
- 285 000c A042     		cmp	r0, r4
- 286 000e 0BD0     		beq	.L12
- 287              	.L13:
+ 331              		.loc 1 99 151 view .LVU62
+ 332 0004 0F46     		mov	r7, r1
+ 333 0006 0699     		ldr	r1, [sp, #24]
+ 334              	.LVL22:
+  99:quantum/process_keycode/process_dynamic_macro.c ****     /* If we've just started recording, ignore all the key releases. */
+ 335              		.loc 1 99 151 view .LVU63
+ 336 0008 DFF88480 		ldr	r8, .L36+8
+ 337 000c 1446     		mov	r4, r2
+ 338              		.loc 1 101 8 view .LVU64
+ 339 000e 8A78     		ldrb	r2, [r1, #2]	@ zero_extendqisi2
+ 340              	.LVL23:
+  99:quantum/process_keycode/process_dynamic_macro.c ****     /* If we've just started recording, ignore all the key releases. */
+ 341              		.loc 1 99 151 view .LVU65
+ 342 0010 1D46     		mov	r5, r3
+ 343 0012 0646     		mov	r6, r0
+ 344              		.loc 1 101 35 view .LVU66
+ 345 0014 3B68     		ldr	r3, [r7]
+ 346              	.LVL24:
+ 347              		.loc 1 101 8 view .LVU67
+ 348 0016 52B9     		cbnz	r2, .L25
+ 349              		.loc 1 101 32 discriminator 1 view .LVU68
+ 350 0018 9842     		cmp	r0, r3
+ 351 001a 08D1     		bne	.L25
  102:quantum/process_keycode/process_dynamic_macro.c ****         dprintln("dynamic macro: ignoring a leading key-up event");
+ 352              		.loc 1 102 9 is_stmt 1 view .LVU69
+ 353              		.loc 1 102 9 view .LVU70
+ 354 001c 98F80030 		ldrb	r3, [r8]	@ zero_extendqisi2
+ 355 0020 DA07     		lsls	r2, r3, #31
+ 356 0022 2ED5     		bpl	.L24
+ 357              		.loc 1 102 9 discriminator 1 view .LVU71
  103:quantum/process_keycode/process_dynamic_macro.c ****         return;
  104:quantum/process_keycode/process_dynamic_macro.c ****     }
  105:quantum/process_keycode/process_dynamic_macro.c **** 
@@ -394,151 +482,296 @@
  107:quantum/process_keycode/process_dynamic_macro.c ****      * is safe to use before overwriting the other macro.
  108:quantum/process_keycode/process_dynamic_macro.c ****      */
  109:quantum/process_keycode/process_dynamic_macro.c ****     if (*macro_pointer - direction != macro2_end) {
- 288              		.loc 1 109 5 is_stmt 1 view .LVU55
- 289              		.loc 1 109 24 is_stmt 0 view .LVU56
- 290 0010 A4EBC306 		sub	r6, r4, r3, lsl #3
- 291              		.loc 1 109 8 view .LVU57
- 292 0014 B242     		cmp	r2, r6
- 293              		.loc 1 109 24 view .LVU58
- 294 0016 4FEAC300 		lsl	r0, r3, #3
- 295              	.LVL17:
- 296              		.loc 1 109 8 view .LVU59
- 297 001a 06D0     		beq	.L15
  110:quantum/process_keycode/process_dynamic_macro.c ****         **macro_pointer = *record;
- 298              		.loc 1 110 9 is_stmt 1 view .LVU60
- 299              		.loc 1 110 25 is_stmt 0 view .LVU61
- 300 001c 0B68     		ldr	r3, [r1]	@ unaligned
- 301              	.LVL18:
- 302              		.loc 1 110 25 view .LVU62
- 303 001e 2360     		str	r3, [r4]	@ unaligned
- 304 0020 4B68     		ldr	r3, [r1, #4]	@ unaligned
- 305 0022 6360     		str	r3, [r4, #4]	@ unaligned
  111:quantum/process_keycode/process_dynamic_macro.c ****         *macro_pointer += direction;
- 306              		.loc 1 111 9 is_stmt 1 view .LVU63
- 307              		.loc 1 111 24 is_stmt 0 view .LVU64
- 308 0024 0444     		add	r4, r4, r0
- 309 0026 2C60     		str	r4, [r5]
- 310              	.LVL19:
- 311              	.L12:
  112:quantum/process_keycode/process_dynamic_macro.c ****     } else {
  113:quantum/process_keycode/process_dynamic_macro.c ****         dynamic_macro_record_key_user(direction, record);
  114:quantum/process_keycode/process_dynamic_macro.c ****     }
  115:quantum/process_keycode/process_dynamic_macro.c **** 
  116:quantum/process_keycode/process_dynamic_macro.c ****     dprintf("dynamic macro: slot %d length: %d/%d\n", DYNAMIC_MACRO_CURRENT_SLOT(), DYNAMIC_MACRO_C
  117:quantum/process_keycode/process_dynamic_macro.c **** }
- 312              		.loc 1 117 1 view .LVU65
- 313 0028 70BD     		pop	{r4, r5, r6, pc}
- 314              	.LVL20:
- 315              	.L15:
- 113:quantum/process_keycode/process_dynamic_macro.c ****     }
- 316              		.loc 1 113 9 is_stmt 1 view .LVU66
- 317 002a 1846     		mov	r0, r3
- 318 002c FFF7FEFF 		bl	dynamic_macro_record_key_user
- 319              	.LVL21:
+ 358              		.loc 1 117 1 is_stmt 0 discriminator 1 view .LVU72
+ 359 0024 BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+ 360              		.cfi_remember_state
+ 361              		.cfi_restore 14
+ 362              		.cfi_restore 8
+ 363              		.cfi_restore 7
+ 364              		.cfi_restore 6
+ 365              		.cfi_restore 5
+ 366              		.cfi_restore 4
+ 367              		.cfi_def_cfa_offset 0
+ 368              	.LVL25:
+ 102:quantum/process_keycode/process_dynamic_macro.c ****         dprintln("dynamic macro: ignoring a leading key-up event");
+ 369              		.loc 1 102 9 discriminator 1 view .LVU73
+ 370 0028 1748     		ldr	r0, .L36
+ 371              	.LVL26:
+ 102:quantum/process_keycode/process_dynamic_macro.c ****         dprintln("dynamic macro: ignoring a leading key-up event");
+ 372              		.loc 1 102 9 discriminator 1 view .LVU74
+ 373 002a FFF7FEBF 		b	printf_
+ 374              	.LVL27:
+ 375              	.L25:
+ 376              		.cfi_restore_state
+ 109:quantum/process_keycode/process_dynamic_macro.c ****         **macro_pointer = *record;
+ 377              		.loc 1 109 5 is_stmt 1 view .LVU75
+ 109:quantum/process_keycode/process_dynamic_macro.c ****         **macro_pointer = *record;
+ 378              		.loc 1 109 24 is_stmt 0 view .LVU76
+ 379 002e A3EBC502 		sub	r2, r3, r5, lsl #3
+ 109:quantum/process_keycode/process_dynamic_macro.c ****         **macro_pointer = *record;
+ 380              		.loc 1 109 8 view .LVU77
+ 381 0032 9442     		cmp	r4, r2
+ 109:quantum/process_keycode/process_dynamic_macro.c ****         **macro_pointer = *record;
+ 382              		.loc 1 109 24 view .LVU78
+ 383 0034 4FEAC500 		lsl	r0, r5, #3
+ 384              	.LVL28:
+ 109:quantum/process_keycode/process_dynamic_macro.c ****         **macro_pointer = *record;
+ 385              		.loc 1 109 8 view .LVU79
+ 386 0038 1FD0     		beq	.L28
+ 110:quantum/process_keycode/process_dynamic_macro.c ****         *macro_pointer += direction;
+ 387              		.loc 1 110 9 is_stmt 1 view .LVU80
+ 110:quantum/process_keycode/process_dynamic_macro.c ****         *macro_pointer += direction;
+ 388              		.loc 1 110 25 is_stmt 0 view .LVU81
+ 389 003a 0A68     		ldr	r2, [r1]	@ unaligned
+ 390 003c 1A60     		str	r2, [r3]	@ unaligned
+ 391 003e 4A68     		ldr	r2, [r1, #4]	@ unaligned
+ 392 0040 5A60     		str	r2, [r3, #4]	@ unaligned
+ 111:quantum/process_keycode/process_dynamic_macro.c ****     } else {
+ 393              		.loc 1 111 9 is_stmt 1 view .LVU82
+ 111:quantum/process_keycode/process_dynamic_macro.c ****     } else {
+ 394              		.loc 1 111 24 is_stmt 0 view .LVU83
+ 395 0042 0344     		add	r3, r3, r0
+ 396 0044 3B60     		str	r3, [r7]
+ 397              	.L29:
  116:quantum/process_keycode/process_dynamic_macro.c **** }
- 320              		.loc 1 116 202 view .LVU67
- 321 0030 FAE7     		b	.L12
- 322              		.cfi_endproc
- 323              	.LFE298:
- 325              		.section	.text.dynamic_macro_record_end,"ax",%progbits
- 326              		.align	1
- 327              		.global	dynamic_macro_record_end
- 328              		.syntax unified
- 329              		.thumb
- 330              		.thumb_func
- 331              		.fpu fpv4-sp-d16
- 333              	dynamic_macro_record_end:
- 334              	.LVL22:
- 335              	.LFB299:
+ 398              		.loc 1 116 5 is_stmt 1 view .LVU84
+ 116:quantum/process_keycode/process_dynamic_macro.c **** }
+ 399              		.loc 1 116 5 view .LVU85
+ 400 0046 98F80030 		ldrb	r3, [r8]	@ zero_extendqisi2
+ 401 004a DB07     		lsls	r3, r3, #31
+ 402 004c 19D5     		bpl	.L24
+ 116:quantum/process_keycode/process_dynamic_macro.c **** }
+ 403              		.loc 1 116 5 discriminator 1 view .LVU86
+ 404 004e 3A68     		ldr	r2, [r7]
+ 405 0050 0E48     		ldr	r0, .L36+4
+ 406 0052 A41B     		subs	r4, r4, r6
+ 407              	.LVL29:
+ 116:quantum/process_keycode/process_dynamic_macro.c **** }
+ 408              		.loc 1 116 5 is_stmt 0 discriminator 1 view .LVU87
+ 409 0054 921B     		subs	r2, r2, r6
+ 410 0056 E410     		asrs	r4, r4, #3
+ 411 0058 002D     		cmp	r5, #0
+ 412 005a 05FB04F4 		mul	r4, r5, r4
+ 413 005e 4FEAE202 		asr	r2, r2, #3
+ 414 0062 04F10103 		add	r3, r4, #1
+ 415 0066 05FB02F2 		mul	r2, r5, r2
+ 416 006a C8BF     		it	gt
+ 417 006c 0121     		movgt	r1, #1
+ 418              		.loc 1 117 1 discriminator 1 view .LVU88
+ 419 006e BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+ 420              		.cfi_remember_state
+ 421              		.cfi_restore 14
+ 422              		.cfi_restore 8
+ 423              		.cfi_restore 7
+ 424              		.cfi_restore 6
+ 425              		.cfi_restore 5
+ 426              		.cfi_restore 4
+ 427              		.cfi_def_cfa_offset 0
+ 428              	.LVL30:
+ 116:quantum/process_keycode/process_dynamic_macro.c **** }
+ 429              		.loc 1 116 5 discriminator 1 view .LVU89
+ 430 0072 D8BF     		it	le
+ 431 0074 0221     		movle	r1, #2
+ 432 0076 FFF7FEBF 		b	printf_
+ 433              	.LVL31:
+ 434              	.L28:
+ 435              		.cfi_restore_state
+ 113:quantum/process_keycode/process_dynamic_macro.c ****     }
+ 436              		.loc 1 113 9 is_stmt 1 view .LVU90
+ 437 007a 2846     		mov	r0, r5
+ 438 007c FFF7FEFF 		bl	dynamic_macro_record_key_user
+ 439              	.LVL32:
+ 440 0080 E1E7     		b	.L29
+ 441              	.L24:
+ 442              		.loc 1 117 1 is_stmt 0 view .LVU91
+ 443 0082 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 444              	.LVL33:
+ 445              	.L37:
+ 446              		.loc 1 117 1 view .LVU92
+ 447 0086 00BF     		.align	2
+ 448              	.L36:
+ 449 0088 00000000 		.word	.LC2
+ 450 008c 31000000 		.word	.LC3
+ 451 0090 00000000 		.word	debug_config
+ 452              		.cfi_endproc
+ 453              	.LFE298:
+ 455              		.section	.rodata.dynamic_macro_record_end.str1.1,"aMS",%progbits,1
+ 456              	.LC4:
+ 457 0000 64796E61 		.ascii	"dynamic macro: trimming a trailing key-down event\015"
+ 457      6D696320 
+ 457      6D616372 
+ 457      6F3A2074 
+ 457      72696D6D 
+ 458 0032 0A00     		.ascii	"\012\000"
+ 459              	.LC5:
+ 460 0034 64796E61 		.ascii	"dynamic macro: slot %d saved, length: %d\012\000"
+ 460      6D696320 
+ 460      6D616372 
+ 460      6F3A2073 
+ 460      6C6F7420 
+ 461              		.section	.text.dynamic_macro_record_end,"ax",%progbits
+ 462              		.align	1
+ 463              		.global	dynamic_macro_record_end
+ 464              		.syntax unified
+ 465              		.thumb
+ 466              		.thumb_func
+ 467              		.fpu fpv4-sp-d16
+ 469              	dynamic_macro_record_end:
+ 470              	.LVL34:
+ 471              	.LFB299:
  118:quantum/process_keycode/process_dynamic_macro.c **** 
  119:quantum/process_keycode/process_dynamic_macro.c **** /**
  120:quantum/process_keycode/process_dynamic_macro.c ****  * End recording of the dynamic macro. Essentially just update the
  121:quantum/process_keycode/process_dynamic_macro.c ****  * pointer to the end of the macro.
  122:quantum/process_keycode/process_dynamic_macro.c ****  */
  123:quantum/process_keycode/process_dynamic_macro.c **** void dynamic_macro_record_end(keyrecord_t *macro_buffer, keyrecord_t *macro_pointer, int8_t directi
- 336              		.loc 1 123 129 view -0
- 337              		.cfi_startproc
- 338              		@ args = 0, pretend = 0, frame = 0
- 339              		@ frame_needed = 0, uses_anonymous_args = 0
+ 472              		.loc 1 123 129 is_stmt 1 view -0
+ 473              		.cfi_startproc
+ 474              		@ args = 0, pretend = 0, frame = 0
+ 475              		@ frame_needed = 0, uses_anonymous_args = 0
  124:quantum/process_keycode/process_dynamic_macro.c ****     dynamic_macro_record_end_user(direction);
- 340              		.loc 1 124 5 view .LVU69
+ 476              		.loc 1 124 5 view .LVU94
  123:quantum/process_keycode/process_dynamic_macro.c ****     dynamic_macro_record_end_user(direction);
- 341              		.loc 1 123 129 is_stmt 0 view .LVU70
- 342 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
- 343              		.cfi_def_cfa_offset 24
- 344              		.cfi_offset 3, -24
- 345              		.cfi_offset 4, -20
- 346              		.cfi_offset 5, -16
- 347              		.cfi_offset 6, -12
- 348              		.cfi_offset 7, -8
- 349              		.cfi_offset 14, -4
+ 477              		.loc 1 123 129 is_stmt 0 view .LVU95
+ 478 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 479              		.cfi_def_cfa_offset 40
+ 480              		.cfi_offset 3, -40
+ 481              		.cfi_offset 4, -36
+ 482              		.cfi_offset 5, -32
+ 483              		.cfi_offset 6, -28
+ 484              		.cfi_offset 7, -24
+ 485              		.cfi_offset 8, -20
+ 486              		.cfi_offset 9, -16
+ 487              		.cfi_offset 10, -12
+ 488              		.cfi_offset 11, -8
+ 489              		.cfi_offset 14, -4
  123:quantum/process_keycode/process_dynamic_macro.c ****     dynamic_macro_record_end_user(direction);
- 350              		.loc 1 123 129 view .LVU71
- 351 0002 0746     		mov	r7, r0
- 352              		.loc 1 124 5 view .LVU72
- 353 0004 1046     		mov	r0, r2
- 354              	.LVL23:
+ 490              		.loc 1 123 129 view .LVU96
+ 491 0004 0446     		mov	r4, r0
+ 492              		.loc 1 124 5 view .LVU97
+ 493 0006 1046     		mov	r0, r2
+ 494              	.LVL35:
  123:quantum/process_keycode/process_dynamic_macro.c ****     dynamic_macro_record_end_user(direction);
- 355              		.loc 1 123 129 view .LVU73
- 356 0006 1446     		mov	r4, r2
- 357 0008 0D46     		mov	r5, r1
- 358 000a 1E46     		mov	r6, r3
- 359              		.loc 1 124 5 view .LVU74
- 360 000c FFF7FEFF 		bl	dynamic_macro_record_end_user
- 361              	.LVL24:
+ 495              		.loc 1 123 129 view .LVU98
+ 496 0008 1646     		mov	r6, r2
+ 497 000a 0D46     		mov	r5, r1
+ 498 000c 1F46     		mov	r7, r3
+ 499              		.loc 1 124 5 view .LVU99
+ 500 000e FFF7FEFF 		bl	dynamic_macro_record_end_user
+ 501              	.LVL36:
  125:quantum/process_keycode/process_dynamic_macro.c **** 
  126:quantum/process_keycode/process_dynamic_macro.c ****     /* Do not save the keys being held when stopping the recording,
  127:quantum/process_keycode/process_dynamic_macro.c ****      * i.e. the keys used to access the layer DYN_REC_STOP is on.
  128:quantum/process_keycode/process_dynamic_macro.c ****      */
  129:quantum/process_keycode/process_dynamic_macro.c ****     while (macro_pointer != macro_buffer && (macro_pointer - direction)->event.pressed) {
- 362              		.loc 1 129 5 is_stmt 1 view .LVU75
- 363              		.loc 1 129 60 is_stmt 0 view .LVU76
- 364 0010 E400     		lsls	r4, r4, #3
- 365 0012 6442     		rsbs	r4, r4, #0
- 366              	.LVL25:
- 367              	.L18:
- 368              		.loc 1 129 11 is_stmt 1 view .LVU77
- 369 0014 BD42     		cmp	r5, r7
- 370 0016 02D0     		beq	.L17
- 371              		.loc 1 129 60 is_stmt 0 discriminator 1 view .LVU78
- 372 0018 2B19     		adds	r3, r5, r4
- 373              		.loc 1 129 42 discriminator 1 view .LVU79
- 374 001a 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
- 375 001c 0AB9     		cbnz	r2, .L19
- 376              	.L17:
+ 502              		.loc 1 129 5 is_stmt 1 view .LVU100
+ 503              		.loc 1 129 60 is_stmt 0 view .LVU101
+ 504 0012 4FEAC608 		lsl	r8, r6, #3
  130:quantum/process_keycode/process_dynamic_macro.c ****         dprintln("dynamic macro: trimming a trailing key-down event");
+ 505              		.loc 1 130 9 view .LVU102
+ 506 0016 DFF850A0 		ldr	r10, .L52+4
+ 507 001a DFF850B0 		ldr	fp, .L52+8
+ 129:quantum/process_keycode/process_dynamic_macro.c ****         dprintln("dynamic macro: trimming a trailing key-down event");
+ 508              		.loc 1 129 60 view .LVU103
+ 509 001e C8F10008 		rsb	r8, r8, #0
+ 510              	.LVL37:
+ 511              	.L39:
+ 129:quantum/process_keycode/process_dynamic_macro.c ****         dprintln("dynamic macro: trimming a trailing key-down event");
+ 512              		.loc 1 129 11 is_stmt 1 view .LVU104
+ 513              		.loc 1 130 9 is_stmt 0 view .LVU105
+ 514 0022 9AF80020 		ldrb	r2, [r10]	@ zero_extendqisi2
+ 129:quantum/process_keycode/process_dynamic_macro.c ****         dprintln("dynamic macro: trimming a trailing key-down event");
+ 515              		.loc 1 129 11 view .LVU106
+ 516 0026 A542     		cmp	r5, r4
+ 517              		.loc 1 130 9 view .LVU107
+ 518 0028 02F00102 		and	r2, r2, #1
+ 129:quantum/process_keycode/process_dynamic_macro.c ****         dprintln("dynamic macro: trimming a trailing key-down event");
+ 519              		.loc 1 129 11 view .LVU108
+ 520 002c 04D0     		beq	.L41
+ 129:quantum/process_keycode/process_dynamic_macro.c ****         dprintln("dynamic macro: trimming a trailing key-down event");
+ 521              		.loc 1 129 60 discriminator 1 view .LVU109
+ 522 002e 05EB0809 		add	r9, r5, r8
+ 129:quantum/process_keycode/process_dynamic_macro.c ****         dprintln("dynamic macro: trimming a trailing key-down event");
+ 523              		.loc 1 129 42 discriminator 1 view .LVU110
+ 524 0032 99F80230 		ldrb	r3, [r9, #2]	@ zero_extendqisi2
+ 525 0036 7BB9     		cbnz	r3, .L42
+ 526              	.L41:
  131:quantum/process_keycode/process_dynamic_macro.c ****         macro_pointer -= direction;
  132:quantum/process_keycode/process_dynamic_macro.c ****     }
  133:quantum/process_keycode/process_dynamic_macro.c **** 
  134:quantum/process_keycode/process_dynamic_macro.c ****     dprintf("dynamic macro: slot %d saved, length: %d\n", DYNAMIC_MACRO_CURRENT_SLOT(), DYNAMIC_MAC
- 377              		.loc 1 134 147 is_stmt 1 view .LVU80
+ 527              		.loc 1 134 5 is_stmt 1 view .LVU111
+ 528              		.loc 1 134 5 view .LVU112
+ 529 0038 5AB1     		cbz	r2, .L43
+ 530              		.loc 1 134 5 discriminator 1 view .LVU113
+ 531 003a 2C1B     		subs	r4, r5, r4
+ 532              	.LVL38:
+ 533              		.loc 1 134 5 is_stmt 0 discriminator 1 view .LVU114
+ 534 003c 002E     		cmp	r6, #0
+ 535 003e 4FEAE404 		asr	r4, r4, #3
+ 536 0042 0848     		ldr	r0, .L52
+ 537 0044 06FB04F2 		mul	r2, r6, r4
+ 538 0048 CCBF     		ite	gt
+ 539 004a 0121     		movgt	r1, #1
+ 540 004c 0221     		movle	r1, #2
+ 541 004e FFF7FEFF 		bl	printf_
+ 542              	.LVL39:
+ 543              	.L43:
+ 544              		.loc 1 134 5 is_stmt 1 discriminator 7 view .LVU115
  135:quantum/process_keycode/process_dynamic_macro.c **** 
  136:quantum/process_keycode/process_dynamic_macro.c ****     *macro_end = macro_pointer;
- 378              		.loc 1 136 5 view .LVU81
- 379              		.loc 1 136 16 is_stmt 0 view .LVU82
- 380 001e 3560     		str	r5, [r6]
+ 545              		.loc 1 136 5 discriminator 7 view .LVU116
+ 546              		.loc 1 136 16 is_stmt 0 discriminator 7 view .LVU117
+ 547 0052 3D60     		str	r5, [r7]
  137:quantum/process_keycode/process_dynamic_macro.c **** }
- 381              		.loc 1 137 1 view .LVU83
- 382 0020 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
- 383              	.LVL26:
- 384              	.L19:
- 385              		.loc 1 137 1 view .LVU84
- 386 0022 1D46     		mov	r5, r3
- 387              	.LVL27:
- 388              		.loc 1 137 1 view .LVU85
- 389 0024 F6E7     		b	.L18
- 390              		.cfi_endproc
- 391              	.LFE299:
- 393              		.section	.text.process_dynamic_macro,"ax",%progbits
- 394              		.align	1
- 395              		.global	process_dynamic_macro
- 396              		.syntax unified
- 397              		.thumb
- 398              		.thumb_func
- 399              		.fpu fpv4-sp-d16
- 401              	process_dynamic_macro:
- 402              	.LVL28:
- 403              	.LFB300:
+ 548              		.loc 1 137 1 discriminator 7 view .LVU118
+ 549 0054 BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 550              	.LVL40:
+ 551              	.L42:
+ 130:quantum/process_keycode/process_dynamic_macro.c ****         macro_pointer -= direction;
+ 552              		.loc 1 130 9 is_stmt 1 view .LVU119
+ 130:quantum/process_keycode/process_dynamic_macro.c ****         macro_pointer -= direction;
+ 553              		.loc 1 130 9 view .LVU120
+ 554 0058 12B1     		cbz	r2, .L40
+ 130:quantum/process_keycode/process_dynamic_macro.c ****         macro_pointer -= direction;
+ 555              		.loc 1 130 9 discriminator 1 view .LVU121
+ 556 005a 5846     		mov	r0, fp
+ 557 005c FFF7FEFF 		bl	printf_
+ 558              	.LVL41:
+ 559              	.L40:
+ 123:quantum/process_keycode/process_dynamic_macro.c ****     dynamic_macro_record_end_user(direction);
+ 560              		.loc 1 123 129 is_stmt 0 view .LVU122
+ 561 0060 4D46     		mov	r5, r9
+ 562              	.LVL42:
+ 123:quantum/process_keycode/process_dynamic_macro.c ****     dynamic_macro_record_end_user(direction);
+ 563              		.loc 1 123 129 view .LVU123
+ 564 0062 DEE7     		b	.L39
+ 565              	.L53:
+ 566              		.align	2
+ 567              	.L52:
+ 568 0064 34000000 		.word	.LC5
+ 569 0068 00000000 		.word	debug_config
+ 570 006c 00000000 		.word	.LC4
+ 571              		.cfi_endproc
+ 572              	.LFE299:
+ 574              		.section	.text.process_dynamic_macro,"ax",%progbits
+ 575              		.align	1
+ 576              		.global	process_dynamic_macro
+ 577              		.syntax unified
+ 578              		.thumb
+ 579              		.thumb_func
+ 580              		.fpu fpv4-sp-d16
+ 582              	process_dynamic_macro:
+ 583              	.LVL43:
+ 584              	.LFB300:
  138:quantum/process_keycode/process_dynamic_macro.c **** 
  139:quantum/process_keycode/process_dynamic_macro.c **** /* Handle the key events related to the dynamic macros. Should be
  140:quantum/process_keycode/process_dynamic_macro.c ****  * called from process_record_user() like this:
@@ -551,10 +784,10 @@
  147:quantum/process_keycode/process_dynamic_macro.c ****  *   }
  148:quantum/process_keycode/process_dynamic_macro.c ****  */
  149:quantum/process_keycode/process_dynamic_macro.c **** bool process_dynamic_macro(uint16_t keycode, keyrecord_t *record) {
- 404              		.loc 1 149 67 is_stmt 1 view -0
- 405              		.cfi_startproc
- 406              		@ args = 0, pretend = 0, frame = 0
- 407              		@ frame_needed = 0, uses_anonymous_args = 0
+ 585              		.loc 1 149 67 is_stmt 1 view -0
+ 586              		.cfi_startproc
+ 587              		@ args = 0, pretend = 0, frame = 0
+ 588              		@ frame_needed = 0, uses_anonymous_args = 0
  150:quantum/process_keycode/process_dynamic_macro.c ****     /* Both macros use the same buffer but read/write on different
  151:quantum/process_keycode/process_dynamic_macro.c ****      * ends of it.
  152:quantum/process_keycode/process_dynamic_macro.c ****      *
@@ -580,94 +813,94 @@
  172:quantum/process_keycode/process_dynamic_macro.c ****      * and one using the whole buffer.
  173:quantum/process_keycode/process_dynamic_macro.c ****      */
  174:quantum/process_keycode/process_dynamic_macro.c ****     static keyrecord_t macro_buffer[DYNAMIC_MACRO_SIZE];
- 408              		.loc 1 174 5 view .LVU87
+ 589              		.loc 1 174 5 view .LVU125
  175:quantum/process_keycode/process_dynamic_macro.c **** 
  176:quantum/process_keycode/process_dynamic_macro.c ****     /* Pointer to the first buffer element after the first macro.
  177:quantum/process_keycode/process_dynamic_macro.c ****      * Initially points to the very beginning of the buffer since the
  178:quantum/process_keycode/process_dynamic_macro.c ****      * macro is empty. */
  179:quantum/process_keycode/process_dynamic_macro.c ****     static keyrecord_t *macro_end = macro_buffer;
- 409              		.loc 1 179 5 view .LVU88
+ 590              		.loc 1 179 5 view .LVU126
  180:quantum/process_keycode/process_dynamic_macro.c **** 
  181:quantum/process_keycode/process_dynamic_macro.c ****     /* The other end of the macro buffer. Serves as the beginning of
  182:quantum/process_keycode/process_dynamic_macro.c ****      * the second macro. */
  183:quantum/process_keycode/process_dynamic_macro.c ****     static keyrecord_t *const r_macro_buffer = macro_buffer + DYNAMIC_MACRO_SIZE - 1;
- 410              		.loc 1 183 5 view .LVU89
+ 591              		.loc 1 183 5 view .LVU127
  184:quantum/process_keycode/process_dynamic_macro.c **** 
  185:quantum/process_keycode/process_dynamic_macro.c ****     /* Like macro_end but for the second macro. */
  186:quantum/process_keycode/process_dynamic_macro.c ****     static keyrecord_t *r_macro_end = r_macro_buffer;
- 411              		.loc 1 186 5 view .LVU90
+ 592              		.loc 1 186 5 view .LVU128
  187:quantum/process_keycode/process_dynamic_macro.c **** 
  188:quantum/process_keycode/process_dynamic_macro.c ****     /* A persistent pointer to the current macro position (iterator)
  189:quantum/process_keycode/process_dynamic_macro.c ****      * used during the recording. */
  190:quantum/process_keycode/process_dynamic_macro.c ****     static keyrecord_t *macro_pointer = NULL;
- 412              		.loc 1 190 5 view .LVU91
+ 593              		.loc 1 190 5 view .LVU129
  191:quantum/process_keycode/process_dynamic_macro.c **** 
  192:quantum/process_keycode/process_dynamic_macro.c ****     /* 0   - no macro is being recorded right now
  193:quantum/process_keycode/process_dynamic_macro.c ****      * 1,2 - either macro 1 or 2 is being recorded */
  194:quantum/process_keycode/process_dynamic_macro.c ****     static uint8_t macro_id = 0;
- 413              		.loc 1 194 5 view .LVU92
+ 594              		.loc 1 194 5 view .LVU130
  195:quantum/process_keycode/process_dynamic_macro.c **** 
  196:quantum/process_keycode/process_dynamic_macro.c ****     if (macro_id == 0) {
- 414              		.loc 1 196 5 view .LVU93
+ 595              		.loc 1 196 5 view .LVU131
  149:quantum/process_keycode/process_dynamic_macro.c ****     /* Both macros use the same buffer but read/write on different
- 415              		.loc 1 149 67 is_stmt 0 view .LVU94
- 416 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
- 417              		.cfi_def_cfa_offset 24
- 418              		.cfi_offset 4, -12
- 419              		.cfi_offset 5, -8
- 420              		.cfi_offset 14, -4
- 421              		.loc 1 196 18 view .LVU95
- 422 0002 344D     		ldr	r5, .L39
- 423 0004 2C78     		ldrb	r4, [r5]	@ zero_extendqisi2
- 424              		.loc 1 196 8 view .LVU96
- 425 0006 3CBB     		cbnz	r4, .L21
+ 596              		.loc 1 149 67 is_stmt 0 view .LVU132
+ 597 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 598              		.cfi_def_cfa_offset 24
+ 599              		.cfi_offset 4, -12
+ 600              		.cfi_offset 5, -8
+ 601              		.cfi_offset 14, -4
+ 602              		.loc 1 196 18 view .LVU133
+ 603 0002 344D     		ldr	r5, .L73
+ 604 0004 2C78     		ldrb	r4, [r5]	@ zero_extendqisi2
+ 605              		.loc 1 196 8 view .LVU134
+ 606 0006 3CBB     		cbnz	r4, .L55
  197:quantum/process_keycode/process_dynamic_macro.c ****         /* No macro recording in progress. */
  198:quantum/process_keycode/process_dynamic_macro.c ****         if (!record->event.pressed) {
- 426              		.loc 1 198 9 is_stmt 1 view .LVU97
- 427              		.loc 1 198 27 is_stmt 0 view .LVU98
- 428 0008 8C78     		ldrb	r4, [r1, #2]	@ zero_extendqisi2
- 429              		.loc 1 198 12 view .LVU99
- 430 000a 7CB9     		cbnz	r4, .L22
+ 607              		.loc 1 198 9 is_stmt 1 view .LVU135
+ 608              		.loc 1 198 27 is_stmt 0 view .LVU136
+ 609 0008 8C78     		ldrb	r4, [r1, #2]	@ zero_extendqisi2
+ 610              		.loc 1 198 12 view .LVU137
+ 611 000a 7CB9     		cbnz	r4, .L56
  199:quantum/process_keycode/process_dynamic_macro.c ****             switch (keycode) {
- 431              		.loc 1 199 13 is_stmt 1 view .LVU100
- 432 000c A0F5BA40 		sub	r0, r0, #23808
- 433              	.LVL29:
- 434              		.loc 1 199 13 is_stmt 0 view .LVU101
- 435 0010 0338     		subs	r0, r0, #3
- 436 0012 0428     		cmp	r0, #4
- 437 0014 47D8     		bhi	.L34
- 438 0016 DFE800F0 		tbb	[pc, r0]
- 439              	.L24:
- 440 001a 03       		.byte	(.L27-.L24)/2
- 441 001b 0C       		.byte	(.L26-.L24)/2
- 442 001c 46       		.byte	(.L34-.L24)/2
- 443 001d 12       		.byte	(.L25-.L24)/2
- 444 001e 19       		.byte	(.L23-.L24)/2
- 445 001f 00       		.p2align 1
- 446              	.L27:
+ 612              		.loc 1 199 13 is_stmt 1 view .LVU138
+ 613 000c A0F5BA40 		sub	r0, r0, #23808
+ 614              	.LVL44:
+ 615              		.loc 1 199 13 is_stmt 0 view .LVU139
+ 616 0010 0338     		subs	r0, r0, #3
+ 617 0012 0428     		cmp	r0, #4
+ 618 0014 47D8     		bhi	.L68
+ 619 0016 DFE800F0 		tbb	[pc, r0]
+ 620              	.L58:
+ 621 001a 03       		.byte	(.L61-.L58)/2
+ 622 001b 0C       		.byte	(.L60-.L58)/2
+ 623 001c 46       		.byte	(.L68-.L58)/2
+ 624 001d 12       		.byte	(.L59-.L58)/2
+ 625 001e 19       		.byte	(.L57-.L58)/2
+ 626 001f 00       		.p2align 1
+ 627              	.L61:
  200:quantum/process_keycode/process_dynamic_macro.c ****                 case DYN_REC_START1:
  201:quantum/process_keycode/process_dynamic_macro.c ****                     dynamic_macro_record_start(&macro_pointer, macro_buffer);
- 447              		.loc 1 201 21 is_stmt 1 view .LVU102
- 448 0020 2D49     		ldr	r1, .L39+4
- 449              	.LVL30:
- 450              		.loc 1 201 21 is_stmt 0 view .LVU103
- 451 0022 2E48     		ldr	r0, .L39+8
- 452 0024 FFF7FEFF 		bl	dynamic_macro_record_start
- 453              	.LVL31:
+ 628              		.loc 1 201 21 is_stmt 1 view .LVU140
+ 629 0020 2D49     		ldr	r1, .L73+4
+ 630              	.LVL45:
+ 631              		.loc 1 201 21 is_stmt 0 view .LVU141
+ 632 0022 2E48     		ldr	r0, .L73+8
+ 633 0024 FFF7FEFF 		bl	dynamic_macro_record_start
+ 634              	.LVL46:
  202:quantum/process_keycode/process_dynamic_macro.c ****                     macro_id = 1;
- 454              		.loc 1 202 21 is_stmt 1 view .LVU104
- 455              		.loc 1 202 30 is_stmt 0 view .LVU105
- 456 0028 0123     		movs	r3, #1
- 457              	.L37:
+ 635              		.loc 1 202 21 is_stmt 1 view .LVU142
+ 636              		.loc 1 202 30 is_stmt 0 view .LVU143
+ 637 0028 0123     		movs	r3, #1
+ 638              	.L71:
  203:quantum/process_keycode/process_dynamic_macro.c ****                     return false;
  204:quantum/process_keycode/process_dynamic_macro.c ****                 case DYN_REC_START2:
  205:quantum/process_keycode/process_dynamic_macro.c ****                     dynamic_macro_record_start(&macro_pointer, r_macro_buffer);
  206:quantum/process_keycode/process_dynamic_macro.c ****                     macro_id = 2;
- 458              		.loc 1 206 30 view .LVU106
- 459 002a 2B70     		strb	r3, [r5]
+ 639              		.loc 1 206 30 view .LVU144
+ 640 002a 2B70     		strb	r3, [r5]
  207:quantum/process_keycode/process_dynamic_macro.c ****                     return false;
- 460              		.loc 1 207 21 is_stmt 1 view .LVU107
- 461              	.L22:
+ 641              		.loc 1 207 21 is_stmt 1 view .LVU145
+ 642              	.L56:
  208:quantum/process_keycode/process_dynamic_macro.c ****                 case DYN_MACRO_PLAY1:
  209:quantum/process_keycode/process_dynamic_macro.c ****                     dynamic_macro_play(macro_buffer, macro_end, +1);
  210:quantum/process_keycode/process_dynamic_macro.c ****                     return false;
@@ -720,283 +953,290 @@
  257:quantum/process_keycode/process_dynamic_macro.c **** 
  258:quantum/process_keycode/process_dynamic_macro.c ****     return true;
  259:quantum/process_keycode/process_dynamic_macro.c **** }
- 462              		.loc 1 259 1 is_stmt 0 view .LVU108
- 463 002c 2046     		mov	r0, r4
- 464 002e 03B0     		add	sp, sp, #12
- 465              		.cfi_remember_state
- 466              		.cfi_def_cfa_offset 12
- 467              		@ sp needed
- 468 0030 30BD     		pop	{r4, r5, pc}
- 469              	.LVL32:
- 470              	.L26:
- 471              		.cfi_restore_state
+ 643              		.loc 1 259 1 is_stmt 0 view .LVU146
+ 644 002c 2046     		mov	r0, r4
+ 645 002e 03B0     		add	sp, sp, #12
+ 646              		.cfi_remember_state
+ 647              		.cfi_def_cfa_offset 12
+ 648              		@ sp needed
+ 649 0030 30BD     		pop	{r4, r5, pc}
+ 650              	.LVL47:
+ 651              	.L60:
+ 652              		.cfi_restore_state
  205:quantum/process_keycode/process_dynamic_macro.c ****                     macro_id = 2;
- 472              		.loc 1 205 21 is_stmt 1 view .LVU109
- 473 0032 2B49     		ldr	r1, .L39+12
- 474              	.LVL33:
+ 653              		.loc 1 205 21 is_stmt 1 view .LVU147
+ 654 0032 2B49     		ldr	r1, .L73+12
+ 655              	.LVL48:
  205:quantum/process_keycode/process_dynamic_macro.c ****                     macro_id = 2;
- 475              		.loc 1 205 21 is_stmt 0 view .LVU110
- 476 0034 2948     		ldr	r0, .L39+8
- 477 0036 FFF7FEFF 		bl	dynamic_macro_record_start
- 478              	.LVL34:
+ 656              		.loc 1 205 21 is_stmt 0 view .LVU148
+ 657 0034 2948     		ldr	r0, .L73+8
+ 658 0036 FFF7FEFF 		bl	dynamic_macro_record_start
+ 659              	.LVL49:
  206:quantum/process_keycode/process_dynamic_macro.c ****                     return false;
- 479              		.loc 1 206 21 is_stmt 1 view .LVU111
+ 660              		.loc 1 206 21 is_stmt 1 view .LVU149
  206:quantum/process_keycode/process_dynamic_macro.c ****                     return false;
- 480              		.loc 1 206 30 is_stmt 0 view .LVU112
- 481 003a 0223     		movs	r3, #2
- 482 003c F5E7     		b	.L37
- 483              	.LVL35:
- 484              	.L25:
+ 661              		.loc 1 206 30 is_stmt 0 view .LVU150
+ 662 003a 0223     		movs	r3, #2
+ 663 003c F5E7     		b	.L71
+ 664              	.LVL50:
+ 665              	.L59:
  209:quantum/process_keycode/process_dynamic_macro.c ****                     return false;
- 485              		.loc 1 209 21 is_stmt 1 view .LVU113
- 486 003e 294B     		ldr	r3, .L39+16
- 487 0040 2548     		ldr	r0, .L39+4
- 488 0042 1968     		ldr	r1, [r3]
- 489              	.LVL36:
+ 666              		.loc 1 209 21 is_stmt 1 view .LVU151
+ 667 003e 294B     		ldr	r3, .L73+16
+ 668 0040 2548     		ldr	r0, .L73+4
+ 669 0042 1968     		ldr	r1, [r3]
+ 670              	.LVL51:
  209:quantum/process_keycode/process_dynamic_macro.c ****                     return false;
- 490              		.loc 1 209 21 is_stmt 0 view .LVU114
- 491 0044 0122     		movs	r2, #1
- 492              	.L38:
+ 671              		.loc 1 209 21 is_stmt 0 view .LVU152
+ 672 0044 0122     		movs	r2, #1
+ 673              	.L72:
  212:quantum/process_keycode/process_dynamic_macro.c ****                     return false;
- 493              		.loc 1 212 21 view .LVU115
- 494 0046 FFF7FEFF 		bl	dynamic_macro_play
- 495              	.LVL37:
+ 674              		.loc 1 212 21 view .LVU153
+ 675 0046 FFF7FEFF 		bl	dynamic_macro_play
+ 676              	.LVL52:
  213:quantum/process_keycode/process_dynamic_macro.c ****             }
- 496              		.loc 1 213 21 is_stmt 1 view .LVU116
+ 677              		.loc 1 213 21 is_stmt 1 view .LVU154
  213:quantum/process_keycode/process_dynamic_macro.c ****             }
- 497              		.loc 1 213 28 is_stmt 0 view .LVU117
- 498 004a EFE7     		b	.L22
- 499              	.LVL38:
- 500              	.L23:
+ 678              		.loc 1 213 28 is_stmt 0 view .LVU155
+ 679 004a EFE7     		b	.L56
+ 680              	.LVL53:
+ 681              	.L57:
  212:quantum/process_keycode/process_dynamic_macro.c ****                     return false;
- 501              		.loc 1 212 21 is_stmt 1 view .LVU118
- 502 004c 264B     		ldr	r3, .L39+20
- 503 004e 2448     		ldr	r0, .L39+12
- 504 0050 1968     		ldr	r1, [r3]
- 505              	.LVL39:
+ 682              		.loc 1 212 21 is_stmt 1 view .LVU156
+ 683 004c 264B     		ldr	r3, .L73+20
+ 684 004e 2448     		ldr	r0, .L73+12
+ 685 0050 1968     		ldr	r1, [r3]
+ 686              	.LVL54:
  212:quantum/process_keycode/process_dynamic_macro.c ****                     return false;
- 506              		.loc 1 212 21 is_stmt 0 view .LVU119
- 507 0052 4FF0FF32 		mov	r2, #-1
- 508 0056 F6E7     		b	.L38
- 509              	.LVL40:
- 510              	.L21:
+ 687              		.loc 1 212 21 is_stmt 0 view .LVU157
+ 688 0052 4FF0FF32 		mov	r2, #-1
+ 689 0056 F6E7     		b	.L72
+ 690              	.LVL55:
+ 691              	.L55:
  218:quantum/process_keycode/process_dynamic_macro.c ****             case DYN_REC_START1:
- 511              		.loc 1 218 9 is_stmt 1 view .LVU120
- 512 0058 A0F5BA43 		sub	r3, r0, #23808
- 513 005c 033B     		subs	r3, r3, #3
- 514 005e 022B     		cmp	r3, #2
- 515 0060 1DD8     		bhi	.L28
+ 692              		.loc 1 218 9 is_stmt 1 view .LVU158
+ 693 0058 A0F5BA43 		sub	r3, r0, #23808
+ 694 005c 033B     		subs	r3, r3, #3
+ 695 005e 022B     		cmp	r3, #2
+ 696 0060 1DD8     		bhi	.L62
  223:quantum/process_keycode/process_dynamic_macro.c ****                                                                           * just after the recordin
- 516              		.loc 1 223 17 view .LVU121
+ 697              		.loc 1 223 17 view .LVU159
  223:quantum/process_keycode/process_dynamic_macro.c ****                                                                           * just after the recordin
- 517              		.loc 1 223 20 is_stmt 0 view .LVU122
- 518 0062 45F60552 		movw	r2, #23813
- 519 0066 801A     		subs	r0, r0, r2
- 520              	.LVL41:
+ 698              		.loc 1 223 20 is_stmt 0 view .LVU160
+ 699 0062 45F60552 		movw	r2, #23813
+ 700 0066 801A     		subs	r0, r0, r2
+ 701              	.LVL56:
  223:quantum/process_keycode/process_dynamic_macro.c ****                                                                           * just after the recordin
- 521              		.loc 1 223 20 view .LVU123
- 522 0068 8B78     		ldrb	r3, [r1, #2]	@ zero_extendqisi2
- 523 006a 18BF     		it	ne
- 524 006c 0120     		movne	r0, #1
- 525 006e 8342     		cmp	r3, r0
- 526 0070 2ED0     		beq	.L35
+ 702              		.loc 1 223 20 view .LVU161
+ 703 0068 8B78     		ldrb	r3, [r1, #2]	@ zero_extendqisi2
+ 704 006a 18BF     		it	ne
+ 705 006c 0120     		movne	r0, #1
+ 706 006e 8342     		cmp	r3, r0
+ 707 0070 2ED0     		beq	.L69
  226:quantum/process_keycode/process_dynamic_macro.c ****                         case 1:
- 527              		.loc 1 226 21 is_stmt 1 view .LVU124
- 528 0072 012C     		cmp	r4, #1
- 529 0074 04D0     		beq	.L29
- 530 0076 022C     		cmp	r4, #2
- 531 0078 0AD0     		beq	.L30
- 532              	.LVL42:
- 533              	.L31:
+ 708              		.loc 1 226 21 is_stmt 1 view .LVU162
+ 709 0072 012C     		cmp	r4, #1
+ 710 0074 04D0     		beq	.L63
+ 711 0076 022C     		cmp	r4, #2
+ 712 0078 0AD0     		beq	.L64
+ 713              	.LVL57:
+ 714              	.L65:
  234:quantum/process_keycode/process_dynamic_macro.c ****                 }
- 534              		.loc 1 234 21 view .LVU125
+ 715              		.loc 1 234 21 view .LVU163
  234:quantum/process_keycode/process_dynamic_macro.c ****                 }
- 535              		.loc 1 234 30 is_stmt 0 view .LVU126
- 536 007a 0024     		movs	r4, #0
- 537 007c 2C70     		strb	r4, [r5]
- 538 007e D5E7     		b	.L22
- 539              	.LVL43:
- 540              	.L29:
+ 716              		.loc 1 234 30 is_stmt 0 view .LVU164
+ 717 007a 0024     		movs	r4, #0
+ 718 007c 2C70     		strb	r4, [r5]
+ 719 007e D5E7     		b	.L56
+ 720              	.LVL58:
+ 721              	.L63:
  228:quantum/process_keycode/process_dynamic_macro.c ****                             break;
- 541              		.loc 1 228 29 is_stmt 1 view .LVU127
- 542 0080 1649     		ldr	r1, .L39+8
- 543              	.LVL44:
+ 722              		.loc 1 228 29 is_stmt 1 view .LVU165
+ 723 0080 1649     		ldr	r1, .L73+8
+ 724              	.LVL59:
  228:quantum/process_keycode/process_dynamic_macro.c ****                             break;
- 544              		.loc 1 228 29 is_stmt 0 view .LVU128
- 545 0082 184B     		ldr	r3, .L39+16
- 546 0084 0968     		ldr	r1, [r1]
- 547 0086 1448     		ldr	r0, .L39+4
- 548 0088 2246     		mov	r2, r4
- 549              	.L36:
+ 725              		.loc 1 228 29 is_stmt 0 view .LVU166
+ 726 0082 184B     		ldr	r3, .L73+16
+ 727 0084 0968     		ldr	r1, [r1]
+ 728 0086 1448     		ldr	r0, .L73+4
+ 729 0088 2246     		mov	r2, r4
+ 730              	.L70:
  231:quantum/process_keycode/process_dynamic_macro.c ****                             break;
- 550              		.loc 1 231 29 view .LVU129
- 551 008a FFF7FEFF 		bl	dynamic_macro_record_end
- 552              	.LVL45:
+ 731              		.loc 1 231 29 view .LVU167
+ 732 008a FFF7FEFF 		bl	dynamic_macro_record_end
+ 733              	.LVL60:
  232:quantum/process_keycode/process_dynamic_macro.c ****                     }
- 553              		.loc 1 232 29 is_stmt 1 view .LVU130
- 554 008e F4E7     		b	.L31
- 555              	.LVL46:
- 556              	.L30:
+ 734              		.loc 1 232 29 is_stmt 1 view .LVU168
+ 735 008e F4E7     		b	.L65
+ 736              	.LVL61:
+ 737              	.L64:
  231:quantum/process_keycode/process_dynamic_macro.c ****                             break;
- 557              		.loc 1 231 29 view .LVU131
- 558 0090 1249     		ldr	r1, .L39+8
- 559              	.LVL47:
+ 738              		.loc 1 231 29 view .LVU169
+ 739 0090 1249     		ldr	r1, .L73+8
+ 740              	.LVL62:
  231:quantum/process_keycode/process_dynamic_macro.c ****                             break;
- 560              		.loc 1 231 29 is_stmt 0 view .LVU132
- 561 0092 154B     		ldr	r3, .L39+20
- 562 0094 0968     		ldr	r1, [r1]
- 563 0096 1248     		ldr	r0, .L39+12
- 564 0098 4FF0FF32 		mov	r2, #-1
- 565 009c F5E7     		b	.L36
- 566              	.LVL48:
- 567              	.L28:
+ 741              		.loc 1 231 29 is_stmt 0 view .LVU170
+ 742 0092 154B     		ldr	r3, .L73+20
+ 743 0094 0968     		ldr	r1, [r1]
+ 744 0096 1248     		ldr	r0, .L73+12
+ 745 0098 4FF0FF32 		mov	r2, #-1
+ 746 009c F5E7     		b	.L70
+ 747              	.LVL63:
+ 748              	.L62:
  245:quantum/process_keycode/process_dynamic_macro.c ****                     case 1:
- 568              		.loc 1 245 17 is_stmt 1 view .LVU133
- 569 009e 012C     		cmp	r4, #1
- 570 00a0 03D0     		beq	.L32
- 571 00a2 022C     		cmp	r4, #2
- 572 00a4 0AD0     		beq	.L33
- 573              	.LVL49:
- 574              	.L34:
+ 749              		.loc 1 245 17 is_stmt 1 view .LVU171
+ 750 009e 012C     		cmp	r4, #1
+ 751 00a0 03D0     		beq	.L66
+ 752 00a2 022C     		cmp	r4, #2
+ 753 00a4 0AD0     		beq	.L67
+ 754              	.LVL64:
+ 755              	.L68:
  198:quantum/process_keycode/process_dynamic_macro.c ****             switch (keycode) {
- 575              		.loc 1 198 12 is_stmt 0 view .LVU134
- 576 00a6 0124     		movs	r4, #1
- 577 00a8 C0E7     		b	.L22
- 578              	.LVL50:
- 579              	.L32:
+ 756              		.loc 1 198 12 is_stmt 0 view .LVU172
+ 757 00a6 0124     		movs	r4, #1
+ 758 00a8 C0E7     		b	.L56
+ 759              	.LVL65:
+ 760              	.L66:
  247:quantum/process_keycode/process_dynamic_macro.c ****                         break;
- 580              		.loc 1 247 25 is_stmt 1 view .LVU135
- 581 00aa 0F4A     		ldr	r2, .L39+20
- 582 00ac 0091     		str	r1, [sp]
- 583 00ae 1268     		ldr	r2, [r2]
- 584 00b0 0A49     		ldr	r1, .L39+8
- 585              	.LVL51:
+ 761              		.loc 1 247 25 is_stmt 1 view .LVU173
+ 762 00aa 0F4A     		ldr	r2, .L73+20
+ 763 00ac 0091     		str	r1, [sp]
+ 764 00ae 1268     		ldr	r2, [r2]
+ 765 00b0 0A49     		ldr	r1, .L73+8
+ 766              	.LVL66:
  247:quantum/process_keycode/process_dynamic_macro.c ****                         break;
- 586              		.loc 1 247 25 is_stmt 0 view .LVU136
- 587 00b2 0948     		ldr	r0, .L39+4
- 588              	.LVL52:
+ 767              		.loc 1 247 25 is_stmt 0 view .LVU174
+ 768 00b2 0948     		ldr	r0, .L73+4
+ 769              	.LVL67:
  247:quantum/process_keycode/process_dynamic_macro.c ****                         break;
- 589              		.loc 1 247 25 view .LVU137
- 590 00b4 2346     		mov	r3, r4
- 591 00b6 FFF7FEFF 		bl	dynamic_macro_record_key
- 592              	.LVL53:
+ 770              		.loc 1 247 25 view .LVU175
+ 771 00b4 2346     		mov	r3, r4
+ 772 00b6 FFF7FEFF 		bl	dynamic_macro_record_key
+ 773              	.LVL68:
  248:quantum/process_keycode/process_dynamic_macro.c ****                     case 2:
- 593              		.loc 1 248 25 is_stmt 1 view .LVU138
- 594 00ba B7E7     		b	.L22
- 595              	.LVL54:
- 596              	.L33:
+ 774              		.loc 1 248 25 is_stmt 1 view .LVU176
+ 775 00ba B7E7     		b	.L56
+ 776              	.LVL69:
+ 777              	.L67:
  250:quantum/process_keycode/process_dynamic_macro.c ****                         break;
- 597              		.loc 1 250 25 view .LVU139
- 598 00bc 094A     		ldr	r2, .L39+16
- 599 00be 0091     		str	r1, [sp]
- 600 00c0 1268     		ldr	r2, [r2]
- 601 00c2 0649     		ldr	r1, .L39+8
- 602              	.LVL55:
+ 778              		.loc 1 250 25 view .LVU177
+ 779 00bc 094A     		ldr	r2, .L73+16
+ 780 00be 0091     		str	r1, [sp]
+ 781 00c0 1268     		ldr	r2, [r2]
+ 782 00c2 0649     		ldr	r1, .L73+8
+ 783              	.LVL70:
  250:quantum/process_keycode/process_dynamic_macro.c ****                         break;
- 603              		.loc 1 250 25 is_stmt 0 view .LVU140
- 604 00c4 0648     		ldr	r0, .L39+12
- 605              	.LVL56:
+ 784              		.loc 1 250 25 is_stmt 0 view .LVU178
+ 785 00c4 0648     		ldr	r0, .L73+12
+ 786              	.LVL71:
  250:quantum/process_keycode/process_dynamic_macro.c ****                         break;
- 606              		.loc 1 250 25 view .LVU141
- 607 00c6 4FF0FF33 		mov	r3, #-1
- 608 00ca FFF7FEFF 		bl	dynamic_macro_record_key
- 609              	.LVL57:
+ 787              		.loc 1 250 25 view .LVU179
+ 788 00c6 4FF0FF33 		mov	r3, #-1
+ 789 00ca FFF7FEFF 		bl	dynamic_macro_record_key
+ 790              	.LVL72:
  251:quantum/process_keycode/process_dynamic_macro.c ****                 }
- 610              		.loc 1 251 25 is_stmt 1 view .LVU142
- 611 00ce EAE7     		b	.L34
- 612              	.LVL58:
- 613              	.L35:
+ 791              		.loc 1 251 25 is_stmt 1 view .LVU180
+ 792 00ce EAE7     		b	.L68
+ 793              	.LVL73:
+ 794              	.L69:
  236:quantum/process_keycode/process_dynamic_macro.c **** #ifdef DYNAMIC_MACRO_NO_NESTING
- 614              		.loc 1 236 24 is_stmt 0 view .LVU143
- 615 00d0 0024     		movs	r4, #0
- 616 00d2 ABE7     		b	.L22
- 617              	.L40:
- 618              		.align	2
- 619              	.L39:
- 620 00d4 00000000 		.word	.LANCHOR0
- 621 00d8 00000000 		.word	.LANCHOR1
- 622 00dc 00000000 		.word	.LANCHOR2
- 623 00e0 F8030000 		.word	.LANCHOR1+1016
- 624 00e4 00000000 		.word	.LANCHOR3
- 625 00e8 00000000 		.word	.LANCHOR4
- 626              		.cfi_endproc
- 627              	.LFE300:
- 629              		.section	.bss.macro_buffer.2,"aw",%nobits
- 630              		.align	1
- 631              		.set	.LANCHOR1,. + 0
- 634              	macro_buffer.2:
- 635 0000 00000000 		.space	1024
- 635      00000000 
- 635      00000000 
- 635      00000000 
- 635      00000000 
- 636              		.section	.bss.macro_id.4,"aw",%nobits
- 637              		.set	.LANCHOR0,. + 0
- 640              	macro_id.4:
- 641 0000 00       		.space	1
- 642              		.section	.bss.macro_pointer.3,"aw",%nobits
- 643              		.align	2
- 644              		.set	.LANCHOR2,. + 0
- 647              	macro_pointer.3:
- 648 0000 00000000 		.space	4
- 649              		.section	.data.macro_end.1,"aw"
- 650              		.align	2
- 651              		.set	.LANCHOR3,. + 0
- 654              	macro_end.1:
- 655 0000 00000000 		.word	macro_buffer.2
- 656              		.section	.data.r_macro_end.0,"aw"
- 657              		.align	2
- 658              		.set	.LANCHOR4,. + 0
- 661              	r_macro_end.0:
- 662 0000 F8030000 		.word	macro_buffer.2+1016
- 663              		.text
- 664              	.Letext0:
- 665              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
- 666              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
- 667              		.file 4 "tmk_core/common/keyboard.h"
- 668              		.file 5 "tmk_core/common/action.h"
- 669              		.file 6 "tmk_core/common/action_layer.h"
- 670              		.file 7 "quantum/quantum_keycodes.h"
+ 795              		.loc 1 236 24 is_stmt 0 view .LVU181
+ 796 00d0 0024     		movs	r4, #0
+ 797 00d2 ABE7     		b	.L56
+ 798              	.L74:
+ 799              		.align	2
+ 800              	.L73:
+ 801 00d4 00000000 		.word	.LANCHOR0
+ 802 00d8 00000000 		.word	.LANCHOR1
+ 803 00dc 00000000 		.word	.LANCHOR2
+ 804 00e0 F8030000 		.word	.LANCHOR1+1016
+ 805 00e4 00000000 		.word	.LANCHOR3
+ 806 00e8 00000000 		.word	.LANCHOR4
+ 807              		.cfi_endproc
+ 808              	.LFE300:
+ 810              		.section	.bss.macro_buffer.2,"aw",%nobits
+ 811              		.align	1
+ 812              		.set	.LANCHOR1,. + 0
+ 815              	macro_buffer.2:
+ 816 0000 00000000 		.space	1024
+ 816      00000000 
+ 816      00000000 
+ 816      00000000 
+ 816      00000000 
+ 817              		.section	.bss.macro_id.4,"aw",%nobits
+ 818              		.set	.LANCHOR0,. + 0
+ 821              	macro_id.4:
+ 822 0000 00       		.space	1
+ 823              		.section	.bss.macro_pointer.3,"aw",%nobits
+ 824              		.align	2
+ 825              		.set	.LANCHOR2,. + 0
+ 828              	macro_pointer.3:
+ 829 0000 00000000 		.space	4
+ 830              		.section	.data.macro_end.1,"aw"
+ 831              		.align	2
+ 832              		.set	.LANCHOR3,. + 0
+ 835              	macro_end.1:
+ 836 0000 00000000 		.word	macro_buffer.2
+ 837              		.section	.data.r_macro_end.0,"aw"
+ 838              		.align	2
+ 839              		.set	.LANCHOR4,. + 0
+ 842              	r_macro_end.0:
+ 843 0000 F8030000 		.word	macro_buffer.2+1016
+ 844              		.text
+ 845              	.Letext0:
+ 846              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 847              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 848              		.file 4 "tmk_core/common/keyboard.h"
+ 849              		.file 5 "tmk_core/common/action.h"
+ 850              		.file 6 "quantum/logging/debug.h"
+ 851              		.file 7 "tmk_core/common/action_layer.h"
+ 852              		.file 8 "lib/printf/printf.h"
+ 853              		.file 9 "quantum/quantum_keycodes.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 process_dynamic_macro.c
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:18     .text.dynamic_macro_led_blink:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:26     .text.dynamic_macro_led_blink:0000000000000000 dynamic_macro_led_blink
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:40     .text.dynamic_macro_record_start_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:47     .text.dynamic_macro_record_start_user:0000000000000000 dynamic_macro_record_start_user
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:62     .text.dynamic_macro_play_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:69     .text.dynamic_macro_play_user:0000000000000000 dynamic_macro_play_user
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:85     .text.dynamic_macro_record_key_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:92     .text.dynamic_macro_record_key_user:0000000000000000 dynamic_macro_record_key_user
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:108    .text.dynamic_macro_record_end_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:115    .text.dynamic_macro_record_end_user:0000000000000000 dynamic_macro_record_end_user
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:126    .text.dynamic_macro_record_start:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:133    .text.dynamic_macro_record_start:0000000000000000 dynamic_macro_record_start
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:171    .text.dynamic_macro_play:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:178    .text.dynamic_macro_play:0000000000000000 dynamic_macro_play
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:248    .text.dynamic_macro_play:000000000000003c $d
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:253    .text.dynamic_macro_record_key:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:260    .text.dynamic_macro_record_key:0000000000000000 dynamic_macro_record_key
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:326    .text.dynamic_macro_record_end:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:333    .text.dynamic_macro_record_end:0000000000000000 dynamic_macro_record_end
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:394    .text.process_dynamic_macro:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:401    .text.process_dynamic_macro:0000000000000000 process_dynamic_macro
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:440    .text.process_dynamic_macro:000000000000001a $d
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:620    .text.process_dynamic_macro:00000000000000d4 $d
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:630    .bss.macro_buffer.2:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:634    .bss.macro_buffer.2:0000000000000000 macro_buffer.2
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:640    .bss.macro_id.4:0000000000000000 macro_id.4
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:641    .bss.macro_id.4:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:643    .bss.macro_pointer.3:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:647    .bss.macro_pointer.3:0000000000000000 macro_pointer.3
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:650    .data.macro_end.1:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:654    .data.macro_end.1:0000000000000000 macro_end.1
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:657    .data.r_macro_end.0:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:661    .data.r_macro_end.0:0000000000000000 r_macro_end.0
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:445    .text.process_dynamic_macro:000000000000001f $d
-C:\Users\lhanj\AppData\Local\Temp\ccUalrTU.s:445    .text.process_dynamic_macro:0000000000000020 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:18     .text.dynamic_macro_led_blink:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:26     .text.dynamic_macro_led_blink:0000000000000000 dynamic_macro_led_blink
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:40     .text.dynamic_macro_record_start_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:47     .text.dynamic_macro_record_start_user:0000000000000000 dynamic_macro_record_start_user
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:62     .text.dynamic_macro_play_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:69     .text.dynamic_macro_play_user:0000000000000000 dynamic_macro_play_user
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:85     .text.dynamic_macro_record_key_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:92     .text.dynamic_macro_record_key_user:0000000000000000 dynamic_macro_record_key_user
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:108    .text.dynamic_macro_record_end_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:115    .text.dynamic_macro_record_end_user:0000000000000000 dynamic_macro_record_end_user
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:129    .text.dynamic_macro_record_start:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:136    .text.dynamic_macro_record_start:0000000000000000 dynamic_macro_record_start
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:188    .text.dynamic_macro_record_start:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:197    .text.dynamic_macro_play:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:204    .text.dynamic_macro_play:0000000000000000 dynamic_macro_play
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:294    .text.dynamic_macro_play:0000000000000054 $d
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:307    .text.dynamic_macro_record_key:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:314    .text.dynamic_macro_record_key:0000000000000000 dynamic_macro_record_key
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:449    .text.dynamic_macro_record_key:0000000000000088 $d
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:462    .text.dynamic_macro_record_end:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:469    .text.dynamic_macro_record_end:0000000000000000 dynamic_macro_record_end
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:568    .text.dynamic_macro_record_end:0000000000000064 $d
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:575    .text.process_dynamic_macro:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:582    .text.process_dynamic_macro:0000000000000000 process_dynamic_macro
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:621    .text.process_dynamic_macro:000000000000001a $d
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:801    .text.process_dynamic_macro:00000000000000d4 $d
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:811    .bss.macro_buffer.2:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:815    .bss.macro_buffer.2:0000000000000000 macro_buffer.2
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:821    .bss.macro_id.4:0000000000000000 macro_id.4
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:822    .bss.macro_id.4:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:824    .bss.macro_pointer.3:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:828    .bss.macro_pointer.3:0000000000000000 macro_pointer.3
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:831    .data.macro_end.1:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:835    .data.macro_end.1:0000000000000000 macro_end.1
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:838    .data.r_macro_end.0:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:842    .data.r_macro_end.0:0000000000000000 r_macro_end.0
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:626    .text.process_dynamic_macro:000000000000001f $d
+C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:626    .text.process_dynamic_macro:0000000000000020 $t
 
 UNDEFINED SYMBOLS
+printf_
 clear_keyboard
 layer_clear
+debug_config
 process_record
 layer_state

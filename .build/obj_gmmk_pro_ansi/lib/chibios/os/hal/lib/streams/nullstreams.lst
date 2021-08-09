@@ -248,18 +248,18 @@
  169              		.file 6 "lib/chibios/os/hal/lib/streams/nullstreams.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 nullstreams.c
-C:\Users\lhanj\AppData\Local\Temp\ccyHSgO1.s:18     .text.writes:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccyHSgO1.s:25     .text.writes:0000000000000000 writes
-C:\Users\lhanj\AppData\Local\Temp\ccyHSgO1.s:46     .text.reads:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccyHSgO1.s:52     .text.reads:0000000000000000 reads
-C:\Users\lhanj\AppData\Local\Temp\ccyHSgO1.s:73     .text.put:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccyHSgO1.s:79     .text.put:0000000000000000 put
-C:\Users\lhanj\AppData\Local\Temp\ccyHSgO1.s:99     .text.get:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccyHSgO1.s:105    .text.get:0000000000000000 get
-C:\Users\lhanj\AppData\Local\Temp\ccyHSgO1.s:124    .text.nullObjectInit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccyHSgO1.s:131    .text.nullObjectInit:0000000000000000 nullObjectInit
-C:\Users\lhanj\AppData\Local\Temp\ccyHSgO1.s:148    .text.nullObjectInit:0000000000000008 $d
-C:\Users\lhanj\AppData\Local\Temp\ccyHSgO1.s:153    .rodata.vmt:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccyHSgO1.s:157    .rodata.vmt:0000000000000000 vmt
+C:\Users\lhanj\AppData\Local\Temp\ccYgKyWT.s:18     .text.writes:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYgKyWT.s:25     .text.writes:0000000000000000 writes
+C:\Users\lhanj\AppData\Local\Temp\ccYgKyWT.s:46     .text.reads:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYgKyWT.s:52     .text.reads:0000000000000000 reads
+C:\Users\lhanj\AppData\Local\Temp\ccYgKyWT.s:73     .text.put:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYgKyWT.s:79     .text.put:0000000000000000 put
+C:\Users\lhanj\AppData\Local\Temp\ccYgKyWT.s:99     .text.get:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYgKyWT.s:105    .text.get:0000000000000000 get
+C:\Users\lhanj\AppData\Local\Temp\ccYgKyWT.s:124    .text.nullObjectInit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYgKyWT.s:131    .text.nullObjectInit:0000000000000000 nullObjectInit
+C:\Users\lhanj\AppData\Local\Temp\ccYgKyWT.s:148    .text.nullObjectInit:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccYgKyWT.s:153    .rodata.vmt:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccYgKyWT.s:157    .rodata.vmt:0000000000000000 vmt
 
 NO UNDEFINED SYMBOLS

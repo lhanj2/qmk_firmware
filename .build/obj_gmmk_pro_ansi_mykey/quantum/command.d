@@ -1,5 +1,4 @@
-.build/obj_gmmk_pro_ansi_mykey/common/usb_util.o: \
- tmk_core/common/usb_util.c \
+.build/obj_gmmk_pro_ansi_mykey/quantum/command.o: quantum/command.c \
  platforms/chibios/GENERIC_STM32_F303XC/configs/bootloader_defs.h \
  keyboards/gmmk/pro/config.h quantum/config_common.h \
  tmk_core/common/pin_defs.h tmk_core/common/chibios/pin_defs.h \
@@ -9,8 +8,7 @@
  .build/obj_gmmk_pro_ansi/src/layouts.h \
  keyboards/gmmk/pro/ansi/keymaps/mykey/config.h \
  platforms/chibios/GENERIC_STM32_F303XC/configs/config.h \
- quantum/quantum.h tmk_core/common/chibios/platform_deps.h \
- lib/chibios/os/hal/include/hal.h lib/chibios/os/hal/osal/rt-nil/osal.h \
+ tmk_core/common/wait.h tmk_core/common/chibios/_wait.h \
  lib/chibios/os/rt/include/ch.h platforms/chibios/common/configs/chconf.h \
  lib/chibios/os/rt/include/chchecks.h lib/chibios/os/license/chlicense.h \
  lib/chibios/os/license/chcustomer.h \
@@ -53,8 +51,29 @@
  lib/chibios/os/oslib/include/chdelegates.h \
  lib/chibios/os/oslib/include/chjobs.h \
  lib/chibios/os/oslib/include/chfactory.h \
- lib/chibios/os/rt/include/chdynamic.h keyboards/gmmk/pro/halconf.h \
- platforms/chibios/common/configs/halconf.h keyboards/gmmk/pro/mcuconf.h \
+ lib/chibios/os/rt/include/chdynamic.h tmk_core/common/chibios/wait.c \
+ tmk_core/common/keycode.h tmk_core/common/host.h \
+ tmk_core/common/report.h tmk_core/protocol/usb_descriptor.h \
+ tmk_core/protocol/chibios/lufa_utils/LUFA/Drivers/USB/USB.h \
+ tmk_core/common/progmem.h \
+ lib/lufa/LUFA/Drivers/USB/Class/Common/HIDClassCommon.h \
+ lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/StdDescriptors.h \
+ c\:\users\lhanj\qmk_firmware\lib\lufa\lufa\common\common.h \
+ lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/USBMode.h \
+ lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/Events.h \
+ lib/lufa/LUFA/Drivers/USB/Class/Common/HIDParser.h \
+ lib/lufa/LUFA/Drivers/USB/Class/Common/HIDReportData.h \
+ lib/lufa/LUFA/Drivers/USB/Class/Common/CDCClassCommon.h \
+ lib/lufa/LUFA/Drivers/USB/Class/Common/AudioClassCommon.h \
+ lib/lufa/LUFA/Drivers/USB/Class/Common/MIDIClassCommon.h \
+ lib/lufa/LUFA/Drivers/USB/Class/Common/AudioClassCommon.h \
+ lib/lufa/LUFA/Drivers/USB/Core/USBController.h \
+ lib/lufa/LUFA/Drivers/USB/Core/../../../Common/Common.h \
+ lib/lufa/LUFA/Drivers/USB/Core/USBMode.h \
+ lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.h \
+ lib/chibios/os/hal/include/hal.h lib/chibios/os/hal/osal/rt-nil/osal.h \
+ keyboards/gmmk/pro/halconf.h platforms/chibios/common/configs/halconf.h \
+ keyboards/gmmk/pro/mcuconf.h \
  platforms/chibios/GENERIC_STM32_F303XC/configs/mcuconf.h \
  lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.h \
  lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_registry.h \
@@ -107,35 +126,19 @@
  lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h \
  lib/chibios/os/hal/include/hal_mmc_spi.h \
  lib/chibios/os/hal/include/hal_serial_usb.h \
- tmk_core/common/chibios/chibios_config.h tmk_core/common/wait.h \
- tmk_core/common/chibios/_wait.h tmk_core/common/chibios/wait.c \
- quantum/matrix.h quantum/keymap.h tmk_core/common/action.h \
- tmk_core/common/keyboard.h tmk_core/common/keycode.h \
+ tmk_core/common/host_driver.h quantum/led.h quantum/keymap.h \
+ tmk_core/common/action.h tmk_core/common/keyboard.h \
  tmk_core/common/action_code.h tmk_core/common/action_macro.h \
- tmk_core/common/progmem.h tmk_core/common/report.h \
- tmk_core/protocol/usb_descriptor.h \
- tmk_core/protocol/chibios/lufa_utils/LUFA/Drivers/USB/USB.h \
- lib/lufa/LUFA/Drivers/USB/Class/Common/HIDClassCommon.h \
- lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/StdDescriptors.h \
- c\:\users\lhanj\qmk_firmware\lib\lufa\lufa\common\common.h \
- lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/USBMode.h \
- lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/Events.h \
- lib/lufa/LUFA/Drivers/USB/Class/Common/HIDParser.h \
- lib/lufa/LUFA/Drivers/USB/Class/Common/HIDReportData.h \
- lib/lufa/LUFA/Drivers/USB/Class/Common/CDCClassCommon.h \
- lib/lufa/LUFA/Drivers/USB/Class/Common/AudioClassCommon.h \
- lib/lufa/LUFA/Drivers/USB/Class/Common/MIDIClassCommon.h \
- lib/lufa/LUFA/Drivers/USB/Class/Common/AudioClassCommon.h \
- lib/lufa/LUFA/Drivers/USB/Core/USBController.h \
- lib/lufa/LUFA/Drivers/USB/Core/../../../Common/Common.h \
- lib/lufa/LUFA/Drivers/USB/Core/USBMode.h \
- lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.h \
- tmk_core/common/host.h tmk_core/common/host_driver.h quantum/led.h \
  quantum/logging/debug.h quantum/logging/print.h quantum/util.h \
  quantum/bitwise.h quantum/logging/sendchar.h lib/printf/printf.h \
  quantum/keycode_config.h tmk_core/common/eeconfig.h \
  quantum/quantum_keycodes.h quantum/sequencer/sequencer.h \
  tmk_core/common/timer.h tmk_core/common/chibios/_timer.h \
+ tmk_core/common/bootloader.h tmk_core/common/action_layer.h \
+ tmk_core/common/action_util.h tmk_core/common/sleep_led.h \
+ quantum/command.h quantum/quantum.h \
+ tmk_core/common/chibios/platform_deps.h \
+ tmk_core/common/chibios/chibios_config.h quantum/matrix.h \
  quantum/rgb_matrix/rgb_matrix.h quantum/rgb_matrix/rgb_matrix_types.h \
  quantum/color.h drivers/led/aw20216.h tmk_core/common/gpio.h \
  tmk_core/common/chibios/gpio.h \
@@ -176,20 +179,18 @@
  quantum/rgb_matrix/animations/solid_reactive_nexus.h \
  quantum/rgb_matrix/animations/splash_anim.h \
  quantum/rgb_matrix/animations/solid_splash_anim.h \
- tmk_core/common/action_layer.h tmk_core/common/bootloader.h \
  quantum/bootmagic/bootmagic.h quantum/bootmagic/bootmagic_lite.h \
  tmk_core/common/sync_timer.h tmk_core/common/atomic_util.h \
- tmk_core/common/chibios/atomic_util.h tmk_core/common/action_util.h \
- tmk_core/common/action_tapping.h quantum/send_string.h \
- quantum/send_string_keycodes.h tmk_core/common/suspend.h \
- quantum/process_keycode/process_tap_dance.h \
+ tmk_core/common/chibios/atomic_util.h tmk_core/common/action_tapping.h \
+ quantum/send_string.h quantum/send_string_keycodes.h \
+ tmk_core/common/suspend.h quantum/process_keycode/process_tap_dance.h \
  quantum/process_keycode/process_terminal_nop.h \
  quantum/process_keycode/process_space_cadet.h \
  quantum/process_keycode/process_magic.h \
  quantum/process_keycode/process_grave_esc.h \
  quantum/process_keycode/process_rgb.h \
  quantum/process_keycode/process_dynamic_macro.h quantum/dynamic_keymap.h \
- quantum/via.h quantum/encoder.h tmk_core/common/usb_util.h
+ quantum/via.h quantum/encoder.h quantum/version.h quantum/mousekey.h
 platforms/chibios/GENERIC_STM32_F303XC/configs/bootloader_defs.h:
 keyboards/gmmk/pro/config.h:
 quantum/config_common.h:
@@ -202,10 +203,8 @@ keyboards/gmmk/pro/ansi/config.h:
 .build/obj_gmmk_pro_ansi/src/layouts.h:
 keyboards/gmmk/pro/ansi/keymaps/mykey/config.h:
 platforms/chibios/GENERIC_STM32_F303XC/configs/config.h:
-quantum/quantum.h:
-tmk_core/common/chibios/platform_deps.h:
-lib/chibios/os/hal/include/hal.h:
-lib/chibios/os/hal/osal/rt-nil/osal.h:
+tmk_core/common/wait.h:
+tmk_core/common/chibios/_wait.h:
 lib/chibios/os/rt/include/ch.h:
 platforms/chibios/common/configs/chconf.h:
 lib/chibios/os/rt/include/chchecks.h:
@@ -258,6 +257,30 @@ lib/chibios/os/oslib/include/chdelegates.h:
 lib/chibios/os/oslib/include/chjobs.h:
 lib/chibios/os/oslib/include/chfactory.h:
 lib/chibios/os/rt/include/chdynamic.h:
+tmk_core/common/chibios/wait.c:
+tmk_core/common/keycode.h:
+tmk_core/common/host.h:
+tmk_core/common/report.h:
+tmk_core/protocol/usb_descriptor.h:
+tmk_core/protocol/chibios/lufa_utils/LUFA/Drivers/USB/USB.h:
+tmk_core/common/progmem.h:
+lib/lufa/LUFA/Drivers/USB/Class/Common/HIDClassCommon.h:
+lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/StdDescriptors.h:
+c\:\users\lhanj\qmk_firmware\lib\lufa\lufa\common\common.h:
+lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/USBMode.h:
+lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/Events.h:
+lib/lufa/LUFA/Drivers/USB/Class/Common/HIDParser.h:
+lib/lufa/LUFA/Drivers/USB/Class/Common/HIDReportData.h:
+lib/lufa/LUFA/Drivers/USB/Class/Common/CDCClassCommon.h:
+lib/lufa/LUFA/Drivers/USB/Class/Common/AudioClassCommon.h:
+lib/lufa/LUFA/Drivers/USB/Class/Common/MIDIClassCommon.h:
+lib/lufa/LUFA/Drivers/USB/Class/Common/AudioClassCommon.h:
+lib/lufa/LUFA/Drivers/USB/Core/USBController.h:
+lib/lufa/LUFA/Drivers/USB/Core/../../../Common/Common.h:
+lib/lufa/LUFA/Drivers/USB/Core/USBMode.h:
+lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.h:
+lib/chibios/os/hal/include/hal.h:
+lib/chibios/os/hal/osal/rt-nil/osal.h:
 keyboards/gmmk/pro/halconf.h:
 platforms/chibios/common/configs/halconf.h:
 keyboards/gmmk/pro/mcuconf.h:
@@ -313,39 +336,13 @@ lib/chibios/os/hal/include/hal_st.h:
 lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h:
 lib/chibios/os/hal/include/hal_mmc_spi.h:
 lib/chibios/os/hal/include/hal_serial_usb.h:
-tmk_core/common/chibios/chibios_config.h:
-tmk_core/common/wait.h:
-tmk_core/common/chibios/_wait.h:
-tmk_core/common/chibios/wait.c:
-quantum/matrix.h:
+tmk_core/common/host_driver.h:
+quantum/led.h:
 quantum/keymap.h:
 tmk_core/common/action.h:
 tmk_core/common/keyboard.h:
-tmk_core/common/keycode.h:
 tmk_core/common/action_code.h:
 tmk_core/common/action_macro.h:
-tmk_core/common/progmem.h:
-tmk_core/common/report.h:
-tmk_core/protocol/usb_descriptor.h:
-tmk_core/protocol/chibios/lufa_utils/LUFA/Drivers/USB/USB.h:
-lib/lufa/LUFA/Drivers/USB/Class/Common/HIDClassCommon.h:
-lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/StdDescriptors.h:
-c\:\users\lhanj\qmk_firmware\lib\lufa\lufa\common\common.h:
-lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/USBMode.h:
-lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/Events.h:
-lib/lufa/LUFA/Drivers/USB/Class/Common/HIDParser.h:
-lib/lufa/LUFA/Drivers/USB/Class/Common/HIDReportData.h:
-lib/lufa/LUFA/Drivers/USB/Class/Common/CDCClassCommon.h:
-lib/lufa/LUFA/Drivers/USB/Class/Common/AudioClassCommon.h:
-lib/lufa/LUFA/Drivers/USB/Class/Common/MIDIClassCommon.h:
-lib/lufa/LUFA/Drivers/USB/Class/Common/AudioClassCommon.h:
-lib/lufa/LUFA/Drivers/USB/Core/USBController.h:
-lib/lufa/LUFA/Drivers/USB/Core/../../../Common/Common.h:
-lib/lufa/LUFA/Drivers/USB/Core/USBMode.h:
-lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.h:
-tmk_core/common/host.h:
-tmk_core/common/host_driver.h:
-quantum/led.h:
 quantum/logging/debug.h:
 quantum/logging/print.h:
 quantum/util.h:
@@ -358,6 +355,15 @@ quantum/quantum_keycodes.h:
 quantum/sequencer/sequencer.h:
 tmk_core/common/timer.h:
 tmk_core/common/chibios/_timer.h:
+tmk_core/common/bootloader.h:
+tmk_core/common/action_layer.h:
+tmk_core/common/action_util.h:
+tmk_core/common/sleep_led.h:
+quantum/command.h:
+quantum/quantum.h:
+tmk_core/common/chibios/platform_deps.h:
+tmk_core/common/chibios/chibios_config.h:
+quantum/matrix.h:
 quantum/rgb_matrix/rgb_matrix.h:
 quantum/rgb_matrix/rgb_matrix_types.h:
 quantum/color.h:
@@ -401,14 +407,11 @@ quantum/rgb_matrix/animations/solid_reactive_cross.h:
 quantum/rgb_matrix/animations/solid_reactive_nexus.h:
 quantum/rgb_matrix/animations/splash_anim.h:
 quantum/rgb_matrix/animations/solid_splash_anim.h:
-tmk_core/common/action_layer.h:
-tmk_core/common/bootloader.h:
 quantum/bootmagic/bootmagic.h:
 quantum/bootmagic/bootmagic_lite.h:
 tmk_core/common/sync_timer.h:
 tmk_core/common/atomic_util.h:
 tmk_core/common/chibios/atomic_util.h:
-tmk_core/common/action_util.h:
 tmk_core/common/action_tapping.h:
 quantum/send_string.h:
 quantum/send_string_keycodes.h:
@@ -423,4 +426,5 @@ quantum/process_keycode/process_dynamic_macro.h:
 quantum/dynamic_keymap.h:
 quantum/via.h:
 quantum/encoder.h:
-tmk_core/common/usb_util.h:
+quantum/version.h:
+quantum/mousekey.h:

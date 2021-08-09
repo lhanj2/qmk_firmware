@@ -712,24 +712,24 @@
  520              		.file 8 "drivers/chibios/spi_master.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 aw20216.c
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:18     .text.AW20216_write:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:26     .text.AW20216_write:0000000000000000 AW20216_write
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:120    .text.AW20216_write:0000000000000048 $d
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:127    .text.AW20216_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:134    .text.AW20216_init:0000000000000000 AW20216_init
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:301    .text.AW20216_set_color:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:308    .text.AW20216_set_color:0000000000000000 AW20216_set_color
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:372    .text.AW20216_set_color:0000000000000030 $d
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:18     .text.AW20216_write:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:26     .text.AW20216_write:0000000000000000 AW20216_write
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:120    .text.AW20216_write:0000000000000048 $d
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:127    .text.AW20216_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:134    .text.AW20216_init:0000000000000000 AW20216_init
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:301    .text.AW20216_set_color:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:308    .text.AW20216_set_color:0000000000000000 AW20216_set_color
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:372    .text.AW20216_set_color:0000000000000030 $d
                             *COM*:00000000000001b0 g_pwm_buffer
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:379    .text.AW20216_set_color_all:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:386    .text.AW20216_set_color_all:0000000000000000 AW20216_set_color_all
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:438    .text.AW20216_update_pwm_buffers:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:445    .text.AW20216_update_pwm_buffers:0000000000000000 AW20216_update_pwm_buffers
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:493    .text.AW20216_update_pwm_buffers:0000000000000024 $d
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:504    .bss.g_pwm_buffer_update_required:0000000000000000 g_pwm_buffer_update_required
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:505    .bss.g_pwm_buffer_update_required:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:510    .bss.s_spi_transfer_buffer.0:0000000000000000 s_spi_transfer_buffer.0
-C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:511    .bss.s_spi_transfer_buffer.0:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:379    .text.AW20216_set_color_all:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:386    .text.AW20216_set_color_all:0000000000000000 AW20216_set_color_all
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:438    .text.AW20216_update_pwm_buffers:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:445    .text.AW20216_update_pwm_buffers:0000000000000000 AW20216_update_pwm_buffers
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:493    .text.AW20216_update_pwm_buffers:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:504    .bss.g_pwm_buffer_update_required:0000000000000000 g_pwm_buffer_update_required
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:505    .bss.g_pwm_buffer_update_required:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:510    .bss.s_spi_transfer_buffer.0:0000000000000000 s_spi_transfer_buffer.0
+C:\Users\lhanj\AppData\Local\Temp\cc9Wf2TV.s:511    .bss.s_spi_transfer_buffer.0:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 spi_start

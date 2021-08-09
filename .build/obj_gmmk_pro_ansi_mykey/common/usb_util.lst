@@ -95,11 +95,11 @@
   81              	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 usb_util.c
-C:\Users\lhanj\AppData\Local\Temp\cchtBac9.s:18     .text.usb_disconnect:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cchtBac9.s:26     .text.usb_disconnect:0000000000000000 usb_disconnect
-C:\Users\lhanj\AppData\Local\Temp\cchtBac9.s:40     .text.usb_connected_state:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cchtBac9.s:47     .text.usb_connected_state:0000000000000000 usb_connected_state
-C:\Users\lhanj\AppData\Local\Temp\cchtBac9.s:62     .text.usb_vbus_state:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cchtBac9.s:69     .text.usb_vbus_state:0000000000000000 usb_vbus_state
+C:\Users\lhanj\AppData\Local\Temp\ccErgttd.s:18     .text.usb_disconnect:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccErgttd.s:26     .text.usb_disconnect:0000000000000000 usb_disconnect
+C:\Users\lhanj\AppData\Local\Temp\ccErgttd.s:40     .text.usb_connected_state:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccErgttd.s:47     .text.usb_connected_state:0000000000000000 usb_connected_state
+C:\Users\lhanj\AppData\Local\Temp\ccErgttd.s:62     .text.usb_vbus_state:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccErgttd.s:69     .text.usb_vbus_state:0000000000000000 usb_vbus_state
 
 NO UNDEFINED SYMBOLS

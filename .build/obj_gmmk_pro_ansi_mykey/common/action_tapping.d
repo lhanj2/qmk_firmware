@@ -16,7 +16,7 @@
  tmk_core/common/timer.h tmk_core/common/chibios/_timer.h \
  quantum/logging/nodebug.h quantum/logging/debug.h \
  quantum/logging/print.h quantum/util.h quantum/bitwise.h \
- quantum/logging/sendchar.h
+ quantum/logging/sendchar.h lib/printf/printf.h
 platforms/chibios/GENERIC_STM32_F303XC/configs/bootloader_defs.h:
 keyboards/gmmk/pro/config.h:
 quantum/config_common.h:
@@ -45,3 +45,4 @@ quantum/logging/print.h:
 quantum/util.h:
 quantum/bitwise.h:
 quantum/logging/sendchar.h:
+lib/printf/printf.h:

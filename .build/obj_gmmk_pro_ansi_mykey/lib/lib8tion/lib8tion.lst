@@ -26,7 +26,7 @@
   28              		.file 3 "lib/lib8tion/lib8tion.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lib8tion.c
-C:\Users\lhanj\AppData\Local\Temp\ccoKYO8j.s:22     .data.rand16seed:0000000000000000 rand16seed
-C:\Users\lhanj\AppData\Local\Temp\ccoKYO8j.s:19     .data.rand16seed:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\cc3JRqWz.s:22     .data.rand16seed:0000000000000000 rand16seed
+C:\Users\lhanj\AppData\Local\Temp\cc3JRqWz.s:19     .data.rand16seed:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

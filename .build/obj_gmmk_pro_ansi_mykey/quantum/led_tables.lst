@@ -86,6 +86,6 @@
   42              		.file 4 "quantum/led_tables.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 led_tables.c
-C:\Users\lhanj\AppData\Local\Temp\ccfP6rDF.s:21     .rodata.CIE1931_CURVE:0000000000000000 CIE1931_CURVE
+C:\Users\lhanj\AppData\Local\Temp\ccmf6a8M.s:21     .rodata.CIE1931_CURVE:0000000000000000 CIE1931_CURVE
 
 NO UNDEFINED SYMBOLS

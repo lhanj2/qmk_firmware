@@ -1026,20 +1026,20 @@
  259              		.file 6 "./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/stm32_tim.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 hal_st.c
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:18     .text.stInit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:26     .text.stInit:0000000000000000 stInit
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:41     .text.stStartAlarm:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:48     .text.stStartAlarm:0000000000000000 stStartAlarm
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:89     .text.stStopAlarm:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:96     .text.stStopAlarm:0000000000000000 stStopAlarm
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:121    .text.stSetAlarm:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:128    .text.stSetAlarm:0000000000000000 stSetAlarm
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:158    .text.stGetAlarm:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:165    .text.stGetAlarm:0000000000000000 stGetAlarm
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:192    .text.stGetCounter:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:199    .text.stGetCounter:0000000000000000 stGetCounter
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:223    .text.stIsAlarmActive:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:230    .text.stIsAlarmActive:0000000000000000 stIsAlarmActive
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:18     .text.stInit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:26     .text.stInit:0000000000000000 stInit
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:41     .text.stStartAlarm:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:48     .text.stStartAlarm:0000000000000000 stStartAlarm
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:89     .text.stStopAlarm:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:96     .text.stStopAlarm:0000000000000000 stStopAlarm
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:121    .text.stSetAlarm:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:128    .text.stSetAlarm:0000000000000000 stSetAlarm
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:158    .text.stGetAlarm:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:165    .text.stGetAlarm:0000000000000000 stGetAlarm
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:192    .text.stGetCounter:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:199    .text.stGetCounter:0000000000000000 stGetCounter
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:223    .text.stIsAlarmActive:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWC2NVP.s:230    .text.stIsAlarmActive:0000000000000000 stIsAlarmActive
 
 UNDEFINED SYMBOLS
 st_lld_init

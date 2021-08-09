@@ -525,15 +525,15 @@
  248              		.file 6 "./lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 board.c
-C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:18     .text.gpio_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:25     .text.gpio_init:0000000000000000 gpio_init
-C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:75     .text.__chibios_override___early_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:82     .text.__chibios_override___early_init:0000000000000000 __chibios_override___early_init
-C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:169    .text.__chibios_override___early_init:0000000000000070 $d
-C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:175    .text.__chibios_override_boardInit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:182    .text.__chibios_override_boardInit:0000000000000000 __chibios_override_boardInit
-C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:195    .rodata.gpio_default_config:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:199    .rodata.gpio_default_config:0000000000000000 gpio_default_config
+C:\Users\lhanj\AppData\Local\Temp\ccXMur6x.s:18     .text.gpio_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccXMur6x.s:25     .text.gpio_init:0000000000000000 gpio_init
+C:\Users\lhanj\AppData\Local\Temp\ccXMur6x.s:75     .text.__chibios_override___early_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccXMur6x.s:82     .text.__chibios_override___early_init:0000000000000000 __chibios_override___early_init
+C:\Users\lhanj\AppData\Local\Temp\ccXMur6x.s:169    .text.__chibios_override___early_init:0000000000000070 $d
+C:\Users\lhanj\AppData\Local\Temp\ccXMur6x.s:175    .text.__chibios_override_boardInit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccXMur6x.s:182    .text.__chibios_override_boardInit:0000000000000000 __chibios_override_boardInit
+C:\Users\lhanj\AppData\Local\Temp\ccXMur6x.s:195    .rodata.gpio_default_config:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccXMur6x.s:199    .rodata.gpio_default_config:0000000000000000 gpio_default_config
 
 UNDEFINED SYMBOLS
 stm32_clock_init

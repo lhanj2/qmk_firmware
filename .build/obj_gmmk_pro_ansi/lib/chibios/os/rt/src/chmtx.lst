@@ -4420,31 +4420,31 @@
  1345              		.file 12 "./lib/chibios/os/rt/include/chsem.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 chmtx.c
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:18     .text.queue_prio_insert:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:25     .text.queue_prio_insert:0000000000000000 queue_prio_insert
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:78     .text.chMtxObjectInit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:85     .text.chMtxObjectInit:0000000000000000 chMtxObjectInit
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:124    .text.chMtxLockS:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:131    .text.chMtxLockS:0000000000000000 chMtxLockS
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:286    .text.chMtxLockS:000000000000005c $d
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:292    .text.chMtxLock:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:299    .text.chMtxLock:0000000000000000 chMtxLock
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:407    .text.chMtxTryLockS:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:414    .text.chMtxTryLockS:0000000000000000 chMtxTryLockS
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:468    .text.chMtxTryLockS:0000000000000018 $d
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:473    .text.chMtxTryLock:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:480    .text.chMtxTryLock:0000000000000000 chMtxTryLock
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:588    .text.chMtxUnlock:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:595    .text.chMtxUnlock:0000000000000000 chMtxUnlock
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:855    .text.chMtxUnlock:0000000000000054 $d
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:860    .text.chMtxUnlockS:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:867    .text.chMtxUnlockS:0000000000000000 chMtxUnlockS
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:1060   .text.chMtxUnlockS:0000000000000048 $d
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:1065   .text.chMtxUnlockAllS:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:1072   .text.chMtxUnlockAllS:0000000000000000 chMtxUnlockAllS
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:1222   .text.chMtxUnlockAllS:0000000000000044 $d
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:1227   .text.chMtxUnlockAll:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvkwTtC.s:1234   .text.chMtxUnlockAll:0000000000000000 chMtxUnlockAll
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:18     .text.queue_prio_insert:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:25     .text.queue_prio_insert:0000000000000000 queue_prio_insert
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:78     .text.chMtxObjectInit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:85     .text.chMtxObjectInit:0000000000000000 chMtxObjectInit
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:124    .text.chMtxLockS:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:131    .text.chMtxLockS:0000000000000000 chMtxLockS
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:286    .text.chMtxLockS:000000000000005c $d
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:292    .text.chMtxLock:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:299    .text.chMtxLock:0000000000000000 chMtxLock
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:407    .text.chMtxTryLockS:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:414    .text.chMtxTryLockS:0000000000000000 chMtxTryLockS
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:468    .text.chMtxTryLockS:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:473    .text.chMtxTryLock:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:480    .text.chMtxTryLock:0000000000000000 chMtxTryLock
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:588    .text.chMtxUnlock:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:595    .text.chMtxUnlock:0000000000000000 chMtxUnlock
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:855    .text.chMtxUnlock:0000000000000054 $d
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:860    .text.chMtxUnlockS:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:867    .text.chMtxUnlockS:0000000000000000 chMtxUnlockS
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:1060   .text.chMtxUnlockS:0000000000000048 $d
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:1065   .text.chMtxUnlockAllS:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:1072   .text.chMtxUnlockAllS:0000000000000000 chMtxUnlockAllS
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:1222   .text.chMtxUnlockAllS:0000000000000044 $d
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:1227   .text.chMtxUnlockAll:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc7zGAXi.s:1234   .text.chMtxUnlockAll:0000000000000000 chMtxUnlockAll
 
 UNDEFINED SYMBOLS
 chSchReadyI

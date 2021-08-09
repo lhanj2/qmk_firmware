@@ -1,7 +1,7 @@
 /* 20210806 HJLee - macro, mapping, knob layer added. 
    20210807 HJLee - knob function changed(brightness)
    20210808 HJLee - RGB works with RGB_TOG
-   20210809 HJLee - Test
+   20210809 HJLee - (macro not working)
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -16,6 +16,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+/******If use Via, should reset EEPROM(because enabling via saves your keymap to your EEPROM)*****/
+// EEPROM RESET : Plug cable with pressing ESC
 #include QMK_KEYBOARD_H
 #include "rgb_matrix_map.h"
 
@@ -75,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
     [_BASE] = LAYOUT(
-        KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_CALC,          NOB_LAYER_INC,
+        KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_MPLY,          NOB_LAYER_INC,
         KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,          KC_PSCR,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,          KC_PGUP,
         KC_CAPS, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,           KC_PGDN,
@@ -84,10 +87,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),//set RGUI to move virtual desktop because LGUI used to doubletap 
 
     [_FN1] = LAYOUT(
-        MY_SLEEP, KC_MYCM, KC_WHOM, KC_CALC, KC_MSEL, KC_MPRV, KC_MNXT, KC_MPLY, KC_MSTP, KC_MUTE, KC_VOLD, KC_VOLU, _______, KC_CALC,          _______,
+        MY_SLEEP, KC_MYCM, KC_WHOM, KC_CALC, KC_MSEL, KC_MPRV, KC_MNXT, KC_MPLY, KC_MSTP, DM_REC1, DM_REC2, DM_PLY1, DM_PLY2, KC_CALC,          _______,
         _______, DM_REC1, DM_REC2, DM_PLY1, DM_PLY2, _______, _______, _______, _______, _______, _______, _______, _______, _______,          RGB_TOG,
         _______, _______, RGB_VAI, _______, _______, _______, _______, KC_PSCR, KC_SLCK, KC_PAUS, _______, _______, _______, RESET,            KC_HOME,
-        KC_CAPS, _______, RGB_VAD, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          KC_END,
+        TT(_MO2), _______, RGB_VAD, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          KC_END,
         _______,          _______, RGB_HUI, _______, _______, _______, KC_NLCK, _______, RGB_TOD, RGB_TOI, _______,          _______, RGB_MOD, _______,
         _______, KC_WINLCK, _______,                            _______,                          _______, _______, _______, RGB_SPD, RGB_RMOD, RGB_SPI
     ),
@@ -134,6 +137,7 @@ void timeout_update_threshold(bool increase) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    //All of keycodes need return true or false (meaning of send origin keycode after action)
     switch (keycode) {
     case KC_00:
         if (record->event.pressed) {
@@ -142,7 +146,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
             // when keycode KC_00 is released
         }
-        break;
+        return false;
     case KC_WINLCK:
         if (record->event.pressed) {
             _isWinKeyDisabled = !_isWinKeyDisabled; //toggle status
@@ -152,44 +156,45 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 process_magic(GUI_ON, record);
             }
         } else  unregister_code16(keycode);
-        break;
+        return false;
     case RGB_TOI:
         if(record->event.pressed) {
             timeout_update_threshold(true);
         } else  unregister_code16(keycode);
-        break;
+        return false;
     case RGB_TOD:
         if(record->event.pressed) {
              timeout_update_threshold(false);  //decrease timeout
         } else  unregister_code16(keycode);
-        break;
+        return false;
     case NOB_LAYER_INC://SHIFT KNOB
         if ((record->event.pressed) && (Shift_Pressed == false)) {
             nob_layer_state++;
         } else if ((record->event.pressed) && (Shift_Pressed == true)) {
             tap_code(KC_MUTE);
         }
-        //If want to use Layer 3, change 2 to 3
+        //If want to use Knob Layer 3, change 2 to 3
         if (nob_layer_state == 2) nob_layer_state = 0;
-        break;
+        return false;
     case KC_RSFT:  // FOR RSFT KNOB VOLUME
         record->event.pressed ? (Shift_Pressed = true) : (Shift_Pressed = false);
-        break;
-    case KC_LSFT:  // FOR RSFT KNOB VOLUME
+        return true;
+    case KC_LSFT:  // FOR LSFT KNOB VOLUME
         record->event.pressed ? (Shift_Pressed = true) : (Shift_Pressed = false);
-        break;
-    case MY_KNOBFNKEY:
+        return true;
+    case MY_KNOBFNKEY:  // 210809 test
         if (record->event.pressed) {
-            Shift_Pressed = true;
+            tap_code(KC_PSCR);
+            printf("CALC");
         } else {
-            Shift_Pressed = false;
+            (Shift_Pressed = false);
+            printf("CALC");
         }
-        break;
+        return false;
+        //break;
     case MY_SLEEP:
-        if (record->event.pressed) {
-            tap_code(KC_SLEP);
-        }
-        break;
+        if (record->event.pressed) tap_code(KC_SLEP);
+        return false;
     case RGB_TOG:
         if (record->event.pressed && !RGB_TOGGLED) {  // reset activity timer
             #ifdef RGB_MATRIX_ENABLE //if rgb enabled
@@ -204,14 +209,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             #endif
             timeout_reset_timer();
         }
-        break;
+        return false;
+    default:
+        return true;
     }
-    return true;
 };
 
 void matrix_scan_user(void) {
     //if (timeout_threshold > 0) {
-    //    if (timer_elapsed(timeout_timer) >= 600) { // 1 minute tick
+    //    if (timer_elapsed(timeout_timer) >= 60000) { // 1 minute tick
     //        timeout_counter++;
     //        timeout_timer = timer_read();
     //    }
@@ -224,13 +230,10 @@ void matrix_scan_user(void) {
 };
 
 
-#ifdef ENCODER_ENABLE       // Encoder Functionality
-    uint8_t selected_layer = 0;
-
+#ifdef ENCODER_ENABLE       // Encoder Function
     bool encoder_update_user(uint8_t index, bool clockwise) {
     switch (nob_layer_state) {
         case _WHEEL:
-            //clockwise ? tap_code(KC_WH_D) : tap_code(KC_WH_U);
             if (clockwise && Shift_Pressed)                 tap_code(KC_VOLU);
             else if (!clockwise && Shift_Pressed)         tap_code(KC_VOLD);
             else if (clockwise && !Shift_Pressed)           tap_code(KC_WH_D);
@@ -242,7 +245,7 @@ void matrix_scan_user(void) {
             else if (clockwise && !Shift_Pressed)           tap_code16(KC_MNXT);
             else if (!clockwise && !Shift_Pressed)        tap_code16(KC_MPRV);
             break;
-        case _VOLUME:  // 210807 no use
+        case _VOLUME:  // 210807 not use
             clockwise ? tap_code(KC_VOLU) : tap_code(KC_VOLD);
             break;
     }
@@ -304,20 +307,20 @@ void matrix_scan_user(void) {
             break;
         }
     }
+    //LED SLEEP 210809 remarked
+    //void suspend_power_down_user(void) {
+    //    rgb_matrix_set_suspend_state(true);
+    //}
 
-    void suspend_power_down_user(void) {
-        rgb_matrix_set_suspend_state(true);
-    }
-
-    void suspend_wakeup_init_user(void) {
-        rgb_matrix_set_suspend_state(false);
-    }
+    //void suspend_wakeup_init_user(void) {
+    //    rgb_matrix_set_suspend_state(false);
+    //}
 #endif
 
 
 void keyboard_post_init_user(void) {
 
-    if (IS_HOST_LED_ON(USB_LED_NUM_LOCK)) { // turn on Num lock by defautl so that the numpad layer always has predictable results
+    if (IS_HOST_LED_ON(USB_LED_NUM_LOCK)) { // turn on Num lock by default so that the numpad layer always has predictable results
         tap_code(KC_NUMLOCK);
     }
     timeout_timer = timer_read(); // set inital time for ide timeout

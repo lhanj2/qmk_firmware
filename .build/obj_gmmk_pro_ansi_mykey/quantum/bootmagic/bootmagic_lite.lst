@@ -201,12 +201,12 @@
  139              		.file 8 "quantum/via.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 bootmagic_lite.c
-C:\Users\lhanj\AppData\Local\Temp\cc6Nz0iM.s:18     .text.bootmagic_lite_reset_eeprom:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc6Nz0iM.s:26     .text.bootmagic_lite_reset_eeprom:0000000000000000 bootmagic_lite_reset_eeprom
-C:\Users\lhanj\AppData\Local\Temp\cc6Nz0iM.s:41     .text.bootmagic_lite:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc6Nz0iM.s:48     .text.bootmagic_lite:0000000000000000 bootmagic_lite
-C:\Users\lhanj\AppData\Local\Temp\cc6Nz0iM.s:104    .text.bootmagic:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc6Nz0iM.s:111    .text.bootmagic:0000000000000000 bootmagic
+C:\Users\lhanj\AppData\Local\Temp\cc3GHfGl.s:18     .text.bootmagic_lite_reset_eeprom:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc3GHfGl.s:26     .text.bootmagic_lite_reset_eeprom:0000000000000000 bootmagic_lite_reset_eeprom
+C:\Users\lhanj\AppData\Local\Temp\cc3GHfGl.s:41     .text.bootmagic_lite:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc3GHfGl.s:48     .text.bootmagic_lite:0000000000000000 bootmagic_lite
+C:\Users\lhanj\AppData\Local\Temp\cc3GHfGl.s:104    .text.bootmagic:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc3GHfGl.s:111    .text.bootmagic:0000000000000000 bootmagic
 
 UNDEFINED SYMBOLS
 via_eeprom_reset

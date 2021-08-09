@@ -128,7 +128,7 @@
  lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.h \
  tmk_core/common/host_driver.h quantum/led.h quantum/logging/debug.h \
  quantum/logging/print.h quantum/util.h quantum/bitwise.h \
- quantum/logging/sendchar.h tmk_core/common/suspend.h \
+ quantum/logging/sendchar.h lib/printf/printf.h tmk_core/common/suspend.h \
  tmk_core/common/wait.h tmk_core/common/chibios/_wait.h \
  tmk_core/common/chibios/wait.c tmk_core/protocol/chibios/usb_driver.h \
  lib/chibios/os/hal/include/hal_usb_cdc.h quantum/keycode_config.h \
@@ -283,6 +283,7 @@ quantum/logging/print.h:
 quantum/util.h:
 quantum/bitwise.h:
 quantum/logging/sendchar.h:
+lib/printf/printf.h:
 tmk_core/common/suspend.h:
 tmk_core/common/wait.h:
 tmk_core/common/chibios/_wait.h:

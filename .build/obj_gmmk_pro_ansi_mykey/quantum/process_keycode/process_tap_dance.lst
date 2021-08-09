@@ -1348,35 +1348,35 @@
  945              		.file 12 "quantum/quantum_keycodes.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 process_tap_dance.c
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:18     .text.process_tap_dance_action_on_dance_finished.part.0:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:25     .text.process_tap_dance_action_on_dance_finished.part.0:0000000000000000 process_tap_dance_action_on_dance_finished.part.0
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:99     .text.qk_tap_dance_pair_on_each_tap:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:106    .text.qk_tap_dance_pair_on_each_tap:0000000000000000 qk_tap_dance_pair_on_each_tap
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:145    .text.qk_tap_dance_pair_finished:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:152    .text.qk_tap_dance_pair_finished:0000000000000000 qk_tap_dance_pair_finished
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:192    .text.qk_tap_dance_pair_reset:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:199    .text.qk_tap_dance_pair_reset:0000000000000000 qk_tap_dance_pair_reset
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:239    .text.qk_tap_dance_dual_role_on_each_tap:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:246    .text.qk_tap_dance_dual_role_on_each_tap:0000000000000000 qk_tap_dance_dual_role_on_each_tap
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:285    .text.qk_tap_dance_dual_role_finished:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:292    .text.qk_tap_dance_dual_role_finished:0000000000000000 qk_tap_dance_dual_role_finished
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:332    .text.qk_tap_dance_dual_role_reset:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:339    .text.qk_tap_dance_dual_role_reset:0000000000000000 qk_tap_dance_dual_role_reset
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:366    .text.reset_tap_dance:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:373    .text.reset_tap_dance:0000000000000000 reset_tap_dance
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:493    .text.reset_tap_dance:0000000000000048 $d
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:499    .text.preprocess_tap_dance:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:506    .text.preprocess_tap_dance:0000000000000000 preprocess_tap_dance
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:625    .text.preprocess_tap_dance:0000000000000060 $d
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:633    .text.process_tap_dance:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:640    .text.process_tap_dance:0000000000000000 process_tap_dance
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:796    .text.process_tap_dance:000000000000007c $d
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:803    .text.tap_dance_task:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:810    .text.tap_dance_task:0000000000000000 tap_dance_task
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:915    .text.tap_dance_task:000000000000005c $d
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:921    .bss.last_td:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:925    .bss.last_td:0000000000000000 last_td
-C:\Users\lhanj\AppData\Local\Temp\ccPX6kTf.s:931    .data.highest_td:0000000000000000 highest_td
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:18     .text.process_tap_dance_action_on_dance_finished.part.0:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:25     .text.process_tap_dance_action_on_dance_finished.part.0:0000000000000000 process_tap_dance_action_on_dance_finished.part.0
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:99     .text.qk_tap_dance_pair_on_each_tap:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:106    .text.qk_tap_dance_pair_on_each_tap:0000000000000000 qk_tap_dance_pair_on_each_tap
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:145    .text.qk_tap_dance_pair_finished:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:152    .text.qk_tap_dance_pair_finished:0000000000000000 qk_tap_dance_pair_finished
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:192    .text.qk_tap_dance_pair_reset:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:199    .text.qk_tap_dance_pair_reset:0000000000000000 qk_tap_dance_pair_reset
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:239    .text.qk_tap_dance_dual_role_on_each_tap:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:246    .text.qk_tap_dance_dual_role_on_each_tap:0000000000000000 qk_tap_dance_dual_role_on_each_tap
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:285    .text.qk_tap_dance_dual_role_finished:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:292    .text.qk_tap_dance_dual_role_finished:0000000000000000 qk_tap_dance_dual_role_finished
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:332    .text.qk_tap_dance_dual_role_reset:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:339    .text.qk_tap_dance_dual_role_reset:0000000000000000 qk_tap_dance_dual_role_reset
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:366    .text.reset_tap_dance:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:373    .text.reset_tap_dance:0000000000000000 reset_tap_dance
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:493    .text.reset_tap_dance:0000000000000048 $d
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:499    .text.preprocess_tap_dance:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:506    .text.preprocess_tap_dance:0000000000000000 preprocess_tap_dance
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:625    .text.preprocess_tap_dance:0000000000000060 $d
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:633    .text.process_tap_dance:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:640    .text.process_tap_dance:0000000000000000 process_tap_dance
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:796    .text.process_tap_dance:000000000000007c $d
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:803    .text.tap_dance_task:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:810    .text.tap_dance_task:0000000000000000 tap_dance_task
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:915    .text.tap_dance_task:000000000000005c $d
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:921    .bss.last_td:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:925    .bss.last_td:0000000000000000 last_td
+C:\Users\lhanj\AppData\Local\Temp\ccqdCtWc.s:931    .data.highest_td:0000000000000000 highest_td
 
 UNDEFINED SYMBOLS
 add_mods

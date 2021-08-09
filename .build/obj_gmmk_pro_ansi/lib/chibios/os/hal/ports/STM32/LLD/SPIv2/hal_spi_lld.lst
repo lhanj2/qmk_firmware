@@ -4367,41 +4367,41 @@
  1146              		.file 22 "./lib/chibios/os/rt/include/chthreads.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 hal_spi_lld.c
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:21     .text.spi_lld_serve_tx_interrupt:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:28     .text.spi_lld_serve_tx_interrupt:0000000000000000 spi_lld_serve_tx_interrupt
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:64     .text.spi_lld_serve_tx_interrupt:000000000000000c $d
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:69     .text.spi_lld_serve_rx_interrupt:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:75     .text.spi_lld_serve_rx_interrupt:0000000000000000 spi_lld_serve_rx_interrupt
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:358    .text.spi_lld_serve_rx_interrupt:000000000000009c $d
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:363    .text.spi_lld_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:370    .text.spi_lld_init:0000000000000000 spi_lld_init
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:405    .text.spi_lld_init:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:21     .text.spi_lld_serve_tx_interrupt:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:28     .text.spi_lld_serve_tx_interrupt:0000000000000000 spi_lld_serve_tx_interrupt
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:64     .text.spi_lld_serve_tx_interrupt:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:69     .text.spi_lld_serve_rx_interrupt:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:75     .text.spi_lld_serve_rx_interrupt:0000000000000000 spi_lld_serve_rx_interrupt
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:358    .text.spi_lld_serve_rx_interrupt:000000000000009c $d
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:363    .text.spi_lld_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:370    .text.spi_lld_init:0000000000000000 spi_lld_init
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:405    .text.spi_lld_init:0000000000000024 $d
                             *COM*:0000000000000030 SPID1
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:411    .text.spi_lld_start:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:418    .text.spi_lld_start:0000000000000000 spi_lld_start
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:589    .text.spi_lld_start:00000000000000b8 $d
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:597    .text.spi_lld_stop:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:604    .text.spi_lld_stop:0000000000000000 spi_lld_stop
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:677    .text.spi_lld_stop:0000000000000040 $d
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:683    .text.spi_lld_ignore:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:690    .text.spi_lld_ignore:0000000000000000 spi_lld_ignore
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:752    .text.spi_lld_ignore:0000000000000030 $d
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:758    .text.spi_lld_exchange:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:765    .text.spi_lld_exchange:0000000000000000 spi_lld_exchange
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:831    .text.spi_lld_send:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:838    .text.spi_lld_send:0000000000000000 spi_lld_send
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:901    .text.spi_lld_send:0000000000000034 $d
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:906    .text.spi_lld_receive:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:913    .text.spi_lld_receive:0000000000000000 spi_lld_receive
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:978    .text.spi_lld_receive:0000000000000034 $d
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:983    .text.spi_lld_abort:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:990    .text.spi_lld_abort:0000000000000000 spi_lld_abort
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:1033   .text.spi_lld_polled_exchange:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:1040   .text.spi_lld_polled_exchange:0000000000000000 spi_lld_polled_exchange
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:1115   .bss.dummyrx:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:1119   .bss.dummyrx:0000000000000000 dummyrx
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:1122   .rodata.dummytx:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\cclDuvK8.s:1126   .rodata.dummytx:0000000000000000 dummytx
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:411    .text.spi_lld_start:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:418    .text.spi_lld_start:0000000000000000 spi_lld_start
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:589    .text.spi_lld_start:00000000000000b8 $d
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:597    .text.spi_lld_stop:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:604    .text.spi_lld_stop:0000000000000000 spi_lld_stop
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:677    .text.spi_lld_stop:0000000000000040 $d
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:683    .text.spi_lld_ignore:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:690    .text.spi_lld_ignore:0000000000000000 spi_lld_ignore
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:752    .text.spi_lld_ignore:0000000000000030 $d
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:758    .text.spi_lld_exchange:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:765    .text.spi_lld_exchange:0000000000000000 spi_lld_exchange
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:831    .text.spi_lld_send:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:838    .text.spi_lld_send:0000000000000000 spi_lld_send
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:901    .text.spi_lld_send:0000000000000034 $d
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:906    .text.spi_lld_receive:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:913    .text.spi_lld_receive:0000000000000000 spi_lld_receive
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:978    .text.spi_lld_receive:0000000000000034 $d
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:983    .text.spi_lld_abort:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:990    .text.spi_lld_abort:0000000000000000 spi_lld_abort
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:1033   .text.spi_lld_polled_exchange:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:1040   .text.spi_lld_polled_exchange:0000000000000000 spi_lld_polled_exchange
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:1115   .bss.dummyrx:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:1119   .bss.dummyrx:0000000000000000 dummyrx
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:1122   .rodata.dummytx:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\cclhywju.s:1126   .rodata.dummytx:0000000000000000 dummytx
 
 UNDEFINED SYMBOLS
 chSysHalt

@@ -3161,12 +3161,12 @@
  224              		.file 5 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 bootloader.c
-C:\Users\lhanj\AppData\Local\Temp\ccFsKq6x.s:18     .text.bootloader_jump:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccFsKq6x.s:26     .text.bootloader_jump:0000000000000000 bootloader_jump
-C:\Users\lhanj\AppData\Local\Temp\ccFsKq6x.s:101    .text.bootloader_jump:0000000000000020 $d
-C:\Users\lhanj\AppData\Local\Temp\ccFsKq6x.s:111    .text.enter_bootloader_mode_if_requested:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccFsKq6x.s:118    .text.enter_bootloader_mode_if_requested:0000000000000000 enter_bootloader_mode_if_requested
-C:\Users\lhanj\AppData\Local\Temp\ccFsKq6x.s:215    .text.enter_bootloader_mode_if_requested:0000000000000030 $d
+C:\Users\lhanj\AppData\Local\Temp\ccyTTfil.s:18     .text.bootloader_jump:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccyTTfil.s:26     .text.bootloader_jump:0000000000000000 bootloader_jump
+C:\Users\lhanj\AppData\Local\Temp\ccyTTfil.s:101    .text.bootloader_jump:0000000000000020 $d
+C:\Users\lhanj\AppData\Local\Temp\ccyTTfil.s:111    .text.enter_bootloader_mode_if_requested:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccyTTfil.s:118    .text.enter_bootloader_mode_if_requested:0000000000000000 enter_bootloader_mode_if_requested
+C:\Users\lhanj\AppData\Local\Temp\ccyTTfil.s:215    .text.enter_bootloader_mode_if_requested:0000000000000030 $d
 
 UNDEFINED SYMBOLS
 __ram0_end__

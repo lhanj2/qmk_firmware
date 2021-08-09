@@ -616,19 +616,19 @@
  402              		.file 9 "quantum/sequencer/sequencer.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 process_space_cadet.c
-C:\Users\lhanj\AppData\Local\Temp\ccx1LIbx.s:18     .text.perform_space_cadet:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccx1LIbx.s:26     .text.perform_space_cadet:0000000000000000 perform_space_cadet
-C:\Users\lhanj\AppData\Local\Temp\ccx1LIbx.s:221    .text.perform_space_cadet:00000000000000b0 $d
-C:\Users\lhanj\AppData\Local\Temp\ccx1LIbx.s:227    .text.process_space_cadet:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccx1LIbx.s:234    .text.process_space_cadet:0000000000000000 process_space_cadet
-C:\Users\lhanj\AppData\Local\Temp\ccx1LIbx.s:292    .text.process_space_cadet:000000000000004a $d
-C:\Users\lhanj\AppData\Local\Temp\ccx1LIbx.s:376    .text.process_space_cadet:00000000000000b0 $d
-C:\Users\lhanj\AppData\Local\Temp\ccx1LIbx.s:384    .bss.sc_last:0000000000000000 sc_last
-C:\Users\lhanj\AppData\Local\Temp\ccx1LIbx.s:385    .bss.sc_last:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccx1LIbx.s:387    .bss.sc_timer:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccx1LIbx.s:391    .bss.sc_timer:0000000000000000 sc_timer
-C:\Users\lhanj\AppData\Local\Temp\ccx1LIbx.s:295    .text.process_space_cadet:000000000000004d $d
-C:\Users\lhanj\AppData\Local\Temp\ccx1LIbx.s:295    .text.process_space_cadet:000000000000004e $t
+C:\Users\lhanj\AppData\Local\Temp\ccSEg4Ut.s:18     .text.perform_space_cadet:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccSEg4Ut.s:26     .text.perform_space_cadet:0000000000000000 perform_space_cadet
+C:\Users\lhanj\AppData\Local\Temp\ccSEg4Ut.s:221    .text.perform_space_cadet:00000000000000b0 $d
+C:\Users\lhanj\AppData\Local\Temp\ccSEg4Ut.s:227    .text.process_space_cadet:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccSEg4Ut.s:234    .text.process_space_cadet:0000000000000000 process_space_cadet
+C:\Users\lhanj\AppData\Local\Temp\ccSEg4Ut.s:292    .text.process_space_cadet:000000000000004a $d
+C:\Users\lhanj\AppData\Local\Temp\ccSEg4Ut.s:376    .text.process_space_cadet:00000000000000b0 $d
+C:\Users\lhanj\AppData\Local\Temp\ccSEg4Ut.s:384    .bss.sc_last:0000000000000000 sc_last
+C:\Users\lhanj\AppData\Local\Temp\ccSEg4Ut.s:385    .bss.sc_last:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccSEg4Ut.s:387    .bss.sc_timer:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccSEg4Ut.s:391    .bss.sc_timer:0000000000000000 sc_timer
+C:\Users\lhanj\AppData\Local\Temp\ccSEg4Ut.s:295    .text.process_space_cadet:000000000000004d $d
+C:\Users\lhanj\AppData\Local\Temp\ccSEg4Ut.s:295    .text.process_space_cadet:000000000000004e $t
 
 UNDEFINED SYMBOLS
 timer_read

@@ -10,7 +10,8 @@
  keyboards/gmmk/pro/ansi/keymaps/mykey/config.h \
  platforms/chibios/GENERIC_STM32_F303XC/configs/config.h \
  quantum/logging/debug.h quantum/logging/print.h quantum/util.h \
- quantum/bitwise.h quantum/logging/sendchar.h tmk_core/common/progmem.h
+ quantum/bitwise.h quantum/logging/sendchar.h tmk_core/common/progmem.h \
+ lib/printf/printf.h
 platforms/chibios/GENERIC_STM32_F303XC/configs/bootloader_defs.h:
 keyboards/gmmk/pro/config.h:
 quantum/config_common.h:
@@ -29,3 +30,4 @@ quantum/util.h:
 quantum/bitwise.h:
 quantum/logging/sendchar.h:
 tmk_core/common/progmem.h:
+lib/printf/printf.h:

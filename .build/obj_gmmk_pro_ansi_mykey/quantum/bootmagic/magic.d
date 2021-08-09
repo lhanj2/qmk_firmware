@@ -55,8 +55,8 @@
  lib/chibios/os/rt/include/chdynamic.h tmk_core/common/chibios/wait.c \
  quantum/matrix.h tmk_core/common/bootloader.h quantum/logging/debug.h \
  quantum/logging/print.h quantum/util.h quantum/bitwise.h \
- quantum/logging/sendchar.h tmk_core/common/progmem.h quantum/keymap.h \
- tmk_core/common/action.h tmk_core/common/keyboard.h \
+ quantum/logging/sendchar.h tmk_core/common/progmem.h lib/printf/printf.h \
+ quantum/keymap.h tmk_core/common/action.h tmk_core/common/keyboard.h \
  tmk_core/common/keycode.h tmk_core/common/action_code.h \
  tmk_core/common/action_macro.h tmk_core/common/report.h \
  tmk_core/protocol/usb_descriptor.h \
@@ -211,6 +211,7 @@ quantum/util.h:
 quantum/bitwise.h:
 quantum/logging/sendchar.h:
 tmk_core/common/progmem.h:
+lib/printf/printf.h:
 quantum/keymap.h:
 tmk_core/common/action.h:
 tmk_core/common/keyboard.h:

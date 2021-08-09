@@ -133,12 +133,12 @@
  lib/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.h \
  tmk_core/common/host.h tmk_core/common/host_driver.h quantum/led.h \
  quantum/logging/debug.h quantum/logging/print.h quantum/util.h \
- quantum/bitwise.h quantum/logging/sendchar.h quantum/keycode_config.h \
- tmk_core/common/eeconfig.h quantum/quantum_keycodes.h \
- quantum/sequencer/sequencer.h tmk_core/common/timer.h \
- tmk_core/common/chibios/_timer.h quantum/rgb_matrix/rgb_matrix.h \
- quantum/rgb_matrix/rgb_matrix_types.h quantum/color.h \
- drivers/led/aw20216.h tmk_core/common/gpio.h \
+ quantum/bitwise.h quantum/logging/sendchar.h lib/printf/printf.h \
+ quantum/keycode_config.h tmk_core/common/eeconfig.h \
+ quantum/quantum_keycodes.h quantum/sequencer/sequencer.h \
+ tmk_core/common/timer.h tmk_core/common/chibios/_timer.h \
+ quantum/rgb_matrix/rgb_matrix.h quantum/rgb_matrix/rgb_matrix_types.h \
+ quantum/color.h drivers/led/aw20216.h tmk_core/common/gpio.h \
  tmk_core/common/chibios/gpio.h \
  quantum/rgb_matrix/animations/rgb_matrix_effects.inc \
  quantum/rgb_matrix/animations/solid_color_anim.h \
@@ -354,6 +354,7 @@ quantum/logging/print.h:
 quantum/util.h:
 quantum/bitwise.h:
 quantum/logging/sendchar.h:
+lib/printf/printf.h:
 quantum/keycode_config.h:
 tmk_core/common/eeconfig.h:
 quantum/quantum_keycodes.h:

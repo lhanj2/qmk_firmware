@@ -1389,29 +1389,29 @@
  875              		.file 14 "tmk_core/common/eeconfig.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 via.c
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:18     .text.via_eeprom_is_valid:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:26     .text.via_eeprom_is_valid:0000000000000000 via_eeprom_is_valid
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:77     .text.via_eeprom_set_valid:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:84     .text.via_eeprom_set_valid:0000000000000000 via_eeprom_set_valid
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:138    .text.via_eeprom_reset:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:145    .text.via_eeprom_reset:0000000000000000 via_eeprom_reset
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:174    .text.via_init_kb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:181    .text.via_init_kb:0000000000000000 via_init_kb
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:194    .text.via_get_layout_options:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:201    .text.via_get_layout_options:0000000000000000 via_get_layout_options
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:238    .text.via_set_layout_options:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:245    .text.via_set_layout_options:0000000000000000 via_set_layout_options
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:270    .text.via_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:277    .text.via_init:0000000000000000 via_init
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:326    .text.process_record_via:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:333    .text.process_record_via:0000000000000000 process_record_via
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:447    .text.raw_hid_receive_kb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:454    .text.raw_hid_receive_kb:0000000000000000 raw_hid_receive_kb
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:473    .text.raw_hid_receive:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:480    .text.raw_hid_receive:0000000000000000 raw_hid_receive
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:508    .text.raw_hid_receive:0000000000000012 $d
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:527    .text.raw_hid_receive:0000000000000025 $d
-C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:527    .text.raw_hid_receive:0000000000000026 $t
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:18     .text.via_eeprom_is_valid:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:26     .text.via_eeprom_is_valid:0000000000000000 via_eeprom_is_valid
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:77     .text.via_eeprom_set_valid:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:84     .text.via_eeprom_set_valid:0000000000000000 via_eeprom_set_valid
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:138    .text.via_eeprom_reset:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:145    .text.via_eeprom_reset:0000000000000000 via_eeprom_reset
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:174    .text.via_init_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:181    .text.via_init_kb:0000000000000000 via_init_kb
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:194    .text.via_get_layout_options:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:201    .text.via_get_layout_options:0000000000000000 via_get_layout_options
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:238    .text.via_set_layout_options:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:245    .text.via_set_layout_options:0000000000000000 via_set_layout_options
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:270    .text.via_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:277    .text.via_init:0000000000000000 via_init
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:326    .text.process_record_via:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:333    .text.process_record_via:0000000000000000 process_record_via
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:447    .text.raw_hid_receive_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:454    .text.raw_hid_receive_kb:0000000000000000 raw_hid_receive_kb
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:473    .text.raw_hid_receive:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:480    .text.raw_hid_receive:0000000000000000 raw_hid_receive
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:508    .text.raw_hid_receive:0000000000000012 $d
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:527    .text.raw_hid_receive:0000000000000025 $d
+C:\Users\lhanj\AppData\Local\Temp\ccr9zbFx.s:527    .text.raw_hid_receive:0000000000000026 $t
 
 UNDEFINED SYMBOLS
 eeprom_read_byte

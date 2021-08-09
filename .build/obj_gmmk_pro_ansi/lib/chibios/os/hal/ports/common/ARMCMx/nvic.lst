@@ -300,15 +300,15 @@
  195              		.file 4 "./lib/chibios/os/common/ext/ARM/CMSIS/Core/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 nvic.c
-C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:18     .text.nvicEnableVector:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:26     .text.nvicEnableVector:0000000000000000 nvicEnableVector
-C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:69     .text.nvicDisableVector:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:76     .text.nvicDisableVector:0000000000000000 nvicDisableVector
-C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:110    .text.nvicDisableVector:000000000000001c $d
-C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:115    .text.nvicSetSystemHandlerPriority:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:122    .text.nvicSetSystemHandlerPriority:0000000000000000 nvicSetSystemHandlerPriority
-C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:153    .text.nvicClearPending:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:160    .text.nvicClearPending:0000000000000000 nvicClearPending
-C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:187    .text.nvicClearPending:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\ccSqMQnB.s:18     .text.nvicEnableVector:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccSqMQnB.s:26     .text.nvicEnableVector:0000000000000000 nvicEnableVector
+C:\Users\lhanj\AppData\Local\Temp\ccSqMQnB.s:69     .text.nvicDisableVector:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccSqMQnB.s:76     .text.nvicDisableVector:0000000000000000 nvicDisableVector
+C:\Users\lhanj\AppData\Local\Temp\ccSqMQnB.s:110    .text.nvicDisableVector:000000000000001c $d
+C:\Users\lhanj\AppData\Local\Temp\ccSqMQnB.s:115    .text.nvicSetSystemHandlerPriority:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccSqMQnB.s:122    .text.nvicSetSystemHandlerPriority:0000000000000000 nvicSetSystemHandlerPriority
+C:\Users\lhanj\AppData\Local\Temp\ccSqMQnB.s:153    .text.nvicClearPending:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccSqMQnB.s:160    .text.nvicClearPending:0000000000000000 nvicClearPending
+C:\Users\lhanj\AppData\Local\Temp\ccSqMQnB.s:187    .text.nvicClearPending:0000000000000018 $d
 
 NO UNDEFINED SYMBOLS

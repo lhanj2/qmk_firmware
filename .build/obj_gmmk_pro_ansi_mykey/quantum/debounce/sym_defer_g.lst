@@ -341,20 +341,20 @@
  229              		.file 6 "quantum/sequencer/sequencer.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 sym_defer_g.c
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:18     .text.debounce_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:26     .text.debounce_init:0000000000000000 debounce_init
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:41     .text.debounce:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:48     .text.debounce:0000000000000000 debounce
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:158    .text.debounce:0000000000000040 $d
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:165    .text.debounce_active:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:172    .text.debounce_active:0000000000000000 debounce_active
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:187    .text.debounce_active:0000000000000008 $d
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:192    .text.debounce_free:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:199    .text.debounce_free:0000000000000000 debounce_free
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:215    .bss.debouncing:0000000000000000 debouncing
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:216    .bss.debouncing:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:218    .bss.debouncing_time:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:222    .bss.debouncing_time:0000000000000000 debouncing_time
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:18     .text.debounce_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:26     .text.debounce_init:0000000000000000 debounce_init
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:41     .text.debounce:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:48     .text.debounce:0000000000000000 debounce
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:158    .text.debounce:0000000000000040 $d
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:165    .text.debounce_active:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:172    .text.debounce_active:0000000000000000 debounce_active
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:187    .text.debounce_active:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:192    .text.debounce_free:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:199    .text.debounce_free:0000000000000000 debounce_free
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:215    .bss.debouncing:0000000000000000 debouncing
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:216    .bss.debouncing:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:218    .bss.debouncing_time:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccobs2if.s:222    .bss.debouncing_time:0000000000000000 debouncing_time
 
 UNDEFINED SYMBOLS
 timer_read32

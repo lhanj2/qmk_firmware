@@ -273,56 +273,73 @@
  142 000a 08BD     		pop	{r3, pc}
  143              		.cfi_endproc
  144              	.LFE291:
- 146              		.section	.text.startup.main,"ax",%progbits
- 147              		.align	1
- 148              		.global	main
- 149              		.syntax unified
- 150              		.thumb
- 151              		.thumb_func
- 152              		.fpu fpv4-sp-d16
- 154              	main:
- 155              	.LFB292:
+ 146              		.section	.rodata.main.str1.1,"aMS",%progbits,1
+ 147              	.LC0:
+ 148 0000 55534220 		.ascii	"USB configured.\012\000"
+ 148      636F6E66 
+ 148      69677572 
+ 148      65642E0A 
+ 148      00
+ 149              	.LC1:
+ 150 0011 4B657962 		.ascii	"Keyboard start.\012\000"
+ 150      6F617264 
+ 150      20737461 
+ 150      72742E0A 
+ 150      00
+ 151              	.LC2:
+ 152 0022 5B735D00 		.ascii	"[s]\000"
+ 153              		.section	.text.startup.main,"ax",%progbits
+ 154              		.align	1
+ 155              		.global	main
+ 156              		.syntax unified
+ 157              		.thumb
+ 158              		.thumb_func
+ 159              		.fpu fpv4-sp-d16
+ 161              	main:
+ 162              	.LFB292:
  139:tmk_core/protocol/chibios/main.c **** 
  140:tmk_core/protocol/chibios/main.c **** /* Main thread
  141:tmk_core/protocol/chibios/main.c ****  */
  142:tmk_core/protocol/chibios/main.c **** int main(void) {
- 156              		.loc 1 142 16 is_stmt 1 view -0
- 157              		.cfi_startproc
- 158              		@ args = 0, pretend = 0, frame = 0
- 159              		@ frame_needed = 0, uses_anonymous_args = 0
+ 163              		.loc 1 142 16 is_stmt 1 view -0
+ 164              		.cfi_startproc
+ 165              		@ args = 0, pretend = 0, frame = 0
+ 166              		@ frame_needed = 0, uses_anonymous_args = 0
  143:tmk_core/protocol/chibios/main.c ****     /* ChibiOS/RT init */
  144:tmk_core/protocol/chibios/main.c ****     halInit();
- 160              		.loc 1 144 5 view .LVU21
+ 167              		.loc 1 144 5 view .LVU21
  142:tmk_core/protocol/chibios/main.c ****     /* ChibiOS/RT init */
- 161              		.loc 1 142 16 is_stmt 0 view .LVU22
- 162 0000 10B5     		push	{r4, lr}
- 163              		.cfi_def_cfa_offset 8
- 164              		.cfi_offset 4, -8
- 165              		.cfi_offset 14, -4
- 166              		.loc 1 144 5 view .LVU23
- 167 0002 FFF7FEFF 		bl	halInit
- 168              	.LVL6:
+ 168              		.loc 1 142 16 is_stmt 0 view .LVU22
+ 169 0000 38B5     		push	{r3, r4, r5, lr}
+ 170              		.cfi_def_cfa_offset 16
+ 171              		.cfi_offset 3, -16
+ 172              		.cfi_offset 4, -12
+ 173              		.cfi_offset 5, -8
+ 174              		.cfi_offset 14, -4
+ 175              		.loc 1 144 5 view .LVU23
+ 176 0002 FFF7FEFF 		bl	halInit
+ 177              	.LVL6:
  145:tmk_core/protocol/chibios/main.c ****     chSysInit();
- 169              		.loc 1 145 5 is_stmt 1 view .LVU24
- 170 0006 FFF7FEFF 		bl	chSysInit
- 171              	.LVL7:
+ 178              		.loc 1 145 5 is_stmt 1 view .LVU24
+ 179 0006 FFF7FEFF 		bl	chSysInit
+ 180              	.LVL7:
  146:tmk_core/protocol/chibios/main.c **** 
  147:tmk_core/protocol/chibios/main.c ****     // TESTING
  148:tmk_core/protocol/chibios/main.c ****     // chThdCreateStatic(waThread1, sizeof(waThread1), NORMALPRIO, Thread1, NULL);
  149:tmk_core/protocol/chibios/main.c **** 
  150:tmk_core/protocol/chibios/main.c ****     keyboard_setup();
- 172              		.loc 1 150 5 view .LVU25
- 173 000a FFF7FEFF 		bl	keyboard_setup
- 174              	.LVL8:
+ 181              		.loc 1 150 5 view .LVU25
+ 182 000a FFF7FEFF 		bl	keyboard_setup
+ 183              	.LVL8:
  151:tmk_core/protocol/chibios/main.c **** 
  152:tmk_core/protocol/chibios/main.c ****     /* Init USB */
  153:tmk_core/protocol/chibios/main.c ****     usb_event_queue_init();
- 175              		.loc 1 153 5 view .LVU26
- 176 000e FFF7FEFF 		bl	usb_event_queue_init
- 177              	.LVL9:
+ 184              		.loc 1 153 5 view .LVU26
+ 185 000e FFF7FEFF 		bl	usb_event_queue_init
+ 186              	.LVL9:
  154:tmk_core/protocol/chibios/main.c ****     init_usb_driver(&USB_DRIVER);
- 178              		.loc 1 154 5 view .LVU27
- 179 0012 1648     		ldr	r0, .L15
+ 187              		.loc 1 154 5 view .LVU27
+ 188 0012 1C48     		ldr	r0, .L14
  155:tmk_core/protocol/chibios/main.c **** 
  156:tmk_core/protocol/chibios/main.c **** #ifdef MIDI_ENABLE
  157:tmk_core/protocol/chibios/main.c ****     setup_midi();
@@ -384,62 +401,81 @@
  213:tmk_core/protocol/chibios/main.c **** 
  214:tmk_core/protocol/chibios/main.c **** #if !defined(NO_USB_STARTUP_CHECK)
  215:tmk_core/protocol/chibios/main.c ****         if (USB_DRIVER.state == USB_SUSPENDED) {
- 180              		.loc 1 215 23 is_stmt 0 view .LVU28
- 181 0014 154C     		ldr	r4, .L15
- 154:tmk_core/protocol/chibios/main.c ****     init_usb_driver(&USB_DRIVER);
- 182              		.loc 1 154 5 view .LVU29
- 183 0016 FFF7FEFF 		bl	init_usb_driver
- 184              	.LVL10:
- 168:tmk_core/protocol/chibios/main.c **** 
- 185              		.loc 1 168 5 is_stmt 1 view .LVU30
- 171:tmk_core/protocol/chibios/main.c **** #if defined(WAIT_FOR_USB) || defined(SERIAL_LINK_ENABLE)
- 186              		.loc 1 171 5 view .LVU31
- 178:tmk_core/protocol/chibios/main.c ****         break;
- 187              		.loc 1 178 9 view .LVU32
- 179:tmk_core/protocol/chibios/main.c **** #endif
- 188              		.loc 1 179 9 view .LVU33
- 196:tmk_core/protocol/chibios/main.c **** 
- 189              		.loc 1 196 5 view .LVU34
- 196:tmk_core/protocol/chibios/main.c **** 
- 190              		.loc 1 196 5 view .LVU35
- 196:tmk_core/protocol/chibios/main.c **** 
- 191              		.loc 1 196 5 view .LVU36
- 192 001a 41F28830 		movw	r0, #5000
- 193 001e FFF7FEFF 		bl	chThdSleep
- 194              	.LVL11:
- 196:tmk_core/protocol/chibios/main.c **** 
- 195              		.loc 1 196 5 view .LVU37
- 198:tmk_core/protocol/chibios/main.c **** 
- 196              		.loc 1 198 31 view .LVU38
- 201:tmk_core/protocol/chibios/main.c ****     host_set_driver(driver);
- 197              		.loc 1 201 5 view .LVU39
- 198 0022 FFF7FEFF 		bl	keyboard_init
- 199              	.LVL12:
- 202:tmk_core/protocol/chibios/main.c **** 
- 200              		.loc 1 202 5 view .LVU40
- 201 0026 1248     		ldr	r0, .L15+4
- 202 0028 FFF7FEFF 		bl	host_set_driver
- 203              	.LVL13:
- 204              	.L11:
- 208:tmk_core/protocol/chibios/main.c **** 
- 205              		.loc 1 208 31 view .LVU41
- 211:tmk_core/protocol/chibios/main.c ****         usb_event_queue_task();
- 206              		.loc 1 211 5 view .LVU42
- 212:tmk_core/protocol/chibios/main.c **** 
- 207              		.loc 1 212 9 view .LVU43
- 208 002c FFF7FEFF 		bl	usb_event_queue_task
- 209              	.LVL14:
- 210              		.loc 1 215 9 view .LVU44
- 211              		.loc 1 215 12 is_stmt 0 view .LVU45
- 212 0030 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
- 213 0032 052B     		cmp	r3, #5
- 214 0034 11D0     		beq	.L9
- 215              	.L8:
+ 189              		.loc 1 215 23 is_stmt 0 view .LVU28
+ 190 0014 1B4C     		ldr	r4, .L14
  216:tmk_core/protocol/chibios/main.c ****             print("[s]");
+ 191              		.loc 1 216 13 view .LVU29
+ 192 0016 1C4D     		ldr	r5, .L14+4
+ 154:tmk_core/protocol/chibios/main.c ****     init_usb_driver(&USB_DRIVER);
+ 193              		.loc 1 154 5 view .LVU30
+ 194 0018 FFF7FEFF 		bl	init_usb_driver
+ 195              	.LVL10:
+ 168:tmk_core/protocol/chibios/main.c **** 
+ 196              		.loc 1 168 5 is_stmt 1 view .LVU31
+ 171:tmk_core/protocol/chibios/main.c **** #if defined(WAIT_FOR_USB) || defined(SERIAL_LINK_ENABLE)
+ 197              		.loc 1 171 5 view .LVU32
+ 178:tmk_core/protocol/chibios/main.c ****         break;
+ 198              		.loc 1 178 9 view .LVU33
+ 179:tmk_core/protocol/chibios/main.c **** #endif
+ 199              		.loc 1 179 9 view .LVU34
+ 196:tmk_core/protocol/chibios/main.c **** 
+ 200              		.loc 1 196 5 view .LVU35
+ 196:tmk_core/protocol/chibios/main.c **** 
+ 201              		.loc 1 196 5 view .LVU36
+ 196:tmk_core/protocol/chibios/main.c **** 
+ 202              		.loc 1 196 5 view .LVU37
+ 203 001c 41F28830 		movw	r0, #5000
+ 204 0020 FFF7FEFF 		bl	chThdSleep
+ 205              	.LVL11:
+ 196:tmk_core/protocol/chibios/main.c **** 
+ 206              		.loc 1 196 5 view .LVU38
+ 198:tmk_core/protocol/chibios/main.c **** 
+ 207              		.loc 1 198 5 view .LVU39
+ 208 0024 1948     		ldr	r0, .L14+8
+ 209 0026 FFF7FEFF 		bl	printf_
+ 210              	.LVL12:
+ 201:tmk_core/protocol/chibios/main.c ****     host_set_driver(driver);
+ 211              		.loc 1 201 5 view .LVU40
+ 212 002a FFF7FEFF 		bl	keyboard_init
+ 213              	.LVL13:
+ 202:tmk_core/protocol/chibios/main.c **** 
+ 214              		.loc 1 202 5 view .LVU41
+ 215 002e 1848     		ldr	r0, .L14+12
+ 216 0030 FFF7FEFF 		bl	host_set_driver
+ 217              	.LVL14:
+ 208:tmk_core/protocol/chibios/main.c **** 
+ 218              		.loc 1 208 5 view .LVU42
+ 219 0034 1748     		ldr	r0, .L14+16
+ 220 0036 FFF7FEFF 		bl	printf_
+ 221              	.LVL15:
+ 222              	.L11:
+ 211:tmk_core/protocol/chibios/main.c ****         usb_event_queue_task();
+ 223              		.loc 1 211 5 view .LVU43
+ 212:tmk_core/protocol/chibios/main.c **** 
+ 224              		.loc 1 212 9 view .LVU44
+ 225 003a FFF7FEFF 		bl	usb_event_queue_task
+ 226              	.LVL16:
+ 215:tmk_core/protocol/chibios/main.c ****             print("[s]");
+ 227              		.loc 1 215 9 view .LVU45
+ 215:tmk_core/protocol/chibios/main.c ****             print("[s]");
+ 228              		.loc 1 215 12 is_stmt 0 view .LVU46
+ 229 003e 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 230 0040 052B     		cmp	r3, #5
+ 231 0042 09D1     		bne	.L7
+ 232              		.loc 1 216 13 is_stmt 1 view .LVU47
+ 233 0044 2846     		mov	r0, r5
+ 234 0046 FFF7FEFF 		bl	printf_
+ 235              	.LVL17:
  217:tmk_core/protocol/chibios/main.c **** #    ifdef VISUALIZER_ENABLE
  218:tmk_core/protocol/chibios/main.c ****             visualizer_suspend();
  219:tmk_core/protocol/chibios/main.c **** #    endif
  220:tmk_core/protocol/chibios/main.c ****             while (USB_DRIVER.state == USB_SUSPENDED) {
+ 236              		.loc 1 220 13 view .LVU48
+ 237              	.L9:
+ 238              		.loc 1 220 19 view .LVU49
+ 239 004a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 240 004c 052B     		cmp	r3, #5
+ 241 004e 0CD0     		beq	.L10
  221:tmk_core/protocol/chibios/main.c ****                 /* Do this in the suspended state */
  222:tmk_core/protocol/chibios/main.c **** #    ifdef SERIAL_LINK_ENABLE
  223:tmk_core/protocol/chibios/main.c ****                 serial_link_update();
@@ -454,8 +490,15 @@
  232:tmk_core/protocol/chibios/main.c ****             /* Woken up */
  233:tmk_core/protocol/chibios/main.c ****             // variables has been already cleared by the wakeup hook
  234:tmk_core/protocol/chibios/main.c ****             send_keyboard_report();
+ 242              		.loc 1 234 13 view .LVU50
+ 243 0050 FFF7FEFF 		bl	send_keyboard_report
+ 244              	.LVL18:
  235:tmk_core/protocol/chibios/main.c **** #    ifdef MOUSEKEY_ENABLE
  236:tmk_core/protocol/chibios/main.c ****             mousekey_send();
+ 245              		.loc 1 236 13 view .LVU51
+ 246 0054 FFF7FEFF 		bl	mousekey_send
+ 247              	.LVL19:
+ 248              	.L7:
  237:tmk_core/protocol/chibios/main.c **** #    endif /* MOUSEKEY_ENABLE */
  238:tmk_core/protocol/chibios/main.c **** 
  239:tmk_core/protocol/chibios/main.c **** #    ifdef VISUALIZER_ENABLE
@@ -465,11 +508,14 @@
  243:tmk_core/protocol/chibios/main.c **** #endif
  244:tmk_core/protocol/chibios/main.c **** 
  245:tmk_core/protocol/chibios/main.c ****         keyboard_task();
- 216              		.loc 1 245 9 is_stmt 1 view .LVU46
- 217 0036 FFF7FEFF 		bl	keyboard_task
- 218              	.LVL15:
+ 249              		.loc 1 245 9 view .LVU52
+ 250 0058 FFF7FEFF 		bl	keyboard_task
+ 251              	.LVL20:
  246:tmk_core/protocol/chibios/main.c **** #ifdef CONSOLE_ENABLE
  247:tmk_core/protocol/chibios/main.c ****         console_task();
+ 252              		.loc 1 247 9 view .LVU53
+ 253 005c FFF7FEFF 		bl	console_task
+ 254              	.LVL21:
  248:tmk_core/protocol/chibios/main.c **** #endif
  249:tmk_core/protocol/chibios/main.c **** #ifdef MIDI_ENABLE
  250:tmk_core/protocol/chibios/main.c ****         midi_ep_task();
@@ -479,119 +525,110 @@
  254:tmk_core/protocol/chibios/main.c **** #endif
  255:tmk_core/protocol/chibios/main.c **** #ifdef RAW_ENABLE
  256:tmk_core/protocol/chibios/main.c ****         raw_hid_task();
- 219              		.loc 1 256 9 view .LVU47
- 220 003a FFF7FEFF 		bl	raw_hid_task
- 221              	.LVL16:
+ 255              		.loc 1 256 9 view .LVU54
+ 256 0060 FFF7FEFF 		bl	raw_hid_task
+ 257              	.LVL22:
  257:tmk_core/protocol/chibios/main.c **** #endif
  258:tmk_core/protocol/chibios/main.c **** 
  259:tmk_core/protocol/chibios/main.c ****         // Run housekeeping
  260:tmk_core/protocol/chibios/main.c ****         housekeeping_task();
- 222              		.loc 1 260 9 view .LVU48
- 223 003e FFF7FEFF 		bl	housekeeping_task
- 224              	.LVL17:
+ 258              		.loc 1 260 9 view .LVU55
+ 259 0064 FFF7FEFF 		bl	housekeeping_task
+ 260              	.LVL23:
  211:tmk_core/protocol/chibios/main.c ****         usb_event_queue_task();
- 225              		.loc 1 211 11 view .LVU49
+ 261              		.loc 1 211 11 view .LVU56
  212:tmk_core/protocol/chibios/main.c **** 
- 226              		.loc 1 212 9 is_stmt 0 view .LVU50
- 227 0042 F3E7     		b	.L11
- 228              	.L10:
+ 262              		.loc 1 212 9 is_stmt 0 view .LVU57
+ 263 0068 E7E7     		b	.L11
+ 264              	.L10:
  225:tmk_core/protocol/chibios/main.c ****                 /* Remote wakeup */
- 229              		.loc 1 225 17 is_stmt 1 view .LVU51
- 230 0044 FFF7FEFF 		bl	suspend_power_down
- 231              	.LVL18:
+ 265              		.loc 1 225 17 is_stmt 1 view .LVU58
+ 266 006a FFF7FEFF 		bl	suspend_power_down
+ 267              	.LVL24:
  227:tmk_core/protocol/chibios/main.c ****                     usbWakeupHost(&USB_DRIVER);
- 232              		.loc 1 227 17 view .LVU52
+ 268              		.loc 1 227 17 view .LVU59
  227:tmk_core/protocol/chibios/main.c ****                     usbWakeupHost(&USB_DRIVER);
- 233              		.loc 1 227 21 is_stmt 0 view .LVU53
- 234 0048 FFF7FEFF 		bl	suspend_wakeup_condition
- 235              	.LVL19:
+ 269              		.loc 1 227 21 is_stmt 0 view .LVU60
+ 270 006e FFF7FEFF 		bl	suspend_wakeup_condition
+ 271              	.LVL25:
  227:tmk_core/protocol/chibios/main.c ****                     usbWakeupHost(&USB_DRIVER);
- 236              		.loc 1 227 20 view .LVU54
- 237 004c 28B1     		cbz	r0, .L9
+ 272              		.loc 1 227 20 view .LVU61
+ 273 0072 0028     		cmp	r0, #0
+ 274 0074 E9D0     		beq	.L9
  228:tmk_core/protocol/chibios/main.c ****                     restart_usb_driver(&USB_DRIVER);
- 238              		.loc 1 228 21 is_stmt 1 view .LVU55
- 239 004e 2046     		mov	r0, r4
- 240 0050 FFF7FEFF 		bl	usbWakeupHost
- 241              	.LVL20:
+ 275              		.loc 1 228 21 is_stmt 1 view .LVU62
+ 276 0076 2046     		mov	r0, r4
+ 277 0078 FFF7FEFF 		bl	usbWakeupHost
+ 278              	.LVL26:
  229:tmk_core/protocol/chibios/main.c ****                 }
- 242              		.loc 1 229 21 view .LVU56
- 243 0054 2046     		mov	r0, r4
- 244 0056 FFF7FEFF 		bl	restart_usb_driver
- 245              	.LVL21:
- 246              	.L9:
- 220:tmk_core/protocol/chibios/main.c ****                 /* Do this in the suspended state */
- 247              		.loc 1 220 19 view .LVU57
- 248 005a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
- 249 005c 052B     		cmp	r3, #5
- 250 005e F1D0     		beq	.L10
- 234:tmk_core/protocol/chibios/main.c **** #    ifdef MOUSEKEY_ENABLE
- 251              		.loc 1 234 13 view .LVU58
- 252 0060 FFF7FEFF 		bl	send_keyboard_report
- 253              	.LVL22:
- 236:tmk_core/protocol/chibios/main.c **** #    endif /* MOUSEKEY_ENABLE */
- 254              		.loc 1 236 13 view .LVU59
- 255 0064 FFF7FEFF 		bl	mousekey_send
- 256              	.LVL23:
- 257 0068 E5E7     		b	.L8
- 258              	.L16:
- 259 006a 00BF     		.align	2
- 260              	.L15:
- 261 006c 00000000 		.word	USBD1
- 262 0070 00000000 		.word	.LANCHOR0
- 263              		.cfi_endproc
- 264              	.LFE292:
- 266              		.global	chibios_driver
- 267              		.section	.data.chibios_driver,"aw"
- 268              		.align	2
- 269              		.set	.LANCHOR0,. + 0
- 272              	chibios_driver:
- 273 0000 00000000 		.word	keyboard_leds
- 274 0004 00000000 		.word	send_keyboard
- 275 0008 00000000 		.word	send_mouse
- 276 000c 00000000 		.word	send_system
- 277 0010 00000000 		.word	send_consumer
- 278              		.text
- 279              	.Letext0:
- 280              		.file 2 "c:\\qmk_msys\\mingw64\\lib\\gcc\\arm-none-eabi\\10.1.0\\include\\stddef.h"
- 281              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
- 282              		.file 4 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
- 283              		.file 5 "./lib/chibios/os/common/ports/ARMCMx/compilers/GCC/chtypes.h"
- 284              		.file 6 "./lib/chibios/os/rt/include/chsystypes.h"
- 285              		.file 7 "./lib/chibios/os/rt/include/chschd.h"
- 286              		.file 8 "./lib/chibios/os/rt/include/chtime.h"
- 287              		.file 9 "./lib/chibios/os/common/ports/ARMCMx/chcore_v7m.h"
- 288              		.file 10 "./lib/chibios/os/rt/include/chsem.h"
- 289              		.file 11 "./lib/chibios/os/rt/include/chmtx.h"
- 290              		.file 12 "./lib/chibios/os/hal/include/hal_usb.h"
- 291              		.file 13 "./lib/chibios/os/hal/ports/STM32/LLD/USBv1/hal_usb_lld.h"
- 292              		.file 14 "tmk_core/common/report.h"
- 293              		.file 15 "tmk_core/common/host_driver.h"
- 294              		.file 16 "./lib/chibios/os/hal/include/hal.h"
- 295              		.file 17 "./lib/chibios/os/rt/include/chsys.h"
- 296              		.file 18 "tmk_core/common/keyboard.h"
- 297              		.file 19 "tmk_core/protocol/chibios/usb_main.h"
- 298              		.file 20 "./lib/chibios/os/rt/include/chthreads.h"
- 299              		.file 21 "tmk_core/common/host.h"
- 300              		.file 22 "tmk_core/common/suspend.h"
- 301              		.file 23 "tmk_core/common/action_util.h"
- 302              		.file 24 "quantum/mousekey.h"
+ 279              		.loc 1 229 21 view .LVU63
+ 280 007c 2046     		mov	r0, r4
+ 281 007e FFF7FEFF 		bl	restart_usb_driver
+ 282              	.LVL27:
+ 283 0082 E2E7     		b	.L9
+ 284              	.L15:
+ 285              		.align	2
+ 286              	.L14:
+ 287 0084 00000000 		.word	USBD1
+ 288 0088 22000000 		.word	.LC2
+ 289 008c 00000000 		.word	.LC0
+ 290 0090 00000000 		.word	.LANCHOR0
+ 291 0094 11000000 		.word	.LC1
+ 292              		.cfi_endproc
+ 293              	.LFE292:
+ 295              		.global	chibios_driver
+ 296              		.section	.data.chibios_driver,"aw"
+ 297              		.align	2
+ 298              		.set	.LANCHOR0,. + 0
+ 301              	chibios_driver:
+ 302 0000 00000000 		.word	keyboard_leds
+ 303 0004 00000000 		.word	send_keyboard
+ 304 0008 00000000 		.word	send_mouse
+ 305 000c 00000000 		.word	send_system
+ 306 0010 00000000 		.word	send_consumer
+ 307              		.text
+ 308              	.Letext0:
+ 309              		.file 2 "c:\\qmk_msys\\mingw64\\lib\\gcc\\arm-none-eabi\\10.1.0\\include\\stddef.h"
+ 310              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 311              		.file 4 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 312              		.file 5 "./lib/chibios/os/common/ports/ARMCMx/compilers/GCC/chtypes.h"
+ 313              		.file 6 "./lib/chibios/os/rt/include/chsystypes.h"
+ 314              		.file 7 "./lib/chibios/os/rt/include/chschd.h"
+ 315              		.file 8 "./lib/chibios/os/rt/include/chtime.h"
+ 316              		.file 9 "./lib/chibios/os/common/ports/ARMCMx/chcore_v7m.h"
+ 317              		.file 10 "./lib/chibios/os/rt/include/chsem.h"
+ 318              		.file 11 "./lib/chibios/os/rt/include/chmtx.h"
+ 319              		.file 12 "./lib/chibios/os/hal/include/hal_usb.h"
+ 320              		.file 13 "./lib/chibios/os/hal/ports/STM32/LLD/USBv1/hal_usb_lld.h"
+ 321              		.file 14 "tmk_core/common/report.h"
+ 322              		.file 15 "tmk_core/common/host_driver.h"
+ 323              		.file 16 "./lib/chibios/os/hal/include/hal.h"
+ 324              		.file 17 "./lib/chibios/os/rt/include/chsys.h"
+ 325              		.file 18 "tmk_core/common/keyboard.h"
+ 326              		.file 19 "tmk_core/protocol/chibios/usb_main.h"
+ 327              		.file 20 "./lib/chibios/os/rt/include/chthreads.h"
+ 328              		.file 21 "lib/printf/printf.h"
+ 329              		.file 22 "tmk_core/common/host.h"
+ 330              		.file 23 "tmk_core/common/action_util.h"
+ 331              		.file 24 "quantum/mousekey.h"
+ 332              		.file 25 "tmk_core/common/suspend.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main.c
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:18     .text.early_hardware_init_pre:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:26     .text.early_hardware_init_pre:0000000000000000 early_hardware_init_pre
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:42     .text.early_hardware_init_post:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:49     .text.early_hardware_init_post:0000000000000000 early_hardware_init_post
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:62     .text.board_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:69     .text.board_init:0000000000000000 board_init
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:80     .text.__early_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:87     .text.__early_init:0000000000000000 __early_init
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:115    .text.boardInit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:122    .text.boardInit:0000000000000000 boardInit
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:147    .text.startup.main:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:154    .text.startup.main:0000000000000000 main
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:261    .text.startup.main:000000000000006c $d
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:272    .data.chibios_driver:0000000000000000 chibios_driver
-C:\Users\lhanj\AppData\Local\Temp\ccYpAlpw.s:268    .data.chibios_driver:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:18     .text.early_hardware_init_pre:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:26     .text.early_hardware_init_pre:0000000000000000 early_hardware_init_pre
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:42     .text.early_hardware_init_post:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:49     .text.early_hardware_init_post:0000000000000000 early_hardware_init_post
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:62     .text.board_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:69     .text.board_init:0000000000000000 board_init
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:80     .text.__early_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:87     .text.__early_init:0000000000000000 __early_init
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:115    .text.boardInit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:122    .text.boardInit:0000000000000000 boardInit
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:154    .text.startup.main:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:161    .text.startup.main:0000000000000000 main
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:287    .text.startup.main:0000000000000084 $d
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:301    .data.chibios_driver:0000000000000000 chibios_driver
+C:\Users\lhanj\AppData\Local\Temp\ccdebNXh.s:297    .data.chibios_driver:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 enter_bootloader_mode_if_requested
@@ -603,18 +640,20 @@ keyboard_setup
 usb_event_queue_init
 init_usb_driver
 chThdSleep
+printf_
 keyboard_init
 host_set_driver
 usb_event_queue_task
+send_keyboard_report
+mousekey_send
 keyboard_task
+console_task
 raw_hid_task
 housekeeping_task
 suspend_power_down
 suspend_wakeup_condition
 usbWakeupHost
 restart_usb_driver
-send_keyboard_report
-mousekey_send
 USBD1
 keyboard_leds
 send_keyboard

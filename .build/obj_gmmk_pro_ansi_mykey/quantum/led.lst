@@ -313,17 +313,17 @@
  185              		.file 4 "quantum/led.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 led.c
-C:\Users\lhanj\AppData\Local\Temp\ccStR99e.s:18     .text.led_set_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccStR99e.s:26     .text.led_set_user:0000000000000000 led_set_user
-C:\Users\lhanj\AppData\Local\Temp\ccStR99e.s:41     .text.led_set_kb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccStR99e.s:48     .text.led_set_kb:0000000000000000 led_set_kb
-C:\Users\lhanj\AppData\Local\Temp\ccStR99e.s:70     .text.led_update_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccStR99e.s:77     .text.led_update_user:0000000000000000 led_update_user
-C:\Users\lhanj\AppData\Local\Temp\ccStR99e.s:95     .text.led_update_kb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccStR99e.s:102    .text.led_update_kb:0000000000000000 led_update_kb
-C:\Users\lhanj\AppData\Local\Temp\ccStR99e.s:127    .text.led_init_ports:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccStR99e.s:134    .text.led_init_ports:0000000000000000 led_init_ports
-C:\Users\lhanj\AppData\Local\Temp\ccStR99e.s:147    .text.led_set:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccStR99e.s:154    .text.led_set:0000000000000000 led_set
+C:\Users\lhanj\AppData\Local\Temp\ccIFtQGU.s:18     .text.led_set_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccIFtQGU.s:26     .text.led_set_user:0000000000000000 led_set_user
+C:\Users\lhanj\AppData\Local\Temp\ccIFtQGU.s:41     .text.led_set_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccIFtQGU.s:48     .text.led_set_kb:0000000000000000 led_set_kb
+C:\Users\lhanj\AppData\Local\Temp\ccIFtQGU.s:70     .text.led_update_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccIFtQGU.s:77     .text.led_update_user:0000000000000000 led_update_user
+C:\Users\lhanj\AppData\Local\Temp\ccIFtQGU.s:95     .text.led_update_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccIFtQGU.s:102    .text.led_update_kb:0000000000000000 led_update_kb
+C:\Users\lhanj\AppData\Local\Temp\ccIFtQGU.s:127    .text.led_init_ports:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccIFtQGU.s:134    .text.led_init_ports:0000000000000000 led_init_ports
+C:\Users\lhanj\AppData\Local\Temp\ccIFtQGU.s:147    .text.led_set:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccIFtQGU.s:154    .text.led_set:0000000000000000 led_set
 
 NO UNDEFINED SYMBOLS
