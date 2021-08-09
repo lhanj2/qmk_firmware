@@ -1,0 +1,5 @@
+VIA_ENABLE = yes
+MOUSEKEY_ENABLE = yes
+TAP_DANCE_ENABLE = yes
+BOOTMAGIC_ENABLE = lite     # Enable Bootmagic Lite
+DYNAMIC_MACRO_ENABLE = yes
