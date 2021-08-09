@@ -1,7 +1,7 @@
 /* 20210806 HJLee - macro, mapping, knob layer added. 
-   20210807 HJLee - knob function changed(brightness to cursor moving)
+   20210807 HJLee - knob function changed(brightness)
    20210808 HJLee - RGB works with RGB_TOG
-   20210809 HJLee - Testas
+   20210809 HJLee - Test
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
