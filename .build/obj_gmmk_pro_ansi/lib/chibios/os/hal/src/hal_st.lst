@@ -1,0 +1,1045 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"hal_st.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.stInit,"ax",%progbits
+  18              		.align	1
+  19              		.global	stInit
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	stInit:
+  27              	.LFB278:
+  28              		.file 1 "lib/chibios/os/hal/src/hal_st.c"
+   1:lib/chibios/os/hal/src/hal_st.c **** /*
+   2:lib/chibios/os/hal/src/hal_st.c ****     ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+   3:lib/chibios/os/hal/src/hal_st.c **** 
+   4:lib/chibios/os/hal/src/hal_st.c ****     Licensed under the Apache License, Version 2.0 (the "License");
+   5:lib/chibios/os/hal/src/hal_st.c ****     you may not use this file except in compliance with the License.
+   6:lib/chibios/os/hal/src/hal_st.c ****     You may obtain a copy of the License at
+   7:lib/chibios/os/hal/src/hal_st.c **** 
+   8:lib/chibios/os/hal/src/hal_st.c ****         http://www.apache.org/licenses/LICENSE-2.0
+   9:lib/chibios/os/hal/src/hal_st.c **** 
+  10:lib/chibios/os/hal/src/hal_st.c ****     Unless required by applicable law or agreed to in writing, software
+  11:lib/chibios/os/hal/src/hal_st.c ****     distributed under the License is distributed on an "AS IS" BASIS,
+  12:lib/chibios/os/hal/src/hal_st.c ****     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13:lib/chibios/os/hal/src/hal_st.c ****     See the License for the specific language governing permissions and
+  14:lib/chibios/os/hal/src/hal_st.c ****     limitations under the License.
+  15:lib/chibios/os/hal/src/hal_st.c **** */
+  16:lib/chibios/os/hal/src/hal_st.c **** 
+  17:lib/chibios/os/hal/src/hal_st.c **** /**
+  18:lib/chibios/os/hal/src/hal_st.c ****  * @file    hal_st.c
+  19:lib/chibios/os/hal/src/hal_st.c ****  * @brief   ST Driver code.
+  20:lib/chibios/os/hal/src/hal_st.c ****  *
+  21:lib/chibios/os/hal/src/hal_st.c ****  * @addtogroup ST
+  22:lib/chibios/os/hal/src/hal_st.c ****  * @{
+  23:lib/chibios/os/hal/src/hal_st.c ****  */
+  24:lib/chibios/os/hal/src/hal_st.c **** 
+  25:lib/chibios/os/hal/src/hal_st.c **** #include "hal.h"
+  26:lib/chibios/os/hal/src/hal_st.c **** 
+  27:lib/chibios/os/hal/src/hal_st.c **** #if (OSAL_ST_MODE != OSAL_ST_MODE_NONE) || defined(__DOXYGEN__)
+  28:lib/chibios/os/hal/src/hal_st.c **** 
+  29:lib/chibios/os/hal/src/hal_st.c **** /*===========================================================================*/
+  30:lib/chibios/os/hal/src/hal_st.c **** /* Driver local definitions.                                                 */
+  31:lib/chibios/os/hal/src/hal_st.c **** /*===========================================================================*/
+  32:lib/chibios/os/hal/src/hal_st.c **** 
+  33:lib/chibios/os/hal/src/hal_st.c **** /*===========================================================================*/
+  34:lib/chibios/os/hal/src/hal_st.c **** /* Driver exported variables.                                                */
+  35:lib/chibios/os/hal/src/hal_st.c **** /*===========================================================================*/
+  36:lib/chibios/os/hal/src/hal_st.c **** 
+  37:lib/chibios/os/hal/src/hal_st.c **** /*===========================================================================*/
+  38:lib/chibios/os/hal/src/hal_st.c **** /* Driver local types.                                                       */
+  39:lib/chibios/os/hal/src/hal_st.c **** /*===========================================================================*/
+  40:lib/chibios/os/hal/src/hal_st.c **** 
+  41:lib/chibios/os/hal/src/hal_st.c **** /*===========================================================================*/
+  42:lib/chibios/os/hal/src/hal_st.c **** /* Driver local variables.                                                   */
+  43:lib/chibios/os/hal/src/hal_st.c **** /*===========================================================================*/
+  44:lib/chibios/os/hal/src/hal_st.c **** 
+  45:lib/chibios/os/hal/src/hal_st.c **** #if (ST_LLD_NUM_ALARMS > 1) || defined(__DOXYGEN__)
+  46:lib/chibios/os/hal/src/hal_st.c **** st_callback_t st_callbacks[ST_LLD_NUM_ALARMS - 1];
+  47:lib/chibios/os/hal/src/hal_st.c **** #endif
+  48:lib/chibios/os/hal/src/hal_st.c **** 
+  49:lib/chibios/os/hal/src/hal_st.c **** /*===========================================================================*/
+  50:lib/chibios/os/hal/src/hal_st.c **** /* Driver local functions.                                                   */
+  51:lib/chibios/os/hal/src/hal_st.c **** /*===========================================================================*/
+  52:lib/chibios/os/hal/src/hal_st.c **** 
+  53:lib/chibios/os/hal/src/hal_st.c **** /*===========================================================================*/
+  54:lib/chibios/os/hal/src/hal_st.c **** /* Driver exported functions.                                                */
+  55:lib/chibios/os/hal/src/hal_st.c **** /*===========================================================================*/
+  56:lib/chibios/os/hal/src/hal_st.c **** 
+  57:lib/chibios/os/hal/src/hal_st.c **** /**
+  58:lib/chibios/os/hal/src/hal_st.c ****  * @brief   ST Driver initialization.
+  59:lib/chibios/os/hal/src/hal_st.c ****  * @note    This function is implicitly invoked by @p halInit(), there is
+  60:lib/chibios/os/hal/src/hal_st.c ****  *          no need to explicitly initialize the driver.
+  61:lib/chibios/os/hal/src/hal_st.c ****  *
+  62:lib/chibios/os/hal/src/hal_st.c ****  * @init
+  63:lib/chibios/os/hal/src/hal_st.c ****  */
+  64:lib/chibios/os/hal/src/hal_st.c **** void stInit(void) {
+  29              		.loc 1 64 19 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  65:lib/chibios/os/hal/src/hal_st.c **** #if ST_LLD_NUM_ALARMS > 1
+  66:lib/chibios/os/hal/src/hal_st.c ****   unsigned i;
+  67:lib/chibios/os/hal/src/hal_st.c **** 
+  68:lib/chibios/os/hal/src/hal_st.c ****   for (i = 0U; i < (unsigned)ST_LLD_NUM_ALARMS - 1U; i++) {
+  69:lib/chibios/os/hal/src/hal_st.c ****     st_callbacks[i] = NULL;
+  70:lib/chibios/os/hal/src/hal_st.c ****   }
+  71:lib/chibios/os/hal/src/hal_st.c **** #endif
+  72:lib/chibios/os/hal/src/hal_st.c ****   st_lld_init();
+  34              		.loc 1 72 3 view .LVU1
+  35 0000 FFF7FEBF 		b	st_lld_init
+  36              	.LVL0:
+  37              		.cfi_endproc
+  38              	.LFE278:
+  40              		.section	.text.stStartAlarm,"ax",%progbits
+  41              		.align	1
+  42              		.global	stStartAlarm
+  43              		.syntax unified
+  44              		.thumb
+  45              		.thumb_func
+  46              		.fpu fpv4-sp-d16
+  48              	stStartAlarm:
+  49              	.LVL1:
+  50              	.LFB279:
+  73:lib/chibios/os/hal/src/hal_st.c **** }
+  74:lib/chibios/os/hal/src/hal_st.c **** 
+  75:lib/chibios/os/hal/src/hal_st.c **** #if (OSAL_ST_MODE == OSAL_ST_MODE_FREERUNNING) || defined(__DOXYGEN__)
+  76:lib/chibios/os/hal/src/hal_st.c **** /**
+  77:lib/chibios/os/hal/src/hal_st.c ****  * @brief   Starts the alarm zero.
+  78:lib/chibios/os/hal/src/hal_st.c ****  * @note    Makes sure that no spurious alarms are triggered after
+  79:lib/chibios/os/hal/src/hal_st.c ****  *          this call.
+  80:lib/chibios/os/hal/src/hal_st.c ****  * @note    This functionality is only available in free running mode, the
+  81:lib/chibios/os/hal/src/hal_st.c ****  *          behavior in periodic mode is undefined.
+  82:lib/chibios/os/hal/src/hal_st.c ****  *
+  83:lib/chibios/os/hal/src/hal_st.c ****  * @param[in] abstime   the time to be set for the first alarm
+  84:lib/chibios/os/hal/src/hal_st.c ****  *
+  85:lib/chibios/os/hal/src/hal_st.c ****  * @api
+  86:lib/chibios/os/hal/src/hal_st.c ****  */
+  87:lib/chibios/os/hal/src/hal_st.c **** void stStartAlarm(systime_t abstime) {
+  51              		.loc 1 87 38 view -0
+  52              		.cfi_startproc
+  53              		@ args = 0, pretend = 0, frame = 0
+  54              		@ frame_needed = 0, uses_anonymous_args = 0
+  55              		@ link register save eliminated.
+  88:lib/chibios/os/hal/src/hal_st.c **** 
+  89:lib/chibios/os/hal/src/hal_st.c ****   osalDbgAssert(stIsAlarmActive() == false, "already active");
+  56              		.loc 1 89 3 view .LVU3
+  57              		.loc 1 89 3 view .LVU4
+  58              		.loc 1 89 3 view .LVU5
+  90:lib/chibios/os/hal/src/hal_st.c **** 
+  91:lib/chibios/os/hal/src/hal_st.c ****   st_lld_start_alarm(abstime);
+  59              		.loc 1 91 3 view .LVU6
+  60              	.LBB12:
+  61              	.LBI12:
+  62              		.file 2 "./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h"
+   1:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*
+   2:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****     ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+   3:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+   4:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****     Licensed under the Apache License, Version 2.0 (the "License");
+   5:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****     you may not use this file except in compliance with the License.
+   6:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****     You may obtain a copy of the License at
+   7:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+   8:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****         http://www.apache.org/licenses/LICENSE-2.0
+   9:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  10:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****     Unless required by applicable law or agreed to in writing, software
+  11:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****     distributed under the License is distributed on an "AS IS" BASIS,
+  12:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****     See the License for the specific language governing permissions and
+  14:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****     limitations under the License.
+  15:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** */
+  16:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  17:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /**
+  18:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @file    TIMv1/hal_st_lld.h
+  19:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @brief   ST Driver subsystem low level driver header.
+  20:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @details This header is designed to be include-able without having to
+  21:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *          include other files from the HAL.
+  22:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *
+  23:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @addtogroup ST
+  24:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @{
+  25:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  */
+  26:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  27:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #ifndef HAL_ST_LLD_H
+  28:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define HAL_ST_LLD_H
+  29:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  30:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+  31:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /* Driver constants.                                                         */
+  32:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+  33:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  34:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /* Feature currently disabled.*/
+  35:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_ENFORCE_ALARMS 1
+  36:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  37:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+  38:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /* Driver pre-compile time settings.                                         */
+  39:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+  40:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  41:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /**
+  42:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @name    Configuration options
+  43:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @{
+  44:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  */
+  45:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /**
+  46:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @brief   SysTick timer IRQ priority.
+  47:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  */
+  48:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_ST_IRQ_PRIORITY) || defined(__DOXYGEN__)
+  49:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_IRQ_PRIORITY               8
+  50:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+  51:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  52:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /**
+  53:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @brief   TIMx unit (by number) to be used for free running operations.
+  54:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @note    You must select a 32 bits timer if a 32 bits @p systick_t type
+  55:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *          is required.
+  56:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @note    Timers 2, 3, 4, 5, 21 and 22 are supported.
+  57:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  */
+  58:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_ST_USE_TIMER) || defined(__DOXYGEN__)
+  59:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIMER                  2
+  60:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+  61:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /** @} */
+  62:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  63:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+  64:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /* Derived constants and error checks.                                       */
+  65:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+  66:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  67:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /* This has to go after transition to shared handlers is complete for all
+  68:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****    platforms.*/
+  69:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_HAS_TIM2)
+  70:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_HAS_TIM2                      FALSE
+  71:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+  72:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  73:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_HAS_TIM3)
+  74:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_HAS_TIM3                      FALSE
+  75:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+  76:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  77:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_HAS_TIM4)
+  78:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_HAS_TIM4                      FALSE
+  79:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+  80:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  81:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_HAS_TIM5)
+  82:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_HAS_TIM5                      FALSE
+  83:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+  84:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  85:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_HAS_TIM9)
+  86:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_HAS_TIM9                      FALSE
+  87:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+  88:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  89:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_HAS_TIM10)
+  90:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_HAS_TIM10                     FALSE
+  91:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+  92:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  93:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_HAS_TIM11)
+  94:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_HAS_TIM11                     FALSE
+  95:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+  96:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+  97:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_HAS_TIM12)
+  98:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_HAS_TIM12                     FALSE
+  99:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 100:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 101:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_HAS_TIM13)
+ 102:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_HAS_TIM13                     FALSE
+ 103:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 104:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 105:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_HAS_TIM14)
+ 106:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_HAS_TIM14                      FALSE
+ 107:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 108:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 109:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_HAS_TIM21)
+ 110:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_HAS_TIM21                     FALSE
+ 111:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 112:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 113:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if !defined(STM32_HAS_TIM22)
+ 114:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_HAS_TIM22                     FALSE
+ 115:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 116:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /**/
+ 117:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 118:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if OSAL_ST_MODE == OSAL_ST_MODE_FREERUNNING
+ 119:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 120:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if STM32_ST_USE_TIMER == 2
+ 121:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 122:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM2_IS_USED)
+ 123:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "ST requires TIM2 but the timer is already used"
+ 124:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 125:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_TIM2_IS_USED
+ 126:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 127:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 128:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM2_SUPPRESS_ISR)
+ 129:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_SYSTICK_SUPPRESS_ISR
+ 130:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 131:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 132:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_TIM                        STM32_TIM2
+ 133:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define ST_LLD_NUM_ALARMS                   STM32_TIM2_CHANNELS
+ 134:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                FALSE
+ 135:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   TRUE
+ 136:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   FALSE
+ 137:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   FALSE
+ 138:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   FALSE
+ 139:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   FALSE
+ 140:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  FALSE
+ 141:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  FALSE
+ 142:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  FALSE
+ 143:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  FALSE
+ 144:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  FALSE
+ 145:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  FALSE
+ 146:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  FALSE
+ 147:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 148:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #elif STM32_ST_USE_TIMER == 3
+ 149:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 150:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM3_IS_USED)
+ 151:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "ST requires TIM3 but the timer is already used"
+ 152:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 153:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_TIM3_IS_USED
+ 154:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 155:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 156:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM3_SUPPRESS_ISR)
+ 157:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_SYSTICK_SUPPRESS_ISR
+ 158:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 159:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 160:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_TIM                        STM32_TIM3
+ 161:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define ST_LLD_NUM_ALARMS                   STM32_TIM3_CHANNELS
+ 162:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                FALSE
+ 163:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   FALSE
+ 164:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   TRUE
+ 165:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   FALSE
+ 166:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   FALSE
+ 167:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   FALSE
+ 168:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  FALSE
+ 169:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  FALSE
+ 170:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  FALSE
+ 171:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  FALSE
+ 172:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  FALSE
+ 173:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  FALSE
+ 174:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  FALSE
+ 175:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 176:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #elif STM32_ST_USE_TIMER == 4
+ 177:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 178:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM4_IS_USED)
+ 179:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "ST requires TIM4 but the timer is already used"
+ 180:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 181:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_TIM4_IS_USED
+ 182:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 183:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 184:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM4_SUPPRESS_ISR)
+ 185:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_SYSTICK_SUPPRESS_ISR
+ 186:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 187:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 188:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_TIM                        STM32_TIM4
+ 189:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define ST_LLD_NUM_ALARMS                   STM32_TIM4_CHANNELS
+ 190:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                FALSE
+ 191:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   FALSE
+ 192:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   FALSE
+ 193:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   TRUE
+ 194:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   FALSE
+ 195:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   FALSE
+ 196:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  FALSE
+ 197:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  FALSE
+ 198:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  FALSE
+ 199:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  FALSE
+ 200:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  FALSE
+ 201:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  FALSE
+ 202:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  FALSE
+ 203:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 204:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #elif STM32_ST_USE_TIMER == 5
+ 205:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 206:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM5_IS_USED)
+ 207:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "ST requires TIM5 but the timer is already used"
+ 208:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 209:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_TIM5_IS_USED
+ 210:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 211:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 212:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM5_SUPPRESS_ISR)
+ 213:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_SYSTICK_SUPPRESS_ISR
+ 214:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 215:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 216:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_TIM                        STM32_TIM5
+ 217:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define ST_LLD_NUM_ALARMS                   STM32_TIM5_CHANNELS
+ 218:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                FALSE
+ 219:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   FALSE
+ 220:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   FALSE
+ 221:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   FALSE
+ 222:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   TRUE
+ 223:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   FALSE
+ 224:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  FALSE
+ 225:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  FALSE
+ 226:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  FALSE
+ 227:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  FALSE
+ 228:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  FALSE
+ 229:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  FALSE
+ 230:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  FALSE
+ 231:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 232:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #elif STM32_ST_USE_TIMER == 9
+ 233:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 234:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM9_IS_USED)
+ 235:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "ST requires TIM9 but the timer is already used"
+ 236:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 237:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_TIM9_IS_USED
+ 238:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 239:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 240:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM9_SUPPRESS_ISR)
+ 241:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_SYSTICK_SUPPRESS_ISR
+ 242:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 243:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 244:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_TIM                        STM32_TIM9
+ 245:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define ST_LLD_NUM_ALARMS                   STM32_TIM9_CHANNELS
+ 246:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                FALSE
+ 247:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   FALSE
+ 248:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   FALSE
+ 249:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   FALSE
+ 250:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   FALSE
+ 251:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   TRUE
+ 252:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  FALSE
+ 253:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  FALSE
+ 254:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  FALSE
+ 255:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  FALSE
+ 256:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  FALSE
+ 257:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  FALSE
+ 258:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  FALSE
+ 259:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 260:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #elif STM32_ST_USE_TIMER == 10
+ 261:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 262:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM10_IS_USED)
+ 263:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "ST requires TIM10 but the timer is already used"
+ 264:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 265:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_TIM10_IS_USED
+ 266:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 267:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 268:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM10_SUPPRESS_ISR)
+ 269:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_SYSTICK_SUPPRESS_ISR
+ 270:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 271:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 272:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_TIM                        STM32_TIM10
+ 273:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define ST_LLD_NUM_ALARMS                   STM32_TIM10_CHANNELS
+ 274:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                FALSE
+ 275:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   FALSE
+ 276:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   FALSE
+ 277:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   FALSE
+ 278:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   FALSE
+ 279:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   FALSE
+ 280:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  TRUE
+ 281:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  FALSE
+ 282:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  FALSE
+ 283:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  FALSE
+ 284:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  FALSE
+ 285:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  FALSE
+ 286:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  FALSE
+ 287:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 288:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #elif STM32_ST_USE_TIMER == 11
+ 289:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 290:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM11_IS_USED)
+ 291:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "ST requires TIM11 but the timer is already used"
+ 292:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 293:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_TIM11_IS_USED
+ 294:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 295:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 296:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM11_SUPPRESS_ISR)
+ 297:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_SYSTICK_SUPPRESS_ISR
+ 298:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 299:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 300:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_TIM                        STM32_TIM11
+ 301:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define ST_LLD_NUM_ALARMS                   STM32_TIM11_CHANNELS
+ 302:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                FALSE
+ 303:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   FALSE
+ 304:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   FALSE
+ 305:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   FALSE
+ 306:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   FALSE
+ 307:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   FALSE
+ 308:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  FALSE
+ 309:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  TRUE
+ 310:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  FALSE
+ 311:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  FALSE
+ 312:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  FALSE
+ 313:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  FALSE
+ 314:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  FALSE
+ 315:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 316:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #elif STM32_ST_USE_TIMER == 12
+ 317:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 318:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM12_IS_USED)
+ 319:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "ST requires TIM12 but the timer is already used"
+ 320:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 321:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_TIM12_IS_USED
+ 322:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 323:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 324:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM12_SUPPRESS_ISR)
+ 325:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_SYSTICK_SUPPRESS_ISR
+ 326:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 327:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 328:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_TIM                        STM32_TIM12
+ 329:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define ST_LLD_NUM_ALARMS                   STM32_TIM12_CHANNELS
+ 330:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                FALSE
+ 331:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   FALSE
+ 332:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   FALSE
+ 333:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   FALSE
+ 334:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   FALSE
+ 335:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   FALSE
+ 336:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  FALSE
+ 337:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  FALSE
+ 338:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  TRUE
+ 339:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  FALSE
+ 340:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  FALSE
+ 341:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  FALSE
+ 342:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  FALSE
+ 343:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 344:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #elif STM32_ST_USE_TIMER == 13
+ 345:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 346:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM13_IS_USED)
+ 347:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "ST requires TIM13 but the timer is already used"
+ 348:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 349:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_TIM13_IS_USED
+ 350:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 351:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 352:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM13_SUPPRESS_ISR)
+ 353:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_SYSTICK_SUPPRESS_ISR
+ 354:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 355:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 356:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_TIM                        STM32_TIM13
+ 357:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define ST_LLD_NUM_ALARMS                   STM32_TIM13_CHANNELS
+ 358:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                FALSE
+ 359:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   FALSE
+ 360:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   FALSE
+ 361:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   FALSE
+ 362:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   FALSE
+ 363:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   FALSE
+ 364:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  FALSE
+ 365:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  FALSE
+ 366:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  FALSE
+ 367:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  TRUE
+ 368:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  FALSE
+ 369:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  FALSE
+ 370:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  FALSE
+ 371:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 372:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #elif STM32_ST_USE_TIMER == 14
+ 373:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 374:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM14_IS_USED)
+ 375:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "ST requires TIM14 but the timer is already used"
+ 376:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 377:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_TIM14_IS_USED
+ 378:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 379:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 380:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM14_SUPPRESS_ISR)
+ 381:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_SYSTICK_SUPPRESS_ISR
+ 382:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 383:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 384:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_TIM                        STM32_TIM14
+ 385:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define ST_LLD_NUM_ALARMS                   STM32_TIM14_CHANNELS
+ 386:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                FALSE
+ 387:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   FALSE
+ 388:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   FALSE
+ 389:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   FALSE
+ 390:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   FALSE
+ 391:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   FALSE
+ 392:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  FALSE
+ 393:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  FALSE
+ 394:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  FALSE
+ 395:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  FALSE
+ 396:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  TRUE
+ 397:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  FALSE
+ 398:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  FALSE
+ 399:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 400:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #elif STM32_ST_USE_TIMER == 21
+ 401:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 402:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM21_IS_USED)
+ 403:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "ST requires TIM21 but the timer is already used"
+ 404:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 405:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_TIM21_IS_USED
+ 406:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 407:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 408:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM21_SUPPRESS_ISR)
+ 409:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_SYSTICK_SUPPRESS_ISR
+ 410:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 411:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 412:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_TIM                        STM32_TIM21
+ 413:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define ST_LLD_NUM_ALARMS                   STM32_TIM21_CHANNELS
+ 414:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                FALSE
+ 415:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   FALSE
+ 416:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   FALSE
+ 417:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   FALSE
+ 418:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   FALSE
+ 419:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   FALSE
+ 420:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  FALSE
+ 421:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  FALSE
+ 422:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  FALSE
+ 423:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  FALSE
+ 424:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  FALSE
+ 425:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  TRUE
+ 426:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  FALSE
+ 427:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 428:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #elif STM32_ST_USE_TIMER == 22
+ 429:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 430:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM22_IS_USED)
+ 431:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "ST requires TIM22 but the timer is already used"
+ 432:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 433:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_TIM22_IS_USED
+ 434:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 435:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 436:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_TIM22_SUPPRESS_ISR)
+ 437:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_SYSTICK_SUPPRESS_ISR
+ 438:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 439:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 440:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_TIM                        STM32_TIM22
+ 441:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define ST_LLD_NUM_ALARMS                   STM32_TIM22_CHANNELS
+ 442:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                FALSE
+ 443:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   FALSE
+ 444:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   FALSE
+ 445:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   FALSE
+ 446:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   FALSE
+ 447:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   FALSE
+ 448:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  FALSE
+ 449:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  FALSE
+ 450:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  FALSE
+ 451:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  FALSE
+ 452:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  FALSE
+ 453:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  FALSE
+ 454:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  TRUE
+ 455:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 456:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 457:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "STM32_ST_USE_TIMER specifies an unsupported timer"
+ 458:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 459:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 460:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if defined(STM32_ST_ENFORCE_ALARMS)
+ 461:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 462:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if (STM32_ST_ENFORCE_ALARMS < 1) || (STM32_ST_ENFORCE_ALARMS > ST_LLD_NUM_ALARMS)
+ 463:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #error "invalid STM32_ST_ENFORCE_ALARMS value"
+ 464:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 465:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 466:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #undef ST_LLD_NUM_ALARMS
+ 467:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define ST_LLD_NUM_ALARMS                   STM32_ST_ENFORCE_ALARMS
+ 468:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 469:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 470:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #elif OSAL_ST_MODE == OSAL_ST_MODE_FREERUNNING
+ 471:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 472:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                TRUE
+ 473:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   FALSE
+ 474:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   FALSE
+ 475:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   FALSE
+ 476:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   FALSE
+ 477:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   FALSE
+ 478:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  FALSE
+ 479:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  FALSE
+ 480:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  FALSE
+ 481:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  FALSE
+ 482:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  FALSE
+ 483:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  FALSE
+ 484:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  FALSE
+ 485:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 486:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 487:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 488:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_SYSTICK                FALSE
+ 489:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM2                   FALSE
+ 490:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM3                   FALSE
+ 491:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM4                   FALSE
+ 492:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM5                   FALSE
+ 493:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM9                   FALSE
+ 494:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM10                  FALSE
+ 495:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM11                  FALSE
+ 496:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM12                  FALSE
+ 497:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM13                  FALSE
+ 498:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM14                  FALSE
+ 499:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM21                  FALSE
+ 500:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #define STM32_ST_USE_TIM22                  FALSE
+ 501:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 502:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 503:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 504:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+ 505:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /* Driver data structures and types.                                         */
+ 506:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+ 507:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 508:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+ 509:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /* Driver macros.                                                            */
+ 510:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+ 511:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 512:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+ 513:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /* External declarations.                                                    */
+ 514:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+ 515:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 516:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #ifdef __cplusplus
+ 517:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** extern "C" {
+ 518:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 519:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****   void st_lld_init(void);
+ 520:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****   void st_lld_serve_interrupt(void);
+ 521:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #ifdef __cplusplus
+ 522:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** }
+ 523:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 524:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 525:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+ 526:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /* Driver inline functions.                                                  */
+ 527:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /*===========================================================================*/
+ 528:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 529:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 530:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if (OSAL_ST_MODE == OSAL_ST_MODE_FREERUNNING) || defined(__DOXYGEN__)
+ 531:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 532:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /**
+ 533:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @brief   Returns the time counter value.
+ 534:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *
+ 535:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @return              The counter value.
+ 536:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *
+ 537:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @notapi
+ 538:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  */
+ 539:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** static inline systime_t st_lld_get_counter(void) {
+ 540:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 541:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****   return (systime_t)STM32_ST_TIM->CNT;
+ 542:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** }
+ 543:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 544:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /**
+ 545:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @brief   Starts the alarm.
+ 546:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @note    Makes sure that no spurious alarms are triggered after
+ 547:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *          this call.
+ 548:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *
+ 549:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @param[in] abstime   the time to be set for the first alarm
+ 550:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *
+ 551:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @notapi
+ 552:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  */
+ 553:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** static inline void st_lld_start_alarm(systime_t abstime) {
+  63              		.loc 2 553 20 view .LVU7
+  64              	.LBB13:
+ 554:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 555:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****   STM32_ST_TIM->CCR[0] = (uint32_t)abstime;
+  65              		.loc 2 555 3 view .LVU8
+  66              		.loc 2 555 24 is_stmt 0 view .LVU9
+  67 0000 4FF08043 		mov	r3, #1073741824
+ 556:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****   STM32_ST_TIM->SR     = 0;
+  68              		.loc 2 556 24 view .LVU10
+  69 0004 0022     		movs	r2, #0
+ 555:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****   STM32_ST_TIM->SR     = 0;
+  70              		.loc 2 555 24 view .LVU11
+  71 0006 5863     		str	r0, [r3, #52]
+  72              		.loc 2 556 3 is_stmt 1 view .LVU12
+  73              		.loc 2 556 24 is_stmt 0 view .LVU13
+  74 0008 1A61     		str	r2, [r3, #16]
+ 557:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if ST_LLD_NUM_ALARMS == 1
+ 558:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****   STM32_ST_TIM->DIER   = STM32_TIM_DIER_CC1IE;
+  75              		.loc 2 558 3 is_stmt 1 view .LVU14
+  76              		.loc 2 558 24 is_stmt 0 view .LVU15
+  77 000a 0222     		movs	r2, #2
+  78 000c DA60     		str	r2, [r3, #12]
+  79              	.LVL2:
+  80              		.loc 2 558 24 view .LVU16
+  81              	.LBE13:
+  82              	.LBE12:
+  92:lib/chibios/os/hal/src/hal_st.c **** }
+  83              		.loc 1 92 1 view .LVU17
+  84 000e 7047     		bx	lr
+  85              		.cfi_endproc
+  86              	.LFE279:
+  88              		.section	.text.stStopAlarm,"ax",%progbits
+  89              		.align	1
+  90              		.global	stStopAlarm
+  91              		.syntax unified
+  92              		.thumb
+  93              		.thumb_func
+  94              		.fpu fpv4-sp-d16
+  96              	stStopAlarm:
+  97              	.LFB280:
+  93:lib/chibios/os/hal/src/hal_st.c **** 
+  94:lib/chibios/os/hal/src/hal_st.c **** /**
+  95:lib/chibios/os/hal/src/hal_st.c ****  * @brief   Stops the alarm zero interrupt.
+  96:lib/chibios/os/hal/src/hal_st.c ****  * @note    This functionality is only available in free running mode, the
+  97:lib/chibios/os/hal/src/hal_st.c ****  *          behavior in periodic mode is undefined.
+  98:lib/chibios/os/hal/src/hal_st.c ****  *
+  99:lib/chibios/os/hal/src/hal_st.c ****  * @api
+ 100:lib/chibios/os/hal/src/hal_st.c ****  */
+ 101:lib/chibios/os/hal/src/hal_st.c **** void stStopAlarm(void) {
+  98              		.loc 1 101 24 is_stmt 1 view -0
+  99              		.cfi_startproc
+ 100              		@ args = 0, pretend = 0, frame = 0
+ 101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102              		@ link register save eliminated.
+ 102:lib/chibios/os/hal/src/hal_st.c **** 
+ 103:lib/chibios/os/hal/src/hal_st.c ****   st_lld_stop_alarm();
+ 103              		.loc 1 103 3 view .LVU19
+ 104              	.LBB14:
+ 105              	.LBI14:
+ 559:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 560:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****   STM32_ST_TIM->DIER  |= STM32_TIM_DIER_CC1IE;
+ 561:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 562:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** }
+ 563:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 564:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /**
+ 565:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @brief   Stops the alarm interrupt.
+ 566:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *
+ 567:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @notapi
+ 568:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  */
+ 569:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** static inline void st_lld_stop_alarm(void) {
+ 106              		.loc 2 569 20 view .LVU20
+ 107              	.LBB15:
+ 570:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 571:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #if ST_LLD_NUM_ALARMS == 1
+ 572:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****   STM32_ST_TIM->DIER = 0U;
+ 108              		.loc 2 572 3 view .LVU21
+ 109              		.loc 2 572 22 is_stmt 0 view .LVU22
+ 110 0000 4FF08043 		mov	r3, #1073741824
+ 111 0004 0022     		movs	r2, #0
+ 112 0006 DA60     		str	r2, [r3, #12]
+ 113              	.LBE15:
+ 114              	.LBE14:
+ 104:lib/chibios/os/hal/src/hal_st.c **** }
+ 115              		.loc 1 104 1 view .LVU23
+ 116 0008 7047     		bx	lr
+ 117              		.cfi_endproc
+ 118              	.LFE280:
+ 120              		.section	.text.stSetAlarm,"ax",%progbits
+ 121              		.align	1
+ 122              		.global	stSetAlarm
+ 123              		.syntax unified
+ 124              		.thumb
+ 125              		.thumb_func
+ 126              		.fpu fpv4-sp-d16
+ 128              	stSetAlarm:
+ 129              	.LVL3:
+ 130              	.LFB281:
+ 105:lib/chibios/os/hal/src/hal_st.c **** 
+ 106:lib/chibios/os/hal/src/hal_st.c **** /**
+ 107:lib/chibios/os/hal/src/hal_st.c ****  * @brief   Sets the alarm zero time.
+ 108:lib/chibios/os/hal/src/hal_st.c ****  * @note    This functionality is only available in free running mode, the
+ 109:lib/chibios/os/hal/src/hal_st.c ****  *          behavior in periodic mode is undefined.
+ 110:lib/chibios/os/hal/src/hal_st.c ****  *
+ 111:lib/chibios/os/hal/src/hal_st.c ****  * @param[in] abstime   the time to be set for the next alarm
+ 112:lib/chibios/os/hal/src/hal_st.c ****  *
+ 113:lib/chibios/os/hal/src/hal_st.c ****  * @api
+ 114:lib/chibios/os/hal/src/hal_st.c ****  */
+ 115:lib/chibios/os/hal/src/hal_st.c **** void stSetAlarm(systime_t abstime) {
+ 131              		.loc 1 115 36 is_stmt 1 view -0
+ 132              		.cfi_startproc
+ 133              		@ args = 0, pretend = 0, frame = 0
+ 134              		@ frame_needed = 0, uses_anonymous_args = 0
+ 135              		@ link register save eliminated.
+ 116:lib/chibios/os/hal/src/hal_st.c **** 
+ 117:lib/chibios/os/hal/src/hal_st.c ****   osalDbgAssert(stIsAlarmActive() != false, "not active");
+ 136              		.loc 1 117 3 view .LVU25
+ 137              		.loc 1 117 3 view .LVU26
+ 138              		.loc 1 117 3 view .LVU27
+ 118:lib/chibios/os/hal/src/hal_st.c **** 
+ 119:lib/chibios/os/hal/src/hal_st.c ****   st_lld_set_alarm(abstime);
+ 139              		.loc 1 119 3 view .LVU28
+ 140              	.LBB16:
+ 141              	.LBI16:
+ 573:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #else
+ 574:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  STM32_ST_TIM->DIER &= ~STM32_TIM_DIER_CC1IE;
+ 575:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** #endif
+ 576:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** }
+ 577:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 578:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /**
+ 579:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @brief   Sets the alarm time.
+ 580:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *
+ 581:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @param[in] abstime   the time to be set for the next alarm
+ 582:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *
+ 583:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @notapi
+ 584:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  */
+ 585:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** static inline void st_lld_set_alarm(systime_t abstime) {
+ 142              		.loc 2 585 20 view .LVU29
+ 143              	.LBB17:
+ 586:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 587:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****   STM32_ST_TIM->CCR[0] = (uint32_t)abstime;
+ 144              		.loc 2 587 3 view .LVU30
+ 145              		.loc 2 587 24 is_stmt 0 view .LVU31
+ 146 0000 4FF08043 		mov	r3, #1073741824
+ 147 0004 5863     		str	r0, [r3, #52]
+ 148              	.LVL4:
+ 149              		.loc 2 587 24 view .LVU32
+ 150              	.LBE17:
+ 151              	.LBE16:
+ 120:lib/chibios/os/hal/src/hal_st.c **** }
+ 152              		.loc 1 120 1 view .LVU33
+ 153 0006 7047     		bx	lr
+ 154              		.cfi_endproc
+ 155              	.LFE281:
+ 157              		.section	.text.stGetAlarm,"ax",%progbits
+ 158              		.align	1
+ 159              		.global	stGetAlarm
+ 160              		.syntax unified
+ 161              		.thumb
+ 162              		.thumb_func
+ 163              		.fpu fpv4-sp-d16
+ 165              	stGetAlarm:
+ 166              	.LFB282:
+ 121:lib/chibios/os/hal/src/hal_st.c **** 
+ 122:lib/chibios/os/hal/src/hal_st.c **** /**
+ 123:lib/chibios/os/hal/src/hal_st.c ****  * @brief   Returns the alarm zero current time.
+ 124:lib/chibios/os/hal/src/hal_st.c ****  * @note    This functionality is only available in free running mode, the
+ 125:lib/chibios/os/hal/src/hal_st.c ****  *          behavior in periodic mode is undefined.
+ 126:lib/chibios/os/hal/src/hal_st.c ****  *
+ 127:lib/chibios/os/hal/src/hal_st.c ****  * @return              The currently set alarm time.
+ 128:lib/chibios/os/hal/src/hal_st.c ****  *
+ 129:lib/chibios/os/hal/src/hal_st.c ****  * @api
+ 130:lib/chibios/os/hal/src/hal_st.c ****  */
+ 131:lib/chibios/os/hal/src/hal_st.c **** systime_t stGetAlarm(void) {
+ 167              		.loc 1 131 28 is_stmt 1 view -0
+ 168              		.cfi_startproc
+ 169              		@ args = 0, pretend = 0, frame = 0
+ 170              		@ frame_needed = 0, uses_anonymous_args = 0
+ 171              		@ link register save eliminated.
+ 132:lib/chibios/os/hal/src/hal_st.c **** 
+ 133:lib/chibios/os/hal/src/hal_st.c ****   osalDbgAssert(stIsAlarmActive() != false, "not active");
+ 172              		.loc 1 133 3 view .LVU35
+ 173              		.loc 1 133 3 view .LVU36
+ 174              		.loc 1 133 3 view .LVU37
+ 134:lib/chibios/os/hal/src/hal_st.c **** 
+ 135:lib/chibios/os/hal/src/hal_st.c ****   return st_lld_get_alarm();
+ 175              		.loc 1 135 3 view .LVU38
+ 176              	.LBB18:
+ 177              	.LBI18:
+ 588:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** }
+ 589:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 590:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /**
+ 591:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @brief   Returns the current alarm time.
+ 592:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *
+ 593:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @return              The currently set alarm time.
+ 594:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *
+ 595:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @notapi
+ 596:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  */
+ 597:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** static inline systime_t st_lld_get_alarm(void) {
+ 178              		.loc 2 597 25 view .LVU39
+ 179              	.LBB19:
+ 598:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 599:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****   return (systime_t)STM32_ST_TIM->CCR[0];
+ 180              		.loc 2 599 3 view .LVU40
+ 181              		.loc 2 599 10 is_stmt 0 view .LVU41
+ 182 0000 4FF08043 		mov	r3, #1073741824
+ 183 0004 586B     		ldr	r0, [r3, #52]
+ 184              	.LBE19:
+ 185              	.LBE18:
+ 136:lib/chibios/os/hal/src/hal_st.c **** }
+ 186              		.loc 1 136 1 view .LVU42
+ 187 0006 7047     		bx	lr
+ 188              		.cfi_endproc
+ 189              	.LFE282:
+ 191              		.section	.text.stGetCounter,"ax",%progbits
+ 192              		.align	1
+ 193              		.global	stGetCounter
+ 194              		.syntax unified
+ 195              		.thumb
+ 196              		.thumb_func
+ 197              		.fpu fpv4-sp-d16
+ 199              	stGetCounter:
+ 200              	.LFB283:
+ 137:lib/chibios/os/hal/src/hal_st.c **** 
+ 138:lib/chibios/os/hal/src/hal_st.c **** /**
+ 139:lib/chibios/os/hal/src/hal_st.c ****  * @brief   Returns the time counter value.
+ 140:lib/chibios/os/hal/src/hal_st.c ****  * @note    This functionality is only available in free running mode, the
+ 141:lib/chibios/os/hal/src/hal_st.c ****  *          behaviour in periodic mode is undefined.
+ 142:lib/chibios/os/hal/src/hal_st.c ****  *
+ 143:lib/chibios/os/hal/src/hal_st.c ****  * @return              The counter value.
+ 144:lib/chibios/os/hal/src/hal_st.c ****  *
+ 145:lib/chibios/os/hal/src/hal_st.c ****  * @api
+ 146:lib/chibios/os/hal/src/hal_st.c ****  */
+ 147:lib/chibios/os/hal/src/hal_st.c **** systime_t stGetCounter(void) {
+ 201              		.loc 1 147 30 is_stmt 1 view -0
+ 202              		.cfi_startproc
+ 203              		@ args = 0, pretend = 0, frame = 0
+ 204              		@ frame_needed = 0, uses_anonymous_args = 0
+ 205              		@ link register save eliminated.
+ 148:lib/chibios/os/hal/src/hal_st.c **** 
+ 149:lib/chibios/os/hal/src/hal_st.c ****   return st_lld_get_counter();
+ 206              		.loc 1 149 3 view .LVU44
+ 207              	.LBB20:
+ 208              	.LBI20:
+ 539:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 209              		.loc 2 539 25 view .LVU45
+ 210              	.LBB21:
+ 541:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** }
+ 211              		.loc 2 541 3 view .LVU46
+ 541:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** }
+ 212              		.loc 2 541 10 is_stmt 0 view .LVU47
+ 213 0000 4FF08043 		mov	r3, #1073741824
+ 214 0004 586A     		ldr	r0, [r3, #36]
+ 215              	.LBE21:
+ 216              	.LBE20:
+ 150:lib/chibios/os/hal/src/hal_st.c **** }
+ 217              		.loc 1 150 1 view .LVU48
+ 218 0006 7047     		bx	lr
+ 219              		.cfi_endproc
+ 220              	.LFE283:
+ 222              		.section	.text.stIsAlarmActive,"ax",%progbits
+ 223              		.align	1
+ 224              		.global	stIsAlarmActive
+ 225              		.syntax unified
+ 226              		.thumb
+ 227              		.thumb_func
+ 228              		.fpu fpv4-sp-d16
+ 230              	stIsAlarmActive:
+ 231              	.LFB284:
+ 151:lib/chibios/os/hal/src/hal_st.c **** 
+ 152:lib/chibios/os/hal/src/hal_st.c **** /**
+ 153:lib/chibios/os/hal/src/hal_st.c ****  * @brief   Determines if the alarm zero is active.
+ 154:lib/chibios/os/hal/src/hal_st.c ****  *
+ 155:lib/chibios/os/hal/src/hal_st.c ****  * @return              The alarm status.
+ 156:lib/chibios/os/hal/src/hal_st.c ****  * @retval false        if the alarm is not active.
+ 157:lib/chibios/os/hal/src/hal_st.c ****  * @retval true         is the alarm is active
+ 158:lib/chibios/os/hal/src/hal_st.c ****  *
+ 159:lib/chibios/os/hal/src/hal_st.c ****  * @api
+ 160:lib/chibios/os/hal/src/hal_st.c ****  */
+ 161:lib/chibios/os/hal/src/hal_st.c **** bool stIsAlarmActive(void) {
+ 232              		.loc 1 161 28 is_stmt 1 view -0
+ 233              		.cfi_startproc
+ 234              		@ args = 0, pretend = 0, frame = 0
+ 235              		@ frame_needed = 0, uses_anonymous_args = 0
+ 236              		@ link register save eliminated.
+ 162:lib/chibios/os/hal/src/hal_st.c **** 
+ 163:lib/chibios/os/hal/src/hal_st.c ****   return st_lld_is_alarm_active();
+ 237              		.loc 1 163 3 view .LVU50
+ 238              	.LBB24:
+ 239              	.LBI24:
+ 600:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** }
+ 601:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 602:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** /**
+ 603:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @brief   Determines if the alarm is active.
+ 604:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *
+ 605:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @return              The alarm status.
+ 606:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @retval false        if the alarm is not active.
+ 607:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @retval true         is the alarm is active
+ 608:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  *
+ 609:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  * @notapi
+ 610:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****  */
+ 611:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** static inline bool st_lld_is_alarm_active(void) {
+ 240              		.loc 2 611 20 view .LVU51
+ 241              	.LBB25:
+ 612:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h **** 
+ 613:./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/hal_st_lld.h ****   return (bool)((STM32_ST_TIM->DIER & STM32_TIM_DIER_CC1IE) != 0);
+ 242              		.loc 2 613 3 view .LVU52
+ 243              		.loc 2 613 30 is_stmt 0 view .LVU53
+ 244 0000 4FF08043 		mov	r3, #1073741824
+ 245 0004 D868     		ldr	r0, [r3, #12]
+ 246              	.LBE25:
+ 247              	.LBE24:
+ 164:lib/chibios/os/hal/src/hal_st.c **** }
+ 248              		.loc 1 164 1 view .LVU54
+ 249 0006 C0F34000 		ubfx	r0, r0, #1, #1
+ 250 000a 7047     		bx	lr
+ 251              		.cfi_endproc
+ 252              	.LFE284:
+ 254              		.text
+ 255              	.Letext0:
+ 256              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 257              		.file 4 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 258              		.file 5 "./lib/chibios/os/rt/include/chtime.h"
+ 259              		.file 6 "./lib/chibios/os/hal/ports/STM32/LLD/TIMv1/stm32_tim.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 hal_st.c
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:18     .text.stInit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:26     .text.stInit:0000000000000000 stInit
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:41     .text.stStartAlarm:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:48     .text.stStartAlarm:0000000000000000 stStartAlarm
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:89     .text.stStopAlarm:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:96     .text.stStopAlarm:0000000000000000 stStopAlarm
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:121    .text.stSetAlarm:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:128    .text.stSetAlarm:0000000000000000 stSetAlarm
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:158    .text.stGetAlarm:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:165    .text.stGetAlarm:0000000000000000 stGetAlarm
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:192    .text.stGetCounter:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:199    .text.stGetCounter:0000000000000000 stGetCounter
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:223    .text.stIsAlarmActive:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccXu0Udh.s:230    .text.stIsAlarmActive:0000000000000000 stIsAlarmActive
+
+UNDEFINED SYMBOLS
+st_lld_init

@@ -1,0 +1,91 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"led_tables.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	CIE1931_CURVE
+  18              		.section	.rodata.CIE1931_CURVE,"a"
+  21              	CIE1931_CURVE:
+  22 0000 00010101 		.ascii	"\000\001\001\001\001\001\001\001\001\001\002\002\002"
+  22      01010101 
+  22      01010202 
+  22      02
+  23 000d 02020202 		.ascii	"\002\002\002\002\002\002\003\003\003\003\003\003\003"
+  23      02020303 
+  23      03030303 
+  23      03
+  24 001a 03040404 		.ascii	"\003\004\004\004\004\004\004\004\005\005\005\005\005"
+  24      04040404 
+  24      05050505 
+  24      05
+  25 0027 06060606 		.ascii	"\006\006\006\006\006\007\007\007\007\007\010\010\010"
+  25      06070707 
+  25      07070808 
+  25      08
+  26 0034 08090909 		.ascii	"\010\011\011\011\011\012\012\012\013\013\013\014\014"
+  26      090A0A0A 
+  26      0B0B0B0C 
+  26      0C
+  27 0041 0C0D0D0D 		.ascii	"\014\015\015\015\016\016\016\017\017\017\020\020\021"
+  27      0E0E0E0F 
+  27      0F0F1010 
+  27      11
+  28 004e 11111212 		.ascii	"\021\021\022\022\023\023\024\024\025\025\026\026\027"
+  28      13131414 
+  28      15151616 
+  28      17
+  29 005b 17181819 		.ascii	"\027\030\030\031\031\032\032\033\033\034\035\035\036"
+  29      191A1A1B 
+  29      1B1C1D1D 
+  29      1E
+  30 0068 1E1F2020 		.ascii	"\036\037  !\"\"#$$%&&'())*+,--./01223456789:;<=>?@A"
+  30      21222223 
+  30      24242526 
+  30      26272829 
+  30      292A2B2C 
+  31 0093 42434445 		.ascii	"BCDEFGHIJLMNOPQSTUVXYZ[]^_abdefhiklmoprsuwxz{}~\200"
+  31      46474849 
+  31      4A4C4D4E 
+  31      4F505153 
+  31      54555658 
+  32 00c3 82838587 		.ascii	"\202\203\205\207\210\212\214\216\217\221\223\225\226"
+  32      888A8C8E 
+  32      8F919395 
+  32      96
+  33 00d0 989A9C9E 		.ascii	"\230\232\234\236\240\242\243\245\247\251\253\255\257"
+  33      A0A2A3A5 
+  33      A7A9ABAD 
+  33      AF
+  34 00dd B1B3B5B7 		.ascii	"\261\263\265\267\272\274\276\300\302\304\306\311\313"
+  34      BABCBEC0 
+  34      C2C4C6C9 
+  34      CB
+  35 00ea CDCFD1D4 		.ascii	"\315\317\321\324\326\330\333\335\337\342\344\347\351"
+  35      D6D8DBDD 
+  35      DFE2E4E7 
+  35      E9
+  36 00f7 EBEEF0F3 		.ascii	"\353\356\360\363\365\370\372\375\377"
+  36      F5F8FAFD 
+  36      FF
+  37              		.text
+  38              	.Letext0:
+  39              		.file 1 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+  40              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+  41              		.file 3 "quantum/led_tables.h"
+  42              		.file 4 "quantum/led_tables.c"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 led_tables.c
+C:\Users\lhanj\AppData\Local\Temp\ccfP6rDF.s:21     .rodata.CIE1931_CURVE:0000000000000000 CIE1931_CURVE
+
+NO UNDEFINED SYMBOLS

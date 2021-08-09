@@ -1,0 +1,145 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"print.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.null_sendchar_func,"ax",%progbits
+  18              		.align	1
+  19              		.arch armv7e-m
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	null_sendchar_func:
+  26              	.LVL0:
+  27              	.LFB0:
+  28              		.file 1 "quantum/logging/print.c"
+   1:quantum/logging/print.c **** /*
+   2:quantum/logging/print.c **** Copyright 2011 Jun Wako <wakojun@gmail.com>
+   3:quantum/logging/print.c **** 
+   4:quantum/logging/print.c **** This program is free software: you can redistribute it and/or modify
+   5:quantum/logging/print.c **** it under the terms of the GNU General Public License as published by
+   6:quantum/logging/print.c **** the Free Software Foundation, either version 2 of the License, or
+   7:quantum/logging/print.c **** (at your option) any later version.
+   8:quantum/logging/print.c **** 
+   9:quantum/logging/print.c **** This program is distributed in the hope that it will be useful,
+  10:quantum/logging/print.c **** but WITHOUT ANY WARRANTY; without even the implied warranty of
+  11:quantum/logging/print.c **** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  12:quantum/logging/print.c **** GNU General Public License for more details.
+  13:quantum/logging/print.c **** 
+  14:quantum/logging/print.c **** You should have received a copy of the GNU General Public License
+  15:quantum/logging/print.c **** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  16:quantum/logging/print.c **** */
+  17:quantum/logging/print.c **** #include <stddef.h>
+  18:quantum/logging/print.c **** #include "sendchar.h"
+  19:quantum/logging/print.c **** 
+  20:quantum/logging/print.c **** // bind lib/printf to console interface - sendchar
+  21:quantum/logging/print.c **** 
+  22:quantum/logging/print.c **** static int8_t          null_sendchar_func(uint8_t c) { return 0; }
+  29              		.loc 1 22 54 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              		.loc 1 22 56 view .LVU1
+  35              		.loc 1 22 66 is_stmt 0 view .LVU2
+  36 0000 0020     		movs	r0, #0
+  37              	.LVL1:
+  38              		.loc 1 22 66 view .LVU3
+  39 0002 7047     		bx	lr
+  40              		.cfi_endproc
+  41              	.LFE0:
+  43              		.section	.text.print_set_sendchar,"ax",%progbits
+  44              		.align	1
+  45              		.global	print_set_sendchar
+  46              		.syntax unified
+  47              		.thumb
+  48              		.thumb_func
+  49              		.fpu fpv4-sp-d16
+  51              	print_set_sendchar:
+  52              	.LVL2:
+  53              	.LFB1:
+  23:quantum/logging/print.c **** static sendchar_func_t func = null_sendchar_func;
+  24:quantum/logging/print.c **** 
+  25:quantum/logging/print.c **** void print_set_sendchar(sendchar_func_t send) { func = send; }
+  54              		.loc 1 25 47 is_stmt 1 view -0
+  55              		.cfi_startproc
+  56              		@ args = 0, pretend = 0, frame = 0
+  57              		@ frame_needed = 0, uses_anonymous_args = 0
+  58              		@ link register save eliminated.
+  59              		.loc 1 25 49 view .LVU5
+  60              		.loc 1 25 54 is_stmt 0 view .LVU6
+  61 0000 014B     		ldr	r3, .L3
+  62 0002 1860     		str	r0, [r3]
+  63              		.loc 1 25 62 view .LVU7
+  64 0004 7047     		bx	lr
+  65              	.L4:
+  66 0006 00BF     		.align	2
+  67              	.L3:
+  68 0008 00000000 		.word	.LANCHOR0
+  69              		.cfi_endproc
+  70              	.LFE1:
+  72              		.section	.text._putchar,"ax",%progbits
+  73              		.align	1
+  74              		.global	_putchar
+  75              		.syntax unified
+  76              		.thumb
+  77              		.thumb_func
+  78              		.fpu fpv4-sp-d16
+  80              	_putchar:
+  81              	.LVL3:
+  82              	.LFB2:
+  26:quantum/logging/print.c **** 
+  27:quantum/logging/print.c **** void _putchar(char character) { func(character); }
+  83              		.loc 1 27 31 is_stmt 1 view -0
+  84              		.cfi_startproc
+  85              		@ args = 0, pretend = 0, frame = 0
+  86              		@ frame_needed = 0, uses_anonymous_args = 0
+  87              		@ link register save eliminated.
+  88              		.loc 1 27 33 view .LVU9
+  89 0000 014B     		ldr	r3, .L6
+  90 0002 1B68     		ldr	r3, [r3]
+  91 0004 1847     		bx	r3
+  92              	.LVL4:
+  93              	.L7:
+  94              		.loc 1 27 33 is_stmt 0 view .LVU10
+  95 0006 00BF     		.align	2
+  96              	.L6:
+  97 0008 00000000 		.word	.LANCHOR0
+  98              		.cfi_endproc
+  99              	.LFE2:
+ 101              		.section	.data.func,"aw"
+ 102              		.align	2
+ 103              		.set	.LANCHOR0,. + 0
+ 106              	func:
+ 107 0000 00000000 		.word	null_sendchar_func
+ 108              		.text
+ 109              	.Letext0:
+ 110              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 111              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 112              		.file 4 "quantum/logging/sendchar.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 print.c
+C:\Users\lhanj\AppData\Local\Temp\ccqaHdlq.s:18     .text.null_sendchar_func:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqaHdlq.s:25     .text.null_sendchar_func:0000000000000000 null_sendchar_func
+C:\Users\lhanj\AppData\Local\Temp\ccqaHdlq.s:44     .text.print_set_sendchar:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqaHdlq.s:51     .text.print_set_sendchar:0000000000000000 print_set_sendchar
+C:\Users\lhanj\AppData\Local\Temp\ccqaHdlq.s:68     .text.print_set_sendchar:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccqaHdlq.s:73     .text._putchar:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccqaHdlq.s:80     .text._putchar:0000000000000000 _putchar
+C:\Users\lhanj\AppData\Local\Temp\ccqaHdlq.s:97     .text._putchar:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccqaHdlq.s:102    .data.func:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccqaHdlq.s:106    .data.func:0000000000000000 func
+
+NO UNDEFINED SYMBOLS

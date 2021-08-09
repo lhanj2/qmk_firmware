@@ -1,0 +1,610 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"hal_lld.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.hal_lld_init,"ax",%progbits
+  18              		.align	1
+  19              		.global	hal_lld_init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	hal_lld_init:
+  27              	.LFB279:
+  28              		.file 1 "lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c"
+   1:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /*
+   2:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+   3:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+   4:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     Licensed under the Apache License, Version 2.0 (the "License");
+   5:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     you may not use this file except in compliance with the License.
+   6:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     You may obtain a copy of the License at
+   7:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+   8:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****         http://www.apache.org/licenses/LICENSE-2.0
+   9:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  10:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     Unless required by applicable law or agreed to in writing, software
+  11:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     distributed under the License is distributed on an "AS IS" BASIS,
+  12:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     See the License for the specific language governing permissions and
+  14:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     limitations under the License.
+  15:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** */
+  16:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  17:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /**
+  18:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @file    STM32F3xx/hal_lld.c
+  19:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @brief   STM32F3xx HAL subsystem low level driver source.
+  20:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  *
+  21:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @addtogroup HAL
+  22:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @{
+  23:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  */
+  24:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  25:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #include "hal.h"
+  26:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  27:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /*===========================================================================*/
+  28:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /* Driver local definitions.                                                 */
+  29:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /*===========================================================================*/
+  30:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  31:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /*===========================================================================*/
+  32:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /* Driver exported variables.                                                */
+  33:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /*===========================================================================*/
+  34:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  35:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /**
+  36:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @brief   CMSIS system core clock variable.
+  37:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @note    It is declared in system_stm32f3xx.h.
+  38:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  */
+  39:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** uint32_t SystemCoreClock = STM32_HCLK;
+  40:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  41:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /*===========================================================================*/
+  42:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /* Driver local variables and types.                                         */
+  43:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /*===========================================================================*/
+  44:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  45:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /*===========================================================================*/
+  46:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /* Driver local functions.                                                   */
+  47:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /*===========================================================================*/
+  48:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  49:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /**
+  50:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @brief   Initializes the backup domain.
+  51:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @note    WARNING! Changing clock source impossible without resetting
+  52:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  *          of the whole BKP domain.
+  53:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  */
+  54:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** static void hal_lld_backup_domain_init(void) {
+  55:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  56:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* Backup domain access enabled and left open.*/
+  57:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   PWR->CR |= PWR_CR_DBP;
+  58:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  59:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* Reset BKP domain if different clock source selected.*/
+  60:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   if ((RCC->BDCR & STM32_RTCSEL_MASK) != STM32_RTCSEL) {
+  61:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     /* Backup domain reset.*/
+  62:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     RCC->BDCR = RCC_BDCR_BDRST;
+  63:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     RCC->BDCR = 0;
+  64:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   }
+  65:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  66:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* If enabled then the LSE is started.*/
+  67:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #if STM32_LSE_ENABLED
+  68:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #if defined(STM32_LSE_BYPASS)
+  69:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* LSE Bypass.*/
+  70:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->BDCR |= STM32_LSEDRV | RCC_BDCR_LSEON | RCC_BDCR_LSEBYP;
+  71:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #else
+  72:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* No LSE Bypass.*/
+  73:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->BDCR |= STM32_LSEDRV | RCC_BDCR_LSEON;
+  74:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #endif
+  75:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->BDCR & RCC_BDCR_LSERDY) == 0)
+  76:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     ;                                     /* Waits until LSE is stable.   */
+  77:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #endif
+  78:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  79:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #if STM32_RTCSEL != STM32_RTCSEL_NOCLOCK
+  80:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* If the backup domain hasn't been initialized yet then proceed with
+  81:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****      initialization.*/
+  82:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   if ((RCC->BDCR & RCC_BDCR_RTCEN) == 0) {
+  83:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     /* Selects clock source.*/
+  84:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     RCC->BDCR |= STM32_RTCSEL;
+  85:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  86:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     /* RTC clock enabled.*/
+  87:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     RCC->BDCR |= RCC_BDCR_RTCEN;
+  88:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   }
+  89:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #endif /* STM32_RTCSEL != STM32_RTCSEL_NOCLOCK */
+  90:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** }
+  91:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  92:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /*===========================================================================*/
+  93:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /* Driver interrupt handlers.                                                */
+  94:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /*===========================================================================*/
+  95:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  96:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /*===========================================================================*/
+  97:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /* Driver exported functions.                                                */
+  98:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /*===========================================================================*/
+  99:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 100:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /**
+ 101:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @brief   Low level HAL driver initialization.
+ 102:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  *
+ 103:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @notapi
+ 104:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  */
+ 105:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** void hal_lld_init(void) {
+  29              		.loc 1 105 25 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+ 106:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 107:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* Reset of all peripherals.
+ 108:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****      Note, GPIOs are not reset because initialized before this point in
+ 109:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****      board files.*/
+ 110:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   rccResetAHB(~STM32_GPIO_EN_MASK);
+  33              		.loc 1 110 3 view .LVU1
+ 105:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  34              		.loc 1 105 25 is_stmt 0 view .LVU2
+  35 0000 10B5     		push	{r4, lr}
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 4, -8
+  38              		.cfi_offset 14, -4
+  39              		.loc 1 110 3 view .LVU3
+  40 0002 224C     		ldr	r4, .L7
+  41 0004 A36A     		ldr	r3, [r4, #40]
+  42 0006 63F4FC03 		orn	r3, r3, #8257536
+  43 000a A362     		str	r3, [r4, #40]
+  44              		.loc 1 110 3 is_stmt 1 view .LVU4
+  45 000c A36A     		ldr	r3, [r4, #40]
+  46 000e 03F4FC03 		and	r3, r3, #8257536
+  47 0012 A362     		str	r3, [r4, #40]
+  48              		.loc 1 110 3 view .LVU5
+ 111:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   rccResetAPB1(0xFFFFFFFF);
+  49              		.loc 1 111 3 is_stmt 0 view .LVU6
+  50 0014 4FF0FF32 		mov	r2, #-1
+ 110:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   rccResetAPB1(0xFFFFFFFF);
+  51              		.loc 1 110 3 view .LVU7
+  52 0018 A36A     		ldr	r3, [r4, #40]
+ 110:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   rccResetAPB1(0xFFFFFFFF);
+  53              		.loc 1 110 35 is_stmt 1 view .LVU8
+  54              		.loc 1 111 3 view .LVU9
+  55 001a 2369     		ldr	r3, [r4, #16]
+  56 001c 2261     		str	r2, [r4, #16]
+  57              		.loc 1 111 3 view .LVU10
+  58 001e 2369     		ldr	r3, [r4, #16]
+  59 0020 0023     		movs	r3, #0
+  60 0022 2361     		str	r3, [r4, #16]
+  61              		.loc 1 111 3 view .LVU11
+  62 0024 2169     		ldr	r1, [r4, #16]
+  63              		.loc 1 111 27 view .LVU12
+ 112:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   rccResetAPB2(0xFFFFFFFF);
+  64              		.loc 1 112 3 view .LVU13
+  65 0026 E168     		ldr	r1, [r4, #12]
+  66 0028 E260     		str	r2, [r4, #12]
+  67              		.loc 1 112 3 view .LVU14
+  68 002a E268     		ldr	r2, [r4, #12]
+  69 002c E360     		str	r3, [r4, #12]
+  70              		.loc 1 112 3 view .LVU15
+  71 002e E268     		ldr	r2, [r4, #12]
+  72              		.loc 1 112 27 view .LVU16
+ 113:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 114:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* PWR clock enabled.*/
+ 115:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   rccEnablePWRInterface(true);
+  73              		.loc 1 115 3 view .LVU17
+  74 0030 E269     		ldr	r2, [r4, #28]
+  75              	.LBB4:
+  76              	.LBB5:
+  57:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  77              		.loc 1 57 11 is_stmt 0 view .LVU18
+  78 0032 1749     		ldr	r1, .L7+4
+  79              	.LBE5:
+  80              	.LBE4:
+  81              		.loc 1 115 3 view .LVU19
+  82 0034 42F08052 		orr	r2, r2, #268435456
+  83 0038 E261     		str	r2, [r4, #28]
+  84              		.loc 1 115 3 is_stmt 1 view .LVU20
+  85 003a E269     		ldr	r2, [r4, #28]
+  86              		.loc 1 115 30 view .LVU21
+ 116:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 117:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* Initializes the backup domain.*/
+ 118:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   hal_lld_backup_domain_init();
+  87              		.loc 1 118 3 view .LVU22
+  88              	.LBB7:
+  89              	.LBI4:
+  54:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  90              		.loc 1 54 13 view .LVU23
+  91              	.LBB6:
+  57:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  92              		.loc 1 57 3 view .LVU24
+  57:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+  93              		.loc 1 57 11 is_stmt 0 view .LVU25
+  94 003c 0A68     		ldr	r2, [r1]
+  95 003e 42F48072 		orr	r2, r2, #256
+  96 0042 0A60     		str	r2, [r1]
+  60:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     /* Backup domain reset.*/
+  97              		.loc 1 60 3 is_stmt 1 view .LVU26
+  60:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     /* Backup domain reset.*/
+  98              		.loc 1 60 11 is_stmt 0 view .LVU27
+  99 0044 226A     		ldr	r2, [r4, #32]
+  60:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     /* Backup domain reset.*/
+ 100              		.loc 1 60 18 view .LVU28
+ 101 0046 02F44072 		and	r2, r2, #768
+  60:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     /* Backup domain reset.*/
+ 102              		.loc 1 60 6 view .LVU29
+ 103 004a B2F5007F 		cmp	r2, #512
+  62:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     RCC->BDCR = 0;
+ 104              		.loc 1 62 5 is_stmt 1 view .LVU30
+  62:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     RCC->BDCR = 0;
+ 105              		.loc 1 62 15 is_stmt 0 view .LVU31
+ 106 004e 1EBF     		ittt	ne
+ 107 0050 4FF48032 		movne	r2, #65536
+ 108 0054 2262     		strne	r2, [r4, #32]
+  63:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   }
+ 109              		.loc 1 63 5 is_stmt 1 view .LVU32
+  63:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   }
+ 110              		.loc 1 63 15 is_stmt 0 view .LVU33
+ 111 0056 2362     		strne	r3, [r4, #32]
+  82:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     /* Selects clock source.*/
+ 112              		.loc 1 82 3 is_stmt 1 view .LVU34
+  82:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     /* Selects clock source.*/
+ 113              		.loc 1 82 11 is_stmt 0 view .LVU35
+ 114 0058 236A     		ldr	r3, [r4, #32]
+  82:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     /* Selects clock source.*/
+ 115              		.loc 1 82 6 view .LVU36
+ 116 005a 1B04     		lsls	r3, r3, #16
+ 117 005c 07D4     		bmi	.L3
+  84:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 118              		.loc 1 84 5 is_stmt 1 view .LVU37
+  84:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 119              		.loc 1 84 15 is_stmt 0 view .LVU38
+ 120 005e 236A     		ldr	r3, [r4, #32]
+ 121 0060 43F40073 		orr	r3, r3, #512
+ 122 0064 2362     		str	r3, [r4, #32]
+  87:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   }
+ 123              		.loc 1 87 5 is_stmt 1 view .LVU39
+  87:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   }
+ 124              		.loc 1 87 15 is_stmt 0 view .LVU40
+ 125 0066 236A     		ldr	r3, [r4, #32]
+ 126 0068 43F40043 		orr	r3, r3, #32768
+ 127 006c 2362     		str	r3, [r4, #32]
+ 128              	.L3:
+ 129              	.LBE6:
+ 130              	.LBE7:
+ 119:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 120:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* DMA subsystems initialization.*/
+ 121:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #if defined(STM32_DMA_REQUIRED)
+ 122:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   dmaInit();
+ 131              		.loc 1 122 3 is_stmt 1 view .LVU41
+ 132 006e FFF7FEFF 		bl	dmaInit
+ 133              	.LVL0:
+ 123:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #endif
+ 124:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 125:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* IRQ subsystem initialization.*/
+ 126:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   irqInit();
+ 134              		.loc 1 126 3 view .LVU42
+ 135 0072 FFF7FEFF 		bl	irqInit
+ 136              	.LVL1:
+ 127:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 128:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* Programmable voltage detector enable.*/
+ 129:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #if STM32_PVD_ENABLE
+ 130:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   PWR->CR |= PWR_CR_PVDE | (STM32_PLS & STM32_PLS_MASK);
+ 131:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #endif /* STM32_PVD_ENABLE */
+ 132:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 133:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* SYSCFG clock enabled here because it is a multi-functional unit shared
+ 134:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****      among multiple drivers.*/
+ 135:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   rccEnableAPB2(RCC_APB2ENR_SYSCFGEN, true);
+ 137              		.loc 1 135 3 view .LVU43
+ 138 0076 A369     		ldr	r3, [r4, #24]
+ 136:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 137:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #if STM32_HAS_USB
+ 138:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* USB IRQ relocated to not conflict with CAN.*/
+ 139:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   SYSCFG->CFGR1 |= SYSCFG_CFGR1_USB_IT_RMP;
+ 139              		.loc 1 139 17 is_stmt 0 view .LVU44
+ 140 0078 064A     		ldr	r2, .L7+8
+ 135:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 141              		.loc 1 135 3 view .LVU45
+ 142 007a 43F00103 		orr	r3, r3, #1
+ 143 007e A361     		str	r3, [r4, #24]
+ 135:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 144              		.loc 1 135 3 is_stmt 1 view .LVU46
+ 145 0080 A369     		ldr	r3, [r4, #24]
+ 135:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 146              		.loc 1 135 44 view .LVU47
+ 147              		.loc 1 139 3 view .LVU48
+ 148              		.loc 1 139 17 is_stmt 0 view .LVU49
+ 149 0082 1368     		ldr	r3, [r2]
+ 150 0084 43F02003 		orr	r3, r3, #32
+ 151 0088 1360     		str	r3, [r2]
+ 140:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #endif
+ 141:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** }
+ 152              		.loc 1 141 1 view .LVU50
+ 153 008a 10BD     		pop	{r4, pc}
+ 154              	.L8:
+ 155              		.align	2
+ 156              	.L7:
+ 157 008c 00100240 		.word	1073876992
+ 158 0090 00700040 		.word	1073770496
+ 159 0094 00000140 		.word	1073807360
+ 160              		.cfi_endproc
+ 161              	.LFE279:
+ 163              		.section	.text.stm32_clock_init,"ax",%progbits
+ 164              		.align	1
+ 165              		.global	stm32_clock_init
+ 166              		.syntax unified
+ 167              		.thumb
+ 168              		.thumb_func
+ 169              		.fpu fpv4-sp-d16
+ 171              	stm32_clock_init:
+ 172              	.LFB280:
+ 142:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 143:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** /**
+ 144:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @brief   STM32 clocks and PLL initialization.
+ 145:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @note    All the involved constants come from the file @p board.h.
+ 146:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @note    This function should be invoked just after the system reset.
+ 147:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  *
+ 148:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  * @special
+ 149:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****  */
+ 150:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** void stm32_clock_init(void) {
+ 173              		.loc 1 150 29 is_stmt 1 view -0
+ 174              		.cfi_startproc
+ 175              		@ args = 0, pretend = 0, frame = 0
+ 176              		@ frame_needed = 0, uses_anonymous_args = 0
+ 177              		@ link register save eliminated.
+ 151:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 152:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #if !STM32_NO_INIT
+ 153:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* HSI setup, it enforces the reset situation in order to handle possible
+ 154:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****      problems with JTAG probes and re-initializations.*/
+ 155:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->CR |= RCC_CR_HSION;                  /* Make sure HSI is ON.         */
+ 178              		.loc 1 155 3 view .LVU52
+ 179              		.loc 1 155 11 is_stmt 0 view .LVU53
+ 180 0000 224B     		ldr	r3, .L28
+ 181 0002 1A68     		ldr	r2, [r3]
+ 182 0004 42F00102 		orr	r2, r2, #1
+ 183 0008 1A60     		str	r2, [r3]
+ 156:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while (!(RCC->CR & RCC_CR_HSIRDY))
+ 184              		.loc 1 156 3 is_stmt 1 view .LVU54
+ 185              	.L10:
+ 157:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     ;                                       /* Wait until HSI is stable.    */
+ 186              		.loc 1 157 5 discriminator 1 view .LVU55
+ 156:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while (!(RCC->CR & RCC_CR_HSIRDY))
+ 187              		.loc 1 156 9 discriminator 1 view .LVU56
+ 156:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while (!(RCC->CR & RCC_CR_HSIRDY))
+ 188              		.loc 1 156 15 is_stmt 0 discriminator 1 view .LVU57
+ 189 000a 1A68     		ldr	r2, [r3]
+ 156:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while (!(RCC->CR & RCC_CR_HSIRDY))
+ 190              		.loc 1 156 9 discriminator 1 view .LVU58
+ 191 000c 9207     		lsls	r2, r2, #30
+ 192 000e FCD5     		bpl	.L10
+ 158:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 159:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* HSI is selected as new source without touching the other fields in
+ 160:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****      CFGR. Clearing the register has to be postponed after HSI is the
+ 161:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****      new source.*/
+ 162:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->CFGR &= ~RCC_CFGR_SW;                /* Reset SW, selecting HSI.     */
+ 193              		.loc 1 162 3 is_stmt 1 view .LVU59
+ 194              		.loc 1 162 13 is_stmt 0 view .LVU60
+ 195 0010 5A68     		ldr	r2, [r3, #4]
+ 196 0012 22F00302 		bic	r2, r2, #3
+ 197 0016 5A60     		str	r2, [r3, #4]
+ 163:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_HSI)
+ 198              		.loc 1 163 3 is_stmt 1 view .LVU61
+ 199              	.L11:
+ 164:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     ;                                       /* Wait until HSI is selected.  */
+ 200              		.loc 1 164 5 discriminator 1 view .LVU62
+ 163:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_HSI)
+ 201              		.loc 1 163 9 discriminator 1 view .LVU63
+ 163:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_HSI)
+ 202              		.loc 1 163 14 is_stmt 0 discriminator 1 view .LVU64
+ 203 0018 5A68     		ldr	r2, [r3, #4]
+ 163:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_HSI)
+ 204              		.loc 1 163 9 discriminator 1 view .LVU65
+ 205 001a 12F00C02 		ands	r2, r2, #12
+ 206 001e FBD1     		bne	.L11
+ 165:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 166:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* Registers finally cleared to reset values.*/
+ 167:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->CR &= RCC_CR_HSITRIM | RCC_CR_HSION; /* CR Reset value.              */
+ 207              		.loc 1 167 3 is_stmt 1 view .LVU66
+ 208              		.loc 1 167 11 is_stmt 0 view .LVU67
+ 209 0020 1968     		ldr	r1, [r3]
+ 210 0022 01F0F901 		and	r1, r1, #249
+ 211 0026 1960     		str	r1, [r3]
+ 168:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->CFGR = 0;                            /* CFGR reset value.            */
+ 212              		.loc 1 168 3 is_stmt 1 view .LVU68
+ 213              		.loc 1 168 13 is_stmt 0 view .LVU69
+ 214 0028 5A60     		str	r2, [r3, #4]
+ 169:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 170:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #if STM32_HSE_ENABLED
+ 171:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* HSE activation.*/
+ 172:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #if defined(STM32_HSE_BYPASS)
+ 173:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* HSE Bypass.*/
+ 174:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->CR |= RCC_CR_HSEON | RCC_CR_HSEBYP;
+ 175:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #else
+ 176:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* No HSE Bypass.*/
+ 177:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->CR |= RCC_CR_HSEON;
+ 215              		.loc 1 177 3 is_stmt 1 view .LVU70
+ 216              		.loc 1 177 11 is_stmt 0 view .LVU71
+ 217 002a 1A68     		ldr	r2, [r3]
+ 218 002c 42F48032 		orr	r2, r2, #65536
+ 219 0030 1A60     		str	r2, [r3]
+ 178:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #endif
+ 179:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while (!(RCC->CR & RCC_CR_HSERDY))
+ 220              		.loc 1 179 3 is_stmt 1 view .LVU72
+ 221              	.L12:
+ 180:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     ;                                       /* Waits until HSE is stable.   */
+ 222              		.loc 1 180 5 discriminator 1 view .LVU73
+ 179:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     ;                                       /* Waits until HSE is stable.   */
+ 223              		.loc 1 179 9 discriminator 1 view .LVU74
+ 179:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     ;                                       /* Waits until HSE is stable.   */
+ 224              		.loc 1 179 15 is_stmt 0 discriminator 1 view .LVU75
+ 225 0032 1A68     		ldr	r2, [r3]
+ 179:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     ;                                       /* Waits until HSE is stable.   */
+ 226              		.loc 1 179 9 discriminator 1 view .LVU76
+ 227 0034 9003     		lsls	r0, r2, #14
+ 228 0036 FCD5     		bpl	.L12
+ 181:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #endif
+ 182:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 183:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #if STM32_LSI_ENABLED
+ 184:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* LSI activation.*/
+ 185:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->CSR |= RCC_CSR_LSION;
+ 229              		.loc 1 185 3 is_stmt 1 view .LVU77
+ 230              		.loc 1 185 12 is_stmt 0 view .LVU78
+ 231 0038 5A6A     		ldr	r2, [r3, #36]
+ 232 003a 42F00102 		orr	r2, r2, #1
+ 233 003e 5A62     		str	r2, [r3, #36]
+ 186:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->CSR & RCC_CSR_LSIRDY) == 0)
+ 234              		.loc 1 186 3 is_stmt 1 view .LVU79
+ 235              	.L13:
+ 187:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     ;                                       /* Waits until LSI is stable.   */
+ 236              		.loc 1 187 5 discriminator 1 view .LVU80
+ 186:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->CSR & RCC_CSR_LSIRDY) == 0)
+ 237              		.loc 1 186 9 discriminator 1 view .LVU81
+ 186:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->CSR & RCC_CSR_LSIRDY) == 0)
+ 238              		.loc 1 186 14 is_stmt 0 discriminator 1 view .LVU82
+ 239 0040 5A6A     		ldr	r2, [r3, #36]
+ 186:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->CSR & RCC_CSR_LSIRDY) == 0)
+ 240              		.loc 1 186 9 discriminator 1 view .LVU83
+ 241 0042 9107     		lsls	r1, r2, #30
+ 242 0044 FCD5     		bpl	.L13
+ 188:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #endif
+ 189:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 190:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* Clock settings.*/
+ 191:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->CFGR  = STM32_MCOSEL    | STM32_USBPRE    | STM32_PLLMUL   |
+ 243              		.loc 1 191 3 is_stmt 1 view .LVU84
+ 244              		.loc 1 191 14 is_stmt 0 view .LVU85
+ 245 0046 124A     		ldr	r2, .L28+4
+ 246 0048 5A60     		str	r2, [r3, #4]
+ 192:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****                STM32_PLLSRC    | STM32_PPRE1     | STM32_PPRE2    |
+ 193:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****                STM32_HPRE;
+ 194:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->CFGR2 = STM32_ADC34PRES | STM32_ADC12PRES | STM32_PREDIV;
+ 247              		.loc 1 194 3 is_stmt 1 view .LVU86
+ 248              		.loc 1 194 14 is_stmt 0 view .LVU87
+ 249 004a 4FF40452 		mov	r2, #8448
+ 250 004e DA62     		str	r2, [r3, #44]
+ 195:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->CFGR3 = STM32_UART5SW   | STM32_UART4SW   | STM32_USART3SW |
+ 251              		.loc 1 195 3 is_stmt 1 view .LVU88
+ 252              		.loc 1 195 14 is_stmt 0 view .LVU89
+ 253 0050 3022     		movs	r2, #48
+ 254 0052 1A63     		str	r2, [r3, #48]
+ 196:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****                STM32_USART2SW  | STM32_I2C2SW    | STM32_I2C1SW   |
+ 197:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****                STM32_USART1SW;
+ 198:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 199:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #if STM32_ACTIVATE_PLL
+ 200:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* PLL activation.*/
+ 201:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->CR   |= RCC_CR_PLLON;
+ 255              		.loc 1 201 3 is_stmt 1 view .LVU90
+ 256              		.loc 1 201 13 is_stmt 0 view .LVU91
+ 257 0054 1A68     		ldr	r2, [r3]
+ 258 0056 42F08072 		orr	r2, r2, #16777216
+ 259 005a 1A60     		str	r2, [r3]
+ 202:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while (!(RCC->CR & RCC_CR_PLLRDY))
+ 260              		.loc 1 202 3 is_stmt 1 view .LVU92
+ 261              	.L14:
+ 203:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     ;                                       /* Waits until PLL is stable.   */
+ 262              		.loc 1 203 5 discriminator 1 view .LVU93
+ 202:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while (!(RCC->CR & RCC_CR_PLLRDY))
+ 263              		.loc 1 202 9 discriminator 1 view .LVU94
+ 202:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while (!(RCC->CR & RCC_CR_PLLRDY))
+ 264              		.loc 1 202 15 is_stmt 0 discriminator 1 view .LVU95
+ 265 005c 1A68     		ldr	r2, [r3]
+ 202:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while (!(RCC->CR & RCC_CR_PLLRDY))
+ 266              		.loc 1 202 9 discriminator 1 view .LVU96
+ 267 005e 9201     		lsls	r2, r2, #6
+ 268 0060 FCD5     		bpl	.L14
+ 204:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #endif
+ 205:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 206:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* Flash setup and final clock selection.   */
+ 207:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   FLASH->ACR = STM32_FLASHBITS;
+ 269              		.loc 1 207 3 is_stmt 1 view .LVU97
+ 270              		.loc 1 207 14 is_stmt 0 view .LVU98
+ 271 0062 0C49     		ldr	r1, .L28+8
+ 272 0064 1222     		movs	r2, #18
+ 273 0066 0A60     		str	r2, [r1]
+ 208:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((FLASH->ACR & FLASH_ACR_LATENCY_Msk) !=
+ 274              		.loc 1 208 3 is_stmt 1 view .LVU99
+ 275              	.L15:
+ 209:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****          (STM32_FLASHBITS & FLASH_ACR_LATENCY_Msk)) {
+ 210:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   }
+ 276              		.loc 1 210 3 discriminator 1 view .LVU100
+ 208:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((FLASH->ACR & FLASH_ACR_LATENCY_Msk) !=
+ 277              		.loc 1 208 9 discriminator 1 view .LVU101
+ 208:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((FLASH->ACR & FLASH_ACR_LATENCY_Msk) !=
+ 278              		.loc 1 208 16 is_stmt 0 discriminator 1 view .LVU102
+ 279 0068 0A68     		ldr	r2, [r1]
+ 208:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((FLASH->ACR & FLASH_ACR_LATENCY_Msk) !=
+ 280              		.loc 1 208 22 discriminator 1 view .LVU103
+ 281 006a 02F00702 		and	r2, r2, #7
+ 208:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((FLASH->ACR & FLASH_ACR_LATENCY_Msk) !=
+ 282              		.loc 1 208 9 discriminator 1 view .LVU104
+ 283 006e 022A     		cmp	r2, #2
+ 284 0070 FAD1     		bne	.L15
+ 211:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 212:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* Switching to the configured clock source if it is different from HSI.*/
+ 213:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #if (STM32_SW != STM32_SW_HSI)
+ 214:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* Switches clock source.*/
+ 215:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->CFGR |= STM32_SW;
+ 285              		.loc 1 215 3 is_stmt 1 view .LVU105
+ 286              		.loc 1 215 13 is_stmt 0 view .LVU106
+ 287 0072 5A68     		ldr	r2, [r3, #4]
+ 288 0074 42F00202 		orr	r2, r2, #2
+ 289 0078 5A60     		str	r2, [r3, #4]
+ 216:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->CFGR & RCC_CFGR_SWS) != (STM32_SW << 2))
+ 290              		.loc 1 216 3 is_stmt 1 view .LVU107
+ 291              	.L16:
+ 217:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****     ;                                       /* Waits selection complete.    */
+ 292              		.loc 1 217 5 discriminator 1 view .LVU108
+ 216:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->CFGR & RCC_CFGR_SWS) != (STM32_SW << 2))
+ 293              		.loc 1 216 9 discriminator 1 view .LVU109
+ 216:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->CFGR & RCC_CFGR_SWS) != (STM32_SW << 2))
+ 294              		.loc 1 216 14 is_stmt 0 discriminator 1 view .LVU110
+ 295 007a 5A68     		ldr	r2, [r3, #4]
+ 216:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->CFGR & RCC_CFGR_SWS) != (STM32_SW << 2))
+ 296              		.loc 1 216 21 discriminator 1 view .LVU111
+ 297 007c 02F00C02 		and	r2, r2, #12
+ 216:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   while ((RCC->CFGR & RCC_CFGR_SWS) != (STM32_SW << 2))
+ 298              		.loc 1 216 9 discriminator 1 view .LVU112
+ 299 0080 082A     		cmp	r2, #8
+ 300 0082 FAD1     		bne	.L16
+ 218:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #endif
+ 219:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** 
+ 220:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   /* After PLL activation because the special requirements for TIM1 and
+ 221:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****      TIM8 bits.*/
+ 222:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c ****   RCC->CFGR3 |= STM32_HRTIM1SW | STM32_TIM8SW | STM32_TIM1SW;
+ 301              		.loc 1 222 3 is_stmt 1 view .LVU113
+ 302              		.loc 1 222 14 is_stmt 0 view .LVU114
+ 303 0084 1A6B     		ldr	r2, [r3, #48]
+ 304 0086 1A63     		str	r2, [r3, #48]
+ 223:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** #endif /* !STM32_NO_INIT */
+ 224:lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.c **** }
+ 305              		.loc 1 224 1 view .LVU115
+ 306 0088 7047     		bx	lr
+ 307              	.L29:
+ 308 008a 00BF     		.align	2
+ 309              	.L28:
+ 310 008c 00100240 		.word	1073876992
+ 311 0090 00241D00 		.word	1909760
+ 312 0094 00200240 		.word	1073881088
+ 313              		.cfi_endproc
+ 314              	.LFE280:
+ 316              		.global	SystemCoreClock
+ 317              		.section	.data.SystemCoreClock,"aw"
+ 318              		.align	2
+ 321              	SystemCoreClock:
+ 322 0000 00A24A04 		.word	72000000
+ 323              		.text
+ 324              	.Letext0:
+ 325              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 326              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 327              		.file 4 "./lib/chibios/os/common/ext/ST/STM32F3xx/stm32f303xc.h"
+ 328              		.file 5 "./lib/chibios/os/hal/ports/STM32/LLD/DMAv1/stm32_dma.h"
+ 329              		.file 6 "./lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.h"
+ 330              		.file 7 "./lib/chibios/os/common/ext/ST/STM32F3xx/system_stm32f3xx.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 hal_lld.c
+C:\Users\lhanj\AppData\Local\Temp\ccNhbS1h.s:18     .text.hal_lld_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccNhbS1h.s:26     .text.hal_lld_init:0000000000000000 hal_lld_init
+C:\Users\lhanj\AppData\Local\Temp\ccNhbS1h.s:157    .text.hal_lld_init:000000000000008c $d
+C:\Users\lhanj\AppData\Local\Temp\ccNhbS1h.s:164    .text.stm32_clock_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccNhbS1h.s:171    .text.stm32_clock_init:0000000000000000 stm32_clock_init
+C:\Users\lhanj\AppData\Local\Temp\ccNhbS1h.s:310    .text.stm32_clock_init:000000000000008c $d
+C:\Users\lhanj\AppData\Local\Temp\ccNhbS1h.s:321    .data.SystemCoreClock:0000000000000000 SystemCoreClock
+C:\Users\lhanj\AppData\Local\Temp\ccNhbS1h.s:318    .data.SystemCoreClock:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+dmaInit
+irqInit

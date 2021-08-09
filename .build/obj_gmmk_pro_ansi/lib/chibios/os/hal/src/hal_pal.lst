@@ -1,0 +1,282 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"hal_pal.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.palReadBus,"ax",%progbits
+  18              		.align	1
+  19              		.global	palReadBus
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	palReadBus:
+  27              	.LVL0:
+  28              	.LFB278:
+  29              		.file 1 "lib/chibios/os/hal/src/hal_pal.c"
+   1:lib/chibios/os/hal/src/hal_pal.c **** /*
+   2:lib/chibios/os/hal/src/hal_pal.c ****     ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+   3:lib/chibios/os/hal/src/hal_pal.c **** 
+   4:lib/chibios/os/hal/src/hal_pal.c ****     Licensed under the Apache License, Version 2.0 (the "License");
+   5:lib/chibios/os/hal/src/hal_pal.c ****     you may not use this file except in compliance with the License.
+   6:lib/chibios/os/hal/src/hal_pal.c ****     You may obtain a copy of the License at
+   7:lib/chibios/os/hal/src/hal_pal.c **** 
+   8:lib/chibios/os/hal/src/hal_pal.c ****         http://www.apache.org/licenses/LICENSE-2.0
+   9:lib/chibios/os/hal/src/hal_pal.c **** 
+  10:lib/chibios/os/hal/src/hal_pal.c ****     Unless required by applicable law or agreed to in writing, software
+  11:lib/chibios/os/hal/src/hal_pal.c ****     distributed under the License is distributed on an "AS IS" BASIS,
+  12:lib/chibios/os/hal/src/hal_pal.c ****     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13:lib/chibios/os/hal/src/hal_pal.c ****     See the License for the specific language governing permissions and
+  14:lib/chibios/os/hal/src/hal_pal.c ****     limitations under the License.
+  15:lib/chibios/os/hal/src/hal_pal.c **** */
+  16:lib/chibios/os/hal/src/hal_pal.c **** 
+  17:lib/chibios/os/hal/src/hal_pal.c **** /**
+  18:lib/chibios/os/hal/src/hal_pal.c ****  * @file    hal_pal.c
+  19:lib/chibios/os/hal/src/hal_pal.c ****  * @brief   I/O Ports Abstraction Layer code.
+  20:lib/chibios/os/hal/src/hal_pal.c ****  *
+  21:lib/chibios/os/hal/src/hal_pal.c ****  * @addtogroup PAL
+  22:lib/chibios/os/hal/src/hal_pal.c ****  * @{
+  23:lib/chibios/os/hal/src/hal_pal.c ****  */
+  24:lib/chibios/os/hal/src/hal_pal.c **** 
+  25:lib/chibios/os/hal/src/hal_pal.c **** #include "hal.h"
+  26:lib/chibios/os/hal/src/hal_pal.c **** 
+  27:lib/chibios/os/hal/src/hal_pal.c **** #if (HAL_USE_PAL == TRUE) || defined(__DOXYGEN__)
+  28:lib/chibios/os/hal/src/hal_pal.c **** 
+  29:lib/chibios/os/hal/src/hal_pal.c **** /*===========================================================================*/
+  30:lib/chibios/os/hal/src/hal_pal.c **** /* Driver local definitions.                                                 */
+  31:lib/chibios/os/hal/src/hal_pal.c **** /*===========================================================================*/
+  32:lib/chibios/os/hal/src/hal_pal.c **** 
+  33:lib/chibios/os/hal/src/hal_pal.c **** /*===========================================================================*/
+  34:lib/chibios/os/hal/src/hal_pal.c **** /* Driver exported variables.                                                */
+  35:lib/chibios/os/hal/src/hal_pal.c **** /*===========================================================================*/
+  36:lib/chibios/os/hal/src/hal_pal.c **** 
+  37:lib/chibios/os/hal/src/hal_pal.c **** /*===========================================================================*/
+  38:lib/chibios/os/hal/src/hal_pal.c **** /* Driver local variables and types.                                         */
+  39:lib/chibios/os/hal/src/hal_pal.c **** /*===========================================================================*/
+  40:lib/chibios/os/hal/src/hal_pal.c **** 
+  41:lib/chibios/os/hal/src/hal_pal.c **** /*===========================================================================*/
+  42:lib/chibios/os/hal/src/hal_pal.c **** /* Driver local functions.                                                   */
+  43:lib/chibios/os/hal/src/hal_pal.c **** /*===========================================================================*/
+  44:lib/chibios/os/hal/src/hal_pal.c **** 
+  45:lib/chibios/os/hal/src/hal_pal.c **** /*===========================================================================*/
+  46:lib/chibios/os/hal/src/hal_pal.c **** /* Driver exported functions.                                                */
+  47:lib/chibios/os/hal/src/hal_pal.c **** /*===========================================================================*/
+  48:lib/chibios/os/hal/src/hal_pal.c **** 
+  49:lib/chibios/os/hal/src/hal_pal.c **** /**
+  50:lib/chibios/os/hal/src/hal_pal.c ****  * @brief   Read from an I/O bus.
+  51:lib/chibios/os/hal/src/hal_pal.c ****  * @note    The operation is not guaranteed to be atomic on all the
+  52:lib/chibios/os/hal/src/hal_pal.c ****  *          architectures, for atomicity and/or portability reasons you may
+  53:lib/chibios/os/hal/src/hal_pal.c ****  *          need to enclose port I/O operations between @p osalSysLock() and
+  54:lib/chibios/os/hal/src/hal_pal.c ****  *          @p osalSysUnlock().
+  55:lib/chibios/os/hal/src/hal_pal.c ****  * @note    The function internally uses the @p palReadGroup() macro. The use
+  56:lib/chibios/os/hal/src/hal_pal.c ****  *          of this function is preferred when you value code size, readability
+  57:lib/chibios/os/hal/src/hal_pal.c ****  *          and error checking over speed.
+  58:lib/chibios/os/hal/src/hal_pal.c ****  * @note    The function can be called from any context.
+  59:lib/chibios/os/hal/src/hal_pal.c ****  *
+  60:lib/chibios/os/hal/src/hal_pal.c ****  * @param[in] bus       the I/O bus, pointer to a @p IOBus structure
+  61:lib/chibios/os/hal/src/hal_pal.c ****  * @return              The bus logical states.
+  62:lib/chibios/os/hal/src/hal_pal.c ****  *
+  63:lib/chibios/os/hal/src/hal_pal.c ****  * @special
+  64:lib/chibios/os/hal/src/hal_pal.c ****  */
+  65:lib/chibios/os/hal/src/hal_pal.c **** ioportmask_t palReadBus(const IOBus *bus) {
+  30              		.loc 1 65 43 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  66:lib/chibios/os/hal/src/hal_pal.c **** 
+  67:lib/chibios/os/hal/src/hal_pal.c ****   osalDbgCheck((bus != NULL) && (bus->offset < PAL_IOPORTS_WIDTH));
+  35              		.loc 1 67 3 view .LVU1
+  36              		.loc 1 67 3 view .LVU2
+  37              		.loc 1 67 3 view .LVU3
+  68:lib/chibios/os/hal/src/hal_pal.c **** 
+  69:lib/chibios/os/hal/src/hal_pal.c ****   return palReadGroup(bus->portid, bus->mask, bus->offset);
+  38              		.loc 1 69 3 view .LVU4
+  39              		.loc 1 69 10 is_stmt 0 view .LVU5
+  40 0000 0368     		ldr	r3, [r0]
+  41 0002 8268     		ldr	r2, [r0, #8]
+  42 0004 1B69     		ldr	r3, [r3, #16]
+  43 0006 4068     		ldr	r0, [r0, #4]
+  44              	.LVL1:
+  45              		.loc 1 69 10 view .LVU6
+  46 0008 D340     		lsrs	r3, r3, r2
+  70:lib/chibios/os/hal/src/hal_pal.c **** }
+  47              		.loc 1 70 1 view .LVU7
+  48 000a 1840     		ands	r0, r0, r3
+  49 000c 7047     		bx	lr
+  50              		.cfi_endproc
+  51              	.LFE278:
+  53              		.section	.text.palWriteBus,"ax",%progbits
+  54              		.align	1
+  55              		.global	palWriteBus
+  56              		.syntax unified
+  57              		.thumb
+  58              		.thumb_func
+  59              		.fpu fpv4-sp-d16
+  61              	palWriteBus:
+  62              	.LVL2:
+  63              	.LFB279:
+  71:lib/chibios/os/hal/src/hal_pal.c **** 
+  72:lib/chibios/os/hal/src/hal_pal.c **** /**
+  73:lib/chibios/os/hal/src/hal_pal.c ****  * @brief   Write to an I/O bus.
+  74:lib/chibios/os/hal/src/hal_pal.c ****  * @note    The operation is not guaranteed to be atomic on all the
+  75:lib/chibios/os/hal/src/hal_pal.c ****  *          architectures, for atomicity and/or portability reasons you may
+  76:lib/chibios/os/hal/src/hal_pal.c ****  *          need to enclose port I/O operations between @p osalSysLock() and
+  77:lib/chibios/os/hal/src/hal_pal.c ****  *          @p osalSysUnlock().
+  78:lib/chibios/os/hal/src/hal_pal.c ****  * @note    The default implementation is non atomic and not necessarily
+  79:lib/chibios/os/hal/src/hal_pal.c ****  *          optimal. Low level drivers may  optimize the function by using
+  80:lib/chibios/os/hal/src/hal_pal.c ****  *          specific hardware or coding.
+  81:lib/chibios/os/hal/src/hal_pal.c ****  * @note    The function can be called from any context.
+  82:lib/chibios/os/hal/src/hal_pal.c ****  *
+  83:lib/chibios/os/hal/src/hal_pal.c ****  * @param[in] bus       the I/O bus, pointer to a @p IOBus structure
+  84:lib/chibios/os/hal/src/hal_pal.c ****  * @param[in] bits      the bits to be written on the I/O bus. Values exceeding
+  85:lib/chibios/os/hal/src/hal_pal.c ****  *                      the bus width are masked so most significant bits are
+  86:lib/chibios/os/hal/src/hal_pal.c ****  *                      lost.
+  87:lib/chibios/os/hal/src/hal_pal.c ****  *
+  88:lib/chibios/os/hal/src/hal_pal.c ****  * @special
+  89:lib/chibios/os/hal/src/hal_pal.c ****  */
+  90:lib/chibios/os/hal/src/hal_pal.c **** void palWriteBus(const IOBus *bus, ioportmask_t bits) {
+  64              		.loc 1 90 55 is_stmt 1 view -0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  91:lib/chibios/os/hal/src/hal_pal.c **** 
+  92:lib/chibios/os/hal/src/hal_pal.c ****   osalDbgCheck((bus != NULL) && (bus->offset < PAL_IOPORTS_WIDTH));
+  68              		.loc 1 92 3 view .LVU9
+  69              		.loc 1 92 3 view .LVU10
+  70              		.loc 1 92 3 view .LVU11
+  71              	.LBB2:
+  93:lib/chibios/os/hal/src/hal_pal.c **** 
+  94:lib/chibios/os/hal/src/hal_pal.c ****   palWriteGroup(bus->portid, bus->mask, bus->offset, bits);
+  72              		.loc 1 94 3 view .LVU12
+  73              	.LBE2:
+  90:lib/chibios/os/hal/src/hal_pal.c **** 
+  74              		.loc 1 90 55 is_stmt 0 view .LVU13
+  75 0000 30B5     		push	{r4, r5, lr}
+  76              		.cfi_def_cfa_offset 12
+  77              		.cfi_offset 4, -12
+  78              		.cfi_offset 5, -8
+  79              		.cfi_offset 14, -4
+  80              	.LBB3:
+  81              		.loc 1 94 3 view .LVU14
+  82 0002 D0E90142 		ldrd	r4, r2, [r0, #4]
+  83 0006 24EA0103 		bic	r3, r4, r1
+  84 000a 02F11005 		add	r5, r2, #16
+  85 000e 2140     		ands	r1, r1, r4
+  86              	.LVL3:
+  87              		.loc 1 94 3 view .LVU15
+  88 0010 AB40     		lsls	r3, r3, r5
+  89 0012 9140     		lsls	r1, r1, r2
+  90 0014 1943     		orrs	r1, r1, r3
+  91              	.LVL4:
+  92              		.loc 1 94 3 is_stmt 1 view .LVU16
+  93 0016 0368     		ldr	r3, [r0]
+  94 0018 9961     		str	r1, [r3, #24]
+  95              	.LBE3:
+  96              		.loc 1 94 59 view .LVU17
+  95:lib/chibios/os/hal/src/hal_pal.c **** }
+  97              		.loc 1 95 1 is_stmt 0 view .LVU18
+  98 001a 30BD     		pop	{r4, r5, pc}
+  99              		.cfi_endproc
+ 100              	.LFE279:
+ 102              		.section	.text.palSetBusMode,"ax",%progbits
+ 103              		.align	1
+ 104              		.global	palSetBusMode
+ 105              		.syntax unified
+ 106              		.thumb
+ 107              		.thumb_func
+ 108              		.fpu fpv4-sp-d16
+ 110              	palSetBusMode:
+ 111              	.LVL5:
+ 112              	.LFB280:
+  96:lib/chibios/os/hal/src/hal_pal.c **** 
+  97:lib/chibios/os/hal/src/hal_pal.c **** /**
+  98:lib/chibios/os/hal/src/hal_pal.c ****  * @brief   Programs a bus with the specified mode.
+  99:lib/chibios/os/hal/src/hal_pal.c ****  * @note    The operation is not guaranteed to be atomic on all the
+ 100:lib/chibios/os/hal/src/hal_pal.c ****  *          architectures, for atomicity and/or portability reasons you may
+ 101:lib/chibios/os/hal/src/hal_pal.c ****  *          need to enclose port I/O operations between @p osalSysLock() and
+ 102:lib/chibios/os/hal/src/hal_pal.c ****  *          @p osalSysUnlock().
+ 103:lib/chibios/os/hal/src/hal_pal.c ****  * @note    The default implementation is non atomic and not necessarily
+ 104:lib/chibios/os/hal/src/hal_pal.c ****  *          optimal. Low level drivers may  optimize the function by using
+ 105:lib/chibios/os/hal/src/hal_pal.c ****  *          specific hardware or coding.
+ 106:lib/chibios/os/hal/src/hal_pal.c ****  * @note    The function can be called from any context.
+ 107:lib/chibios/os/hal/src/hal_pal.c ****  *
+ 108:lib/chibios/os/hal/src/hal_pal.c ****  * @param[in] bus       the I/O bus, pointer to a @p IOBus structure
+ 109:lib/chibios/os/hal/src/hal_pal.c ****  * @param[in] mode      the mode
+ 110:lib/chibios/os/hal/src/hal_pal.c ****  *
+ 111:lib/chibios/os/hal/src/hal_pal.c ****  * @special
+ 112:lib/chibios/os/hal/src/hal_pal.c ****  */
+ 113:lib/chibios/os/hal/src/hal_pal.c **** void palSetBusMode(const IOBus *bus, iomode_t mode) {
+ 113              		.loc 1 113 53 is_stmt 1 view -0
+ 114              		.cfi_startproc
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117              		@ link register save eliminated.
+ 114:lib/chibios/os/hal/src/hal_pal.c **** 
+ 115:lib/chibios/os/hal/src/hal_pal.c ****   osalDbgCheck((bus != NULL) && (bus->offset < PAL_IOPORTS_WIDTH));
+ 118              		.loc 1 115 3 view .LVU20
+ 119              		.loc 1 115 3 view .LVU21
+ 120              		.loc 1 115 3 view .LVU22
+ 116:lib/chibios/os/hal/src/hal_pal.c **** 
+ 117:lib/chibios/os/hal/src/hal_pal.c ****   palSetGroupMode(bus->portid, bus->mask, bus->offset, mode);
+ 121              		.loc 1 117 3 view .LVU23
+ 113:lib/chibios/os/hal/src/hal_pal.c **** 
+ 122              		.loc 1 113 53 is_stmt 0 view .LVU24
+ 123 0000 10B4     		push	{r4}
+ 124              		.cfi_def_cfa_offset 4
+ 125              		.cfi_offset 4, -4
+ 113:lib/chibios/os/hal/src/hal_pal.c **** 
+ 126              		.loc 1 113 53 view .LVU25
+ 127 0002 0A46     		mov	r2, r1
+ 128              		.loc 1 117 3 view .LVU26
+ 129 0004 D0E90141 		ldrd	r4, r1, [r0, #4]
+ 130              	.LVL6:
+ 131              		.loc 1 117 3 view .LVU27
+ 132 0008 0068     		ldr	r0, [r0]
+ 133              	.LVL7:
+ 134              		.loc 1 117 3 view .LVU28
+ 135 000a 04FA01F1 		lsl	r1, r4, r1
+ 118:lib/chibios/os/hal/src/hal_pal.c **** }
+ 136              		.loc 1 118 1 view .LVU29
+ 137 000e 5DF8044B 		ldr	r4, [sp], #4
+ 138              		.cfi_restore 4
+ 139              		.cfi_def_cfa_offset 0
+ 117:lib/chibios/os/hal/src/hal_pal.c **** }
+ 140              		.loc 1 117 3 view .LVU30
+ 141 0012 FFF7FEBF 		b	_pal_lld_setgroupmode
+ 142              	.LVL8:
+ 117:lib/chibios/os/hal/src/hal_pal.c **** }
+ 143              		.loc 1 117 3 view .LVU31
+ 144              		.cfi_endproc
+ 145              	.LFE280:
+ 147              		.text
+ 148              	.Letext0:
+ 149              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 150              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 151              		.file 4 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\stdint.h"
+ 152              		.file 5 "./lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/stm32_gpio.h"
+ 153              		.file 6 "./lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.h"
+ 154              		.file 7 "./lib/chibios/os/hal/include/hal_pal.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 hal_pal.c
+C:\Users\lhanj\AppData\Local\Temp\ccRoRBt6.s:18     .text.palReadBus:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccRoRBt6.s:26     .text.palReadBus:0000000000000000 palReadBus
+C:\Users\lhanj\AppData\Local\Temp\ccRoRBt6.s:54     .text.palWriteBus:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccRoRBt6.s:61     .text.palWriteBus:0000000000000000 palWriteBus
+C:\Users\lhanj\AppData\Local\Temp\ccRoRBt6.s:103    .text.palSetBusMode:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccRoRBt6.s:110    .text.palSetBusMode:0000000000000000 palSetBusMode
+
+UNDEFINED SYMBOLS
+_pal_lld_setgroupmode

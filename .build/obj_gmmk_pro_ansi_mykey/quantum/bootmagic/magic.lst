@@ -1,0 +1,192 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"magic.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.bootmagic,"ax",%progbits
+  18              		.align	1
+  19              		.weak	bootmagic
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	bootmagic:
+  27              	.LFB286:
+  28              		.file 1 "quantum/bootmagic/magic.c"
+   1:quantum/bootmagic/magic.c **** /* Copyright 2021 QMK
+   2:quantum/bootmagic/magic.c ****  *
+   3:quantum/bootmagic/magic.c ****  * This program is free software: you can redistribute it and/or modify
+   4:quantum/bootmagic/magic.c ****  * it under the terms of the GNU General Public License as published by
+   5:quantum/bootmagic/magic.c ****  * the Free Software Foundation, either version 3 of the License, or
+   6:quantum/bootmagic/magic.c ****  * (at your option) any later version.
+   7:quantum/bootmagic/magic.c ****  *
+   8:quantum/bootmagic/magic.c ****  * This program is distributed in the hope that it will be useful,
+   9:quantum/bootmagic/magic.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  10:quantum/bootmagic/magic.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  11:quantum/bootmagic/magic.c ****  * GNU General Public License for more details.
+  12:quantum/bootmagic/magic.c ****  *
+  13:quantum/bootmagic/magic.c ****  * You should have received a copy of the GNU General Public License
+  14:quantum/bootmagic/magic.c ****  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  15:quantum/bootmagic/magic.c ****  */
+  16:quantum/bootmagic/magic.c **** #include <stdint.h>
+  17:quantum/bootmagic/magic.c **** #include <stdbool.h>
+  18:quantum/bootmagic/magic.c **** #include "wait.h"
+  19:quantum/bootmagic/magic.c **** #include "matrix.h"
+  20:quantum/bootmagic/magic.c **** #include "bootloader.h"
+  21:quantum/bootmagic/magic.c **** #include "debug.h"
+  22:quantum/bootmagic/magic.c **** #include "keymap.h"
+  23:quantum/bootmagic/magic.c **** #include "host.h"
+  24:quantum/bootmagic/magic.c **** #include "action_layer.h"
+  25:quantum/bootmagic/magic.c **** #include "eeconfig.h"
+  26:quantum/bootmagic/magic.c **** #include "bootmagic.h"
+  27:quantum/bootmagic/magic.c **** 
+  28:quantum/bootmagic/magic.c **** keymap_config_t keymap_config;
+  29:quantum/bootmagic/magic.c **** 
+  30:quantum/bootmagic/magic.c **** __attribute__((weak)) void bootmagic(void) {}
+  29              		.loc 1 30 44 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              		.loc 1 30 45 view .LVU1
+  35 0000 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE286:
+  39              		.section	.text.magic,"ax",%progbits
+  40              		.align	1
+  41              		.global	magic
+  42              		.syntax unified
+  43              		.thumb
+  44              		.thumb_func
+  45              		.fpu fpv4-sp-d16
+  47              	magic:
+  48              	.LFB287:
+  31:quantum/bootmagic/magic.c **** 
+  32:quantum/bootmagic/magic.c **** /** \brief Magic
+  33:quantum/bootmagic/magic.c ****  *
+  34:quantum/bootmagic/magic.c ****  * FIXME: Needs doc
+  35:quantum/bootmagic/magic.c ****  */
+  36:quantum/bootmagic/magic.c **** void magic(void) {
+  49              		.loc 1 36 18 view -0
+  50              		.cfi_startproc
+  51              		@ args = 0, pretend = 0, frame = 0
+  52              		@ frame_needed = 0, uses_anonymous_args = 0
+  37:quantum/bootmagic/magic.c ****     /* check signature */
+  38:quantum/bootmagic/magic.c ****     if (!eeconfig_is_enabled()) {
+  53              		.loc 1 38 5 view .LVU3
+  36:quantum/bootmagic/magic.c ****     /* check signature */
+  54              		.loc 1 36 18 is_stmt 0 view .LVU4
+  55 0000 08B5     		push	{r3, lr}
+  56              		.cfi_def_cfa_offset 8
+  57              		.cfi_offset 3, -8
+  58              		.cfi_offset 14, -4
+  59              		.loc 1 38 10 view .LVU5
+  60 0002 FFF7FEFF 		bl	eeconfig_is_enabled
+  61              	.LVL0:
+  62              		.loc 1 38 8 view .LVU6
+  63 0006 08B9     		cbnz	r0, .L3
+  39:quantum/bootmagic/magic.c ****         eeconfig_init();
+  64              		.loc 1 39 9 is_stmt 1 view .LVU7
+  65 0008 FFF7FEFF 		bl	eeconfig_init
+  66              	.LVL1:
+  67              	.L3:
+  40:quantum/bootmagic/magic.c ****     }
+  41:quantum/bootmagic/magic.c **** 
+  42:quantum/bootmagic/magic.c ****     /* init globals */
+  43:quantum/bootmagic/magic.c ****     debug_config.raw  = eeconfig_read_debug();
+  68              		.loc 1 43 5 view .LVU8
+  69              		.loc 1 43 25 is_stmt 0 view .LVU9
+  70 000c FFF7FEFF 		bl	eeconfig_read_debug
+  71              	.LVL2:
+  72              		.loc 1 43 23 view .LVU10
+  73 0010 084B     		ldr	r3, .L4
+  74 0012 1870     		strb	r0, [r3]
+  44:quantum/bootmagic/magic.c ****     keymap_config.raw = eeconfig_read_keymap();
+  75              		.loc 1 44 5 is_stmt 1 view .LVU11
+  76              		.loc 1 44 25 is_stmt 0 view .LVU12
+  77 0014 FFF7FEFF 		bl	eeconfig_read_keymap
+  78              	.LVL3:
+  79              		.loc 1 44 23 view .LVU13
+  80 0018 074B     		ldr	r3, .L4+4
+  81 001a 1880     		strh	r0, [r3]	@ movhi
+  45:quantum/bootmagic/magic.c **** 
+  46:quantum/bootmagic/magic.c ****     bootmagic();
+  82              		.loc 1 46 5 is_stmt 1 view .LVU14
+  83 001c FFF7FEFF 		bl	bootmagic
+  84              	.LVL4:
+  47:quantum/bootmagic/magic.c **** 
+  48:quantum/bootmagic/magic.c ****     /* read here just incase bootmagic process changed its value */
+  49:quantum/bootmagic/magic.c ****     layer_state_t default_layer = (layer_state_t)eeconfig_read_default_layer();
+  85              		.loc 1 49 5 view .LVU15
+  86              		.loc 1 49 50 is_stmt 0 view .LVU16
+  87 0020 FFF7FEFF 		bl	eeconfig_read_default_layer
+  88              	.LVL5:
+  50:quantum/bootmagic/magic.c ****     default_layer_set(default_layer);
+  89              		.loc 1 50 5 is_stmt 1 view .LVU17
+  90 0024 FFF7FEFF 		bl	default_layer_set
+  91              	.LVL6:
+  51:quantum/bootmagic/magic.c **** 
+  52:quantum/bootmagic/magic.c ****     /* Also initialize layer state to trigger callback functions for layer_state */
+  53:quantum/bootmagic/magic.c ****     layer_state_set_kb((layer_state_t)layer_state);
+  92              		.loc 1 53 5 view .LVU18
+  93 0028 044B     		ldr	r3, .L4+8
+  94 002a 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  54:quantum/bootmagic/magic.c **** }
+  95              		.loc 1 54 1 is_stmt 0 view .LVU19
+  96 002c BDE80840 		pop	{r3, lr}
+  97              		.cfi_restore 14
+  98              		.cfi_restore 3
+  99              		.cfi_def_cfa_offset 0
+  53:quantum/bootmagic/magic.c **** }
+ 100              		.loc 1 53 5 view .LVU20
+ 101 0030 FFF7FEBF 		b	layer_state_set_kb
+ 102              	.LVL7:
+ 103              	.L5:
+ 104              		.align	2
+ 105              	.L4:
+ 106 0034 00000000 		.word	debug_config
+ 107 0038 00000000 		.word	keymap_config
+ 108 003c 00000000 		.word	layer_state
+ 109              		.cfi_endproc
+ 110              	.LFE287:
+ 112              		.comm	keymap_config,2,2
+ 113              		.text
+ 114              	.Letext0:
+ 115              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 116              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 117              		.file 4 "quantum/logging/debug.h"
+ 118              		.file 5 "quantum/keycode_config.h"
+ 119              		.file 6 "tmk_core/common/action_layer.h"
+ 120              		.file 7 "tmk_core/common/eeconfig.h"
+ 121              		.file 8 "quantum/sequencer/sequencer.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 magic.c
+C:\Users\lhanj\AppData\Local\Temp\ccquzAxg.s:18     .text.bootmagic:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccquzAxg.s:26     .text.bootmagic:0000000000000000 bootmagic
+C:\Users\lhanj\AppData\Local\Temp\ccquzAxg.s:40     .text.magic:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccquzAxg.s:47     .text.magic:0000000000000000 magic
+C:\Users\lhanj\AppData\Local\Temp\ccquzAxg.s:106    .text.magic:0000000000000034 $d
+                            *COM*:0000000000000002 keymap_config
+
+UNDEFINED SYMBOLS
+eeconfig_is_enabled
+eeconfig_init
+eeconfig_read_debug
+eeconfig_read_keymap
+eeconfig_read_default_layer
+default_layer_set
+layer_state_set_kb
+debug_config
+layer_state

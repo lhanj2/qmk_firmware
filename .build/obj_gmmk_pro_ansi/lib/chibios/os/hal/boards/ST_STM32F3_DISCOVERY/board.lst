@@ -1,0 +1,539 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"board.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.gpio_init,"ax",%progbits
+  18              		.align	1
+  19              		.arch armv7e-m
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	gpio_init:
+  26              	.LVL0:
+  27              	.LFB278:
+  28              		.file 1 "lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c"
+   1:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*
+   2:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****     ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+   3:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+   4:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****     Licensed under the Apache License, Version 2.0 (the "License");
+   5:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****     you may not use this file except in compliance with the License.
+   6:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****     You may obtain a copy of the License at
+   7:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+   8:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****         http://www.apache.org/licenses/LICENSE-2.0
+   9:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+  10:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****     Unless required by applicable law or agreed to in writing, software
+  11:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****     distributed under the License is distributed on an "AS IS" BASIS,
+  12:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****     See the License for the specific language governing permissions and
+  14:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****     limitations under the License.
+  15:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** */
+  16:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+  17:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*
+  18:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  * This file has been automatically generated using ChibiStudio board
+  19:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  * generator plugin. Do not edit manually.
+  20:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  */
+  21:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+  22:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #include "hal.h"
+  23:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #include "stm32_gpio.h"
+  24:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+  25:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*===========================================================================*/
+  26:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /* Driver local definitions.                                                 */
+  27:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*===========================================================================*/
+  28:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+  29:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*===========================================================================*/
+  30:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /* Driver exported variables.                                                */
+  31:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*===========================================================================*/
+  32:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+  33:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*===========================================================================*/
+  34:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /* Driver local variables and types.                                         */
+  35:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*===========================================================================*/
+  36:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+  37:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /**
+  38:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  * @brief   Type of STM32 GPIO port setup.
+  39:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  */
+  40:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** typedef struct {
+  41:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   uint32_t              moder;
+  42:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   uint32_t              otyper;
+  43:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   uint32_t              ospeedr;
+  44:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   uint32_t              pupdr;
+  45:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   uint32_t              odr;
+  46:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   uint32_t              afrl;
+  47:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   uint32_t              afrh;
+  48:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** } gpio_setup_t;
+  49:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+  50:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /**
+  51:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  * @brief   Type of STM32 GPIO initialization data.
+  52:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  */
+  53:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** typedef struct {
+  54:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOA || defined(__DOXYGEN__)
+  55:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_setup_t          PAData;
+  56:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+  57:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOB || defined(__DOXYGEN__)
+  58:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_setup_t          PBData;
+  59:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+  60:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOC || defined(__DOXYGEN__)
+  61:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_setup_t          PCData;
+  62:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+  63:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOD || defined(__DOXYGEN__)
+  64:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_setup_t          PDData;
+  65:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+  66:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOE || defined(__DOXYGEN__)
+  67:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_setup_t          PEData;
+  68:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+  69:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOF || defined(__DOXYGEN__)
+  70:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_setup_t          PFData;
+  71:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+  72:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOG || defined(__DOXYGEN__)
+  73:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_setup_t          PGData;
+  74:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+  75:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOH || defined(__DOXYGEN__)
+  76:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_setup_t          PHData;
+  77:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+  78:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOI || defined(__DOXYGEN__)
+  79:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_setup_t          PIData;
+  80:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+  81:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOJ || defined(__DOXYGEN__)
+  82:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_setup_t          PJData;
+  83:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+  84:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOK || defined(__DOXYGEN__)
+  85:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_setup_t          PKData;
+  86:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+  87:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** } gpio_config_t;
+  88:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+  89:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /**
+  90:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  * @brief   STM32 GPIO static initialization data.
+  91:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  */
+  92:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** static const gpio_config_t gpio_default_config = {
+  93:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOA
+  94:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   {VAL_GPIOA_MODER, VAL_GPIOA_OTYPER, VAL_GPIOA_OSPEEDR, VAL_GPIOA_PUPDR,
+  95:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****    VAL_GPIOA_ODR,   VAL_GPIOA_AFRL,   VAL_GPIOA_AFRH},
+  96:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+  97:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOB
+  98:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   {VAL_GPIOB_MODER, VAL_GPIOB_OTYPER, VAL_GPIOB_OSPEEDR, VAL_GPIOB_PUPDR,
+  99:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****    VAL_GPIOB_ODR,   VAL_GPIOB_AFRL,   VAL_GPIOB_AFRH},
+ 100:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 101:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOC
+ 102:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   {VAL_GPIOC_MODER, VAL_GPIOC_OTYPER, VAL_GPIOC_OSPEEDR, VAL_GPIOC_PUPDR,
+ 103:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****    VAL_GPIOC_ODR,   VAL_GPIOC_AFRL,   VAL_GPIOC_AFRH},
+ 104:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 105:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOD
+ 106:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   {VAL_GPIOD_MODER, VAL_GPIOD_OTYPER, VAL_GPIOD_OSPEEDR, VAL_GPIOD_PUPDR,
+ 107:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****    VAL_GPIOD_ODR,   VAL_GPIOD_AFRL,   VAL_GPIOD_AFRH},
+ 108:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 109:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOE
+ 110:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   {VAL_GPIOE_MODER, VAL_GPIOE_OTYPER, VAL_GPIOE_OSPEEDR, VAL_GPIOE_PUPDR,
+ 111:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****    VAL_GPIOE_ODR,   VAL_GPIOE_AFRL,   VAL_GPIOE_AFRH},
+ 112:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 113:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOF
+ 114:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   {VAL_GPIOF_MODER, VAL_GPIOF_OTYPER, VAL_GPIOF_OSPEEDR, VAL_GPIOF_PUPDR,
+ 115:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****    VAL_GPIOF_ODR,   VAL_GPIOF_AFRL,   VAL_GPIOF_AFRH},
+ 116:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 117:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOG
+ 118:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   {VAL_GPIOG_MODER, VAL_GPIOG_OTYPER, VAL_GPIOG_OSPEEDR, VAL_GPIOG_PUPDR,
+ 119:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****    VAL_GPIOG_ODR,   VAL_GPIOG_AFRL,   VAL_GPIOG_AFRH},
+ 120:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 121:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOH
+ 122:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   {VAL_GPIOH_MODER, VAL_GPIOH_OTYPER, VAL_GPIOH_OSPEEDR, VAL_GPIOH_PUPDR,
+ 123:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****    VAL_GPIOH_ODR,   VAL_GPIOH_AFRL,   VAL_GPIOH_AFRH},
+ 124:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 125:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOI
+ 126:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   {VAL_GPIOI_MODER, VAL_GPIOI_OTYPER, VAL_GPIOI_OSPEEDR, VAL_GPIOI_PUPDR,
+ 127:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****    VAL_GPIOI_ODR,   VAL_GPIOI_AFRL,   VAL_GPIOI_AFRH},
+ 128:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 129:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOJ
+ 130:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   {VAL_GPIOJ_MODER, VAL_GPIOJ_OTYPER, VAL_GPIOJ_OSPEEDR, VAL_GPIOJ_PUPDR,
+ 131:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****    VAL_GPIOJ_ODR,   VAL_GPIOJ_AFRL,   VAL_GPIOJ_AFRH},
+ 132:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 133:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOK
+ 134:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   {VAL_GPIOK_MODER, VAL_GPIOK_OTYPER, VAL_GPIOK_OSPEEDR, VAL_GPIOK_PUPDR,
+ 135:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****    VAL_GPIOK_ODR,   VAL_GPIOK_AFRL,   VAL_GPIOK_AFRH}
+ 136:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 137:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** };
+ 138:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 139:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*===========================================================================*/
+ 140:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /* Driver local functions.                                                   */
+ 141:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*===========================================================================*/
+ 142:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 143:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** static void gpio_init(stm32_gpio_t *gpiop, const gpio_setup_t *config) {
+  29              		.loc 1 143 72 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+ 144:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 145:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpiop->OTYPER  = config->otyper;
+  34              		.loc 1 145 3 view .LVU1
+  35              		.loc 1 145 26 is_stmt 0 view .LVU2
+  36 0000 4B68     		ldr	r3, [r1, #4]
+  37              		.loc 1 145 18 view .LVU3
+  38 0002 4360     		str	r3, [r0, #4]
+ 146:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpiop->OSPEEDR = config->ospeedr;
+  39              		.loc 1 146 3 is_stmt 1 view .LVU4
+  40              		.loc 1 146 26 is_stmt 0 view .LVU5
+  41 0004 8B68     		ldr	r3, [r1, #8]
+  42              		.loc 1 146 18 view .LVU6
+  43 0006 8360     		str	r3, [r0, #8]
+ 147:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpiop->PUPDR   = config->pupdr;
+  44              		.loc 1 147 3 is_stmt 1 view .LVU7
+  45              		.loc 1 147 26 is_stmt 0 view .LVU8
+  46 0008 CB68     		ldr	r3, [r1, #12]
+  47              		.loc 1 147 18 view .LVU9
+  48 000a C360     		str	r3, [r0, #12]
+ 148:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpiop->ODR     = config->odr;
+  49              		.loc 1 148 3 is_stmt 1 view .LVU10
+  50              		.loc 1 148 26 is_stmt 0 view .LVU11
+  51 000c 0B69     		ldr	r3, [r1, #16]
+  52              		.loc 1 148 18 view .LVU12
+  53 000e 4361     		str	r3, [r0, #20]
+ 149:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpiop->AFRL    = config->afrl;
+  54              		.loc 1 149 3 is_stmt 1 view .LVU13
+  55              		.loc 1 149 26 is_stmt 0 view .LVU14
+  56 0010 4B69     		ldr	r3, [r1, #20]
+  57              		.loc 1 149 18 view .LVU15
+  58 0012 0362     		str	r3, [r0, #32]
+ 150:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpiop->AFRH    = config->afrh;
+  59              		.loc 1 150 3 is_stmt 1 view .LVU16
+  60              		.loc 1 150 26 is_stmt 0 view .LVU17
+  61 0014 8B69     		ldr	r3, [r1, #24]
+  62              		.loc 1 150 18 view .LVU18
+  63 0016 4362     		str	r3, [r0, #36]
+ 151:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpiop->MODER   = config->moder;
+  64              		.loc 1 151 3 is_stmt 1 view .LVU19
+  65              		.loc 1 151 26 is_stmt 0 view .LVU20
+  66 0018 0B68     		ldr	r3, [r1]
+  67              		.loc 1 151 18 view .LVU21
+  68 001a 0360     		str	r3, [r0]
+ 152:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** }
+  69              		.loc 1 152 1 view .LVU22
+  70 001c 7047     		bx	lr
+  71              		.cfi_endproc
+  72              	.LFE278:
+  74              		.section	.text.__chibios_override___early_init,"ax",%progbits
+  75              		.align	1
+  76              		.global	__chibios_override___early_init
+  77              		.syntax unified
+  78              		.thumb
+  79              		.thumb_func
+  80              		.fpu fpv4-sp-d16
+  82              	__chibios_override___early_init:
+  83              	.LFB280:
+ 153:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 154:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** static void stm32_gpio_init(void) {
+ 155:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 156:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   /* Enabling GPIO-related clocks, the mask comes from the
+ 157:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****      registry header file.*/
+ 158:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   rccResetAHB(STM32_GPIO_EN_MASK);
+ 159:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   rccEnableAHB(STM32_GPIO_EN_MASK, true);
+ 160:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 161:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   /* Initializing all the defined GPIO ports.*/
+ 162:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOA
+ 163:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_init(GPIOA, &gpio_default_config.PAData);
+ 164:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 165:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOB
+ 166:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_init(GPIOB, &gpio_default_config.PBData);
+ 167:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 168:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOC
+ 169:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_init(GPIOC, &gpio_default_config.PCData);
+ 170:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 171:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOD
+ 172:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_init(GPIOD, &gpio_default_config.PDData);
+ 173:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 174:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOE
+ 175:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_init(GPIOE, &gpio_default_config.PEData);
+ 176:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 177:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOF
+ 178:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_init(GPIOF, &gpio_default_config.PFData);
+ 179:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 180:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOG
+ 181:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_init(GPIOG, &gpio_default_config.PGData);
+ 182:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 183:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOH
+ 184:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_init(GPIOH, &gpio_default_config.PHData);
+ 185:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 186:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOI
+ 187:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_init(GPIOI, &gpio_default_config.PIData);
+ 188:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 189:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOJ
+ 190:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_init(GPIOJ, &gpio_default_config.PJData);
+ 191:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 192:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if STM32_HAS_GPIOK
+ 193:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   gpio_init(GPIOK, &gpio_default_config.PKData);
+ 194:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 195:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** }
+ 196:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 197:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*===========================================================================*/
+ 198:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /* Driver interrupt handlers.                                                */
+ 199:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*===========================================================================*/
+ 200:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 201:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*===========================================================================*/
+ 202:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /* Driver exported functions.                                                */
+ 203:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /*===========================================================================*/
+ 204:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 205:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /**
+ 206:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  * @brief   Early initialization code.
+ 207:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  * @details GPIO ports and system clocks are initialized before everything
+ 208:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  *          else.
+ 209:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  */
+ 210:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** void __early_init(void) {
+  84              		.loc 1 210 25 is_stmt 1 view -0
+  85              		.cfi_startproc
+  86              		@ args = 0, pretend = 0, frame = 0
+  87              		@ frame_needed = 0, uses_anonymous_args = 0
+ 211:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 212:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   stm32_gpio_init();
+  88              		.loc 1 212 3 view .LVU24
+  89              	.LBB4:
+  90              	.LBI4:
+ 154:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+  91              		.loc 1 154 13 view .LVU25
+  92              	.LBB5:
+ 158:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   rccEnableAHB(STM32_GPIO_EN_MASK, true);
+  93              		.loc 1 158 3 view .LVU26
+  94              	.LBE5:
+  95              	.LBE4:
+ 210:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+  96              		.loc 1 210 25 is_stmt 0 view .LVU27
+  97 0000 08B5     		push	{r3, lr}
+  98              		.cfi_def_cfa_offset 8
+  99              		.cfi_offset 3, -8
+ 100              		.cfi_offset 14, -4
+ 101              	.LBB7:
+ 102              	.LBB6:
+ 158:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   rccEnableAHB(STM32_GPIO_EN_MASK, true);
+ 103              		.loc 1 158 3 view .LVU28
+ 104 0002 1B4B     		ldr	r3, .L3
+ 105 0004 9A6A     		ldr	r2, [r3, #40]
+ 106 0006 42F4FC02 		orr	r2, r2, #8257536
+ 107 000a 9A62     		str	r2, [r3, #40]
+ 158:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   rccEnableAHB(STM32_GPIO_EN_MASK, true);
+ 108              		.loc 1 158 3 is_stmt 1 view .LVU29
+ 109 000c 9A6A     		ldr	r2, [r3, #40]
+ 110 000e 22F4FC02 		bic	r2, r2, #8257536
+ 111 0012 9A62     		str	r2, [r3, #40]
+ 158:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   rccEnableAHB(STM32_GPIO_EN_MASK, true);
+ 112              		.loc 1 158 3 view .LVU30
+ 113 0014 9A6A     		ldr	r2, [r3, #40]
+ 158:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   rccEnableAHB(STM32_GPIO_EN_MASK, true);
+ 114              		.loc 1 158 34 view .LVU31
+ 159:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 115              		.loc 1 159 3 view .LVU32
+ 116 0016 5A69     		ldr	r2, [r3, #20]
+ 117 0018 42F4FC02 		orr	r2, r2, #8257536
+ 118 001c 5A61     		str	r2, [r3, #20]
+ 159:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 119              		.loc 1 159 3 view .LVU33
+ 163:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 120              		.loc 1 163 3 is_stmt 0 view .LVU34
+ 121 001e 154A     		ldr	r2, .L3+4
+ 159:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 122              		.loc 1 159 3 view .LVU35
+ 123 0020 5B69     		ldr	r3, [r3, #20]
+ 159:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 124              		.loc 1 159 41 is_stmt 1 view .LVU36
+ 163:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 125              		.loc 1 163 3 view .LVU37
+ 126 0022 1146     		mov	r1, r2
+ 127 0024 4FF09040 		mov	r0, #1207959552
+ 128 0028 FFF7FEFF 		bl	gpio_init
+ 129              	.LVL1:
+ 166:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 130              		.loc 1 166 3 view .LVU38
+ 131 002c 02F11C01 		add	r1, r2, #28
+ 132 0030 00F58060 		add	r0, r0, #1024
+ 133 0034 FFF7FEFF 		bl	gpio_init
+ 134              	.LVL2:
+ 169:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 135              		.loc 1 169 3 view .LVU39
+ 136 0038 02F13801 		add	r1, r2, #56
+ 137 003c 00F58060 		add	r0, r0, #1024
+ 138 0040 FFF7FEFF 		bl	gpio_init
+ 139              	.LVL3:
+ 172:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 140              		.loc 1 172 3 view .LVU40
+ 141 0044 02F15401 		add	r1, r2, #84
+ 142 0048 00F58060 		add	r0, r0, #1024
+ 143 004c FFF7FEFF 		bl	gpio_init
+ 144              	.LVL4:
+ 175:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 145              		.loc 1 175 3 view .LVU41
+ 146 0050 02F17001 		add	r1, r2, #112
+ 147 0054 00F58060 		add	r0, r0, #1024
+ 148 0058 FFF7FEFF 		bl	gpio_init
+ 149              	.LVL5:
+ 178:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 150              		.loc 1 178 3 view .LVU42
+ 151 005c 02F18C01 		add	r1, r2, #140
+ 152 0060 00F58060 		add	r0, r0, #1024
+ 153 0064 FFF7FEFF 		bl	gpio_init
+ 154              	.LVL6:
+ 155              	.LBE6:
+ 156              	.LBE7:
+ 213:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   stm32_clock_init();
+ 157              		.loc 1 213 3 view .LVU43
+ 214:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** }
+ 158              		.loc 1 214 1 is_stmt 0 view .LVU44
+ 159 0068 BDE80840 		pop	{r3, lr}
+ 160              		.cfi_restore 14
+ 161              		.cfi_restore 3
+ 162              		.cfi_def_cfa_offset 0
+ 213:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   stm32_clock_init();
+ 163              		.loc 1 213 3 view .LVU45
+ 164 006c FFF7FEBF 		b	stm32_clock_init
+ 165              	.LVL7:
+ 166              	.L4:
+ 167              		.align	2
+ 168              	.L3:
+ 169 0070 00100240 		.word	1073876992
+ 170 0074 00000000 		.word	.LANCHOR0
+ 171              		.cfi_endproc
+ 172              	.LFE280:
+ 174              		.section	.text.__chibios_override_boardInit,"ax",%progbits
+ 175              		.align	1
+ 176              		.global	__chibios_override_boardInit
+ 177              		.syntax unified
+ 178              		.thumb
+ 179              		.thumb_func
+ 180              		.fpu fpv4-sp-d16
+ 182              	__chibios_override_boardInit:
+ 183              	.LFB281:
+ 215:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 216:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if HAL_USE_SDC || defined(__DOXYGEN__)
+ 217:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /**
+ 218:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  * @brief   SDC card detection.
+ 219:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  */
+ 220:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** bool sdc_lld_is_card_inserted(SDCDriver *sdcp) {
+ 221:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 222:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   (void)sdcp;
+ 223:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   /* CHTODO: Fill the implementation.*/
+ 224:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   return true;
+ 225:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** }
+ 226:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 227:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /**
+ 228:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  * @brief   SDC card write protection detection.
+ 229:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  */
+ 230:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** bool sdc_lld_is_write_protected(SDCDriver *sdcp) {
+ 231:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 232:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   (void)sdcp;
+ 233:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   /* CHTODO: Fill the implementation.*/
+ 234:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   return false;
+ 235:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** }
+ 236:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif /* HAL_USE_SDC */
+ 237:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 238:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #if HAL_USE_MMC_SPI || defined(__DOXYGEN__)
+ 239:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /**
+ 240:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  * @brief   MMC_SPI card detection.
+ 241:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  */
+ 242:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** bool mmc_lld_is_card_inserted(MMCDriver *mmcp) {
+ 243:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 244:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   (void)mmcp;
+ 245:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   /* CHTODO: Fill the implementation.*/
+ 246:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   return true;
+ 247:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** }
+ 248:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 249:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /**
+ 250:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  * @brief   MMC_SPI card write protection detection.
+ 251:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  */
+ 252:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** bool mmc_lld_is_write_protected(MMCDriver *mmcp) {
+ 253:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 254:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   (void)mmcp;
+ 255:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   /* CHTODO: Fill the implementation.*/
+ 256:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****   return false;
+ 257:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** }
+ 258:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** #endif
+ 259:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 260:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** /**
+ 261:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  * @brief   Board-specific initialization code.
+ 262:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  * @note    You can add your board-specific code here.
+ 263:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c ****  */
+ 264:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** void boardInit(void) {
+ 184              		.loc 1 264 22 is_stmt 1 view -0
+ 185              		.cfi_startproc
+ 186              		@ args = 0, pretend = 0, frame = 0
+ 187              		@ frame_needed = 0, uses_anonymous_args = 0
+ 188              		@ link register save eliminated.
+ 265:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** 
+ 266:lib/chibios/os/hal/boards/ST_STM32F3_DISCOVERY/board.c **** }
+ 189              		.loc 1 266 1 view .LVU47
+ 190 0000 7047     		bx	lr
+ 191              		.cfi_endproc
+ 192              	.LFE281:
+ 194              		.section	.rodata.gpio_default_config,"a"
+ 195              		.align	2
+ 196              		.set	.LANCHOR0,. + 0
+ 199              	gpio_default_config:
+ 200 0000 00A8802A 		.word	713074688
+ 201 0004 00000000 		.word	0
+ 202 0008 00FCC03C 		.word	1019280384
+ 203 000c 54111564 		.word	1679102292
+ 204 0010 FFFF0000 		.word	65535
+ 205 0014 00005055 		.word	1431306240
+ 206 0018 00E00E00 		.word	974848
+ 207 001c 80A00000 		.word	41088
+ 208 0020 C0000000 		.word	192
+ 209 0024 C0F00000 		.word	61632
+ 210 0028 15055555 		.word	1431635221
+ 211 002c FFFF0000 		.word	65535
+ 212 0030 00000044 		.word	1140850688
+ 213 0034 00000000 		.word	0
+ 214 0038 000A0000 		.word	2560
+ 215 003c 00000000 		.word	0
+ 216 0040 000000F0 		.word	-268435456
+ 217 0044 55555505 		.word	89478485
+ 218 0048 FFFF0000 		.word	65535
+ 219 004c 00007700 		.word	7798784
+ 220 0050 00000000 		.word	0
+ 221 0054 00000000 		.word	0
+ 222 0058 00000000 		.word	0
+ 223 005c 00000000 		.word	0
+ 224 0060 55555555 		.word	1431655765
+ 225 0064 FFFF0000 		.word	65535
+ 226 0068 00000000 		.word	0
+ 227 006c 00000000 		.word	0
+ 228 0070 40005555 		.word	1431633984
+ 229 0074 00000000 		.word	0
+ 230 0078 C000FFFF 		.word	-65344
+ 231 007c 15551501 		.word	18175253
+ 232 0080 FF000000 		.word	255
+ 233 0084 00000000 		.word	0
+ 234 0088 00000000 		.word	0
+ 235 008c 00000000 		.word	0
+ 236 0090 00000000 		.word	0
+ 237 0094 0F000000 		.word	15
+ 238 0098 50555555 		.word	1431655760
+ 239 009c FFFF0000 		.word	65535
+ 240 00a0 00000000 		.word	0
+ 241 00a4 00000000 		.word	0
+ 242              		.text
+ 243              	.Letext0:
+ 244              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 245              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 246              		.file 4 "./lib/chibios/os/common/ext/ST/STM32F3xx/stm32f303xc.h"
+ 247              		.file 5 "./lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/stm32_gpio.h"
+ 248              		.file 6 "./lib/chibios/os/hal/ports/STM32/STM32F3xx/hal_lld.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 board.c
+C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:18     .text.gpio_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:25     .text.gpio_init:0000000000000000 gpio_init
+C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:75     .text.__chibios_override___early_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:82     .text.__chibios_override___early_init:0000000000000000 __chibios_override___early_init
+C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:169    .text.__chibios_override___early_init:0000000000000070 $d
+C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:175    .text.__chibios_override_boardInit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:182    .text.__chibios_override_boardInit:0000000000000000 __chibios_override_boardInit
+C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:195    .rodata.gpio_default_config:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccRjWVZG.s:199    .rodata.gpio_default_config:0000000000000000 gpio_default_config
+
+UNDEFINED SYMBOLS
+stm32_clock_init

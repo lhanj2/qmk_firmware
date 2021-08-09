@@ -1,0 +1,1771 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"chprintf.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.long_to_string_with_divisor.constprop.0,"ax",%progbits
+  18              		.align	1
+  19              		.arch armv7e-m
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	long_to_string_with_divisor.constprop.0:
+  26              	.LVL0:
+  27              	.LFB284:
+  28              		.file 1 "lib/chibios/os/hal/lib/streams/chprintf.c"
+   1:lib/chibios/os/hal/lib/streams/chprintf.c **** /*
+   2:lib/chibios/os/hal/lib/streams/chprintf.c ****     ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+   3:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+   4:lib/chibios/os/hal/lib/streams/chprintf.c ****     Licensed under the Apache License, Version 2.0 (the "License");
+   5:lib/chibios/os/hal/lib/streams/chprintf.c ****     you may not use this file except in compliance with the License.
+   6:lib/chibios/os/hal/lib/streams/chprintf.c ****     You may obtain a copy of the License at
+   7:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+   8:lib/chibios/os/hal/lib/streams/chprintf.c ****         http://www.apache.org/licenses/LICENSE-2.0
+   9:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  10:lib/chibios/os/hal/lib/streams/chprintf.c ****     Unless required by applicable law or agreed to in writing, software
+  11:lib/chibios/os/hal/lib/streams/chprintf.c ****     distributed under the License is distributed on an "AS IS" BASIS,
+  12:lib/chibios/os/hal/lib/streams/chprintf.c ****     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13:lib/chibios/os/hal/lib/streams/chprintf.c ****     See the License for the specific language governing permissions and
+  14:lib/chibios/os/hal/lib/streams/chprintf.c ****     limitations under the License.
+  15:lib/chibios/os/hal/lib/streams/chprintf.c **** */
+  16:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  17:lib/chibios/os/hal/lib/streams/chprintf.c **** /*
+  18:lib/chibios/os/hal/lib/streams/chprintf.c ****    Concepts and parts of this file have been contributed by Fabio Utzig,
+  19:lib/chibios/os/hal/lib/streams/chprintf.c ****    chvprintf() added by Brent Roman.
+  20:lib/chibios/os/hal/lib/streams/chprintf.c ****  */
+  21:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  22:lib/chibios/os/hal/lib/streams/chprintf.c **** /**
+  23:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @file    chprintf.c
+  24:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @brief   Mini printf-like functionality.
+  25:lib/chibios/os/hal/lib/streams/chprintf.c ****  *
+  26:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @addtogroup HAL_CHPRINTF
+  27:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @details Mini printf-like functionality.
+  28:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @{
+  29:lib/chibios/os/hal/lib/streams/chprintf.c ****  */
+  30:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  31:lib/chibios/os/hal/lib/streams/chprintf.c **** #include "hal.h"
+  32:lib/chibios/os/hal/lib/streams/chprintf.c **** #include "chprintf.h"
+  33:lib/chibios/os/hal/lib/streams/chprintf.c **** #include "memstreams.h"
+  34:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  35:lib/chibios/os/hal/lib/streams/chprintf.c **** #define MAX_FILLER 11
+  36:lib/chibios/os/hal/lib/streams/chprintf.c **** #define FLOAT_PRECISION 9
+  37:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  38:lib/chibios/os/hal/lib/streams/chprintf.c **** static char *long_to_string_with_divisor(char *p,
+  29              		.loc 1 38 14 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  39:lib/chibios/os/hal/lib/streams/chprintf.c ****                                          long num,
+  40:lib/chibios/os/hal/lib/streams/chprintf.c ****                                          unsigned radix,
+  41:lib/chibios/os/hal/lib/streams/chprintf.c ****                                          long divisor) {
+  42:lib/chibios/os/hal/lib/streams/chprintf.c ****   int i;
+  33              		.loc 1 42 3 view .LVU1
+  43:lib/chibios/os/hal/lib/streams/chprintf.c ****   char *q;
+  34              		.loc 1 43 3 view .LVU2
+  44:lib/chibios/os/hal/lib/streams/chprintf.c ****   long l, ll;
+  35              		.loc 1 44 3 view .LVU3
+  45:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  46:lib/chibios/os/hal/lib/streams/chprintf.c ****   l = num;
+  36              		.loc 1 46 3 view .LVU4
+  47:lib/chibios/os/hal/lib/streams/chprintf.c ****   if (divisor == 0) {
+  37              		.loc 1 47 3 view .LVU5
+  48:lib/chibios/os/hal/lib/streams/chprintf.c ****     ll = num;
+  49:lib/chibios/os/hal/lib/streams/chprintf.c ****   } else {
+  50:lib/chibios/os/hal/lib/streams/chprintf.c ****     ll = divisor;
+  51:lib/chibios/os/hal/lib/streams/chprintf.c ****   }
+  52:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  53:lib/chibios/os/hal/lib/streams/chprintf.c ****   q = p + MAX_FILLER;
+  38              		.loc 1 53 3 view .LVU6
+  38:lib/chibios/os/hal/lib/streams/chprintf.c ****                                          long num,
+  39              		.loc 1 38 14 is_stmt 0 view .LVU7
+  40 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  41              		.cfi_def_cfa_offset 20
+  42              		.cfi_offset 4, -20
+  43              		.cfi_offset 5, -16
+  44              		.cfi_offset 6, -12
+  45              		.cfi_offset 7, -8
+  46              		.cfi_offset 14, -4
+  47              		.loc 1 53 5 view .LVU8
+  48 0002 00F10B04 		add	r4, r0, #11
+  49              	.LVL1:
+  50              		.loc 1 53 5 view .LVU9
+  51 0006 2346     		mov	r3, r4
+  52              	.LVL2:
+  53              	.L3:
+  54:lib/chibios/os/hal/lib/streams/chprintf.c ****   do {
+  54              		.loc 1 54 3 is_stmt 1 view .LVU10
+  55:lib/chibios/os/hal/lib/streams/chprintf.c ****     i = (int)(l % radix);
+  55              		.loc 1 55 5 view .LVU11
+  56              		.loc 1 55 17 is_stmt 0 view .LVU12
+  57 0008 0D46     		mov	r5, r1
+  58 000a B1FBF2F1 		udiv	r1, r1, r2
+  59              	.LVL3:
+  60              		.loc 1 55 17 view .LVU13
+  61 000e 02FB1157 		mls	r7, r2, r1, r5
+  62              	.LVL4:
+  56:lib/chibios/os/hal/lib/streams/chprintf.c ****     i += '0';
+  63              		.loc 1 56 5 is_stmt 1 view .LVU14
+  64              		.loc 1 56 7 is_stmt 0 view .LVU15
+  65 0012 07F13006 		add	r6, r7, #48
+  66              	.LVL5:
+  57:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (i > '9') {
+  67              		.loc 1 57 5 is_stmt 1 view .LVU16
+  68              		.loc 1 57 8 is_stmt 0 view .LVU17
+  69 0016 392E     		cmp	r6, #57
+  58:lib/chibios/os/hal/lib/streams/chprintf.c ****       i += 'A' - '0' - 10;
+  70              		.loc 1 58 7 is_stmt 1 view .LVU18
+  71              		.loc 1 58 9 is_stmt 0 view .LVU19
+  72 0018 C8BF     		it	gt
+  73 001a 07F13706 		addgt	r6, r7, #55
+  74              	.LVL6:
+  59:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+  60:lib/chibios/os/hal/lib/streams/chprintf.c ****     *--q = i;
+  75              		.loc 1 60 5 is_stmt 1 view .LVU20
+  61:lib/chibios/os/hal/lib/streams/chprintf.c ****     l /= radix;
+  62:lib/chibios/os/hal/lib/streams/chprintf.c ****   } while ((ll /= radix) != 0);
+  76              		.loc 1 62 3 is_stmt 0 view .LVU21
+  77 001e 9542     		cmp	r5, r2
+  60:lib/chibios/os/hal/lib/streams/chprintf.c ****     l /= radix;
+  78              		.loc 1 60 10 view .LVU22
+  79 0020 03F8016D 		strb	r6, [r3, #-1]!
+  80              	.LVL7:
+  61:lib/chibios/os/hal/lib/streams/chprintf.c ****     l /= radix;
+  81              		.loc 1 61 5 is_stmt 1 view .LVU23
+  82              		.loc 1 62 11 view .LVU24
+  83              		.loc 1 62 3 is_stmt 0 view .LVU25
+  84 0024 F0D2     		bcs	.L3
+  63:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  64:lib/chibios/os/hal/lib/streams/chprintf.c ****   i = (int)(p + MAX_FILLER - q);
+  85              		.loc 1 64 3 is_stmt 1 view .LVU26
+  86              	.LVL8:
+  87              		.loc 1 64 3 is_stmt 0 view .LVU27
+  88 0026 421E     		subs	r2, r0, #1
+  89              	.LVL9:
+  90              		.loc 1 64 5 view .LVU28
+  91 0028 E11A     		subs	r1, r4, r3
+  92              	.LVL10:
+  93              	.L4:
+  65:lib/chibios/os/hal/lib/streams/chprintf.c ****   do
+  94              		.loc 1 65 3 is_stmt 1 view .LVU29
+  66:lib/chibios/os/hal/lib/streams/chprintf.c ****     *p++ = *q++;
+  95              		.loc 1 66 5 view .LVU30
+  96              		.loc 1 66 12 is_stmt 0 view .LVU31
+  97 002a 13F8015B 		ldrb	r5, [r3], #1	@ zero_extendqisi2
+  98              	.LVL11:
+  99              		.loc 1 66 10 view .LVU32
+ 100 002e 02F8015F 		strb	r5, [r2, #1]!
+  67:lib/chibios/os/hal/lib/streams/chprintf.c ****   while (--i);
+ 101              		.loc 1 67 9 is_stmt 1 view .LVU33
+ 102              		.loc 1 67 3 is_stmt 0 view .LVU34
+ 103 0032 9C42     		cmp	r4, r3
+ 104 0034 F9D1     		bne	.L4
+  68:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  69:lib/chibios/os/hal/lib/streams/chprintf.c ****   return p;
+ 105              		.loc 1 69 3 is_stmt 1 view .LVU35
+  70:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 106              		.loc 1 70 1 is_stmt 0 view .LVU36
+ 107 0036 0844     		add	r0, r0, r1
+ 108 0038 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 109              		.cfi_endproc
+ 110              	.LFE284:
+ 112              		.section	.rodata.chvprintf.str1.1,"aMS",%progbits,1
+ 113              	.LC0:
+ 114 0000 286E756C 		.ascii	"(null)\000"
+ 114      6C2900
+ 115              		.section	.text.chvprintf,"ax",%progbits
+ 116              		.align	1
+ 117              		.global	chvprintf
+ 118              		.syntax unified
+ 119              		.thumb
+ 120              		.thumb_func
+ 121              		.fpu fpv4-sp-d16
+ 123              	chvprintf:
+ 124              	.LVL12:
+ 125              	.LFB280:
+  71:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  72:lib/chibios/os/hal/lib/streams/chprintf.c **** static char *ch_ltoa(char *p, long num, unsigned radix) {
+  73:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  74:lib/chibios/os/hal/lib/streams/chprintf.c ****   return long_to_string_with_divisor(p, num, radix, 0);
+  75:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+  76:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  77:lib/chibios/os/hal/lib/streams/chprintf.c **** #if CHPRINTF_USE_FLOAT
+  78:lib/chibios/os/hal/lib/streams/chprintf.c **** static const long pow10[FLOAT_PRECISION] = {
+  79:lib/chibios/os/hal/lib/streams/chprintf.c ****     10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000
+  80:lib/chibios/os/hal/lib/streams/chprintf.c **** };
+  81:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  82:lib/chibios/os/hal/lib/streams/chprintf.c **** static char *ftoa(char *p, double num, unsigned long precision) {
+  83:lib/chibios/os/hal/lib/streams/chprintf.c ****   long l;
+  84:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  85:lib/chibios/os/hal/lib/streams/chprintf.c ****   if ((precision == 0) || (precision > FLOAT_PRECISION)) {
+  86:lib/chibios/os/hal/lib/streams/chprintf.c ****     precision = FLOAT_PRECISION;
+  87:lib/chibios/os/hal/lib/streams/chprintf.c ****   }
+  88:lib/chibios/os/hal/lib/streams/chprintf.c ****   precision = pow10[precision - 1];
+  89:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  90:lib/chibios/os/hal/lib/streams/chprintf.c ****   l = (long)num;
+  91:lib/chibios/os/hal/lib/streams/chprintf.c ****   p = long_to_string_with_divisor(p, l, 10, 0);
+  92:lib/chibios/os/hal/lib/streams/chprintf.c ****   *p++ = '.';
+  93:lib/chibios/os/hal/lib/streams/chprintf.c ****   l = (long)((num - l) * precision);
+  94:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  95:lib/chibios/os/hal/lib/streams/chprintf.c ****   return long_to_string_with_divisor(p, l, 10, precision / 10);
+  96:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+  97:lib/chibios/os/hal/lib/streams/chprintf.c **** #endif
+  98:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+  99:lib/chibios/os/hal/lib/streams/chprintf.c **** /**
+ 100:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @brief   System formatted output function.
+ 101:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @details This function implements a minimal @p vprintf()-like functionality
+ 102:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          with output on a @p BaseSequentialStream.
+ 103:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          The general parameters format is: %[-][width|*][.precision|*][l|L]p.
+ 104:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          The following parameter types (p) are supported:
+ 105:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>x</b> hexadecimal integer.
+ 106:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>X</b> hexadecimal long.
+ 107:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>o</b> octal integer.
+ 108:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>O</b> octal long.
+ 109:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>d</b> decimal signed integer.
+ 110:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>D</b> decimal signed long.
+ 111:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>u</b> decimal unsigned integer.
+ 112:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>U</b> decimal unsigned long.
+ 113:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>c</b> character.
+ 114:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>s</b> string.
+ 115:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          .
+ 116:lib/chibios/os/hal/lib/streams/chprintf.c ****  *
+ 117:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @param[in] chp       pointer to a @p BaseSequentialStream implementing object
+ 118:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @param[in] fmt       formatting string
+ 119:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @param[in] ap        list of parameters
+ 120:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @return              The number of bytes that would have been
+ 121:lib/chibios/os/hal/lib/streams/chprintf.c ****  *                      written to @p chp if no stream error occurs
+ 122:lib/chibios/os/hal/lib/streams/chprintf.c ****  *
+ 123:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @api
+ 124:lib/chibios/os/hal/lib/streams/chprintf.c ****  */
+ 125:lib/chibios/os/hal/lib/streams/chprintf.c **** int chvprintf(BaseSequentialStream *chp, const char *fmt, va_list ap) {
+ 126              		.loc 1 125 71 is_stmt 1 view -0
+ 127              		.cfi_startproc
+ 128              		@ args = 0, pretend = 0, frame = 24
+ 129              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130              		.loc 1 125 71 is_stmt 0 view .LVU38
+ 131 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 132              		.cfi_def_cfa_offset 36
+ 133              		.cfi_offset 4, -36
+ 134              		.cfi_offset 5, -32
+ 135              		.cfi_offset 6, -28
+ 136              		.cfi_offset 7, -24
+ 137              		.cfi_offset 8, -20
+ 138              		.cfi_offset 9, -16
+ 139              		.cfi_offset 10, -12
+ 140              		.cfi_offset 11, -8
+ 141              		.cfi_offset 14, -4
+ 142 0004 8046     		mov	r8, r0
+ 143 0006 87B0     		sub	sp, sp, #28
+ 144              		.cfi_def_cfa_offset 64
+ 145              		.loc 1 125 71 view .LVU39
+ 146 0008 1546     		mov	r5, r2
+ 147              	.LVL13:
+ 126:lib/chibios/os/hal/lib/streams/chprintf.c ****   char *p, *s, c, filler;
+ 148              		.loc 1 126 3 is_stmt 1 view .LVU40
+ 127:lib/chibios/os/hal/lib/streams/chprintf.c ****   int i, precision, width;
+ 149              		.loc 1 127 3 view .LVU41
+ 128:lib/chibios/os/hal/lib/streams/chprintf.c ****   int n = 0;
+ 150              		.loc 1 128 3 view .LVU42
+ 151              		.loc 1 128 7 is_stmt 0 view .LVU43
+ 152 000a 4FF00009 		mov	r9, #0
+ 153              	.LVL14:
+ 154              	.L8:
+ 129:lib/chibios/os/hal/lib/streams/chprintf.c ****   bool is_long, left_align, do_sign;
+ 155              		.loc 1 129 3 is_stmt 1 view .LVU44
+ 130:lib/chibios/os/hal/lib/streams/chprintf.c ****   long l;
+ 156              		.loc 1 130 3 view .LVU45
+ 131:lib/chibios/os/hal/lib/streams/chprintf.c **** #if CHPRINTF_USE_FLOAT
+ 132:lib/chibios/os/hal/lib/streams/chprintf.c ****   float f;
+ 133:lib/chibios/os/hal/lib/streams/chprintf.c ****   char tmpbuf[2*MAX_FILLER + 1];
+ 134:lib/chibios/os/hal/lib/streams/chprintf.c **** #else
+ 135:lib/chibios/os/hal/lib/streams/chprintf.c ****   char tmpbuf[MAX_FILLER + 1];
+ 157              		.loc 1 135 3 view .LVU46
+ 136:lib/chibios/os/hal/lib/streams/chprintf.c **** #endif
+ 137:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 138:lib/chibios/os/hal/lib/streams/chprintf.c ****   while (true) {
+ 158              		.loc 1 138 3 view .LVU47
+ 139:lib/chibios/os/hal/lib/streams/chprintf.c ****     c = *fmt++;
+ 159              		.loc 1 139 5 view .LVU48
+ 160              		.loc 1 139 13 is_stmt 0 view .LVU49
+ 161 000e 0C46     		mov	r4, r1
+ 162              	.LVL15:
+ 163              		.loc 1 139 7 view .LVU50
+ 164 0010 14F8013B 		ldrb	r3, [r4], #1	@ zero_extendqisi2
+ 165              	.LVL16:
+ 140:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (c == 0) {
+ 166              		.loc 1 140 5 is_stmt 1 view .LVU51
+ 167              		.loc 1 140 8 is_stmt 0 view .LVU52
+ 168 0014 002B     		cmp	r3, #0
+ 169 0016 3CD0     		beq	.L7
+ 141:lib/chibios/os/hal/lib/streams/chprintf.c ****       return n;
+ 142:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 143:lib/chibios/os/hal/lib/streams/chprintf.c ****     
+ 144:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (c != '%') {
+ 170              		.loc 1 144 5 is_stmt 1 view .LVU53
+ 171              		.loc 1 144 8 is_stmt 0 view .LVU54
+ 172 0018 252B     		cmp	r3, #37
+ 173 001a 08D0     		beq	.L10
+ 145:lib/chibios/os/hal/lib/streams/chprintf.c ****       streamPut(chp, (uint8_t)c);
+ 174              		.loc 1 145 7 is_stmt 1 view .LVU55
+ 175 001c D8F80020 		ldr	r2, [r8]
+ 176              	.LVL17:
+ 177              		.loc 1 145 7 is_stmt 0 view .LVU56
+ 178 0020 1946     		mov	r1, r3
+ 179 0022 D268     		ldr	r2, [r2, #12]
+ 180 0024 4046     		mov	r0, r8
+ 181 0026 9047     		blx	r2
+ 182              	.LVL18:
+ 146:lib/chibios/os/hal/lib/streams/chprintf.c ****       n++;
+ 183              		.loc 1 146 7 is_stmt 1 view .LVU57
+ 184              		.loc 1 146 8 is_stmt 0 view .LVU58
+ 185 0028 09F10109 		add	r9, r9, #1
+ 186              	.LVL19:
+ 147:lib/chibios/os/hal/lib/streams/chprintf.c ****       continue;
+ 187              		.loc 1 147 7 is_stmt 1 view .LVU59
+ 188 002c 49E1     		b	.L11
+ 189              	.LVL20:
+ 190              	.L10:
+ 148:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 149:lib/chibios/os/hal/lib/streams/chprintf.c ****     
+ 150:lib/chibios/os/hal/lib/streams/chprintf.c ****     p = tmpbuf;
+ 191              		.loc 1 150 5 view .LVU60
+ 151:lib/chibios/os/hal/lib/streams/chprintf.c ****     s = tmpbuf;
+ 192              		.loc 1 151 5 view .LVU61
+ 152:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 153:lib/chibios/os/hal/lib/streams/chprintf.c ****     /* Alignment mode.*/
+ 154:lib/chibios/os/hal/lib/streams/chprintf.c ****     left_align = false;
+ 193              		.loc 1 154 5 view .LVU62
+ 155:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (*fmt == '-') {
+ 194              		.loc 1 155 5 view .LVU63
+ 195              		.loc 1 155 8 is_stmt 0 view .LVU64
+ 196 002e 4B78     		ldrb	r3, [r1, #1]	@ zero_extendqisi2
+ 197              	.LVL21:
+ 198              		.loc 1 155 8 view .LVU65
+ 199 0030 2D2B     		cmp	r3, #45
+ 156:lib/chibios/os/hal/lib/streams/chprintf.c ****       fmt++;
+ 200              		.loc 1 156 7 is_stmt 1 view .LVU66
+ 201              		.loc 1 156 10 is_stmt 0 view .LVU67
+ 202 0032 06BF     		itte	eq
+ 203 0034 8C1C     		addeq	r4, r1, #2
+ 204              	.LVL22:
+ 157:lib/chibios/os/hal/lib/streams/chprintf.c ****       left_align = true;
+ 205              		.loc 1 157 7 is_stmt 1 view .LVU68
+ 206              		.loc 1 157 18 is_stmt 0 view .LVU69
+ 207 0036 0123     		moveq	r3, #1
+ 154:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (*fmt == '-') {
+ 208              		.loc 1 154 16 view .LVU70
+ 209 0038 0023     		movne	r3, #0
+ 210 003a 0193     		str	r3, [sp, #4]
+ 211              	.LVL23:
+ 158:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 159:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 160:lib/chibios/os/hal/lib/streams/chprintf.c ****     /* Sign mode.*/
+ 161:lib/chibios/os/hal/lib/streams/chprintf.c ****     do_sign = false;
+ 212              		.loc 1 161 5 is_stmt 1 view .LVU71
+ 162:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (*fmt == '+') {
+ 213              		.loc 1 162 5 view .LVU72
+ 214              		.loc 1 162 8 is_stmt 0 view .LVU73
+ 215 003c 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 216 003e 2B2B     		cmp	r3, #43
+ 163:lib/chibios/os/hal/lib/streams/chprintf.c ****       fmt++;
+ 217              		.loc 1 163 7 is_stmt 1 view .LVU74
+ 218              		.loc 1 163 10 is_stmt 0 view .LVU75
+ 219 0040 04BF     		itt	eq
+ 220 0042 0134     		addeq	r4, r4, #1
+ 221              	.LVL24:
+ 164:lib/chibios/os/hal/lib/streams/chprintf.c ****       do_sign = true;
+ 222              		.loc 1 164 7 is_stmt 1 view .LVU76
+ 223              		.loc 1 164 15 is_stmt 0 view .LVU77
+ 224 0044 0127     		moveq	r7, #1
+ 165:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 166:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 167:lib/chibios/os/hal/lib/streams/chprintf.c ****     /* Filler mode.*/
+ 168:lib/chibios/os/hal/lib/streams/chprintf.c ****     filler = ' ';
+ 169:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (*fmt == '0') {
+ 225              		.loc 1 169 9 view .LVU78
+ 226 0046 94F800A0 		ldrb	r10, [r4]	@ zero_extendqisi2
+ 161:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (*fmt == '+') {
+ 227              		.loc 1 161 13 view .LVU79
+ 228 004a 18BF     		it	ne
+ 229 004c 0027     		movne	r7, #0
+ 230              	.LVL25:
+ 168:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (*fmt == '0') {
+ 231              		.loc 1 168 5 is_stmt 1 view .LVU80
+ 232              		.loc 1 169 5 view .LVU81
+ 233              		.loc 1 169 8 is_stmt 0 view .LVU82
+ 234 004e BAF1300F 		cmp	r10, #48
+ 170:lib/chibios/os/hal/lib/streams/chprintf.c ****       fmt++;
+ 235              		.loc 1 170 7 is_stmt 1 view .LVU83
+ 236              		.loc 1 170 10 is_stmt 0 view .LVU84
+ 237 0052 0CBF     		ite	eq
+ 238 0054 0134     		addeq	r4, r4, #1
+ 239              	.LVL26:
+ 171:lib/chibios/os/hal/lib/streams/chprintf.c ****       filler = '0';
+ 240              		.loc 1 171 7 is_stmt 1 view .LVU85
+ 168:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (*fmt == '0') {
+ 241              		.loc 1 168 12 is_stmt 0 view .LVU86
+ 242 0056 4FF0200A 		movne	r10, #32
+ 243              	.LVL27:
+ 172:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 173:lib/chibios/os/hal/lib/streams/chprintf.c ****     
+ 174:lib/chibios/os/hal/lib/streams/chprintf.c ****     /* Width modifier.*/
+ 175:lib/chibios/os/hal/lib/streams/chprintf.c ****     if ( *fmt == '*') {
+ 244              		.loc 1 175 5 is_stmt 1 view .LVU87
+ 245              		.loc 1 175 8 is_stmt 0 view .LVU88
+ 246 005a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 247 005c 2A2B     		cmp	r3, #42
+ 248 005e 1CD1     		bne	.L65
+ 176:lib/chibios/os/hal/lib/streams/chprintf.c ****       width = va_arg(ap, int);
+ 249              		.loc 1 176 7 is_stmt 1 view .LVU89
+ 250              	.LVL28:
+ 251              		.loc 1 176 13 is_stmt 0 view .LVU90
+ 252 0060 55F804BB 		ldr	fp, [r5], #4
+ 253              	.LVL29:
+ 177:lib/chibios/os/hal/lib/streams/chprintf.c ****       ++fmt;
+ 254              		.loc 1 177 7 is_stmt 1 view .LVU91
+ 178:lib/chibios/os/hal/lib/streams/chprintf.c ****       c = *fmt++;
+ 255              		.loc 1 178 7 view .LVU92
+ 256              		.loc 1 178 9 is_stmt 0 view .LVU93
+ 257 0064 6178     		ldrb	r1, [r4, #1]	@ zero_extendqisi2
+ 258              	.LVL30:
+ 259              		.loc 1 178 15 view .LVU94
+ 260 0066 0234     		adds	r4, r4, #2
+ 261              	.LVL31:
+ 262              	.L16:
+ 179:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 180:lib/chibios/os/hal/lib/streams/chprintf.c ****     else {
+ 181:lib/chibios/os/hal/lib/streams/chprintf.c ****       width = 0;
+ 182:lib/chibios/os/hal/lib/streams/chprintf.c ****       while (true) {
+ 183:lib/chibios/os/hal/lib/streams/chprintf.c ****         c = *fmt++;
+ 184:lib/chibios/os/hal/lib/streams/chprintf.c ****         if (c == 0) {
+ 185:lib/chibios/os/hal/lib/streams/chprintf.c ****           return n;
+ 186:lib/chibios/os/hal/lib/streams/chprintf.c ****         }
+ 187:lib/chibios/os/hal/lib/streams/chprintf.c ****         if (c >= '0' && c <= '9') {
+ 188:lib/chibios/os/hal/lib/streams/chprintf.c ****           c -= '0';
+ 189:lib/chibios/os/hal/lib/streams/chprintf.c ****           width = width * 10 + c;
+ 190:lib/chibios/os/hal/lib/streams/chprintf.c ****         }
+ 191:lib/chibios/os/hal/lib/streams/chprintf.c ****         else {
+ 192:lib/chibios/os/hal/lib/streams/chprintf.c ****           break;
+ 193:lib/chibios/os/hal/lib/streams/chprintf.c ****         }
+ 194:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 195:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 196:lib/chibios/os/hal/lib/streams/chprintf.c ****     
+ 197:lib/chibios/os/hal/lib/streams/chprintf.c ****     /* Precision modifier.*/
+ 198:lib/chibios/os/hal/lib/streams/chprintf.c ****     precision = 0;
+ 263              		.loc 1 198 5 is_stmt 1 view .LVU95
+ 199:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (c == '.') {
+ 264              		.loc 1 199 5 view .LVU96
+ 265              		.loc 1 199 8 is_stmt 0 view .LVU97
+ 266 0068 2E29     		cmp	r1, #46
+ 267 006a 43D1     		bne	.L66
+ 200:lib/chibios/os/hal/lib/streams/chprintf.c ****       c = *fmt++;
+ 268              		.loc 1 200 7 is_stmt 1 view .LVU98
+ 269              	.LVL32:
+ 270              		.loc 1 200 9 is_stmt 0 view .LVU99
+ 271 006c 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 272              	.LVL33:
+ 201:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (c == 0) {
+ 273              		.loc 1 201 7 is_stmt 1 view .LVU100
+ 274              		.loc 1 201 10 is_stmt 0 view .LVU101
+ 275 006e 81B1     		cbz	r1, .L7
+ 202:lib/chibios/os/hal/lib/streams/chprintf.c ****         return n;
+ 203:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 204:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (c == '*') {
+ 276              		.loc 1 204 7 is_stmt 1 view .LVU102
+ 277              		.loc 1 204 10 is_stmt 0 view .LVU103
+ 278 0070 2A29     		cmp	r1, #42
+ 279 0072 21D0     		beq	.L18
+ 200:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (c == 0) {
+ 280              		.loc 1 200 15 view .LVU104
+ 281 0074 661C     		adds	r6, r4, #1
+ 282              	.LVL34:
+ 198:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (c == '.') {
+ 283              		.loc 1 198 15 view .LVU105
+ 284 0076 0020     		movs	r0, #0
+ 285              	.LVL35:
+ 286              	.L19:
+ 205:lib/chibios/os/hal/lib/streams/chprintf.c ****         precision = va_arg(ap, int);
+ 206:lib/chibios/os/hal/lib/streams/chprintf.c ****         c = *fmt++;
+ 207:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 208:lib/chibios/os/hal/lib/streams/chprintf.c ****       else {
+ 209:lib/chibios/os/hal/lib/streams/chprintf.c ****         while (c >= '0' && c <= '9') {
+ 287              		.loc 1 209 25 view .LVU106
+ 288 0078 A1F13002 		sub	r2, r1, #48
+ 289              	.LVL36:
+ 290              		.loc 1 209 25 view .LVU107
+ 291 007c D2B2     		uxtb	r2, r2
+ 292              		.loc 1 209 15 view .LVU108
+ 293 007e 092A     		cmp	r2, #9
+ 294 0080 3446     		mov	r4, r6
+ 295              	.LVL37:
+ 296              		.loc 1 209 15 is_stmt 1 view .LVU109
+ 297 0082 1DD8     		bhi	.L17
+ 210:lib/chibios/os/hal/lib/streams/chprintf.c ****           c -= '0';
+ 298              		.loc 1 210 11 view .LVU110
+ 299              	.LVL38:
+ 211:lib/chibios/os/hal/lib/streams/chprintf.c ****           precision = precision * 10 + c;
+ 300              		.loc 1 211 11 view .LVU111
+ 212:lib/chibios/os/hal/lib/streams/chprintf.c ****           c = *fmt++;
+ 301              		.loc 1 212 13 is_stmt 0 view .LVU112
+ 302 0084 16F8011B 		ldrb	r1, [r6], #1	@ zero_extendqisi2
+ 211:lib/chibios/os/hal/lib/streams/chprintf.c ****           precision = precision * 10 + c;
+ 303              		.loc 1 211 21 view .LVU113
+ 304 0088 0A23     		movs	r3, #10
+ 305 008a 03FB0020 		mla	r0, r3, r0, r2
+ 306              	.LVL39:
+ 307              		.loc 1 212 11 is_stmt 1 view .LVU114
+ 213:lib/chibios/os/hal/lib/streams/chprintf.c ****           if (c == 0) {
+ 308              		.loc 1 213 11 view .LVU115
+ 309              		.loc 1 213 14 is_stmt 0 view .LVU116
+ 310 008e 0029     		cmp	r1, #0
+ 311 0090 F2D1     		bne	.L19
+ 312              	.LVL40:
+ 313              	.L7:
+ 214:lib/chibios/os/hal/lib/streams/chprintf.c ****             return n;
+ 215:lib/chibios/os/hal/lib/streams/chprintf.c ****           }
+ 216:lib/chibios/os/hal/lib/streams/chprintf.c ****         }
+ 217:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 218:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 219:lib/chibios/os/hal/lib/streams/chprintf.c ****     
+ 220:lib/chibios/os/hal/lib/streams/chprintf.c ****     /* Long modifier.*/
+ 221:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (c == 'l' || c == 'L') {
+ 222:lib/chibios/os/hal/lib/streams/chprintf.c ****       is_long = true;
+ 223:lib/chibios/os/hal/lib/streams/chprintf.c ****       c = *fmt++;
+ 224:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (c == 0) {
+ 225:lib/chibios/os/hal/lib/streams/chprintf.c ****         return n;
+ 226:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 227:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 228:lib/chibios/os/hal/lib/streams/chprintf.c ****     else {
+ 229:lib/chibios/os/hal/lib/streams/chprintf.c ****       is_long = (c >= 'A') && (c <= 'Z');
+ 230:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 231:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 232:lib/chibios/os/hal/lib/streams/chprintf.c ****     /* Command decoding.*/
+ 233:lib/chibios/os/hal/lib/streams/chprintf.c ****     switch (c) {
+ 234:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'c':
+ 235:lib/chibios/os/hal/lib/streams/chprintf.c ****       filler = ' ';
+ 236:lib/chibios/os/hal/lib/streams/chprintf.c ****       *p++ = va_arg(ap, int);
+ 237:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 238:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 's':
+ 239:lib/chibios/os/hal/lib/streams/chprintf.c ****       filler = ' ';
+ 240:lib/chibios/os/hal/lib/streams/chprintf.c ****       if ((s = va_arg(ap, char *)) == 0) {
+ 241:lib/chibios/os/hal/lib/streams/chprintf.c ****         s = "(null)";
+ 242:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 243:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (precision == 0) {
+ 244:lib/chibios/os/hal/lib/streams/chprintf.c ****         precision = 32767;
+ 245:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 246:lib/chibios/os/hal/lib/streams/chprintf.c ****       for (p = s; *p && (--precision >= 0); p++)
+ 247:lib/chibios/os/hal/lib/streams/chprintf.c ****         ;
+ 248:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 249:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'D':
+ 250:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'd':
+ 251:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'I':
+ 252:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'i':
+ 253:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (is_long) {
+ 254:lib/chibios/os/hal/lib/streams/chprintf.c ****         l = va_arg(ap, long);
+ 255:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 256:lib/chibios/os/hal/lib/streams/chprintf.c ****       else {
+ 257:lib/chibios/os/hal/lib/streams/chprintf.c ****         l = va_arg(ap, int);
+ 258:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 259:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (l < 0) {
+ 260:lib/chibios/os/hal/lib/streams/chprintf.c ****         *p++ = '-';
+ 261:lib/chibios/os/hal/lib/streams/chprintf.c ****         l = -l;
+ 262:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 263:lib/chibios/os/hal/lib/streams/chprintf.c ****       else
+ 264:lib/chibios/os/hal/lib/streams/chprintf.c ****         if (do_sign) {
+ 265:lib/chibios/os/hal/lib/streams/chprintf.c ****           *p++ = '+';
+ 266:lib/chibios/os/hal/lib/streams/chprintf.c ****         }
+ 267:lib/chibios/os/hal/lib/streams/chprintf.c ****       p = ch_ltoa(p, l, 10);
+ 268:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 269:lib/chibios/os/hal/lib/streams/chprintf.c **** #if CHPRINTF_USE_FLOAT
+ 270:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'f':
+ 271:lib/chibios/os/hal/lib/streams/chprintf.c ****       f = (float) va_arg(ap, double);
+ 272:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (f < 0) {
+ 273:lib/chibios/os/hal/lib/streams/chprintf.c ****         *p++ = '-';
+ 274:lib/chibios/os/hal/lib/streams/chprintf.c ****         f = -f;
+ 275:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 276:lib/chibios/os/hal/lib/streams/chprintf.c ****       else {
+ 277:lib/chibios/os/hal/lib/streams/chprintf.c ****         if (do_sign) {
+ 278:lib/chibios/os/hal/lib/streams/chprintf.c ****           *p++ = '+';
+ 279:lib/chibios/os/hal/lib/streams/chprintf.c ****         }
+ 280:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 281:lib/chibios/os/hal/lib/streams/chprintf.c ****       p = ftoa(p, f, precision);
+ 282:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 283:lib/chibios/os/hal/lib/streams/chprintf.c **** #endif
+ 284:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'X':
+ 285:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'x':
+ 286:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'P':
+ 287:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'p':
+ 288:lib/chibios/os/hal/lib/streams/chprintf.c ****       c = 16;
+ 289:lib/chibios/os/hal/lib/streams/chprintf.c ****       goto unsigned_common;
+ 290:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'U':
+ 291:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'u':
+ 292:lib/chibios/os/hal/lib/streams/chprintf.c ****       c = 10;
+ 293:lib/chibios/os/hal/lib/streams/chprintf.c ****       goto unsigned_common;
+ 294:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'O':
+ 295:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'o':
+ 296:lib/chibios/os/hal/lib/streams/chprintf.c ****       c = 8;
+ 297:lib/chibios/os/hal/lib/streams/chprintf.c **** unsigned_common:
+ 298:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (is_long) {
+ 299:lib/chibios/os/hal/lib/streams/chprintf.c ****         l = va_arg(ap, unsigned long);
+ 300:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 301:lib/chibios/os/hal/lib/streams/chprintf.c ****       else {
+ 302:lib/chibios/os/hal/lib/streams/chprintf.c ****         l = va_arg(ap, unsigned int);
+ 303:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 304:lib/chibios/os/hal/lib/streams/chprintf.c ****       p = ch_ltoa(p, l, c);
+ 305:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 306:lib/chibios/os/hal/lib/streams/chprintf.c ****     default:
+ 307:lib/chibios/os/hal/lib/streams/chprintf.c ****       *p++ = c;
+ 308:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 309:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 310:lib/chibios/os/hal/lib/streams/chprintf.c ****     i = (int)(p - s);
+ 311:lib/chibios/os/hal/lib/streams/chprintf.c ****     if ((width -= i) < 0) {
+ 312:lib/chibios/os/hal/lib/streams/chprintf.c ****       width = 0;
+ 313:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 314:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (left_align == false) {
+ 315:lib/chibios/os/hal/lib/streams/chprintf.c ****       width = -width;
+ 316:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 317:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (width < 0) {
+ 318:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (*s == '-' && filler == '0') {
+ 319:lib/chibios/os/hal/lib/streams/chprintf.c ****         streamPut(chp, (uint8_t)*s++);
+ 320:lib/chibios/os/hal/lib/streams/chprintf.c ****         n++;
+ 321:lib/chibios/os/hal/lib/streams/chprintf.c ****         i--;
+ 322:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 323:lib/chibios/os/hal/lib/streams/chprintf.c ****       do {
+ 324:lib/chibios/os/hal/lib/streams/chprintf.c ****         streamPut(chp, (uint8_t)filler);
+ 325:lib/chibios/os/hal/lib/streams/chprintf.c ****         n++;
+ 326:lib/chibios/os/hal/lib/streams/chprintf.c ****       } while (++width != 0);
+ 327:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 328:lib/chibios/os/hal/lib/streams/chprintf.c ****     while (--i >= 0) {
+ 329:lib/chibios/os/hal/lib/streams/chprintf.c ****       streamPut(chp, (uint8_t)*s++);
+ 330:lib/chibios/os/hal/lib/streams/chprintf.c ****       n++;
+ 331:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 332:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 333:lib/chibios/os/hal/lib/streams/chprintf.c ****     while (width) {
+ 334:lib/chibios/os/hal/lib/streams/chprintf.c ****       streamPut(chp, (uint8_t)filler);
+ 335:lib/chibios/os/hal/lib/streams/chprintf.c ****       n++;
+ 336:lib/chibios/os/hal/lib/streams/chprintf.c ****       width--;
+ 337:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 338:lib/chibios/os/hal/lib/streams/chprintf.c ****   }
+ 339:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 314              		.loc 1 339 1 view .LVU117
+ 315 0092 4846     		mov	r0, r9
+ 316 0094 07B0     		add	sp, sp, #28
+ 317              		.cfi_remember_state
+ 318              		.cfi_def_cfa_offset 36
+ 319              		@ sp needed
+ 320 0096 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 321              	.LVL41:
+ 322              	.L65:
+ 323              		.cfi_restore_state
+ 181:lib/chibios/os/hal/lib/streams/chprintf.c ****       while (true) {
+ 324              		.loc 1 181 13 view .LVU118
+ 325 009a 4FF0000B 		mov	fp, #0
+ 326              	.LVL42:
+ 327              	.L15:
+ 182:lib/chibios/os/hal/lib/streams/chprintf.c ****         c = *fmt++;
+ 328              		.loc 1 182 7 is_stmt 1 view .LVU119
+ 183:lib/chibios/os/hal/lib/streams/chprintf.c ****         if (c == 0) {
+ 329              		.loc 1 183 9 view .LVU120
+ 183:lib/chibios/os/hal/lib/streams/chprintf.c ****         if (c == 0) {
+ 330              		.loc 1 183 11 is_stmt 0 view .LVU121
+ 331 009e 14F8011B 		ldrb	r1, [r4], #1	@ zero_extendqisi2
+ 332              	.LVL43:
+ 184:lib/chibios/os/hal/lib/streams/chprintf.c ****           return n;
+ 333              		.loc 1 184 9 is_stmt 1 view .LVU122
+ 184:lib/chibios/os/hal/lib/streams/chprintf.c ****           return n;
+ 334              		.loc 1 184 12 is_stmt 0 view .LVU123
+ 335 00a2 0029     		cmp	r1, #0
+ 336 00a4 F5D0     		beq	.L7
+ 187:lib/chibios/os/hal/lib/streams/chprintf.c ****           c -= '0';
+ 337              		.loc 1 187 9 is_stmt 1 view .LVU124
+ 187:lib/chibios/os/hal/lib/streams/chprintf.c ****           c -= '0';
+ 338              		.loc 1 187 22 is_stmt 0 view .LVU125
+ 339 00a6 A1F13002 		sub	r2, r1, #48
+ 340              	.LVL44:
+ 187:lib/chibios/os/hal/lib/streams/chprintf.c ****           c -= '0';
+ 341              		.loc 1 187 22 view .LVU126
+ 342 00aa D2B2     		uxtb	r2, r2
+ 187:lib/chibios/os/hal/lib/streams/chprintf.c ****           c -= '0';
+ 343              		.loc 1 187 12 view .LVU127
+ 344 00ac 092A     		cmp	r2, #9
+ 345 00ae DBD8     		bhi	.L16
+ 188:lib/chibios/os/hal/lib/streams/chprintf.c ****           width = width * 10 + c;
+ 346              		.loc 1 188 11 is_stmt 1 view .LVU128
+ 347              	.LVL45:
+ 189:lib/chibios/os/hal/lib/streams/chprintf.c ****         }
+ 348              		.loc 1 189 11 view .LVU129
+ 189:lib/chibios/os/hal/lib/streams/chprintf.c ****         }
+ 349              		.loc 1 189 17 is_stmt 0 view .LVU130
+ 350 00b0 0A23     		movs	r3, #10
+ 351 00b2 03FB0B2B 		mla	fp, r3, fp, r2
+ 352              	.LVL46:
+ 182:lib/chibios/os/hal/lib/streams/chprintf.c ****         c = *fmt++;
+ 353              		.loc 1 182 13 is_stmt 1 view .LVU131
+ 183:lib/chibios/os/hal/lib/streams/chprintf.c ****         if (c == 0) {
+ 354              		.loc 1 183 11 is_stmt 0 view .LVU132
+ 355 00b6 F2E7     		b	.L15
+ 356              	.LVL47:
+ 357              	.L18:
+ 205:lib/chibios/os/hal/lib/streams/chprintf.c ****         c = *fmt++;
+ 358              		.loc 1 205 9 is_stmt 1 view .LVU133
+ 205:lib/chibios/os/hal/lib/streams/chprintf.c ****         c = *fmt++;
+ 359              		.loc 1 205 19 is_stmt 0 view .LVU134
+ 360 00b8 55F8040B 		ldr	r0, [r5], #4
+ 361              	.LVL48:
+ 206:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 362              		.loc 1 206 9 is_stmt 1 view .LVU135
+ 206:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 363              		.loc 1 206 11 is_stmt 0 view .LVU136
+ 364 00bc 6178     		ldrb	r1, [r4, #1]	@ zero_extendqisi2
+ 365              	.LVL49:
+ 206:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 366              		.loc 1 206 17 view .LVU137
+ 367 00be 0234     		adds	r4, r4, #2
+ 368              	.LVL50:
+ 369              	.L17:
+ 221:lib/chibios/os/hal/lib/streams/chprintf.c ****       is_long = true;
+ 370              		.loc 1 221 5 is_stmt 1 view .LVU138
+ 221:lib/chibios/os/hal/lib/streams/chprintf.c ****       is_long = true;
+ 371              		.loc 1 221 18 is_stmt 0 view .LVU139
+ 372 00c0 01F0DF02 		and	r2, r1, #223
+ 373              	.LVL51:
+ 221:lib/chibios/os/hal/lib/streams/chprintf.c ****       is_long = true;
+ 374              		.loc 1 221 18 view .LVU140
+ 375 00c4 4C2A     		cmp	r2, #76
+ 376 00c6 17D1     		bne	.L21
+ 377              	.LVL52:
+ 222:lib/chibios/os/hal/lib/streams/chprintf.c ****       c = *fmt++;
+ 378              		.loc 1 222 7 is_stmt 1 view .LVU141
+ 223:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (c == 0) {
+ 379              		.loc 1 223 7 view .LVU142
+ 223:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (c == 0) {
+ 380              		.loc 1 223 9 is_stmt 0 view .LVU143
+ 381 00c8 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 382              	.LVL53:
+ 224:lib/chibios/os/hal/lib/streams/chprintf.c ****         return n;
+ 383              		.loc 1 224 7 is_stmt 1 view .LVU144
+ 224:lib/chibios/os/hal/lib/streams/chprintf.c ****         return n;
+ 384              		.loc 1 224 10 is_stmt 0 view .LVU145
+ 385 00ca 0029     		cmp	r1, #0
+ 386 00cc E1D0     		beq	.L7
+ 233:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'c':
+ 387              		.loc 1 233 5 view .LVU146
+ 388 00ce 7829     		cmp	r1, #120
+ 223:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (c == 0) {
+ 389              		.loc 1 223 15 view .LVU147
+ 390 00d0 04F10104 		add	r4, r4, #1
+ 391              	.LVL54:
+ 233:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'c':
+ 392              		.loc 1 233 5 is_stmt 1 view .LVU148
+ 393 00d4 1FD8     		bhi	.L23
+ 394 00d6 6229     		cmp	r1, #98
+ 395 00d8 00F2FF80 		bhi	.L54
+ 396 00dc 5829     		cmp	r1, #88
+ 397 00de 1AD8     		bhi	.L23
+ 398 00e0 4E29     		cmp	r1, #78
+ 399 00e2 00F22F81 		bhi	.L55
+ 400 00e6 4429     		cmp	r1, #68
+ 401 00e8 00F09280 		beq	.L41
+ 402 00ec 4929     		cmp	r1, #73
+ 403 00ee 00F08F80 		beq	.L41
+ 404 00f2 10E0     		b	.L23
+ 405              	.LVL55:
+ 406              	.L66:
+ 198:lib/chibios/os/hal/lib/streams/chprintf.c ****     if (c == '.') {
+ 407              		.loc 1 198 15 is_stmt 0 view .LVU149
+ 408 00f4 0020     		movs	r0, #0
+ 409 00f6 E3E7     		b	.L17
+ 410              	.LVL56:
+ 411              	.L21:
+ 229:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 412              		.loc 1 229 7 is_stmt 1 view .LVU150
+ 233:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'c':
+ 413              		.loc 1 233 5 view .LVU151
+ 229:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 414              		.loc 1 229 28 is_stmt 0 view .LVU152
+ 415 00f8 A1F14102 		sub	r2, r1, #65
+ 233:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'c':
+ 416              		.loc 1 233 5 view .LVU153
+ 417 00fc 7829     		cmp	r1, #120
+ 229:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 418              		.loc 1 229 28 view .LVU154
+ 419 00fe D2B2     		uxtb	r2, r2
+ 233:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'c':
+ 420              		.loc 1 233 5 view .LVU155
+ 421 0100 09D8     		bhi	.L23
+ 422 0102 6229     		cmp	r1, #98
+ 423 0104 0BD8     		bhi	.L24
+ 424 0106 5829     		cmp	r1, #88
+ 425 0108 05D8     		bhi	.L23
+ 426 010a 4E29     		cmp	r1, #78
+ 427 010c 3CD8     		bhi	.L25
+ 428 010e 4429     		cmp	r1, #68
+ 429 0110 79D0     		beq	.L26
+ 430 0112 4929     		cmp	r1, #73
+ 431 0114 77D0     		beq	.L26
+ 432              	.LVL57:
+ 433              	.L23:
+ 307:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 434              		.loc 1 307 7 is_stmt 1 view .LVU156
+ 307:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 435              		.loc 1 307 12 is_stmt 0 view .LVU157
+ 436 0116 8DF80C10 		strb	r1, [sp, #12]
+ 308:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 437              		.loc 1 308 7 is_stmt 1 view .LVU158
+ 438 011a 2E46     		mov	r6, r5
+ 439 011c 57E0     		b	.L110
+ 440              	.LVL58:
+ 441              	.L24:
+ 308:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 442              		.loc 1 308 7 is_stmt 0 view .LVU159
+ 443 011e A1F16306 		sub	r6, r1, #99
+ 444 0122 152E     		cmp	r6, #21
+ 445 0124 F7D8     		bhi	.L23
+ 446 0126 0FF2080C 		adr	ip, .L28
+ 447 012a 5CF826F0 		ldr	pc, [ip, r6, lsl #2]
+ 448 012e 00BF     		.p2align 2
+ 449              	.L28:
+ 450 0130 C1010000 		.word	.L32+1
+ 451 0134 07020000 		.word	.L26+1
+ 452 0138 17010000 		.word	.L23+1
+ 453 013c 17010000 		.word	.L23+1
+ 454 0140 17010000 		.word	.L23+1
+ 455 0144 17010000 		.word	.L23+1
+ 456 0148 07020000 		.word	.L26+1
+ 457 014c 17010000 		.word	.L23+1
+ 458 0150 17010000 		.word	.L23+1
+ 459 0154 17010000 		.word	.L23+1
+ 460 0158 17010000 		.word	.L23+1
+ 461 015c 17010000 		.word	.L23+1
+ 462 0160 93020000 		.word	.L74+1
+ 463 0164 81030000 		.word	.L75+1
+ 464 0168 17010000 		.word	.L23+1
+ 465 016c 17010000 		.word	.L23+1
+ 466 0170 D7010000 		.word	.L30+1
+ 467 0174 17010000 		.word	.L23+1
+ 468 0178 7D030000 		.word	.L60+1
+ 469 017c 17010000 		.word	.L23+1
+ 470 0180 17010000 		.word	.L23+1
+ 471 0184 81030000 		.word	.L75+1
+ 472              		.p2align 1
+ 473              	.L25:
+ 474 0188 A1F14F02 		sub	r2, r1, #79
+ 475 018c 092A     		cmp	r2, #9
+ 476 018e C2D8     		bhi	.L23
+ 477 0190 01A0     		adr	r0, .L34
+ 478 0192 50F822F0 		ldr	pc, [r0, r2, lsl #2]
+ 479              	.LVL59:
+ 480 0196 00BF     		.p2align 2
+ 481              	.L34:
+ 482 0198 93020000 		.word	.L74+1
+ 483 019c 81030000 		.word	.L75+1
+ 484 01a0 17010000 		.word	.L23+1
+ 485 01a4 17010000 		.word	.L23+1
+ 486 01a8 17010000 		.word	.L23+1
+ 487 01ac 17010000 		.word	.L23+1
+ 488 01b0 7D030000 		.word	.L60+1
+ 489 01b4 17010000 		.word	.L23+1
+ 490 01b8 17010000 		.word	.L23+1
+ 491 01bc 81030000 		.word	.L75+1
+ 492              		.p2align 1
+ 493              	.L32:
+ 235:lib/chibios/os/hal/lib/streams/chprintf.c ****       *p++ = va_arg(ap, int);
+ 494              		.loc 1 235 7 is_stmt 1 view .LVU160
+ 236:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 495              		.loc 1 236 7 view .LVU161
+ 236:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 496              		.loc 1 236 14 is_stmt 0 view .LVU162
+ 497 01c0 2E46     		mov	r6, r5
+ 498              	.LVL60:
+ 235:lib/chibios/os/hal/lib/streams/chprintf.c ****       *p++ = va_arg(ap, int);
+ 499              		.loc 1 235 14 view .LVU163
+ 500 01c2 4FF0200A 		mov	r10, #32
+ 236:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 501              		.loc 1 236 12 view .LVU164
+ 502 01c6 56F8042B 		ldr	r2, [r6], #4
+ 503              	.LVL61:
+ 236:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 504              		.loc 1 236 12 view .LVU165
+ 505 01ca 8DF80C20 		strb	r2, [sp, #12]
+ 237:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 's':
+ 506              		.loc 1 237 7 is_stmt 1 view .LVU166
+ 507              	.LVL62:
+ 508              	.L110:
+ 151:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 509              		.loc 1 151 7 is_stmt 0 view .LVU167
+ 510 01ce 03AD     		add	r5, sp, #12
+ 511              	.LVL63:
+ 307:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 512              		.loc 1 307 9 view .LVU168
+ 513 01d0 0DF10D00 		add	r0, sp, #13
+ 514              	.LVL64:
+ 308:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 515              		.loc 1 308 7 view .LVU169
+ 516 01d4 2BE0     		b	.L36
+ 517              	.LVL65:
+ 518              	.L30:
+ 239:lib/chibios/os/hal/lib/streams/chprintf.c ****       if ((s = va_arg(ap, char *)) == 0) {
+ 519              		.loc 1 239 7 is_stmt 1 view .LVU170
+ 240:lib/chibios/os/hal/lib/streams/chprintf.c ****         s = "(null)";
+ 520              		.loc 1 240 7 view .LVU171
+ 240:lib/chibios/os/hal/lib/streams/chprintf.c ****         s = "(null)";
+ 521              		.loc 1 240 14 is_stmt 0 view .LVU172
+ 522 01d6 2E46     		mov	r6, r5
+ 523              	.LVL66:
+ 241:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 524              		.loc 1 241 11 view .LVU173
+ 525 01d8 6A4B     		ldr	r3, .L111
+ 240:lib/chibios/os/hal/lib/streams/chprintf.c ****         s = "(null)";
+ 526              		.loc 1 240 14 view .LVU174
+ 527 01da 56F8045B 		ldr	r5, [r6], #4
+ 528              	.LVL67:
+ 244:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 529              		.loc 1 244 19 view .LVU175
+ 530 01de 47F6FF72 		movw	r2, #32767
+ 241:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 531              		.loc 1 241 11 view .LVU176
+ 532 01e2 002D     		cmp	r5, #0
+ 533 01e4 08BF     		it	eq
+ 534 01e6 1D46     		moveq	r5, r3
+ 535              	.LVL68:
+ 243:lib/chibios/os/hal/lib/streams/chprintf.c ****         precision = 32767;
+ 536              		.loc 1 243 7 is_stmt 1 view .LVU177
+ 244:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 537              		.loc 1 244 19 is_stmt 0 view .LVU178
+ 538 01e8 0028     		cmp	r0, #0
+ 539 01ea 08BF     		it	eq
+ 540 01ec 1046     		moveq	r0, r2
+ 541              	.LVL69:
+ 244:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 542              		.loc 1 244 19 view .LVU179
+ 543 01ee 2F18     		adds	r7, r5, r0
+ 544              	.LVL70:
+ 244:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 545              		.loc 1 244 19 view .LVU180
+ 546 01f0 2A46     		mov	r2, r5
+ 547              	.LVL71:
+ 548              	.L39:
+ 244:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 549              		.loc 1 244 19 view .LVU181
+ 550 01f2 1046     		mov	r0, r2
+ 551              	.LVL72:
+ 246:lib/chibios/os/hal/lib/streams/chprintf.c ****         ;
+ 552              		.loc 1 246 19 is_stmt 1 discriminator 1 view .LVU182
+ 246:lib/chibios/os/hal/lib/streams/chprintf.c ****         ;
+ 553              		.loc 1 246 7 is_stmt 0 discriminator 1 view .LVU183
+ 554 01f4 12F8011B 		ldrb	r1, [r2], #1	@ zero_extendqisi2
+ 555 01f8 11B1     		cbz	r1, .L69
+ 556 01fa B91A     		subs	r1, r7, r2
+ 246:lib/chibios/os/hal/lib/streams/chprintf.c ****         ;
+ 557              		.loc 1 246 22 discriminator 3 view .LVU184
+ 558 01fc 0029     		cmp	r1, #0
+ 559 01fe F8DA     		bge	.L39
+ 560              	.L69:
+ 239:lib/chibios/os/hal/lib/streams/chprintf.c ****       if ((s = va_arg(ap, char *)) == 0) {
+ 561              		.loc 1 239 14 view .LVU185
+ 562 0200 4FF0200A 		mov	r10, #32
+ 563 0204 13E0     		b	.L36
+ 564              	.LVL73:
+ 565              	.L26:
+ 253:lib/chibios/os/hal/lib/streams/chprintf.c ****         l = va_arg(ap, long);
+ 566              		.loc 1 253 7 is_stmt 1 view .LVU186
+ 257:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 567              		.loc 1 257 11 is_stmt 0 view .LVU187
+ 568 0206 2E46     		mov	r6, r5
+ 253:lib/chibios/os/hal/lib/streams/chprintf.c ****         l = va_arg(ap, long);
+ 569              		.loc 1 253 10 view .LVU188
+ 570 0208 192A     		cmp	r2, #25
+ 257:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 571              		.loc 1 257 11 view .LVU189
+ 572 020a 56F8041B 		ldr	r1, [r6], #4
+ 573              	.LVL74:
+ 253:lib/chibios/os/hal/lib/streams/chprintf.c ****         l = va_arg(ap, long);
+ 574              		.loc 1 253 10 view .LVU190
+ 575 020e 02D8     		bhi	.L40
+ 576              	.LVL75:
+ 577              	.L41:
+ 254:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 578              		.loc 1 254 9 is_stmt 1 view .LVU191
+ 254:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 579              		.loc 1 254 11 is_stmt 0 view .LVU192
+ 580 0210 2E46     		mov	r6, r5
+ 581              	.LVL76:
+ 254:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 582              		.loc 1 254 11 view .LVU193
+ 583 0212 56F8041B 		ldr	r1, [r6], #4
+ 584              	.LVL77:
+ 585              	.L40:
+ 259:lib/chibios/os/hal/lib/streams/chprintf.c ****         *p++ = '-';
+ 586              		.loc 1 259 7 is_stmt 1 view .LVU194
+ 259:lib/chibios/os/hal/lib/streams/chprintf.c ****         *p++ = '-';
+ 587              		.loc 1 259 10 is_stmt 0 view .LVU195
+ 588 0216 0029     		cmp	r1, #0
+ 589 0218 34DA     		bge	.L42
+ 260:lib/chibios/os/hal/lib/streams/chprintf.c ****         l = -l;
+ 590              		.loc 1 260 9 is_stmt 1 view .LVU196
+ 591              	.LVL78:
+ 260:lib/chibios/os/hal/lib/streams/chprintf.c ****         l = -l;
+ 592              		.loc 1 260 14 is_stmt 0 view .LVU197
+ 593 021a 2D22     		movs	r2, #45
+ 594 021c 8DF80C20 		strb	r2, [sp, #12]
+ 261:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 595              		.loc 1 261 9 is_stmt 1 view .LVU198
+ 261:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 596              		.loc 1 261 11 is_stmt 0 view .LVU199
+ 597 0220 4942     		rsbs	r1, r1, #0
+ 598              	.LVL79:
+ 599              	.L108:
+ 265:lib/chibios/os/hal/lib/streams/chprintf.c ****         }
+ 600              		.loc 1 265 13 view .LVU200
+ 601 0222 0DF10D00 		add	r0, sp, #13
+ 602              	.LVL80:
+ 603              	.L43:
+ 267:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 604              		.loc 1 267 7 is_stmt 1 view .LVU201
+ 605              	.LBB6:
+ 606              	.LBI6:
+  72:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 607              		.loc 1 72 14 view .LVU202
+ 608              	.LBB7:
+  74:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 609              		.loc 1 74 3 view .LVU203
+  74:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 610              		.loc 1 74 10 is_stmt 0 view .LVU204
+ 611 0226 0A22     		movs	r2, #10
+ 612              	.LVL81:
+ 613              	.L109:
+  74:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 614              		.loc 1 74 10 view .LVU205
+ 615              	.LBE7:
+ 616              	.LBE6:
+ 617              	.LBB8:
+ 618              	.LBB9:
+ 619 0228 FFF7FEFF 		bl	long_to_string_with_divisor.constprop.0
+ 620              	.LVL82:
+  74:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 621              		.loc 1 74 10 view .LVU206
+ 622              	.LBE9:
+ 623              	.LBE8:
+ 305:lib/chibios/os/hal/lib/streams/chprintf.c ****     default:
+ 624              		.loc 1 305 7 is_stmt 1 view .LVU207
+ 151:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 625              		.loc 1 151 7 is_stmt 0 view .LVU208
+ 626 022c 03AD     		add	r5, sp, #12
+ 627              	.LVL83:
+ 628              	.L36:
+ 310:lib/chibios/os/hal/lib/streams/chprintf.c ****     if ((width -= i) < 0) {
+ 629              		.loc 1 310 5 is_stmt 1 view .LVU209
+ 310:lib/chibios/os/hal/lib/streams/chprintf.c ****     if ((width -= i) < 0) {
+ 630              		.loc 1 310 7 is_stmt 0 view .LVU210
+ 631 022e 471B     		subs	r7, r0, r5
+ 632              	.LVL84:
+ 311:lib/chibios/os/hal/lib/streams/chprintf.c ****       width = 0;
+ 633              		.loc 1 311 5 is_stmt 1 view .LVU211
+ 314:lib/chibios/os/hal/lib/streams/chprintf.c ****       width = -width;
+ 634              		.loc 1 314 8 is_stmt 0 view .LVU212
+ 635 0230 0199     		ldr	r1, [sp, #4]
+ 311:lib/chibios/os/hal/lib/streams/chprintf.c ****       width = 0;
+ 636              		.loc 1 311 16 view .LVU213
+ 637 0232 ABEB0703 		sub	r3, fp, r7
+ 638              	.LVL85:
+ 311:lib/chibios/os/hal/lib/streams/chprintf.c ****       width = 0;
+ 639              		.loc 1 311 16 view .LVU214
+ 640 0236 23EAE372 		bic	r2, r3, r3, asr #31
+ 641              	.LVL86:
+ 314:lib/chibios/os/hal/lib/streams/chprintf.c ****       width = -width;
+ 642              		.loc 1 314 5 is_stmt 1 view .LVU215
+ 314:lib/chibios/os/hal/lib/streams/chprintf.c ****       width = -width;
+ 643              		.loc 1 314 8 is_stmt 0 view .LVU216
+ 644 023a 0029     		cmp	r1, #0
+ 645 023c 43D1     		bne	.L71
+ 315:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 646              		.loc 1 315 7 is_stmt 1 view .LVU217
+ 317:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (*s == '-' && filler == '0') {
+ 647              		.loc 1 317 8 is_stmt 0 view .LVU218
+ 648 023e 002B     		cmp	r3, #0
+ 315:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 649              		.loc 1 315 13 view .LVU219
+ 650 0240 C2F1000B 		rsb	fp, r2, #0
+ 651              	.LVL87:
+ 317:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (*s == '-' && filler == '0') {
+ 652              		.loc 1 317 5 is_stmt 1 view .LVU220
+ 317:lib/chibios/os/hal/lib/streams/chprintf.c ****       if (*s == '-' && filler == '0') {
+ 653              		.loc 1 317 8 is_stmt 0 view .LVU221
+ 654 0244 1CDD     		ble	.L46
+ 318:lib/chibios/os/hal/lib/streams/chprintf.c ****         streamPut(chp, (uint8_t)*s++);
+ 655              		.loc 1 318 7 is_stmt 1 view .LVU222
+ 318:lib/chibios/os/hal/lib/streams/chprintf.c ****         streamPut(chp, (uint8_t)*s++);
+ 656              		.loc 1 318 10 is_stmt 0 view .LVU223
+ 657 0246 2978     		ldrb	r1, [r5]	@ zero_extendqisi2
+ 658 0248 2D29     		cmp	r1, #45
+ 659 024a 0DD1     		bne	.L48
+ 318:lib/chibios/os/hal/lib/streams/chprintf.c ****         streamPut(chp, (uint8_t)*s++);
+ 660              		.loc 1 318 21 discriminator 1 view .LVU224
+ 661 024c BAF1300F 		cmp	r10, #48
+ 662 0250 0AD1     		bne	.L48
+ 319:lib/chibios/os/hal/lib/streams/chprintf.c ****         n++;
+ 663              		.loc 1 319 9 view .LVU225
+ 664 0252 D8F80030 		ldr	r3, [r8]
+ 665 0256 0192     		str	r2, [sp, #4]
+ 666              	.LVL88:
+ 319:lib/chibios/os/hal/lib/streams/chprintf.c ****         n++;
+ 667              		.loc 1 319 9 view .LVU226
+ 668 0258 DB68     		ldr	r3, [r3, #12]
+ 669 025a 4046     		mov	r0, r8
+ 670              	.LVL89:
+ 319:lib/chibios/os/hal/lib/streams/chprintf.c ****         n++;
+ 671              		.loc 1 319 9 view .LVU227
+ 672 025c 9847     		blx	r3
+ 673              	.LVL90:
+ 674 025e 019A     		ldr	r2, [sp, #4]
+ 321:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 675              		.loc 1 321 10 view .LVU228
+ 676 0260 013F     		subs	r7, r7, #1
+ 677              	.LVL91:
+ 146:lib/chibios/os/hal/lib/streams/chprintf.c ****       continue;
+ 678              		.loc 1 146 8 view .LVU229
+ 679 0262 09F10109 		add	r9, r9, #1
+ 680              	.LVL92:
+ 319:lib/chibios/os/hal/lib/streams/chprintf.c ****         n++;
+ 681              		.loc 1 319 9 is_stmt 1 view .LVU230
+ 682 0266 0135     		adds	r5, r5, #1
+ 683              	.LVL93:
+ 320:lib/chibios/os/hal/lib/streams/chprintf.c ****         i--;
+ 684              		.loc 1 320 9 view .LVU231
+ 321:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 685              		.loc 1 321 9 view .LVU232
+ 686              	.L48:
+ 324:lib/chibios/os/hal/lib/streams/chprintf.c ****         n++;
+ 687              		.loc 1 324 9 is_stmt 0 discriminator 1 view .LVU233
+ 688 0268 D8F80030 		ldr	r3, [r8]
+ 689 026c 0192     		str	r2, [sp, #4]
+ 323:lib/chibios/os/hal/lib/streams/chprintf.c ****         streamPut(chp, (uint8_t)filler);
+ 690              		.loc 1 323 7 is_stmt 1 discriminator 1 view .LVU234
+ 324:lib/chibios/os/hal/lib/streams/chprintf.c ****         n++;
+ 691              		.loc 1 324 9 discriminator 1 view .LVU235
+ 692 026e DB68     		ldr	r3, [r3, #12]
+ 693 0270 5146     		mov	r1, r10
+ 694 0272 4046     		mov	r0, r8
+ 695 0274 9847     		blx	r3
+ 696              	.LVL94:
+ 325:lib/chibios/os/hal/lib/streams/chprintf.c ****       } while (++width != 0);
+ 697              		.loc 1 325 9 discriminator 1 view .LVU236
+ 326:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 698              		.loc 1 326 15 discriminator 1 view .LVU237
+ 326:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 699              		.loc 1 326 7 is_stmt 0 discriminator 1 view .LVU238
+ 700 0276 1BF1010B 		adds	fp, fp, #1
+ 701              	.LVL95:
+ 326:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 702              		.loc 1 326 7 discriminator 1 view .LVU239
+ 703 027a 019A     		ldr	r2, [sp, #4]
+ 704 027c F4D1     		bne	.L48
+ 705 027e 9144     		add	r9, r9, r2
+ 706              	.L46:
+ 707              	.LVL96:
+ 326:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 708              		.loc 1 326 7 discriminator 1 view .LVU240
+ 709 0280 3B46     		mov	r3, r7
+ 710 0282 15E0     		b	.L49
+ 711              	.LVL97:
+ 712              	.L42:
+ 264:lib/chibios/os/hal/lib/streams/chprintf.c ****           *p++ = '+';
+ 713              		.loc 1 264 9 is_stmt 1 view .LVU241
+ 264:lib/chibios/os/hal/lib/streams/chprintf.c ****           *p++ = '+';
+ 714              		.loc 1 264 12 is_stmt 0 view .LVU242
+ 715 0284 1FB1     		cbz	r7, .L70
+ 265:lib/chibios/os/hal/lib/streams/chprintf.c ****         }
+ 716              		.loc 1 265 11 is_stmt 1 view .LVU243
+ 717              	.LVL98:
+ 265:lib/chibios/os/hal/lib/streams/chprintf.c ****         }
+ 718              		.loc 1 265 16 is_stmt 0 view .LVU244
+ 719 0286 2B22     		movs	r2, #43
+ 720 0288 8DF80C20 		strb	r2, [sp, #12]
+ 721 028c C9E7     		b	.L108
+ 722              	.LVL99:
+ 723              	.L70:
+ 150:lib/chibios/os/hal/lib/streams/chprintf.c ****     s = tmpbuf;
+ 724              		.loc 1 150 7 view .LVU245
+ 725 028e 03A8     		add	r0, sp, #12
+ 726              	.LVL100:
+ 150:lib/chibios/os/hal/lib/streams/chprintf.c ****     s = tmpbuf;
+ 727              		.loc 1 150 7 view .LVU246
+ 728 0290 C9E7     		b	.L43
+ 729              	.LVL101:
+ 730              	.L74:
+ 233:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'c':
+ 731              		.loc 1 233 5 view .LVU247
+ 732 0292 0822     		movs	r2, #8
+ 733              	.L31:
+ 734              	.LVL102:
+ 735              	.L44:
+ 257:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 736              		.loc 1 257 11 view .LVU248
+ 737 0294 2E46     		mov	r6, r5
+ 302:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 738              		.loc 1 302 9 is_stmt 1 view .LVU249
+ 739              	.LVL103:
+ 740              	.LBB12:
+ 741              	.LBB10:
+  74:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 742              		.loc 1 74 10 is_stmt 0 view .LVU250
+ 743 0296 03A8     		add	r0, sp, #12
+ 744              	.LVL104:
+  74:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 745              		.loc 1 74 10 view .LVU251
+ 746              	.LBE10:
+ 747              	.LBE12:
+ 302:lib/chibios/os/hal/lib/streams/chprintf.c ****       }
+ 748              		.loc 1 302 11 view .LVU252
+ 749 0298 56F8041B 		ldr	r1, [r6], #4
+ 750              	.LVL105:
+ 304:lib/chibios/os/hal/lib/streams/chprintf.c ****       break;
+ 751              		.loc 1 304 7 is_stmt 1 view .LVU253
+ 752              	.LBB13:
+ 753              	.LBI8:
+  72:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 754              		.loc 1 72 14 view .LVU254
+ 755              	.LBB11:
+  74:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 756              		.loc 1 74 3 view .LVU255
+ 757 029c C4E7     		b	.L109
+ 758              	.LVL106:
+ 759              	.L50:
+  74:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 760              		.loc 1 74 3 is_stmt 0 view .LVU256
+ 761              	.LBE11:
+ 762              	.LBE13:
+ 329:lib/chibios/os/hal/lib/streams/chprintf.c ****       n++;
+ 763              		.loc 1 329 7 view .LVU257
+ 764 029e D8F80020 		ldr	r2, [r8]
+ 765 02a2 15F8011B 		ldrb	r1, [r5], #1	@ zero_extendqisi2
+ 766              	.LVL107:
+ 329:lib/chibios/os/hal/lib/streams/chprintf.c ****       n++;
+ 767              		.loc 1 329 7 view .LVU258
+ 768 02a6 D268     		ldr	r2, [r2, #12]
+ 769 02a8 0193     		str	r3, [sp, #4]
+ 329:lib/chibios/os/hal/lib/streams/chprintf.c ****       n++;
+ 770              		.loc 1 329 7 is_stmt 1 view .LVU259
+ 771              	.LVL108:
+ 329:lib/chibios/os/hal/lib/streams/chprintf.c ****       n++;
+ 772              		.loc 1 329 7 is_stmt 0 view .LVU260
+ 773 02aa 4046     		mov	r0, r8
+ 774 02ac 9047     		blx	r2
+ 775              	.LVL109:
+ 330:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 776              		.loc 1 330 7 is_stmt 1 view .LVU261
+ 777 02ae 019B     		ldr	r3, [sp, #4]
+ 778              	.LVL110:
+ 779              	.L49:
+ 328:lib/chibios/os/hal/lib/streams/chprintf.c ****       streamPut(chp, (uint8_t)*s++);
+ 780              		.loc 1 328 11 view .LVU262
+ 328:lib/chibios/os/hal/lib/streams/chprintf.c ****       streamPut(chp, (uint8_t)*s++);
+ 781              		.loc 1 328 11 is_stmt 0 view .LVU263
+ 782 02b0 013B     		subs	r3, r3, #1
+ 783              	.LVL111:
+ 328:lib/chibios/os/hal/lib/streams/chprintf.c ****       streamPut(chp, (uint8_t)*s++);
+ 784              		.loc 1 328 11 view .LVU264
+ 785 02b2 F4D5     		bpl	.L50
+ 786 02b4 002F     		cmp	r7, #0
+ 787 02b6 A8BF     		it	ge
+ 788 02b8 B944     		addge	r9, r9, r7
+ 789 02ba 5D46     		mov	r5, fp
+ 790              	.LVL112:
+ 791              	.L51:
+ 333:lib/chibios/os/hal/lib/streams/chprintf.c ****       streamPut(chp, (uint8_t)filler);
+ 792              		.loc 1 333 11 is_stmt 1 view .LVU265
+ 793 02bc 2DB9     		cbnz	r5, .L52
+ 794 02be D944     		add	r9, r9, fp
+ 795 02c0 3546     		mov	r5, r6
+ 796              	.LVL113:
+ 797              	.L11:
+ 333:lib/chibios/os/hal/lib/streams/chprintf.c ****       streamPut(chp, (uint8_t)filler);
+ 798              		.loc 1 333 11 is_stmt 0 view .LVU266
+ 799 02c2 2146     		mov	r1, r4
+ 800 02c4 A3E6     		b	.L8
+ 801              	.LVL114:
+ 802              	.L71:
+ 333:lib/chibios/os/hal/lib/streams/chprintf.c ****       streamPut(chp, (uint8_t)filler);
+ 803              		.loc 1 333 11 view .LVU267
+ 804 02c6 9346     		mov	fp, r2
+ 805 02c8 DAE7     		b	.L46
+ 806              	.LVL115:
+ 807              	.L52:
+ 334:lib/chibios/os/hal/lib/streams/chprintf.c ****       n++;
+ 808              		.loc 1 334 7 is_stmt 1 view .LVU268
+ 809 02ca D8F80030 		ldr	r3, [r8]
+ 810 02ce 5146     		mov	r1, r10
+ 811 02d0 DB68     		ldr	r3, [r3, #12]
+ 812 02d2 4046     		mov	r0, r8
+ 813 02d4 9847     		blx	r3
+ 814              	.LVL116:
+ 335:lib/chibios/os/hal/lib/streams/chprintf.c ****       width--;
+ 815              		.loc 1 335 7 view .LVU269
+ 336:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 816              		.loc 1 336 7 view .LVU270
+ 336:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 817              		.loc 1 336 12 is_stmt 0 view .LVU271
+ 818 02d6 013D     		subs	r5, r5, #1
+ 819              	.LVL117:
+ 336:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 820              		.loc 1 336 12 view .LVU272
+ 821 02d8 F0E7     		b	.L51
+ 822              	.LVL118:
+ 823              	.L54:
+ 336:lib/chibios/os/hal/lib/streams/chprintf.c ****     }
+ 824              		.loc 1 336 12 view .LVU273
+ 825 02da A1F16302 		sub	r2, r1, #99
+ 826 02de 152A     		cmp	r2, #21
+ 827 02e0 3FF619AF 		bhi	.L23
+ 828 02e4 01A3     		adr	r3, .L57
+ 829 02e6 53F822F0 		ldr	pc, [r3, r2, lsl #2]
+ 830 02ea 00BF     		.p2align 2
+ 831              	.L57:
+ 832 02ec C1010000 		.word	.L32+1
+ 833 02f0 11020000 		.word	.L41+1
+ 834 02f4 17010000 		.word	.L23+1
+ 835 02f8 17010000 		.word	.L23+1
+ 836 02fc 17010000 		.word	.L23+1
+ 837 0300 17010000 		.word	.L23+1
+ 838 0304 11020000 		.word	.L41+1
+ 839 0308 17010000 		.word	.L23+1
+ 840 030c 17010000 		.word	.L23+1
+ 841 0310 17010000 		.word	.L23+1
+ 842 0314 17010000 		.word	.L23+1
+ 843 0318 17010000 		.word	.L23+1
+ 844 031c 93020000 		.word	.L74+1
+ 845 0320 81030000 		.word	.L75+1
+ 846 0324 17010000 		.word	.L23+1
+ 847 0328 17010000 		.word	.L23+1
+ 848 032c D7010000 		.word	.L30+1
+ 849 0330 17010000 		.word	.L23+1
+ 850 0334 7D030000 		.word	.L60+1
+ 851 0338 17010000 		.word	.L23+1
+ 852 033c 17010000 		.word	.L23+1
+ 853 0340 81030000 		.word	.L75+1
+ 854              		.p2align 1
+ 855              	.L55:
+ 856 0344 A1F14F02 		sub	r2, r1, #79
+ 857 0348 092A     		cmp	r2, #9
+ 858 034a 3FF6E4AE 		bhi	.L23
+ 859 034e 01A3     		adr	r3, .L59
+ 860 0350 53F822F0 		ldr	pc, [r3, r2, lsl #2]
+ 861              		.p2align 2
+ 862              	.L59:
+ 863 0354 93020000 		.word	.L74+1
+ 864 0358 81030000 		.word	.L75+1
+ 865 035c 17010000 		.word	.L23+1
+ 866 0360 17010000 		.word	.L23+1
+ 867 0364 17010000 		.word	.L23+1
+ 868 0368 17010000 		.word	.L23+1
+ 869 036c 7D030000 		.word	.L60+1
+ 870 0370 17010000 		.word	.L23+1
+ 871 0374 17010000 		.word	.L23+1
+ 872 0378 81030000 		.word	.L75+1
+ 873              	.LVL119:
+ 874              		.p2align 1
+ 875              	.L60:
+ 292:lib/chibios/os/hal/lib/streams/chprintf.c ****       goto unsigned_common;
+ 876              		.loc 1 292 9 view .LVU274
+ 877 037c 0A22     		movs	r2, #10
+ 878 037e 89E7     		b	.L44
+ 879              	.L75:
+ 233:lib/chibios/os/hal/lib/streams/chprintf.c ****     case 'c':
+ 880              		.loc 1 233 5 view .LVU275
+ 881 0380 1022     		movs	r2, #16
+ 882              	.LVL120:
+ 298:lib/chibios/os/hal/lib/streams/chprintf.c ****         l = va_arg(ap, unsigned long);
+ 883              		.loc 1 298 7 is_stmt 1 view .LVU276
+ 884 0382 87E7     		b	.L44
+ 885              	.L112:
+ 886              		.align	2
+ 887              	.L111:
+ 888 0384 00000000 		.word	.LC0
+ 889              		.cfi_endproc
+ 890              	.LFE280:
+ 892              		.section	.text.chprintf,"ax",%progbits
+ 893              		.align	1
+ 894              		.global	chprintf
+ 895              		.syntax unified
+ 896              		.thumb
+ 897              		.thumb_func
+ 898              		.fpu fpv4-sp-d16
+ 900              	chprintf:
+ 901              	.LVL121:
+ 902              	.LFB281:
+ 340:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 341:lib/chibios/os/hal/lib/streams/chprintf.c **** /**
+ 342:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @brief   System formatted output function.
+ 343:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @details This function implements a minimal @p printf() like functionality
+ 344:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          with output on a @p BaseSequentialStream.
+ 345:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          The general parameters format is: %[-][width|*][.precision|*][l|L]p.
+ 346:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          The following parameter types (p) are supported:
+ 347:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>x</b> hexadecimal integer.
+ 348:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>X</b> hexadecimal long.
+ 349:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>o</b> octal integer.
+ 350:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>O</b> octal long.
+ 351:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>d</b> decimal signed integer.
+ 352:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>D</b> decimal signed long.
+ 353:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>u</b> decimal unsigned integer.
+ 354:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>U</b> decimal unsigned long.
+ 355:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>c</b> character.
+ 356:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>s</b> string.
+ 357:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          .
+ 358:lib/chibios/os/hal/lib/streams/chprintf.c ****  *
+ 359:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @param[in] chp       pointer to a @p BaseSequentialStream implementing object
+ 360:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @param[in] fmt       formatting string
+ 361:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @return              The number of bytes that would have been
+ 362:lib/chibios/os/hal/lib/streams/chprintf.c ****  *                      written to @p chp if no stream error occurs
+ 363:lib/chibios/os/hal/lib/streams/chprintf.c ****  *
+ 364:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @api
+ 365:lib/chibios/os/hal/lib/streams/chprintf.c ****  */
+ 366:lib/chibios/os/hal/lib/streams/chprintf.c **** int chprintf(BaseSequentialStream *chp, const char *fmt, ...) {
+ 903              		.loc 1 366 63 view -0
+ 904              		.cfi_startproc
+ 905              		@ args = 4, pretend = 12, frame = 8
+ 906              		@ frame_needed = 0, uses_anonymous_args = 1
+ 367:lib/chibios/os/hal/lib/streams/chprintf.c ****   va_list ap;
+ 907              		.loc 1 367 3 view .LVU278
+ 368:lib/chibios/os/hal/lib/streams/chprintf.c ****   int formatted_bytes;
+ 908              		.loc 1 368 3 view .LVU279
+ 369:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 370:lib/chibios/os/hal/lib/streams/chprintf.c ****   va_start(ap, fmt);
+ 909              		.loc 1 370 3 view .LVU280
+ 366:lib/chibios/os/hal/lib/streams/chprintf.c ****   va_list ap;
+ 910              		.loc 1 366 63 is_stmt 0 view .LVU281
+ 911 0000 0EB4     		push	{r1, r2, r3}
+ 912              		.cfi_def_cfa_offset 12
+ 913              		.cfi_offset 1, -12
+ 914              		.cfi_offset 2, -8
+ 915              		.cfi_offset 3, -4
+ 916 0002 03B5     		push	{r0, r1, lr}
+ 917              		.cfi_def_cfa_offset 24
+ 918              		.cfi_offset 14, -16
+ 366:lib/chibios/os/hal/lib/streams/chprintf.c ****   va_list ap;
+ 919              		.loc 1 366 63 view .LVU282
+ 920 0004 03AA     		add	r2, sp, #12
+ 921 0006 52F8041B 		ldr	r1, [r2], #4
+ 922              		.loc 1 370 3 view .LVU283
+ 923 000a 0192     		str	r2, [sp, #4]
+ 371:lib/chibios/os/hal/lib/streams/chprintf.c ****   formatted_bytes = chvprintf(chp, fmt, ap);
+ 924              		.loc 1 371 3 is_stmt 1 view .LVU284
+ 925              		.loc 1 371 21 is_stmt 0 view .LVU285
+ 926 000c FFF7FEFF 		bl	chvprintf
+ 927              	.LVL122:
+ 372:lib/chibios/os/hal/lib/streams/chprintf.c ****   va_end(ap);
+ 928              		.loc 1 372 3 is_stmt 1 view .LVU286
+ 373:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 374:lib/chibios/os/hal/lib/streams/chprintf.c ****   return formatted_bytes;
+ 929              		.loc 1 374 3 view .LVU287
+ 375:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 930              		.loc 1 375 1 is_stmt 0 view .LVU288
+ 931 0010 02B0     		add	sp, sp, #8
+ 932              		.cfi_def_cfa_offset 16
+ 933              		@ sp needed
+ 934 0012 5DF804EB 		ldr	lr, [sp], #4
+ 935              		.cfi_restore 14
+ 936              		.cfi_def_cfa_offset 12
+ 937 0016 03B0     		add	sp, sp, #12
+ 938              		.cfi_restore 3
+ 939              		.cfi_restore 2
+ 940              		.cfi_restore 1
+ 941              		.cfi_def_cfa_offset 0
+ 942 0018 7047     		bx	lr
+ 943              		.cfi_endproc
+ 944              	.LFE281:
+ 946              		.section	.text.chvsnprintf,"ax",%progbits
+ 947              		.align	1
+ 948              		.global	chvsnprintf
+ 949              		.syntax unified
+ 950              		.thumb
+ 951              		.thumb_func
+ 952              		.fpu fpv4-sp-d16
+ 954              	chvsnprintf:
+ 955              	.LVL123:
+ 956              	.LFB283:
+ 376:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 377:lib/chibios/os/hal/lib/streams/chprintf.c **** /**
+ 378:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @brief   System formatted output function.
+ 379:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @details This function implements a minimal @p snprintf()-like functionality.
+ 380:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          The general parameters format is: %[-][width|*][.precision|*][l|L]p.
+ 381:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          The following parameter types (p) are supported:
+ 382:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>x</b> hexadecimal integer.
+ 383:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>X</b> hexadecimal long.
+ 384:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>o</b> octal integer.
+ 385:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>O</b> octal long.
+ 386:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>d</b> decimal signed integer.
+ 387:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>D</b> decimal signed long.
+ 388:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>u</b> decimal unsigned integer.
+ 389:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>U</b> decimal unsigned long.
+ 390:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>c</b> character.
+ 391:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>s</b> string.
+ 392:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          .
+ 393:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @post    @p str is NUL-terminated, unless @p size is 0.
+ 394:lib/chibios/os/hal/lib/streams/chprintf.c ****  *
+ 395:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @param[in] str       pointer to a buffer
+ 396:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @param[in] size      maximum size of the buffer
+ 397:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @param[in] fmt       formatting string
+ 398:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @return              The number of characters (excluding the
+ 399:lib/chibios/os/hal/lib/streams/chprintf.c ****  *                      terminating NUL byte) that would have been
+ 400:lib/chibios/os/hal/lib/streams/chprintf.c ****  *                      stored in @p str if there was room.
+ 401:lib/chibios/os/hal/lib/streams/chprintf.c ****  *
+ 402:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @api
+ 403:lib/chibios/os/hal/lib/streams/chprintf.c ****  */
+ 404:lib/chibios/os/hal/lib/streams/chprintf.c **** int chsnprintf(char *str, size_t size, const char *fmt, ...) {
+ 405:lib/chibios/os/hal/lib/streams/chprintf.c ****   va_list ap;
+ 406:lib/chibios/os/hal/lib/streams/chprintf.c ****   int retval;
+ 407:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 408:lib/chibios/os/hal/lib/streams/chprintf.c ****   /* Performing the print operation.*/
+ 409:lib/chibios/os/hal/lib/streams/chprintf.c ****   va_start(ap, fmt);
+ 410:lib/chibios/os/hal/lib/streams/chprintf.c ****   retval = chvsnprintf(str, size, fmt, ap);
+ 411:lib/chibios/os/hal/lib/streams/chprintf.c ****   va_end(ap);
+ 412:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 413:lib/chibios/os/hal/lib/streams/chprintf.c ****   /* Return number of bytes that would have been written.*/
+ 414:lib/chibios/os/hal/lib/streams/chprintf.c ****   return retval;
+ 415:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 416:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 417:lib/chibios/os/hal/lib/streams/chprintf.c **** /**
+ 418:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @brief   System formatted output function.
+ 419:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @details This function implements a minimal @p vsnprintf()-like functionality.
+ 420:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          The general parameters format is: %[-][width|*][.precision|*][l|L]p.
+ 421:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          The following parameter types (p) are supported:
+ 422:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>x</b> hexadecimal integer.
+ 423:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>X</b> hexadecimal long.
+ 424:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>o</b> octal integer.
+ 425:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>O</b> octal long.
+ 426:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>d</b> decimal signed integer.
+ 427:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>D</b> decimal signed long.
+ 428:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>u</b> decimal unsigned integer.
+ 429:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>U</b> decimal unsigned long.
+ 430:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>c</b> character.
+ 431:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          - <b>s</b> string.
+ 432:lib/chibios/os/hal/lib/streams/chprintf.c ****  *          .
+ 433:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @post    @p str is NUL-terminated, unless @p size is 0.
+ 434:lib/chibios/os/hal/lib/streams/chprintf.c ****  *
+ 435:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @param[in] str       pointer to a buffer
+ 436:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @param[in] size      maximum size of the buffer
+ 437:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @param[in] fmt       formatting string
+ 438:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @param[in] ap        list of parameters
+ 439:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @return              The number of characters (excluding the
+ 440:lib/chibios/os/hal/lib/streams/chprintf.c ****  *                      terminating NUL byte) that would have been
+ 441:lib/chibios/os/hal/lib/streams/chprintf.c ****  *                      stored in @p str if there was room.
+ 442:lib/chibios/os/hal/lib/streams/chprintf.c ****  *
+ 443:lib/chibios/os/hal/lib/streams/chprintf.c ****  * @api
+ 444:lib/chibios/os/hal/lib/streams/chprintf.c ****  */
+ 445:lib/chibios/os/hal/lib/streams/chprintf.c **** int chvsnprintf(char *str, size_t size, const char *fmt, va_list ap) {
+ 957              		.loc 1 445 70 is_stmt 1 view -0
+ 958              		.cfi_startproc
+ 959              		@ args = 0, pretend = 0, frame = 24
+ 960              		@ frame_needed = 0, uses_anonymous_args = 0
+ 446:lib/chibios/os/hal/lib/streams/chprintf.c ****   MemoryStream ms;
+ 961              		.loc 1 446 3 view .LVU290
+ 447:lib/chibios/os/hal/lib/streams/chprintf.c ****   BaseSequentialStream *chp;
+ 962              		.loc 1 447 3 view .LVU291
+ 448:lib/chibios/os/hal/lib/streams/chprintf.c ****   size_t size_wo_nul;
+ 963              		.loc 1 448 3 view .LVU292
+ 449:lib/chibios/os/hal/lib/streams/chprintf.c ****   int retval;
+ 964              		.loc 1 449 3 view .LVU293
+ 450:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 451:lib/chibios/os/hal/lib/streams/chprintf.c ****   if (size > 0)
+ 965              		.loc 1 451 3 view .LVU294
+ 445:lib/chibios/os/hal/lib/streams/chprintf.c ****   MemoryStream ms;
+ 966              		.loc 1 445 70 is_stmt 0 view .LVU295
+ 967 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 968              		.cfi_def_cfa_offset 20
+ 969              		.cfi_offset 4, -20
+ 970              		.cfi_offset 5, -16
+ 971              		.cfi_offset 6, -12
+ 972              		.cfi_offset 7, -8
+ 973              		.cfi_offset 14, -4
+ 974 0002 0546     		mov	r5, r0
+ 975 0004 87B0     		sub	sp, sp, #28
+ 976              		.cfi_def_cfa_offset 48
+ 445:lib/chibios/os/hal/lib/streams/chprintf.c ****   MemoryStream ms;
+ 977              		.loc 1 445 70 view .LVU296
+ 978 0006 1646     		mov	r6, r2
+ 979 0008 1F46     		mov	r7, r3
+ 980              	.LVL124:
+ 981              		.loc 1 451 6 view .LVU297
+ 982 000a 0C46     		mov	r4, r1
+ 983 000c 89B1     		cbz	r1, .L117
+ 452:lib/chibios/os/hal/lib/streams/chprintf.c ****     size_wo_nul = size - 1;
+ 984              		.loc 1 452 5 is_stmt 1 view .LVU298
+ 985              		.loc 1 452 17 is_stmt 0 view .LVU299
+ 986 000e 4A1E     		subs	r2, r1, #1
+ 987              	.LVL125:
+ 988              	.L115:
+ 453:lib/chibios/os/hal/lib/streams/chprintf.c ****   else
+ 454:lib/chibios/os/hal/lib/streams/chprintf.c ****     size_wo_nul = 0;
+ 455:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 456:lib/chibios/os/hal/lib/streams/chprintf.c ****   /* Memory stream object to be used as a string writer, reserving one
+ 457:lib/chibios/os/hal/lib/streams/chprintf.c ****      byte for the final zero.*/
+ 458:lib/chibios/os/hal/lib/streams/chprintf.c ****   msObjectInit(&ms, (uint8_t *)str, size_wo_nul, 0);
+ 989              		.loc 1 458 3 is_stmt 1 view .LVU300
+ 990 0010 0023     		movs	r3, #0
+ 991 0012 2946     		mov	r1, r5
+ 992              	.LVL126:
+ 993              		.loc 1 458 3 is_stmt 0 view .LVU301
+ 994 0014 01A8     		add	r0, sp, #4
+ 995              	.LVL127:
+ 996              		.loc 1 458 3 view .LVU302
+ 997 0016 FFF7FEFF 		bl	msObjectInit
+ 998              	.LVL128:
+ 459:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 460:lib/chibios/os/hal/lib/streams/chprintf.c ****   /* Performing the print operation using the common code.*/
+ 461:lib/chibios/os/hal/lib/streams/chprintf.c ****   chp = (BaseSequentialStream *)(void *)&ms;
+ 999              		.loc 1 461 3 is_stmt 1 view .LVU303
+ 462:lib/chibios/os/hal/lib/streams/chprintf.c ****   retval = chvprintf(chp, fmt, ap);
+ 1000              		.loc 1 462 3 view .LVU304
+ 1001              		.loc 1 462 12 is_stmt 0 view .LVU305
+ 1002 001a 3A46     		mov	r2, r7
+ 1003 001c 3146     		mov	r1, r6
+ 1004 001e 01A8     		add	r0, sp, #4
+ 1005              	.LVL129:
+ 1006              		.loc 1 462 12 view .LVU306
+ 1007 0020 FFF7FEFF 		bl	chvprintf
+ 1008              	.LVL130:
+ 463:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 464:lib/chibios/os/hal/lib/streams/chprintf.c ****   /* Terminate with a zero, unless size==0.*/
+ 465:lib/chibios/os/hal/lib/streams/chprintf.c ****   if (ms.eos < size) {
+ 1009              		.loc 1 465 3 is_stmt 1 view .LVU307
+ 1010              		.loc 1 465 9 is_stmt 0 view .LVU308
+ 1011 0024 049B     		ldr	r3, [sp, #16]
+ 1012              		.loc 1 465 6 view .LVU309
+ 1013 0026 A342     		cmp	r3, r4
+ 466:lib/chibios/os/hal/lib/streams/chprintf.c ****     str[ms.eos] = 0;
+ 1014              		.loc 1 466 5 is_stmt 1 view .LVU310
+ 1015              		.loc 1 466 17 is_stmt 0 view .LVU311
+ 1016 0028 3CBF     		itt	cc
+ 1017 002a 0022     		movcc	r2, #0
+ 1018 002c EA54     		strbcc	r2, [r5, r3]
+ 467:lib/chibios/os/hal/lib/streams/chprintf.c ****   }
+ 468:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 469:lib/chibios/os/hal/lib/streams/chprintf.c ****   /* Return number of bytes that would have been written.*/
+ 470:lib/chibios/os/hal/lib/streams/chprintf.c ****   return retval;
+ 1019              		.loc 1 470 3 is_stmt 1 view .LVU312
+ 471:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 1020              		.loc 1 471 1 is_stmt 0 view .LVU313
+ 1021 002e 07B0     		add	sp, sp, #28
+ 1022              		.cfi_remember_state
+ 1023              		.cfi_def_cfa_offset 20
+ 1024              		@ sp needed
+ 1025 0030 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1026              	.LVL131:
+ 1027              	.L117:
+ 1028              		.cfi_restore_state
+ 454:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 1029              		.loc 1 454 17 view .LVU314
+ 1030 0032 0A46     		mov	r2, r1
+ 1031              	.LVL132:
+ 454:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 1032              		.loc 1 454 17 view .LVU315
+ 1033 0034 ECE7     		b	.L115
+ 1034              		.cfi_endproc
+ 1035              	.LFE283:
+ 1037              		.section	.text.chsnprintf,"ax",%progbits
+ 1038              		.align	1
+ 1039              		.global	chsnprintf
+ 1040              		.syntax unified
+ 1041              		.thumb
+ 1042              		.thumb_func
+ 1043              		.fpu fpv4-sp-d16
+ 1045              	chsnprintf:
+ 1046              	.LVL133:
+ 1047              	.LFB282:
+ 404:lib/chibios/os/hal/lib/streams/chprintf.c ****   va_list ap;
+ 1048              		.loc 1 404 62 is_stmt 1 view -0
+ 1049              		.cfi_startproc
+ 1050              		@ args = 4, pretend = 8, frame = 8
+ 1051              		@ frame_needed = 0, uses_anonymous_args = 1
+ 405:lib/chibios/os/hal/lib/streams/chprintf.c ****   int retval;
+ 1052              		.loc 1 405 3 view .LVU317
+ 406:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 1053              		.loc 1 406 3 view .LVU318
+ 409:lib/chibios/os/hal/lib/streams/chprintf.c ****   retval = chvsnprintf(str, size, fmt, ap);
+ 1054              		.loc 1 409 3 view .LVU319
+ 404:lib/chibios/os/hal/lib/streams/chprintf.c ****   va_list ap;
+ 1055              		.loc 1 404 62 is_stmt 0 view .LVU320
+ 1056 0000 0CB4     		push	{r2, r3}
+ 1057              		.cfi_def_cfa_offset 8
+ 1058              		.cfi_offset 2, -8
+ 1059              		.cfi_offset 3, -4
+ 1060 0002 07B5     		push	{r0, r1, r2, lr}
+ 1061              		.cfi_def_cfa_offset 24
+ 1062              		.cfi_offset 14, -12
+ 404:lib/chibios/os/hal/lib/streams/chprintf.c ****   va_list ap;
+ 1063              		.loc 1 404 62 view .LVU321
+ 1064 0004 04AB     		add	r3, sp, #16
+ 1065 0006 53F8042B 		ldr	r2, [r3], #4
+ 409:lib/chibios/os/hal/lib/streams/chprintf.c ****   retval = chvsnprintf(str, size, fmt, ap);
+ 1066              		.loc 1 409 3 view .LVU322
+ 1067 000a 0193     		str	r3, [sp, #4]
+ 410:lib/chibios/os/hal/lib/streams/chprintf.c ****   va_end(ap);
+ 1068              		.loc 1 410 3 is_stmt 1 view .LVU323
+ 410:lib/chibios/os/hal/lib/streams/chprintf.c ****   va_end(ap);
+ 1069              		.loc 1 410 12 is_stmt 0 view .LVU324
+ 1070 000c FFF7FEFF 		bl	chvsnprintf
+ 1071              	.LVL134:
+ 411:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 1072              		.loc 1 411 3 is_stmt 1 view .LVU325
+ 414:lib/chibios/os/hal/lib/streams/chprintf.c **** }
+ 1073              		.loc 1 414 3 view .LVU326
+ 415:lib/chibios/os/hal/lib/streams/chprintf.c **** 
+ 1074              		.loc 1 415 1 is_stmt 0 view .LVU327
+ 1075 0010 03B0     		add	sp, sp, #12
+ 1076              		.cfi_def_cfa_offset 12
+ 1077              		@ sp needed
+ 1078 0012 5DF804EB 		ldr	lr, [sp], #4
+ 1079              		.cfi_restore 14
+ 1080              		.cfi_def_cfa_offset 8
+ 1081 0016 02B0     		add	sp, sp, #8
+ 1082              		.cfi_restore 3
+ 1083              		.cfi_restore 2
+ 1084              		.cfi_def_cfa_offset 0
+ 1085 0018 7047     		bx	lr
+ 1086              		.cfi_endproc
+ 1087              	.LFE282:
+ 1089              		.text
+ 1090              	.Letext0:
+ 1091              		.file 2 "c:\\qmk_msys\\mingw64\\lib\\gcc\\arm-none-eabi\\10.1.0\\include\\stddef.h"
+ 1092              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1093              		.file 4 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1094              		.file 5 "./lib/chibios/os/common/ports/ARMCMx/compilers/GCC/chtypes.h"
+ 1095              		.file 6 "./lib/chibios/os/hal/include/hal_streams.h"
+ 1096              		.file 7 "c:\\qmk_msys\\mingw64\\lib\\gcc\\arm-none-eabi\\10.1.0\\include\\stdarg.h"
+ 1097              		.file 8 "lib/chibios/os/hal/lib/streams/memstreams.h"
+ 1098              		.file 9 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 chprintf.c
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:18     .text.long_to_string_with_divisor.constprop.0:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:25     .text.long_to_string_with_divisor.constprop.0:0000000000000000 long_to_string_with_divisor.constprop.0
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:116    .text.chvprintf:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:123    .text.chvprintf:0000000000000000 chvprintf
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:450    .text.chvprintf:0000000000000130 $d
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:472    .text.chvprintf:0000000000000188 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:482    .text.chvprintf:0000000000000198 $d
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:492    .text.chvprintf:00000000000001c0 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:832    .text.chvprintf:00000000000002ec $d
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:854    .text.chvprintf:0000000000000344 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:863    .text.chvprintf:0000000000000354 $d
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:874    .text.chvprintf:000000000000037c $t
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:888    .text.chvprintf:0000000000000384 $d
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:893    .text.chprintf:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:900    .text.chprintf:0000000000000000 chprintf
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:947    .text.chvsnprintf:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:954    .text.chvsnprintf:0000000000000000 chvsnprintf
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:1038   .text.chsnprintf:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdZV8F9.s:1045   .text.chsnprintf:0000000000000000 chsnprintf
+
+UNDEFINED SYMBOLS
+msObjectInit

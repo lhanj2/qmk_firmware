@@ -1,0 +1,216 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"bootmagic_lite.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.bootmagic_lite_reset_eeprom,"ax",%progbits
+  18              		.align	1
+  19              		.weak	bootmagic_lite_reset_eeprom
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	bootmagic_lite_reset_eeprom:
+  27              	.LFB291:
+  28              		.file 1 "quantum/bootmagic/bootmagic_lite.c"
+   1:quantum/bootmagic/bootmagic_lite.c **** /* Copyright 2021 QMK
+   2:quantum/bootmagic/bootmagic_lite.c ****  *
+   3:quantum/bootmagic/bootmagic_lite.c ****  * This program is free software: you can redistribute it and/or modify
+   4:quantum/bootmagic/bootmagic_lite.c ****  * it under the terms of the GNU General Public License as published by
+   5:quantum/bootmagic/bootmagic_lite.c ****  * the Free Software Foundation, either version 3 of the License, or
+   6:quantum/bootmagic/bootmagic_lite.c ****  * (at your option) any later version.
+   7:quantum/bootmagic/bootmagic_lite.c ****  *
+   8:quantum/bootmagic/bootmagic_lite.c ****  * This program is distributed in the hope that it will be useful,
+   9:quantum/bootmagic/bootmagic_lite.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  10:quantum/bootmagic/bootmagic_lite.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  11:quantum/bootmagic/bootmagic_lite.c ****  * GNU General Public License for more details.
+  12:quantum/bootmagic/bootmagic_lite.c ****  *
+  13:quantum/bootmagic/bootmagic_lite.c ****  * You should have received a copy of the GNU General Public License
+  14:quantum/bootmagic/bootmagic_lite.c ****  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  15:quantum/bootmagic/bootmagic_lite.c ****  */
+  16:quantum/bootmagic/bootmagic_lite.c **** #include "quantum.h"
+  17:quantum/bootmagic/bootmagic_lite.c **** 
+  18:quantum/bootmagic/bootmagic_lite.c **** /** \brief Reset eeprom
+  19:quantum/bootmagic/bootmagic_lite.c ****  *
+  20:quantum/bootmagic/bootmagic_lite.c ****  * ...just incase someone wants to only change the eeprom behaviour
+  21:quantum/bootmagic/bootmagic_lite.c ****  */
+  22:quantum/bootmagic/bootmagic_lite.c **** __attribute__((weak)) void bootmagic_lite_reset_eeprom(void) {
+  29              		.loc 1 22 62 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  23:quantum/bootmagic/bootmagic_lite.c **** #if defined(VIA_ENABLE)
+  24:quantum/bootmagic/bootmagic_lite.c ****     via_eeprom_reset();
+  34              		.loc 1 24 5 view .LVU1
+  35 0000 FFF7FEBF 		b	via_eeprom_reset
+  36              	.LVL0:
+  37              		.cfi_endproc
+  38              	.LFE291:
+  40              		.section	.text.bootmagic_lite,"ax",%progbits
+  41              		.align	1
+  42              		.weak	bootmagic_lite
+  43              		.syntax unified
+  44              		.thumb
+  45              		.thumb_func
+  46              		.fpu fpv4-sp-d16
+  48              	bootmagic_lite:
+  49              	.LFB292:
+  25:quantum/bootmagic/bootmagic_lite.c **** #else
+  26:quantum/bootmagic/bootmagic_lite.c ****     eeconfig_disable();
+  27:quantum/bootmagic/bootmagic_lite.c **** #endif
+  28:quantum/bootmagic/bootmagic_lite.c **** }
+  29:quantum/bootmagic/bootmagic_lite.c **** 
+  30:quantum/bootmagic/bootmagic_lite.c **** /** \brief The lite version of TMK's bootmagic based on Wilba.
+  31:quantum/bootmagic/bootmagic_lite.c ****  *
+  32:quantum/bootmagic/bootmagic_lite.c ****  *  100% less potential for accidentally making the keyboard do stupid things.
+  33:quantum/bootmagic/bootmagic_lite.c ****  */
+  34:quantum/bootmagic/bootmagic_lite.c **** __attribute__((weak)) void bootmagic_lite(void) {
+  50              		.loc 1 34 49 view -0
+  51              		.cfi_startproc
+  52              		@ args = 0, pretend = 0, frame = 0
+  53              		@ frame_needed = 0, uses_anonymous_args = 0
+  35:quantum/bootmagic/bootmagic_lite.c ****     // We need multiple scans because debouncing can't be turned off.
+  36:quantum/bootmagic/bootmagic_lite.c ****     matrix_scan();
+  54              		.loc 1 36 5 view .LVU3
+  34:quantum/bootmagic/bootmagic_lite.c ****     // We need multiple scans because debouncing can't be turned off.
+  55              		.loc 1 34 49 is_stmt 0 view .LVU4
+  56 0000 08B5     		push	{r3, lr}
+  57              		.cfi_def_cfa_offset 8
+  58              		.cfi_offset 3, -8
+  59              		.cfi_offset 14, -4
+  60              		.loc 1 36 5 view .LVU5
+  61 0002 FFF7FEFF 		bl	matrix_scan
+  62              	.LVL1:
+  37:quantum/bootmagic/bootmagic_lite.c **** #if defined(DEBOUNCE) && DEBOUNCE > 0
+  38:quantum/bootmagic/bootmagic_lite.c ****     wait_ms(DEBOUNCE * 2);
+  63              		.loc 1 38 5 is_stmt 1 view .LVU6
+  64              		.loc 1 38 5 view .LVU7
+  65              		.loc 1 38 5 view .LVU8
+  66 0006 4FF47A70 		mov	r0, #1000
+  67 000a FFF7FEFF 		bl	chThdSleep
+  68              	.LVL2:
+  69              		.loc 1 38 5 view .LVU9
+  39:quantum/bootmagic/bootmagic_lite.c **** #else
+  40:quantum/bootmagic/bootmagic_lite.c ****     wait_ms(30);
+  41:quantum/bootmagic/bootmagic_lite.c **** #endif
+  42:quantum/bootmagic/bootmagic_lite.c ****     matrix_scan();
+  70              		.loc 1 42 5 view .LVU10
+  71 000e FFF7FEFF 		bl	matrix_scan
+  72              	.LVL3:
+  43:quantum/bootmagic/bootmagic_lite.c **** 
+  44:quantum/bootmagic/bootmagic_lite.c ****     // If the configured key (commonly Esc) is held down on power up,
+  45:quantum/bootmagic/bootmagic_lite.c ****     // reset the EEPROM valid state and jump to bootloader.
+  46:quantum/bootmagic/bootmagic_lite.c ****     // This isn't very generalized, but we need something that doesn't
+  47:quantum/bootmagic/bootmagic_lite.c ****     // rely on user's keymaps in firmware or EEPROM.
+  48:quantum/bootmagic/bootmagic_lite.c ****     uint8_t row = BOOTMAGIC_LITE_ROW;
+  73              		.loc 1 48 5 view .LVU11
+  49:quantum/bootmagic/bootmagic_lite.c ****     uint8_t col = BOOTMAGIC_LITE_COLUMN;
+  74              		.loc 1 49 5 view .LVU12
+  50:quantum/bootmagic/bootmagic_lite.c **** 
+  51:quantum/bootmagic/bootmagic_lite.c **** #if defined(SPLIT_KEYBOARD) && defined(BOOTMAGIC_LITE_ROW_RIGHT) && defined(BOOTMAGIC_LITE_COLUMN_R
+  52:quantum/bootmagic/bootmagic_lite.c ****     if (!is_keyboard_left()) {
+  53:quantum/bootmagic/bootmagic_lite.c ****         row = BOOTMAGIC_LITE_ROW_RIGHT;
+  54:quantum/bootmagic/bootmagic_lite.c ****         col = BOOTMAGIC_LITE_COLUMN_RIGHT;
+  55:quantum/bootmagic/bootmagic_lite.c ****     }
+  56:quantum/bootmagic/bootmagic_lite.c **** #endif
+  57:quantum/bootmagic/bootmagic_lite.c **** 
+  58:quantum/bootmagic/bootmagic_lite.c ****     if (matrix_get_row(row) & (1 << col)) {
+  75              		.loc 1 58 5 view .LVU13
+  76              		.loc 1 58 9 is_stmt 0 view .LVU14
+  77 0012 0120     		movs	r0, #1
+  78 0014 FFF7FEFF 		bl	matrix_get_row
+  79              	.LVL4:
+  80              		.loc 1 58 8 view .LVU15
+  81 0018 0307     		lsls	r3, r0, #28
+  82 001a 05D5     		bpl	.L2
+  59:quantum/bootmagic/bootmagic_lite.c ****         bootmagic_lite_reset_eeprom();
+  83              		.loc 1 59 9 is_stmt 1 view .LVU16
+  84 001c FFF7FEFF 		bl	bootmagic_lite_reset_eeprom
+  85              	.LVL5:
+  60:quantum/bootmagic/bootmagic_lite.c **** 
+  61:quantum/bootmagic/bootmagic_lite.c ****         // Jump to bootloader.
+  62:quantum/bootmagic/bootmagic_lite.c ****         bootloader_jump();
+  86              		.loc 1 62 9 view .LVU17
+  63:quantum/bootmagic/bootmagic_lite.c ****     }
+  64:quantum/bootmagic/bootmagic_lite.c **** }
+  87              		.loc 1 64 1 is_stmt 0 view .LVU18
+  88 0020 BDE80840 		pop	{r3, lr}
+  89              		.cfi_remember_state
+  90              		.cfi_restore 14
+  91              		.cfi_restore 3
+  92              		.cfi_def_cfa_offset 0
+  62:quantum/bootmagic/bootmagic_lite.c ****     }
+  93              		.loc 1 62 9 view .LVU19
+  94 0024 FFF7FEBF 		b	bootloader_jump
+  95              	.LVL6:
+  96              	.L2:
+  97              		.cfi_restore_state
+  98              		.loc 1 64 1 view .LVU20
+  99 0028 08BD     		pop	{r3, pc}
+ 100              		.cfi_endproc
+ 101              	.LFE292:
+ 103              		.section	.text.bootmagic,"ax",%progbits
+ 104              		.align	1
+ 105              		.global	bootmagic
+ 106              		.syntax unified
+ 107              		.thumb
+ 108              		.thumb_func
+ 109              		.fpu fpv4-sp-d16
+ 111              	bootmagic:
+ 112              	.LFB293:
+  65:quantum/bootmagic/bootmagic_lite.c **** 
+  66:quantum/bootmagic/bootmagic_lite.c **** void bootmagic(void) { bootmagic_lite(); }
+ 113              		.loc 1 66 22 is_stmt 1 view -0
+ 114              		.cfi_startproc
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117              		.loc 1 66 24 view .LVU22
+ 118              		.loc 1 66 22 is_stmt 0 view .LVU23
+ 119 0000 08B5     		push	{r3, lr}
+ 120              		.cfi_def_cfa_offset 8
+ 121              		.cfi_offset 3, -8
+ 122              		.cfi_offset 14, -4
+ 123              		.loc 1 66 24 view .LVU24
+ 124 0002 FFF7FEFF 		bl	bootmagic_lite
+ 125              	.LVL7:
+ 126              		.loc 1 66 42 view .LVU25
+ 127 0006 08BD     		pop	{r3, pc}
+ 128              		.cfi_endproc
+ 129              	.LFE293:
+ 131              		.text
+ 132              	.Letext0:
+ 133              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 134              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 135              		.file 4 "./lib/chibios/os/rt/include/chtime.h"
+ 136              		.file 5 "quantum/matrix.h"
+ 137              		.file 6 "./lib/chibios/os/rt/include/chthreads.h"
+ 138              		.file 7 "tmk_core/common/bootloader.h"
+ 139              		.file 8 "quantum/via.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 bootmagic_lite.c
+C:\Users\lhanj\AppData\Local\Temp\cc6Nz0iM.s:18     .text.bootmagic_lite_reset_eeprom:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc6Nz0iM.s:26     .text.bootmagic_lite_reset_eeprom:0000000000000000 bootmagic_lite_reset_eeprom
+C:\Users\lhanj\AppData\Local\Temp\cc6Nz0iM.s:41     .text.bootmagic_lite:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc6Nz0iM.s:48     .text.bootmagic_lite:0000000000000000 bootmagic_lite
+C:\Users\lhanj\AppData\Local\Temp\cc6Nz0iM.s:104    .text.bootmagic:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc6Nz0iM.s:111    .text.bootmagic:0000000000000000 bootmagic
+
+UNDEFINED SYMBOLS
+via_eeprom_reset
+matrix_scan
+chThdSleep
+matrix_get_row
+bootloader_jump

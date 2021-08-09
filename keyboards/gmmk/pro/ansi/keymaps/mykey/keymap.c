@@ -257,7 +257,7 @@ void matrix_scan_user(void) {
             rgb_matrix_set_color(LED_L1, RGB_GREEN);
             rgb_matrix_set_color(LED_L2, RGB_GREEN);
         }
-        if (!IS_HOST_LED_ON(USB_LED_NUM_LOCK)) {   // on if NUM lock is OFF
+        if (IS_HOST_LED_ON(USB_LED_NUM_LOCK)) {   // Num Lock indicator
             rgb_matrix_set_color(LED_L3, RGB_MAGENTA);
             rgb_matrix_set_color(LED_L4, RGB_MAGENTA);
         }

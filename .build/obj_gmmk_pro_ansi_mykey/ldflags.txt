@@ -1,0 +1,1 @@
+-Wl,--gc-sections -Wl,--no-wchar-size-warning -mno-thumb-interwork -mthumb -Wl,--script=./lib/chibios/os/common/startup/ARMCMx/compilers/GCC/ld/STM32F303xC.ld,--defsym=__process_stack_size__=0x800,--defsym=__main_stack_size__=0x400 --specs=nano.specs -Wl,-Map=.build/gmmk_pro_ansi_mykey.map,--cref  -L./lib/chibios/os/common/startup/ARMCMx/compilers/GCC/ld   -lm 

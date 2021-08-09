@@ -1,0 +1,314 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"nvic.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.nvicEnableVector,"ax",%progbits
+  18              		.align	1
+  19              		.global	nvicEnableVector
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	nvicEnableVector:
+  27              	.LVL0:
+  28              	.LFB278:
+  29              		.file 1 "lib/chibios/os/hal/ports/common/ARMCMx/nvic.c"
+   1:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /*
+   2:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****     ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+   3:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+   4:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****     Licensed under the Apache License, Version 2.0 (the "License");
+   5:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****     you may not use this file except in compliance with the License.
+   6:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****     You may obtain a copy of the License at
+   7:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+   8:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****         http://www.apache.org/licenses/LICENSE-2.0
+   9:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  10:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****     Unless required by applicable law or agreed to in writing, software
+  11:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****     distributed under the License is distributed on an "AS IS" BASIS,
+  12:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****     See the License for the specific language governing permissions and
+  14:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****     limitations under the License.
+  15:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** */
+  16:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  17:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /**
+  18:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @file    common/ARMCMx/nvic.c
+  19:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @brief   Cortex-Mx NVIC support code.
+  20:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  *
+  21:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @addtogroup COMMON_ARMCMx_NVIC
+  22:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @{
+  23:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  */
+  24:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  25:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** #include "hal.h"
+  26:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  27:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /*===========================================================================*/
+  28:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /* Driver local definitions.                                                 */
+  29:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /*===========================================================================*/
+  30:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  31:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /*===========================================================================*/
+  32:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /* Driver exported variables.                                                */
+  33:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /*===========================================================================*/
+  34:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  35:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /*===========================================================================*/
+  36:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /* Driver local types.                                                       */
+  37:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /*===========================================================================*/
+  38:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  39:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /*===========================================================================*/
+  40:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /* Driver local variables.                                                   */
+  41:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /*===========================================================================*/
+  42:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  43:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /*===========================================================================*/
+  44:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /* Driver local functions.                                                   */
+  45:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /*===========================================================================*/
+  46:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  47:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /*===========================================================================*/
+  48:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /* Driver exported functions.                                                */
+  49:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /*===========================================================================*/
+  50:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  51:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /**
+  52:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @brief   Sets the priority of an interrupt handler and enables it.
+  53:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  *
+  54:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @param[in] n         the interrupt number
+  55:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @param[in] prio      the interrupt priority
+  56:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  */
+  57:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** void nvicEnableVector(uint32_t n, uint32_t prio) {
+  30              		.loc 1 57 50 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  58:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  59:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** #if defined(__CORE_CM0_H_GENERIC) || defined(__CORE_CM0PLUS_H_GENERIC)
+  60:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****   NVIC->IP[_IP_IDX(n)] = (NVIC->IP[_IP_IDX(n)] & ~(0xFFU << _BIT_SHIFT(n))) |
+  61:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****                          (NVIC_PRIORITY_MASK(prio) << _BIT_SHIFT(n));
+  62:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** #else
+  63:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****   NVIC->IP[n] = NVIC_PRIORITY_MASK(prio);
+  35              		.loc 1 63 3 view .LVU1
+  36              		.loc 1 63 15 is_stmt 0 view .LVU2
+  37 0000 00F16043 		add	r3, r0, #-536870912
+  38 0004 03F56143 		add	r3, r3, #57600
+  39              		.loc 1 63 17 view .LVU3
+  40 0008 0901     		lsls	r1, r1, #4
+  41              	.LVL1:
+  42              		.loc 1 63 17 view .LVU4
+  43 000a C9B2     		uxtb	r1, r1
+  44              		.loc 1 63 15 view .LVU5
+  45 000c 83F80013 		strb	r1, [r3, #768]
+  64:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** #endif
+  65:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****   NVIC->ICPR[n >> 5U] = 1U << (n & 0x1FU);
+  46              		.loc 1 65 3 is_stmt 1 view .LVU6
+  47              		.loc 1 65 28 is_stmt 0 view .LVU7
+  48 0010 0122     		movs	r2, #1
+  49              		.loc 1 65 34 view .LVU8
+  50 0012 00F01F03 		and	r3, r0, #31
+  51              		.loc 1 65 28 view .LVU9
+  52 0016 9A40     		lsls	r2, r2, r3
+  53              		.loc 1 65 16 view .LVU10
+  54 0018 4309     		lsrs	r3, r0, #5
+  55 001a 9B00     		lsls	r3, r3, #2
+  56 001c 03F16043 		add	r3, r3, #-536870912
+  57 0020 03F56143 		add	r3, r3, #57600
+  58              		.loc 1 65 23 view .LVU11
+  59 0024 C3F88021 		str	r2, [r3, #384]
+  66:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****   NVIC->ISER[n >> 5U] = 1U << (n & 0x1FU);
+  60              		.loc 1 66 3 is_stmt 1 view .LVU12
+  61              		.loc 1 66 23 is_stmt 0 view .LVU13
+  62 0028 1A60     		str	r2, [r3]
+  67:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** }
+  63              		.loc 1 67 1 view .LVU14
+  64 002a 7047     		bx	lr
+  65              		.cfi_endproc
+  66              	.LFE278:
+  68              		.section	.text.nvicDisableVector,"ax",%progbits
+  69              		.align	1
+  70              		.global	nvicDisableVector
+  71              		.syntax unified
+  72              		.thumb
+  73              		.thumb_func
+  74              		.fpu fpv4-sp-d16
+  76              	nvicDisableVector:
+  77              	.LVL2:
+  78              	.LFB279:
+  68:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  69:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /**
+  70:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @brief   Disables an interrupt handler.
+  71:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  *
+  72:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @param[in] n         the interrupt number
+  73:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  */
+  74:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** void nvicDisableVector(uint32_t n) {
+  79              		.loc 1 74 36 is_stmt 1 view -0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 0
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83              		@ link register save eliminated.
+  75:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  76:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****   NVIC->ICER[n >> 5U] = 1U << (n & 0x1FU);
+  84              		.loc 1 76 3 view .LVU16
+  85              		.loc 1 76 34 is_stmt 0 view .LVU17
+  86 0000 00F01F03 		and	r3, r0, #31
+  87              		.loc 1 76 28 view .LVU18
+  88 0004 0121     		movs	r1, #1
+  89              		.loc 1 76 16 view .LVU19
+  90 0006 4209     		lsrs	r2, r0, #5
+  91              		.loc 1 76 28 view .LVU20
+  92 0008 9940     		lsls	r1, r1, r3
+  93              		.loc 1 76 23 view .LVU21
+  94 000a 044B     		ldr	r3, .L3
+  95 000c 2032     		adds	r2, r2, #32
+  77:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** #if defined(__CORE_CM0_H_GENERIC) || defined(__CORE_CM0PLUS_H_GENERIC)
+  78:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****   NVIC->IP[_IP_IDX(n)] = NVIC->IP[_IP_IDX(n)] & ~(0xFFU << _BIT_SHIFT(n));
+  79:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** #else
+  80:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****   NVIC->IP[n] = 0U;
+  96              		.loc 1 80 15 view .LVU22
+  97 000e 1844     		add	r0, r0, r3
+  98              	.LVL3:
+  76:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** #if defined(__CORE_CM0_H_GENERIC) || defined(__CORE_CM0PLUS_H_GENERIC)
+  99              		.loc 1 76 23 view .LVU23
+ 100 0010 43F82210 		str	r1, [r3, r2, lsl #2]
+ 101              		.loc 1 80 3 is_stmt 1 view .LVU24
+ 102              		.loc 1 80 15 is_stmt 0 view .LVU25
+ 103 0014 0023     		movs	r3, #0
+ 104 0016 80F80033 		strb	r3, [r0, #768]
+  81:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** #endif
+  82:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** }
+ 105              		.loc 1 82 1 view .LVU26
+ 106 001a 7047     		bx	lr
+ 107              	.L4:
+ 108              		.align	2
+ 109              	.L3:
+ 110 001c 00E100E0 		.word	-536813312
+ 111              		.cfi_endproc
+ 112              	.LFE279:
+ 114              		.section	.text.nvicSetSystemHandlerPriority,"ax",%progbits
+ 115              		.align	1
+ 116              		.global	nvicSetSystemHandlerPriority
+ 117              		.syntax unified
+ 118              		.thumb
+ 119              		.thumb_func
+ 120              		.fpu fpv4-sp-d16
+ 122              	nvicSetSystemHandlerPriority:
+ 123              	.LVL4:
+ 124              	.LFB280:
+  83:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  84:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /**
+  85:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @brief   Changes the priority of a system handler.
+  86:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  *
+  87:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @param[in] handler   the system handler number
+  88:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @param[in] prio      the system handler priority
+  89:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  */
+  90:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** void nvicSetSystemHandlerPriority(uint32_t handler, uint32_t prio) {
+ 125              		.loc 1 90 68 is_stmt 1 view -0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 0
+ 128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 129              		@ link register save eliminated.
+  91:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  92:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****   osalDbgCheck(handler < 12U);
+ 130              		.loc 1 92 3 view .LVU28
+ 131              		.loc 1 92 3 view .LVU29
+ 132              		.loc 1 92 3 view .LVU30
+  93:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+  94:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** #if defined(__CORE_CM0_H_GENERIC)
+  95:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****   SCB->SHP[_SHP_IDX(handler)] = (SCB->SHP[_SHP_IDX(handler)] & ~(0xFFU << _BIT_SHIFT(handler))) |
+  96:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****                                 (NVIC_PRIORITY_MASK(prio) << _BIT_SHIFT(handler));
+  97:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** #elif defined(__CORE_CM7_H_GENERIC)
+  98:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****   SCB->SHPR[handler] = NVIC_PRIORITY_MASK(prio);
+  99:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** #else
+ 100:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****   SCB->SHP[handler] = NVIC_PRIORITY_MASK(prio);
+ 133              		.loc 1 100 3 view .LVU31
+ 134              		.loc 1 100 21 is_stmt 0 view .LVU32
+ 135 0000 00F16040 		add	r0, r0, #-536870912
+ 136              	.LVL5:
+ 137              		.loc 1 100 23 view .LVU33
+ 138 0004 0901     		lsls	r1, r1, #4
+ 139              	.LVL6:
+ 140              		.loc 1 100 21 view .LVU34
+ 141 0006 00F56D40 		add	r0, r0, #60672
+ 142              	.LVL7:
+ 143              		.loc 1 100 23 view .LVU35
+ 144 000a C9B2     		uxtb	r1, r1
+ 145              		.loc 1 100 21 view .LVU36
+ 146 000c 0176     		strb	r1, [r0, #24]
+ 101:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** #endif
+ 102:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** }
+ 147              		.loc 1 102 1 view .LVU37
+ 148 000e 7047     		bx	lr
+ 149              		.cfi_endproc
+ 150              	.LFE280:
+ 152              		.section	.text.nvicClearPending,"ax",%progbits
+ 153              		.align	1
+ 154              		.global	nvicClearPending
+ 155              		.syntax unified
+ 156              		.thumb
+ 157              		.thumb_func
+ 158              		.fpu fpv4-sp-d16
+ 160              	nvicClearPending:
+ 161              	.LVL8:
+ 162              	.LFB281:
+ 103:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+ 104:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** /**
+ 105:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @brief   Clears a pending interrupt source.
+ 106:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  *
+ 107:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  * @param[in] n         the interrupt number
+ 108:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****  */
+ 109:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** void nvicClearPending(uint32_t n) {
+ 163              		.loc 1 109 35 is_stmt 1 view -0
+ 164              		.cfi_startproc
+ 165              		@ args = 0, pretend = 0, frame = 0
+ 166              		@ frame_needed = 0, uses_anonymous_args = 0
+ 167              		@ link register save eliminated.
+ 110:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** 
+ 111:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c ****   NVIC->ICPR[n >> 5] = 1 << (n & 0x1F);
+ 168              		.loc 1 111 3 view .LVU39
+ 169              		.loc 1 111 16 is_stmt 0 view .LVU40
+ 170 0000 4309     		lsrs	r3, r0, #5
+ 171              		.loc 1 111 26 view .LVU41
+ 172 0002 0122     		movs	r2, #1
+ 173              		.loc 1 111 32 view .LVU42
+ 174 0004 00F01F00 		and	r0, r0, #31
+ 175              	.LVL9:
+ 176              		.loc 1 111 26 view .LVU43
+ 177 0008 02FA00F0 		lsl	r0, r2, r0
+ 178              		.loc 1 111 22 view .LVU44
+ 179 000c 6033     		adds	r3, r3, #96
+ 180 000e 024A     		ldr	r2, .L7
+ 181 0010 42F82300 		str	r0, [r2, r3, lsl #2]
+ 112:lib/chibios/os/hal/ports/common/ARMCMx/nvic.c **** }
+ 182              		.loc 1 112 1 view .LVU45
+ 183 0014 7047     		bx	lr
+ 184              	.L8:
+ 185 0016 00BF     		.align	2
+ 186              	.L7:
+ 187 0018 00E100E0 		.word	-536813312
+ 188              		.cfi_endproc
+ 189              	.LFE281:
+ 191              		.text
+ 192              	.Letext0:
+ 193              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 194              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 195              		.file 4 "./lib/chibios/os/common/ext/ARM/CMSIS/Core/Include/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 nvic.c
+C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:18     .text.nvicEnableVector:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:26     .text.nvicEnableVector:0000000000000000 nvicEnableVector
+C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:69     .text.nvicDisableVector:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:76     .text.nvicDisableVector:0000000000000000 nvicDisableVector
+C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:110    .text.nvicDisableVector:000000000000001c $d
+C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:115    .text.nvicSetSystemHandlerPriority:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:122    .text.nvicSetSystemHandlerPriority:0000000000000000 nvicSetSystemHandlerPriority
+C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:153    .text.nvicClearPending:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:160    .text.nvicClearPending:0000000000000000 nvicClearPending
+C:\Users\lhanj\AppData\Local\Temp\ccLiCHdo.s:187    .text.nvicClearPending:0000000000000018 $d
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,460 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"syscalls.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text._read_r,"ax",%progbits
+  18              		.align	1
+  19              		.global	_read_r
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	_read_r:
+  27              	.LVL0:
+  28              	.LFB239:
+  29              		.file 1 "lib/chibios/os/various/syscalls.c"
+   1:lib/chibios/os/various/syscalls.c **** /*
+   2:lib/chibios/os/various/syscalls.c ****  ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+   3:lib/chibios/os/various/syscalls.c **** 
+   4:lib/chibios/os/various/syscalls.c ****  Licensed under the Apache License, Version 2.0 (the "License");
+   5:lib/chibios/os/various/syscalls.c ****  you may not use this file except in compliance with the License.
+   6:lib/chibios/os/various/syscalls.c ****  You may obtain a copy of the License at
+   7:lib/chibios/os/various/syscalls.c **** 
+   8:lib/chibios/os/various/syscalls.c ****  http://www.apache.org/licenses/LICENSE-2.0
+   9:lib/chibios/os/various/syscalls.c **** 
+  10:lib/chibios/os/various/syscalls.c ****  Unless required by applicable law or agreed to in writing, software
+  11:lib/chibios/os/various/syscalls.c ****  distributed under the License is distributed on an "AS IS" BASIS,
+  12:lib/chibios/os/various/syscalls.c ****  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13:lib/chibios/os/various/syscalls.c ****  See the License for the specific language governing permissions and
+  14:lib/chibios/os/various/syscalls.c ****  limitations under the License.
+  15:lib/chibios/os/various/syscalls.c ****  */
+  16:lib/chibios/os/various/syscalls.c **** /*
+  17:lib/chibios/os/various/syscalls.c ****  * **** This file incorporates work covered by the following copyright and ****
+  18:lib/chibios/os/various/syscalls.c ****  * **** permission notice:                                                 ****
+  19:lib/chibios/os/various/syscalls.c ****  *
+  20:lib/chibios/os/various/syscalls.c ****  *  Copyright (c) 2009 by Michael Fischer. All rights reserved.
+  21:lib/chibios/os/various/syscalls.c ****  *
+  22:lib/chibios/os/various/syscalls.c ****  *  Redistribution and use in source and binary forms, with or without
+  23:lib/chibios/os/various/syscalls.c ****  *  modification, are permitted provided that the following conditions
+  24:lib/chibios/os/various/syscalls.c ****  *  are met:
+  25:lib/chibios/os/various/syscalls.c ****  *
+  26:lib/chibios/os/various/syscalls.c ****  *  1. Redistributions of source code must retain the above copyright
+  27:lib/chibios/os/various/syscalls.c ****  *     notice, this list of conditions and the following disclaimer.
+  28:lib/chibios/os/various/syscalls.c ****  *  2. Redistributions in binary form must reproduce the above copyright
+  29:lib/chibios/os/various/syscalls.c ****  *     notice, this list of conditions and the following disclaimer in the
+  30:lib/chibios/os/various/syscalls.c ****  *     documentation and/or other materials provided with the distribution.
+  31:lib/chibios/os/various/syscalls.c ****  *  3. Neither the name of the author nor the names of its contributors may
+  32:lib/chibios/os/various/syscalls.c ****  *     be used to endorse or promote products derived from this software
+  33:lib/chibios/os/various/syscalls.c ****  *     without specific prior written permission.
+  34:lib/chibios/os/various/syscalls.c ****  *
+  35:lib/chibios/os/various/syscalls.c ****  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  36:lib/chibios/os/various/syscalls.c ****  *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  37:lib/chibios/os/various/syscalls.c ****  *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  38:lib/chibios/os/various/syscalls.c ****  *  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+  39:lib/chibios/os/various/syscalls.c ****  *  THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  40:lib/chibios/os/various/syscalls.c ****  *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  41:lib/chibios/os/various/syscalls.c ****  *  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+  42:lib/chibios/os/various/syscalls.c ****  *  OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+  43:lib/chibios/os/various/syscalls.c ****  *  AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  44:lib/chibios/os/various/syscalls.c ****  *  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
+  45:lib/chibios/os/various/syscalls.c ****  *  THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+  46:lib/chibios/os/various/syscalls.c ****  *  SUCH DAMAGE.
+  47:lib/chibios/os/various/syscalls.c ****  *
+  48:lib/chibios/os/various/syscalls.c ****  ****************************************************************************
+  49:lib/chibios/os/various/syscalls.c ****  *  History:
+  50:lib/chibios/os/various/syscalls.c ****  *
+  51:lib/chibios/os/various/syscalls.c ****  *  28.03.09  mifi       First Version, based on the original syscall.c from
+  52:lib/chibios/os/various/syscalls.c ****  *                       newlib version 1.17.0
+  53:lib/chibios/os/various/syscalls.c ****  *  17.08.09  gdisirio   Modified the file for use under ChibiOS/RT
+  54:lib/chibios/os/various/syscalls.c ****  *  15.11.09  gdisirio   Added read and write handling
+  55:lib/chibios/os/various/syscalls.c ****  ****************************************************************************/
+  56:lib/chibios/os/various/syscalls.c **** 
+  57:lib/chibios/os/various/syscalls.c **** #include <stdlib.h>
+  58:lib/chibios/os/various/syscalls.c **** #include <errno.h>
+  59:lib/chibios/os/various/syscalls.c **** #include <string.h>
+  60:lib/chibios/os/various/syscalls.c **** #include <sys/stat.h>
+  61:lib/chibios/os/various/syscalls.c **** #include <sys/types.h>
+  62:lib/chibios/os/various/syscalls.c **** 
+  63:lib/chibios/os/various/syscalls.c **** #include "ch.h"
+  64:lib/chibios/os/various/syscalls.c **** #if defined(STDOUT_SD) || defined(STDIN_SD)
+  65:lib/chibios/os/various/syscalls.c **** #include "hal.h"
+  66:lib/chibios/os/various/syscalls.c **** #endif
+  67:lib/chibios/os/various/syscalls.c **** 
+  68:lib/chibios/os/various/syscalls.c **** /***************************************************************************/
+  69:lib/chibios/os/various/syscalls.c **** 
+  70:lib/chibios/os/various/syscalls.c **** __attribute__((used))
+  71:lib/chibios/os/various/syscalls.c **** int _read_r(struct _reent *r, int file, char * ptr, int len) {
+  30              		.loc 1 71 62 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  72:lib/chibios/os/various/syscalls.c ****   (void)r;
+  35              		.loc 1 72 3 view .LVU1
+  73:lib/chibios/os/various/syscalls.c **** #if defined(STDIN_SD)
+  74:lib/chibios/os/various/syscalls.c ****   if (!len || (file != 0)) {
+  75:lib/chibios/os/various/syscalls.c ****     __errno_r(r) = EINVAL;
+  76:lib/chibios/os/various/syscalls.c ****     return -1;
+  77:lib/chibios/os/various/syscalls.c ****   }
+  78:lib/chibios/os/various/syscalls.c ****   len = sdRead(&STDIN_SD, (uint8_t *)ptr, (size_t)len);
+  79:lib/chibios/os/various/syscalls.c ****   return len;
+  80:lib/chibios/os/various/syscalls.c **** #else
+  81:lib/chibios/os/various/syscalls.c ****   (void)file;
+  36              		.loc 1 81 3 view .LVU2
+  82:lib/chibios/os/various/syscalls.c ****   (void)ptr;
+  37              		.loc 1 82 3 view .LVU3
+  83:lib/chibios/os/various/syscalls.c ****   (void)len;
+  38              		.loc 1 83 3 view .LVU4
+  84:lib/chibios/os/various/syscalls.c ****   __errno_r(r)  = EINVAL;
+  39              		.loc 1 84 3 view .LVU5
+  40              		.loc 1 84 17 is_stmt 0 view .LVU6
+  41 0000 1623     		movs	r3, #22
+  42              	.LVL1:
+  43              		.loc 1 84 17 view .LVU7
+  44 0002 0360     		str	r3, [r0]
+  85:lib/chibios/os/various/syscalls.c ****   return -1;
+  45              		.loc 1 85 3 is_stmt 1 view .LVU8
+  86:lib/chibios/os/various/syscalls.c **** #endif
+  87:lib/chibios/os/various/syscalls.c **** }
+  46              		.loc 1 87 1 is_stmt 0 view .LVU9
+  47 0004 4FF0FF30 		mov	r0, #-1
+  48              	.LVL2:
+  49              		.loc 1 87 1 view .LVU10
+  50 0008 7047     		bx	lr
+  51              		.cfi_endproc
+  52              	.LFE239:
+  54              		.section	.text._lseek_r,"ax",%progbits
+  55              		.align	1
+  56              		.global	_lseek_r
+  57              		.syntax unified
+  58              		.thumb
+  59              		.thumb_func
+  60              		.fpu fpv4-sp-d16
+  62              	_lseek_r:
+  63              	.LVL3:
+  64              	.LFB240:
+  88:lib/chibios/os/various/syscalls.c **** 
+  89:lib/chibios/os/various/syscalls.c **** /***************************************************************************/
+  90:lib/chibios/os/various/syscalls.c **** 
+  91:lib/chibios/os/various/syscalls.c **** __attribute__((used))
+  92:lib/chibios/os/various/syscalls.c **** int _lseek_r(struct _reent *r, int file, int ptr, int dir) {
+  65              		.loc 1 92 60 is_stmt 1 view -0
+  66              		.cfi_startproc
+  67              		@ args = 0, pretend = 0, frame = 0
+  68              		@ frame_needed = 0, uses_anonymous_args = 0
+  69              		@ link register save eliminated.
+  93:lib/chibios/os/various/syscalls.c ****   (void)r;
+  70              		.loc 1 93 3 view .LVU12
+  94:lib/chibios/os/various/syscalls.c ****   (void)file;
+  71              		.loc 1 94 3 view .LVU13
+  95:lib/chibios/os/various/syscalls.c ****   (void)ptr;
+  72              		.loc 1 95 3 view .LVU14
+  96:lib/chibios/os/various/syscalls.c ****   (void)dir;
+  73              		.loc 1 96 3 view .LVU15
+  97:lib/chibios/os/various/syscalls.c **** 
+  98:lib/chibios/os/various/syscalls.c ****   return 0;
+  74              		.loc 1 98 3 view .LVU16
+  99:lib/chibios/os/various/syscalls.c **** }
+  75              		.loc 1 99 1 is_stmt 0 view .LVU17
+  76 0000 0020     		movs	r0, #0
+  77              	.LVL4:
+  78              		.loc 1 99 1 view .LVU18
+  79 0002 7047     		bx	lr
+  80              		.cfi_endproc
+  81              	.LFE240:
+  83              		.section	.text._write_r,"ax",%progbits
+  84              		.align	1
+  85              		.global	_write_r
+  86              		.syntax unified
+  87              		.thumb
+  88              		.thumb_func
+  89              		.fpu fpv4-sp-d16
+  91              	_write_r:
+  92              	.LVL5:
+  93              	.LFB241:
+ 100:lib/chibios/os/various/syscalls.c **** 
+ 101:lib/chibios/os/various/syscalls.c **** /***************************************************************************/
+ 102:lib/chibios/os/various/syscalls.c **** 
+ 103:lib/chibios/os/various/syscalls.c **** __attribute__((used))
+ 104:lib/chibios/os/various/syscalls.c **** int _write_r(struct _reent *r, int file, char * ptr, int len) {
+  94              		.loc 1 104 63 is_stmt 1 view -0
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98              		@ link register save eliminated.
+ 105:lib/chibios/os/various/syscalls.c ****   (void)r;
+  99              		.loc 1 105 3 view .LVU20
+ 106:lib/chibios/os/various/syscalls.c ****   (void)file;
+ 100              		.loc 1 106 3 view .LVU21
+ 107:lib/chibios/os/various/syscalls.c ****   (void)ptr;
+ 101              		.loc 1 107 3 view .LVU22
+ 108:lib/chibios/os/various/syscalls.c **** #if defined(STDOUT_SD)
+ 109:lib/chibios/os/various/syscalls.c ****   if (file != 1) {
+ 110:lib/chibios/os/various/syscalls.c ****     __errno_r(r) = EINVAL;
+ 111:lib/chibios/os/various/syscalls.c ****     return -1;
+ 112:lib/chibios/os/various/syscalls.c ****   }
+ 113:lib/chibios/os/various/syscalls.c ****   sdWrite(&STDOUT_SD, (uint8_t *)ptr, (size_t)len);
+ 114:lib/chibios/os/various/syscalls.c **** #endif
+ 115:lib/chibios/os/various/syscalls.c ****   return len;
+ 102              		.loc 1 115 3 view .LVU23
+ 116:lib/chibios/os/various/syscalls.c **** }
+ 103              		.loc 1 116 1 is_stmt 0 view .LVU24
+ 104 0000 1846     		mov	r0, r3
+ 105              	.LVL6:
+ 106              		.loc 1 116 1 view .LVU25
+ 107 0002 7047     		bx	lr
+ 108              		.cfi_endproc
+ 109              	.LFE241:
+ 111              		.section	.text._close_r,"ax",%progbits
+ 112              		.align	1
+ 113              		.global	_close_r
+ 114              		.syntax unified
+ 115              		.thumb
+ 116              		.thumb_func
+ 117              		.fpu fpv4-sp-d16
+ 119              	_close_r:
+ 120              	.LVL7:
+ 121              	.LFB242:
+ 117:lib/chibios/os/various/syscalls.c **** 
+ 118:lib/chibios/os/various/syscalls.c **** /***************************************************************************/
+ 119:lib/chibios/os/various/syscalls.c **** 
+ 120:lib/chibios/os/various/syscalls.c **** __attribute__((used))
+ 121:lib/chibios/os/various/syscalls.c **** int _close_r(struct _reent *r, int file) {
+ 122              		.loc 1 121 42 is_stmt 1 view -0
+ 123              		.cfi_startproc
+ 124              		@ args = 0, pretend = 0, frame = 0
+ 125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 126              		@ link register save eliminated.
+ 122:lib/chibios/os/various/syscalls.c ****   (void)r;
+ 127              		.loc 1 122 3 view .LVU27
+ 123:lib/chibios/os/various/syscalls.c ****   (void)file;
+ 128              		.loc 1 123 3 view .LVU28
+ 124:lib/chibios/os/various/syscalls.c **** 
+ 125:lib/chibios/os/various/syscalls.c ****   return 0;
+ 129              		.loc 1 125 3 view .LVU29
+ 126:lib/chibios/os/various/syscalls.c **** }
+ 130              		.loc 1 126 1 is_stmt 0 view .LVU30
+ 131 0000 0020     		movs	r0, #0
+ 132              	.LVL8:
+ 133              		.loc 1 126 1 view .LVU31
+ 134 0002 7047     		bx	lr
+ 135              		.cfi_endproc
+ 136              	.LFE242:
+ 138              		.section	.text._sbrk_r,"ax",%progbits
+ 139              		.align	1
+ 140              		.global	_sbrk_r
+ 141              		.syntax unified
+ 142              		.thumb
+ 143              		.thumb_func
+ 144              		.fpu fpv4-sp-d16
+ 146              	_sbrk_r:
+ 147              	.LVL9:
+ 148              	.LFB243:
+ 127:lib/chibios/os/various/syscalls.c **** 
+ 128:lib/chibios/os/various/syscalls.c **** /***************************************************************************/
+ 129:lib/chibios/os/various/syscalls.c **** 
+ 130:lib/chibios/os/various/syscalls.c **** __attribute__((used))
+ 131:lib/chibios/os/various/syscalls.c **** caddr_t _sbrk_r(struct _reent *r, int incr) {
+ 149              		.loc 1 131 45 is_stmt 1 view -0
+ 150              		.cfi_startproc
+ 151              		@ args = 0, pretend = 0, frame = 0
+ 152              		@ frame_needed = 0, uses_anonymous_args = 0
+ 132:lib/chibios/os/various/syscalls.c **** #if CH_CFG_USE_MEMCORE
+ 133:lib/chibios/os/various/syscalls.c ****   void *p;
+ 153              		.loc 1 133 3 view .LVU33
+ 134:lib/chibios/os/various/syscalls.c **** 
+ 135:lib/chibios/os/various/syscalls.c ****   chDbgCheck(incr >= 0);
+ 154              		.loc 1 135 3 view .LVU34
+ 155              		.loc 1 135 3 view .LVU35
+ 156              		.loc 1 135 3 view .LVU36
+ 136:lib/chibios/os/various/syscalls.c **** 
+ 137:lib/chibios/os/various/syscalls.c ****   p = chCoreAllocFromBase((size_t)incr, 1U, 0U);
+ 157              		.loc 1 137 3 view .LVU37
+ 131:lib/chibios/os/various/syscalls.c **** #if CH_CFG_USE_MEMCORE
+ 158              		.loc 1 131 45 is_stmt 0 view .LVU38
+ 159 0000 10B5     		push	{r4, lr}
+ 160              		.cfi_def_cfa_offset 8
+ 161              		.cfi_offset 4, -8
+ 162              		.cfi_offset 14, -4
+ 163              		.loc 1 137 7 view .LVU39
+ 164 0002 0022     		movs	r2, #0
+ 131:lib/chibios/os/various/syscalls.c **** #if CH_CFG_USE_MEMCORE
+ 165              		.loc 1 131 45 view .LVU40
+ 166 0004 0446     		mov	r4, r0
+ 167 0006 0846     		mov	r0, r1
+ 168              	.LVL10:
+ 169              		.loc 1 137 7 view .LVU41
+ 170 0008 0121     		movs	r1, #1
+ 171              	.LVL11:
+ 172              		.loc 1 137 7 view .LVU42
+ 173 000a FFF7FEFF 		bl	chCoreAllocFromBase
+ 174              	.LVL12:
+ 138:lib/chibios/os/various/syscalls.c ****   if (p == NULL) {
+ 175              		.loc 1 138 3 is_stmt 1 view .LVU43
+ 176              		.loc 1 138 6 is_stmt 0 view .LVU44
+ 177 000e 18B9     		cbnz	r0, .L5
+ 139:lib/chibios/os/various/syscalls.c ****     __errno_r(r)  = ENOMEM;
+ 178              		.loc 1 139 5 is_stmt 1 view .LVU45
+ 179              		.loc 1 139 19 is_stmt 0 view .LVU46
+ 180 0010 0C23     		movs	r3, #12
+ 181 0012 2360     		str	r3, [r4]
+ 140:lib/chibios/os/various/syscalls.c ****     return (caddr_t)-1;
+ 182              		.loc 1 140 5 is_stmt 1 view .LVU47
+ 183              		.loc 1 140 12 is_stmt 0 view .LVU48
+ 184 0014 4FF0FF30 		mov	r0, #-1
+ 185              	.LVL13:
+ 186              	.L5:
+ 141:lib/chibios/os/various/syscalls.c ****   }
+ 142:lib/chibios/os/various/syscalls.c ****   return (caddr_t)p;
+ 143:lib/chibios/os/various/syscalls.c **** #else
+ 144:lib/chibios/os/various/syscalls.c ****   (void)incr;
+ 145:lib/chibios/os/various/syscalls.c ****   __errno_r(r) = ENOMEM;
+ 146:lib/chibios/os/various/syscalls.c ****   return (caddr_t)-1;
+ 147:lib/chibios/os/various/syscalls.c **** #endif
+ 148:lib/chibios/os/various/syscalls.c **** }
+ 187              		.loc 1 148 1 view .LVU49
+ 188 0018 10BD     		pop	{r4, pc}
+ 189              		.loc 1 148 1 view .LVU50
+ 190              		.cfi_endproc
+ 191              	.LFE243:
+ 193              		.section	.text._fstat_r,"ax",%progbits
+ 194              		.align	1
+ 195              		.global	_fstat_r
+ 196              		.syntax unified
+ 197              		.thumb
+ 198              		.thumb_func
+ 199              		.fpu fpv4-sp-d16
+ 201              	_fstat_r:
+ 202              	.LVL14:
+ 203              	.LFB244:
+ 149:lib/chibios/os/various/syscalls.c **** 
+ 150:lib/chibios/os/various/syscalls.c **** /***************************************************************************/
+ 151:lib/chibios/os/various/syscalls.c **** 
+ 152:lib/chibios/os/various/syscalls.c **** __attribute__((used))
+ 153:lib/chibios/os/various/syscalls.c **** int _fstat_r(struct _reent *r, int file, struct stat * st) {
+ 204              		.loc 1 153 60 is_stmt 1 view -0
+ 205              		.cfi_startproc
+ 206              		@ args = 0, pretend = 0, frame = 0
+ 207              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154:lib/chibios/os/various/syscalls.c ****   (void)r;
+ 208              		.loc 1 154 3 view .LVU52
+ 155:lib/chibios/os/various/syscalls.c ****   (void)file;
+ 209              		.loc 1 155 3 view .LVU53
+ 156:lib/chibios/os/various/syscalls.c **** 
+ 157:lib/chibios/os/various/syscalls.c ****   memset(st, 0, sizeof(*st));
+ 210              		.loc 1 157 3 view .LVU54
+ 153:lib/chibios/os/various/syscalls.c ****   (void)r;
+ 211              		.loc 1 153 60 is_stmt 0 view .LVU55
+ 212 0000 08B5     		push	{r3, lr}
+ 213              		.cfi_def_cfa_offset 8
+ 214              		.cfi_offset 3, -8
+ 215              		.cfi_offset 14, -4
+ 153:lib/chibios/os/various/syscalls.c ****   (void)r;
+ 216              		.loc 1 153 60 view .LVU56
+ 217 0002 1346     		mov	r3, r2
+ 218              		.loc 1 157 3 view .LVU57
+ 219 0004 0021     		movs	r1, #0
+ 220              	.LVL15:
+ 221              		.loc 1 157 3 view .LVU58
+ 222 0006 5822     		movs	r2, #88
+ 223              	.LVL16:
+ 224              		.loc 1 157 3 view .LVU59
+ 225 0008 1846     		mov	r0, r3
+ 226              	.LVL17:
+ 227              		.loc 1 157 3 view .LVU60
+ 228 000a FFF7FEFF 		bl	memset
+ 229              	.LVL18:
+ 158:lib/chibios/os/various/syscalls.c ****   st->st_mode = S_IFCHR;
+ 230              		.loc 1 158 3 is_stmt 1 view .LVU61
+ 231              		.loc 1 158 15 is_stmt 0 view .LVU62
+ 232 000e 4FF40052 		mov	r2, #8192
+ 233 0012 4260     		str	r2, [r0, #4]
+ 159:lib/chibios/os/various/syscalls.c ****   return 0;
+ 234              		.loc 1 159 3 is_stmt 1 view .LVU63
+ 160:lib/chibios/os/various/syscalls.c **** }
+ 235              		.loc 1 160 1 is_stmt 0 view .LVU64
+ 236 0014 0020     		movs	r0, #0
+ 237 0016 08BD     		pop	{r3, pc}
+ 238              		.cfi_endproc
+ 239              	.LFE244:
+ 241              		.section	.text._isatty_r,"ax",%progbits
+ 242              		.align	1
+ 243              		.global	_isatty_r
+ 244              		.syntax unified
+ 245              		.thumb
+ 246              		.thumb_func
+ 247              		.fpu fpv4-sp-d16
+ 249              	_isatty_r:
+ 250              	.LVL19:
+ 251              	.LFB245:
+ 161:lib/chibios/os/various/syscalls.c **** 
+ 162:lib/chibios/os/various/syscalls.c **** /***************************************************************************/
+ 163:lib/chibios/os/various/syscalls.c **** 
+ 164:lib/chibios/os/various/syscalls.c **** __attribute__((used))
+ 165:lib/chibios/os/various/syscalls.c **** int _isatty_r(struct _reent *r, int fd) {
+ 252              		.loc 1 165 41 is_stmt 1 view -0
+ 253              		.cfi_startproc
+ 254              		@ args = 0, pretend = 0, frame = 0
+ 255              		@ frame_needed = 0, uses_anonymous_args = 0
+ 256              		@ link register save eliminated.
+ 166:lib/chibios/os/various/syscalls.c ****   (void)r;
+ 257              		.loc 1 166 3 view .LVU66
+ 167:lib/chibios/os/various/syscalls.c ****   (void)fd;
+ 258              		.loc 1 167 3 view .LVU67
+ 168:lib/chibios/os/various/syscalls.c **** 
+ 169:lib/chibios/os/various/syscalls.c ****   return 1;
+ 259              		.loc 1 169 3 view .LVU68
+ 170:lib/chibios/os/various/syscalls.c **** }
+ 260              		.loc 1 170 1 is_stmt 0 view .LVU69
+ 261 0000 0120     		movs	r0, #1
+ 262              	.LVL20:
+ 263              		.loc 1 170 1 view .LVU70
+ 264 0002 7047     		bx	lr
+ 265              		.cfi_endproc
+ 266              	.LFE245:
+ 268              		.text
+ 269              	.Letext0:
+ 270              		.file 2 "c:\\qmk_msys\\mingw64\\lib\\gcc\\arm-none-eabi\\10.1.0\\include\\stddef.h"
+ 271              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 272              		.file 4 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_types.h"
+ 273              		.file 5 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\reent.h"
+ 274              		.file 6 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\lock.h"
+ 275              		.file 7 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_timeval.h"
+ 276              		.file 8 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_timespec.h"
+ 277              		.file 9 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\types.h"
+ 278              		.file 10 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\stat.h"
+ 279              		.file 11 "<built-in>"
+ 280              		.file 12 "./lib/chibios/os/oslib/include/chmemcore.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 syscalls.c
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:18     .text._read_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:26     .text._read_r:0000000000000000 _read_r
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:55     .text._lseek_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:62     .text._lseek_r:0000000000000000 _lseek_r
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:84     .text._write_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:91     .text._write_r:0000000000000000 _write_r
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:112    .text._close_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:119    .text._close_r:0000000000000000 _close_r
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:139    .text._sbrk_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:146    .text._sbrk_r:0000000000000000 _sbrk_r
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:194    .text._fstat_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:201    .text._fstat_r:0000000000000000 _fstat_r
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:242    .text._isatty_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccxMipFi.s:249    .text._isatty_r:0000000000000000 _isatty_r
+
+UNDEFINED SYMBOLS
+chCoreAllocFromBase
+memset

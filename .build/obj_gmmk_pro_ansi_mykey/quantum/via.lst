@@ -1,0 +1,1437 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"via.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.via_eeprom_is_valid,"ax",%progbits
+  18              		.align	1
+  19              		.global	via_eeprom_is_valid
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	via_eeprom_is_valid:
+  27              	.LFB291:
+  28              		.file 1 "quantum/via.c"
+   1:quantum/via.c **** /* Copyright 2019 Jason Williams (Wilba)
+   2:quantum/via.c ****  *
+   3:quantum/via.c ****  * This program is free software: you can redistribute it and/or modify
+   4:quantum/via.c ****  * it under the terms of the GNU General Public License as published by
+   5:quantum/via.c ****  * the Free Software Foundation, either version 2 of the License, or
+   6:quantum/via.c ****  * (at your option) any later version.
+   7:quantum/via.c ****  *
+   8:quantum/via.c ****  * This program is distributed in the hope that it will be useful,
+   9:quantum/via.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  10:quantum/via.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  11:quantum/via.c ****  * GNU General Public License for more details.
+  12:quantum/via.c ****  *
+  13:quantum/via.c ****  * You should have received a copy of the GNU General Public License
+  14:quantum/via.c ****  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  15:quantum/via.c ****  */
+  16:quantum/via.c **** 
+  17:quantum/via.c **** #ifndef RAW_ENABLE
+  18:quantum/via.c **** #    error "RAW_ENABLE is not enabled"
+  19:quantum/via.c **** #endif
+  20:quantum/via.c **** 
+  21:quantum/via.c **** #ifndef DYNAMIC_KEYMAP_ENABLE
+  22:quantum/via.c **** #    error "DYNAMIC_KEYMAP_ENABLE is not enabled"
+  23:quantum/via.c **** #endif
+  24:quantum/via.c **** 
+  25:quantum/via.c **** // If VIA_CUSTOM_LIGHTING_ENABLE is not defined, then VIA_QMK_BACKLIGHT_ENABLE is set
+  26:quantum/via.c **** // if BACKLIGHT_ENABLE is set, so handling of QMK Backlight values happens here by default.
+  27:quantum/via.c **** // if VIA_CUSTOM_LIGHTING_ENABLE is defined, then VIA_QMK_BACKLIGHT_ENABLE must be explicitly
+  28:quantum/via.c **** // set in keyboard-level config.h, so handling of QMK Backlight values happens here
+  29:quantum/via.c **** #if defined(BACKLIGHT_ENABLE) && !defined(VIA_CUSTOM_LIGHTING_ENABLE)
+  30:quantum/via.c **** #    define VIA_QMK_BACKLIGHT_ENABLE
+  31:quantum/via.c **** #endif
+  32:quantum/via.c **** 
+  33:quantum/via.c **** // If VIA_CUSTOM_LIGHTING_ENABLE is not defined, then VIA_QMK_RGBLIGHT_ENABLE is set
+  34:quantum/via.c **** // if RGBLIGHT_ENABLE is set, so handling of QMK RGBLIGHT values happens here by default.
+  35:quantum/via.c **** // If VIA_CUSTOM_LIGHTING_ENABLE is defined, then VIA_QMK_RGBLIGHT_ENABLE must be explicitly
+  36:quantum/via.c **** // set in keyboard-level config.h, so handling of QMK RGBLIGHT values happens here
+  37:quantum/via.c **** #if defined(RGBLIGHT_ENABLE) && !defined(VIA_CUSTOM_LIGHTING_ENABLE)
+  38:quantum/via.c **** #    define VIA_QMK_RGBLIGHT_ENABLE
+  39:quantum/via.c **** #endif
+  40:quantum/via.c **** 
+  41:quantum/via.c **** #include "quantum.h"
+  42:quantum/via.c **** 
+  43:quantum/via.c **** #include "via.h"
+  44:quantum/via.c **** 
+  45:quantum/via.c **** #include "raw_hid.h"
+  46:quantum/via.c **** #include "dynamic_keymap.h"
+  47:quantum/via.c **** #include "tmk_core/common/eeprom.h"
+  48:quantum/via.c **** #include "version.h"  // for QMK_BUILDDATE used in EEPROM magic
+  49:quantum/via.c **** #include "via_ensure_keycode.h"
+  50:quantum/via.c **** 
+  51:quantum/via.c **** // Forward declare some helpers.
+  52:quantum/via.c **** #if defined(VIA_QMK_BACKLIGHT_ENABLE)
+  53:quantum/via.c **** void via_qmk_backlight_set_value(uint8_t *data);
+  54:quantum/via.c **** void via_qmk_backlight_get_value(uint8_t *data);
+  55:quantum/via.c **** #endif
+  56:quantum/via.c **** 
+  57:quantum/via.c **** #if defined(VIA_QMK_RGBLIGHT_ENABLE)
+  58:quantum/via.c **** void via_qmk_rgblight_set_value(uint8_t *data);
+  59:quantum/via.c **** void via_qmk_rgblight_get_value(uint8_t *data);
+  60:quantum/via.c **** #endif
+  61:quantum/via.c **** 
+  62:quantum/via.c **** // Can be called in an overriding via_init_kb() to test if keyboard level code usage of
+  63:quantum/via.c **** // EEPROM is invalid and use/save defaults.
+  64:quantum/via.c **** bool via_eeprom_is_valid(void) {
+  29              		.loc 1 64 32 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  65:quantum/via.c ****     char *  p      = QMK_BUILDDATE;  // e.g. "2019-11-05-11:29:54"
+  33              		.loc 1 65 5 view .LVU1
+  34              	.LVL0:
+  66:quantum/via.c ****     uint8_t magic0 = ((p[2] & 0x0F) << 4) | (p[3] & 0x0F);
+  35              		.loc 1 66 5 view .LVU2
+  67:quantum/via.c ****     uint8_t magic1 = ((p[5] & 0x0F) << 4) | (p[6] & 0x0F);
+  36              		.loc 1 67 5 view .LVU3
+  68:quantum/via.c ****     uint8_t magic2 = ((p[8] & 0x0F) << 4) | (p[9] & 0x0F);
+  37              		.loc 1 68 5 view .LVU4
+  69:quantum/via.c **** 
+  70:quantum/via.c ****     return (eeprom_read_byte((void *)VIA_EEPROM_MAGIC_ADDR + 0) == magic0 && eeprom_read_byte((void
+  38              		.loc 1 70 5 view .LVU5
+  64:quantum/via.c ****     char *  p      = QMK_BUILDDATE;  // e.g. "2019-11-05-11:29:54"
+  39              		.loc 1 64 32 is_stmt 0 view .LVU6
+  40 0000 08B5     		push	{r3, lr}
+  41              		.cfi_def_cfa_offset 8
+  42              		.cfi_offset 3, -8
+  43              		.cfi_offset 14, -4
+  44              		.loc 1 70 13 view .LVU7
+  45 0002 2320     		movs	r0, #35
+  46 0004 FFF7FEFF 		bl	eeprom_read_byte
+  47              	.LVL1:
+  48              		.loc 1 70 140 view .LVU8
+  49 0008 2128     		cmp	r0, #33
+  50 000a 01D0     		beq	.L2
+  51              	.L4:
+  52 000c 0020     		movs	r0, #0
+  53              	.L3:
+  71:quantum/via.c **** }
+  54              		.loc 1 71 1 discriminator 8 view .LVU9
+  55 000e 08BD     		pop	{r3, pc}
+  56              	.L2:
+  70:quantum/via.c **** }
+  57              		.loc 1 70 78 discriminator 1 view .LVU10
+  58 0010 2420     		movs	r0, #36
+  59 0012 FFF7FEFF 		bl	eeprom_read_byte
+  60              	.LVL2:
+  70:quantum/via.c **** }
+  61              		.loc 1 70 75 discriminator 1 view .LVU11
+  62 0016 0828     		cmp	r0, #8
+  63 0018 F8D1     		bne	.L4
+  70:quantum/via.c **** }
+  64              		.loc 1 70 143 discriminator 3 view .LVU12
+  65 001a 2520     		movs	r0, #37
+  66 001c FFF7FEFF 		bl	eeprom_read_byte
+  67              	.LVL3:
+  70:quantum/via.c **** }
+  68              		.loc 1 70 140 discriminator 3 view .LVU13
+  69 0020 A0F10903 		sub	r3, r0, #9
+  70 0024 5842     		rsbs	r0, r3, #0
+  71 0026 5841     		adcs	r0, r0, r3
+  72 0028 F1E7     		b	.L3
+  73              		.cfi_endproc
+  74              	.LFE291:
+  76              		.section	.text.via_eeprom_set_valid,"ax",%progbits
+  77              		.align	1
+  78              		.global	via_eeprom_set_valid
+  79              		.syntax unified
+  80              		.thumb
+  81              		.thumb_func
+  82              		.fpu fpv4-sp-d16
+  84              	via_eeprom_set_valid:
+  85              	.LVL4:
+  86              	.LFB292:
+  72:quantum/via.c **** 
+  73:quantum/via.c **** // Sets VIA/keyboard level usage of EEPROM to valid/invalid
+  74:quantum/via.c **** // Keyboard level code (eg. via_init_kb()) should not call this
+  75:quantum/via.c **** void via_eeprom_set_valid(bool valid) {
+  87              		.loc 1 75 39 is_stmt 1 view -0
+  88              		.cfi_startproc
+  89              		@ args = 0, pretend = 0, frame = 0
+  90              		@ frame_needed = 0, uses_anonymous_args = 0
+  76:quantum/via.c ****     char *  p      = QMK_BUILDDATE;  // e.g. "2019-11-05-11:29:54"
+  91              		.loc 1 76 5 view .LVU15
+  77:quantum/via.c ****     uint8_t magic0 = ((p[2] & 0x0F) << 4) | (p[3] & 0x0F);
+  92              		.loc 1 77 5 view .LVU16
+  78:quantum/via.c ****     uint8_t magic1 = ((p[5] & 0x0F) << 4) | (p[6] & 0x0F);
+  93              		.loc 1 78 5 view .LVU17
+  79:quantum/via.c ****     uint8_t magic2 = ((p[8] & 0x0F) << 4) | (p[9] & 0x0F);
+  94              		.loc 1 79 5 view .LVU18
+  80:quantum/via.c **** 
+  81:quantum/via.c ****     eeprom_update_byte((void *)VIA_EEPROM_MAGIC_ADDR + 0, valid ? magic0 : 0xFF);
+  95              		.loc 1 81 5 view .LVU19
+  75:quantum/via.c ****     char *  p      = QMK_BUILDDATE;  // e.g. "2019-11-05-11:29:54"
+  96              		.loc 1 75 39 is_stmt 0 view .LVU20
+  97 0000 10B5     		push	{r4, lr}
+  98              		.cfi_def_cfa_offset 8
+  99              		.cfi_offset 4, -8
+ 100              		.cfi_offset 14, -4
+ 101              		.loc 1 81 5 view .LVU21
+ 102 0002 041E     		subs	r4, r0, #0
+ 103 0004 14BF     		ite	ne
+ 104 0006 2121     		movne	r1, #33
+ 105 0008 FF21     		moveq	r1, #255
+ 106 000a 2320     		movs	r0, #35
+ 107              	.LVL5:
+ 108              		.loc 1 81 5 view .LVU22
+ 109 000c FFF7FEFF 		bl	eeprom_update_byte
+ 110              	.LVL6:
+  82:quantum/via.c ****     eeprom_update_byte((void *)VIA_EEPROM_MAGIC_ADDR + 1, valid ? magic1 : 0xFF);
+ 111              		.loc 1 82 5 is_stmt 1 view .LVU23
+ 112 0010 002C     		cmp	r4, #0
+ 113 0012 14BF     		ite	ne
+ 114 0014 0821     		movne	r1, #8
+ 115 0016 FF21     		moveq	r1, #255
+ 116 0018 2420     		movs	r0, #36
+ 117 001a FFF7FEFF 		bl	eeprom_update_byte
+ 118              	.LVL7:
+  83:quantum/via.c ****     eeprom_update_byte((void *)VIA_EEPROM_MAGIC_ADDR + 2, valid ? magic2 : 0xFF);
+ 119              		.loc 1 83 5 view .LVU24
+ 120 001e 002C     		cmp	r4, #0
+ 121 0020 18BF     		it	ne
+ 122 0022 0921     		movne	r1, #9
+  84:quantum/via.c **** }
+ 123              		.loc 1 84 1 is_stmt 0 view .LVU25
+ 124 0024 BDE81040 		pop	{r4, lr}
+ 125              		.cfi_restore 14
+ 126              		.cfi_restore 4
+ 127              		.cfi_def_cfa_offset 0
+  83:quantum/via.c ****     eeprom_update_byte((void *)VIA_EEPROM_MAGIC_ADDR + 2, valid ? magic2 : 0xFF);
+ 128              		.loc 1 83 5 view .LVU26
+ 129 0028 08BF     		it	eq
+ 130 002a FF21     		moveq	r1, #255
+ 131 002c 2520     		movs	r0, #37
+ 132 002e FFF7FEBF 		b	eeprom_update_byte
+ 133              	.LVL8:
+ 134              		.cfi_endproc
+ 135              	.LFE292:
+ 137              		.section	.text.via_eeprom_reset,"ax",%progbits
+ 138              		.align	1
+ 139              		.global	via_eeprom_reset
+ 140              		.syntax unified
+ 141              		.thumb
+ 142              		.thumb_func
+ 143              		.fpu fpv4-sp-d16
+ 145              	via_eeprom_reset:
+ 146              	.LFB293:
+  85:quantum/via.c **** 
+  86:quantum/via.c **** // Flag QMK and VIA/keyboard level EEPROM as invalid.
+  87:quantum/via.c **** // Used in bootmagic_lite() and VIA command handler.
+  88:quantum/via.c **** // Keyboard level code should not need to call this.
+  89:quantum/via.c **** void via_eeprom_reset(void) {
+ 147              		.loc 1 89 29 is_stmt 1 view -0
+ 148              		.cfi_startproc
+ 149              		@ args = 0, pretend = 0, frame = 0
+ 150              		@ frame_needed = 0, uses_anonymous_args = 0
+  90:quantum/via.c ****     // Set the VIA specific EEPROM state as invalid.
+  91:quantum/via.c ****     via_eeprom_set_valid(false);
+ 151              		.loc 1 91 5 view .LVU28
+  89:quantum/via.c ****     // Set the VIA specific EEPROM state as invalid.
+ 152              		.loc 1 89 29 is_stmt 0 view .LVU29
+ 153 0000 08B5     		push	{r3, lr}
+ 154              		.cfi_def_cfa_offset 8
+ 155              		.cfi_offset 3, -8
+ 156              		.cfi_offset 14, -4
+ 157              		.loc 1 91 5 view .LVU30
+ 158 0002 0020     		movs	r0, #0
+ 159 0004 FFF7FEFF 		bl	via_eeprom_set_valid
+ 160              	.LVL9:
+  92:quantum/via.c ****     // Set the TMK/QMK EEPROM state as invalid.
+  93:quantum/via.c ****     eeconfig_disable();
+ 161              		.loc 1 93 5 is_stmt 1 view .LVU31
+  94:quantum/via.c **** }
+ 162              		.loc 1 94 1 is_stmt 0 view .LVU32
+ 163 0008 BDE80840 		pop	{r3, lr}
+ 164              		.cfi_restore 14
+ 165              		.cfi_restore 3
+ 166              		.cfi_def_cfa_offset 0
+  93:quantum/via.c **** }
+ 167              		.loc 1 93 5 view .LVU33
+ 168 000c FFF7FEBF 		b	eeconfig_disable
+ 169              	.LVL10:
+ 170              		.cfi_endproc
+ 171              	.LFE293:
+ 173              		.section	.text.via_init_kb,"ax",%progbits
+ 174              		.align	1
+ 175              		.weak	via_init_kb
+ 176              		.syntax unified
+ 177              		.thumb
+ 178              		.thumb_func
+ 179              		.fpu fpv4-sp-d16
+ 181              	via_init_kb:
+ 182              	.LFB294:
+  95:quantum/via.c **** 
+  96:quantum/via.c **** // Override this at the keyboard code level to check
+  97:quantum/via.c **** // VIA's EEPROM valid state and reset to defaults as needed.
+  98:quantum/via.c **** // Used by keyboards that store their own state in EEPROM,
+  99:quantum/via.c **** // for backlight, rotary encoders, etc.
+ 100:quantum/via.c **** // The override should not set via_eeprom_set_valid(true) as
+ 101:quantum/via.c **** // the caller also needs to check the valid state.
+ 102:quantum/via.c **** __attribute__((weak)) void via_init_kb(void) {}
+ 183              		.loc 1 102 46 is_stmt 1 view -0
+ 184              		.cfi_startproc
+ 185              		@ args = 0, pretend = 0, frame = 0
+ 186              		@ frame_needed = 0, uses_anonymous_args = 0
+ 187              		@ link register save eliminated.
+ 188              		.loc 1 102 47 view .LVU35
+ 189 0000 7047     		bx	lr
+ 190              		.cfi_endproc
+ 191              	.LFE294:
+ 193              		.section	.text.via_get_layout_options,"ax",%progbits
+ 194              		.align	1
+ 195              		.global	via_get_layout_options
+ 196              		.syntax unified
+ 197              		.thumb
+ 198              		.thumb_func
+ 199              		.fpu fpv4-sp-d16
+ 201              	via_get_layout_options:
+ 202              	.LFB296:
+ 103:quantum/via.c **** 
+ 104:quantum/via.c **** // Called by QMK core to initialize dynamic keymaps etc.
+ 105:quantum/via.c **** void via_init(void) {
+ 106:quantum/via.c ****     // Let keyboard level test EEPROM valid state,
+ 107:quantum/via.c ****     // but not set it valid, it is done here.
+ 108:quantum/via.c ****     via_init_kb();
+ 109:quantum/via.c **** 
+ 110:quantum/via.c ****     // If the EEPROM has the magic, the data is good.
+ 111:quantum/via.c ****     // OK to load from EEPROM.
+ 112:quantum/via.c ****     if (via_eeprom_is_valid()) {
+ 113:quantum/via.c ****     } else {
+ 114:quantum/via.c ****         // This resets the layout options
+ 115:quantum/via.c ****         via_set_layout_options(VIA_EEPROM_LAYOUT_OPTIONS_DEFAULT);
+ 116:quantum/via.c ****         // This resets the keymaps in EEPROM to what is in flash.
+ 117:quantum/via.c ****         dynamic_keymap_reset();
+ 118:quantum/via.c ****         // This resets the macros in EEPROM to nothing.
+ 119:quantum/via.c ****         dynamic_keymap_macro_reset();
+ 120:quantum/via.c ****         // Save the magic number last, in case saving was interrupted
+ 121:quantum/via.c ****         via_eeprom_set_valid(true);
+ 122:quantum/via.c ****     }
+ 123:quantum/via.c **** }
+ 124:quantum/via.c **** 
+ 125:quantum/via.c **** // This is generalized so the layout options EEPROM usage can be
+ 126:quantum/via.c **** // variable, between 1 and 4 bytes.
+ 127:quantum/via.c **** uint32_t via_get_layout_options(void) {
+ 203              		.loc 1 127 39 view -0
+ 204              		.cfi_startproc
+ 205              		@ args = 0, pretend = 0, frame = 0
+ 206              		@ frame_needed = 0, uses_anonymous_args = 0
+ 128:quantum/via.c ****     uint32_t value = 0;
+ 207              		.loc 1 128 5 view .LVU37
+ 208              	.LVL11:
+ 129:quantum/via.c ****     // Start at the most significant byte
+ 130:quantum/via.c ****     void *source = (void *)(VIA_EEPROM_LAYOUT_OPTIONS_ADDR);
+ 209              		.loc 1 130 5 view .LVU38
+ 131:quantum/via.c ****     for (uint8_t i = 0; i < VIA_EEPROM_LAYOUT_OPTIONS_SIZE; i++) {
+ 210              		.loc 1 131 5 view .LVU39
+ 211              	.LBB2:
+ 212              		.loc 1 131 10 view .LVU40
+ 213              		.loc 1 131 25 view .LVU41
+ 132:quantum/via.c ****         value = value << 8;
+ 214              		.loc 1 132 9 view .LVU42
+ 133:quantum/via.c ****         value |= eeprom_read_byte(source);
+ 215              		.loc 1 133 9 view .LVU43
+ 216              	.LBE2:
+ 127:quantum/via.c ****     uint32_t value = 0;
+ 217              		.loc 1 127 39 is_stmt 0 view .LVU44
+ 218 0000 08B5     		push	{r3, lr}
+ 219              		.cfi_def_cfa_offset 8
+ 220              		.cfi_offset 3, -8
+ 221              		.cfi_offset 14, -4
+ 222              	.LBB3:
+ 223              		.loc 1 133 18 view .LVU45
+ 224 0002 2620     		movs	r0, #38
+ 225 0004 FFF7FEFF 		bl	eeprom_read_byte
+ 226              	.LVL12:
+ 134:quantum/via.c ****         source++;
+ 227              		.loc 1 134 9 is_stmt 1 view .LVU46
+ 131:quantum/via.c ****         value = value << 8;
+ 228              		.loc 1 131 61 view .LVU47
+ 131:quantum/via.c ****         value = value << 8;
+ 229              		.loc 1 131 25 view .LVU48
+ 230              	.LBE3:
+ 135:quantum/via.c ****     }
+ 136:quantum/via.c ****     return value;
+ 231              		.loc 1 136 5 view .LVU49
+ 137:quantum/via.c **** }
+ 232              		.loc 1 137 1 is_stmt 0 view .LVU50
+ 233 0008 08BD     		pop	{r3, pc}
+ 234              		.cfi_endproc
+ 235              	.LFE296:
+ 237              		.section	.text.via_set_layout_options,"ax",%progbits
+ 238              		.align	1
+ 239              		.global	via_set_layout_options
+ 240              		.syntax unified
+ 241              		.thumb
+ 242              		.thumb_func
+ 243              		.fpu fpv4-sp-d16
+ 245              	via_set_layout_options:
+ 246              	.LVL13:
+ 247              	.LFB297:
+ 138:quantum/via.c **** 
+ 139:quantum/via.c **** void via_set_layout_options(uint32_t value) {
+ 248              		.loc 1 139 45 is_stmt 1 view -0
+ 249              		.cfi_startproc
+ 250              		@ args = 0, pretend = 0, frame = 0
+ 251              		@ frame_needed = 0, uses_anonymous_args = 0
+ 252              		@ link register save eliminated.
+ 140:quantum/via.c ****     // Start at the least significant byte
+ 141:quantum/via.c ****     void *target = (void *)(VIA_EEPROM_LAYOUT_OPTIONS_ADDR + VIA_EEPROM_LAYOUT_OPTIONS_SIZE - 1);
+ 253              		.loc 1 141 5 view .LVU52
+ 142:quantum/via.c ****     for (uint8_t i = 0; i < VIA_EEPROM_LAYOUT_OPTIONS_SIZE; i++) {
+ 254              		.loc 1 142 5 view .LVU53
+ 255              	.LBB4:
+ 256              		.loc 1 142 10 view .LVU54
+ 257              		.loc 1 142 25 view .LVU55
+ 143:quantum/via.c ****         eeprom_update_byte(target, value & 0xFF);
+ 258              		.loc 1 143 9 view .LVU56
+ 259 0000 C1B2     		uxtb	r1, r0
+ 260 0002 2620     		movs	r0, #38
+ 261              	.LVL14:
+ 262              		.loc 1 143 9 is_stmt 0 view .LVU57
+ 263 0004 FFF7FEBF 		b	eeprom_update_byte
+ 264              	.LVL15:
+ 265              	.LBE4:
+ 266              		.cfi_endproc
+ 267              	.LFE297:
+ 269              		.section	.text.via_init,"ax",%progbits
+ 270              		.align	1
+ 271              		.global	via_init
+ 272              		.syntax unified
+ 273              		.thumb
+ 274              		.thumb_func
+ 275              		.fpu fpv4-sp-d16
+ 277              	via_init:
+ 278              	.LFB295:
+ 105:quantum/via.c ****     // Let keyboard level test EEPROM valid state,
+ 279              		.loc 1 105 21 is_stmt 1 view -0
+ 280              		.cfi_startproc
+ 281              		@ args = 0, pretend = 0, frame = 0
+ 282              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108:quantum/via.c **** 
+ 283              		.loc 1 108 5 view .LVU59
+ 105:quantum/via.c ****     // Let keyboard level test EEPROM valid state,
+ 284              		.loc 1 105 21 is_stmt 0 view .LVU60
+ 285 0000 08B5     		push	{r3, lr}
+ 286              		.cfi_def_cfa_offset 8
+ 287              		.cfi_offset 3, -8
+ 288              		.cfi_offset 14, -4
+ 108:quantum/via.c **** 
+ 289              		.loc 1 108 5 view .LVU61
+ 290 0002 FFF7FEFF 		bl	via_init_kb
+ 291              	.LVL16:
+ 112:quantum/via.c ****     } else {
+ 292              		.loc 1 112 5 is_stmt 1 view .LVU62
+ 112:quantum/via.c ****     } else {
+ 293              		.loc 1 112 9 is_stmt 0 view .LVU63
+ 294 0006 FFF7FEFF 		bl	via_eeprom_is_valid
+ 295              	.LVL17:
+ 112:quantum/via.c ****     } else {
+ 296              		.loc 1 112 8 view .LVU64
+ 297 000a 50B9     		cbnz	r0, .L16
+ 115:quantum/via.c ****         // This resets the keymaps in EEPROM to what is in flash.
+ 298              		.loc 1 115 9 is_stmt 1 view .LVU65
+ 299 000c FFF7FEFF 		bl	via_set_layout_options
+ 300              	.LVL18:
+ 117:quantum/via.c ****         // This resets the macros in EEPROM to nothing.
+ 301              		.loc 1 117 9 view .LVU66
+ 302 0010 FFF7FEFF 		bl	dynamic_keymap_reset
+ 303              	.LVL19:
+ 119:quantum/via.c ****         // Save the magic number last, in case saving was interrupted
+ 304              		.loc 1 119 9 view .LVU67
+ 305 0014 FFF7FEFF 		bl	dynamic_keymap_macro_reset
+ 306              	.LVL20:
+ 121:quantum/via.c ****     }
+ 307              		.loc 1 121 9 view .LVU68
+ 123:quantum/via.c **** 
+ 308              		.loc 1 123 1 is_stmt 0 view .LVU69
+ 309 0018 BDE80840 		pop	{r3, lr}
+ 310              		.cfi_remember_state
+ 311              		.cfi_restore 14
+ 312              		.cfi_restore 3
+ 313              		.cfi_def_cfa_offset 0
+ 121:quantum/via.c ****     }
+ 314              		.loc 1 121 9 view .LVU70
+ 315 001c 0120     		movs	r0, #1
+ 316 001e FFF7FEBF 		b	via_eeprom_set_valid
+ 317              	.LVL21:
+ 318              	.L16:
+ 319              		.cfi_restore_state
+ 123:quantum/via.c **** 
+ 320              		.loc 1 123 1 view .LVU71
+ 321 0022 08BD     		pop	{r3, pc}
+ 322              		.cfi_endproc
+ 323              	.LFE295:
+ 325              		.section	.text.process_record_via,"ax",%progbits
+ 326              		.align	1
+ 327              		.global	process_record_via
+ 328              		.syntax unified
+ 329              		.thumb
+ 330              		.thumb_func
+ 331              		.fpu fpv4-sp-d16
+ 333              	process_record_via:
+ 334              	.LVL22:
+ 335              	.LFB298:
+ 144:quantum/via.c ****         value = value >> 8;
+ 145:quantum/via.c ****         target--;
+ 146:quantum/via.c ****     }
+ 147:quantum/via.c **** }
+ 148:quantum/via.c **** 
+ 149:quantum/via.c **** // Called by QMK core to process VIA-specific keycodes.
+ 150:quantum/via.c **** bool process_record_via(uint16_t keycode, keyrecord_t *record) {
+ 336              		.loc 1 150 64 is_stmt 1 view -0
+ 337              		.cfi_startproc
+ 338              		@ args = 0, pretend = 0, frame = 0
+ 339              		@ frame_needed = 0, uses_anonymous_args = 0
+ 151:quantum/via.c ****     // Handle macros
+ 152:quantum/via.c ****     if (record->event.pressed) {
+ 340              		.loc 1 152 5 view .LVU73
+ 150:quantum/via.c ****     // Handle macros
+ 341              		.loc 1 150 64 is_stmt 0 view .LVU74
+ 342 0000 10B5     		push	{r4, lr}
+ 343              		.cfi_def_cfa_offset 8
+ 344              		.cfi_offset 4, -8
+ 345              		.cfi_offset 14, -4
+ 346              		.loc 1 152 22 view .LVU75
+ 347 0002 8C78     		ldrb	r4, [r1, #2]	@ zero_extendqisi2
+ 348              		.loc 1 152 8 view .LVU76
+ 349 0004 FCB1     		cbz	r4, .L19
+ 153:quantum/via.c ****         if (keycode >= MACRO00 && keycode <= MACRO15) {
+ 350              		.loc 1 153 9 is_stmt 1 view .LVU77
+ 351              		.loc 1 153 12 is_stmt 0 view .LVU78
+ 352 0006 A0F5BE43 		sub	r3, r0, #24320
+ 353 000a 123B     		subs	r3, r3, #18
+ 354 000c 0F2B     		cmp	r3, #15
+ 355 000e 24D8     		bhi	.L20
+ 356              	.LBB5:
+ 154:quantum/via.c ****             uint8_t id = keycode - MACRO00;
+ 357              		.loc 1 154 13 is_stmt 1 view .LVU79
+ 358              	.LVL23:
+ 155:quantum/via.c ****             dynamic_keymap_macro_send(id);
+ 359              		.loc 1 155 13 view .LVU80
+ 154:quantum/via.c ****             uint8_t id = keycode - MACRO00;
+ 360              		.loc 1 154 21 is_stmt 0 view .LVU81
+ 361 0010 1238     		subs	r0, r0, #18
+ 362              	.LVL24:
+ 363              		.loc 1 155 13 view .LVU82
+ 364 0012 C0B2     		uxtb	r0, r0
+ 365 0014 FFF7FEFF 		bl	dynamic_keymap_macro_send
+ 366              	.LVL25:
+ 156:quantum/via.c ****             return false;
+ 367              		.loc 1 156 13 is_stmt 1 view .LVU83
+ 368              	.L27:
+ 369              		.loc 1 156 13 is_stmt 0 view .LVU84
+ 370              	.LBE5:
+ 157:quantum/via.c ****         }
+ 158:quantum/via.c ****     }
+ 159:quantum/via.c **** 
+ 160:quantum/via.c ****     // TODO: ideally this would be generalized and refactored into
+ 161:quantum/via.c ****     // QMK core as advanced keycodes, until then, the simple case
+ 162:quantum/via.c ****     // can be available here to keyboards using VIA
+ 163:quantum/via.c ****     switch (keycode) {
+ 164:quantum/via.c ****         case FN_MO13:
+ 165:quantum/via.c ****             if (record->event.pressed) {
+ 166:quantum/via.c ****                 layer_on(1);
+ 167:quantum/via.c ****                 update_tri_layer(1, 2, 3);
+ 168:quantum/via.c ****             } else {
+ 169:quantum/via.c ****                 layer_off(1);
+ 170:quantum/via.c ****                 update_tri_layer(1, 2, 3);
+ 171:quantum/via.c ****             }
+ 172:quantum/via.c ****             return false;
+ 371              		.loc 1 172 20 view .LVU85
+ 372 0018 0024     		movs	r4, #0
+ 373              	.L26:
+ 173:quantum/via.c ****             break;
+ 174:quantum/via.c ****         case FN_MO23:
+ 175:quantum/via.c ****             if (record->event.pressed) {
+ 176:quantum/via.c ****                 layer_on(2);
+ 177:quantum/via.c ****                 update_tri_layer(1, 2, 3);
+ 178:quantum/via.c ****             } else {
+ 179:quantum/via.c ****                 layer_off(2);
+ 180:quantum/via.c ****                 update_tri_layer(1, 2, 3);
+ 181:quantum/via.c ****             }
+ 182:quantum/via.c ****             return false;
+ 183:quantum/via.c ****             break;
+ 184:quantum/via.c ****     }
+ 185:quantum/via.c ****     return true;
+ 186:quantum/via.c **** }
+ 374              		.loc 1 186 1 view .LVU86
+ 375 001a 2046     		mov	r0, r4
+ 376 001c 10BD     		pop	{r4, pc}
+ 377              	.LVL26:
+ 378              	.L24:
+ 165:quantum/via.c ****                 layer_on(1);
+ 379              		.loc 1 165 13 is_stmt 1 view .LVU87
+ 166:quantum/via.c ****                 update_tri_layer(1, 2, 3);
+ 380              		.loc 1 166 17 view .LVU88
+ 381 001e 0120     		movs	r0, #1
+ 382              	.LVL27:
+ 383              	.L29:
+ 166:quantum/via.c ****                 update_tri_layer(1, 2, 3);
+ 384              		.loc 1 166 17 is_stmt 0 view .LVU89
+ 385 0020 FFF7FEFF 		bl	layer_on
+ 386              	.LVL28:
+ 167:quantum/via.c ****             } else {
+ 387              		.loc 1 167 17 is_stmt 1 view .LVU90
+ 388 0024 0322     		movs	r2, #3
+ 389 0026 0221     		movs	r1, #2
+ 390 0028 0120     		movs	r0, #1
+ 391 002a FFF7FEFF 		bl	update_tri_layer
+ 392              	.LVL29:
+ 393 002e F3E7     		b	.L27
+ 394              	.LVL30:
+ 395              	.L22:
+ 169:quantum/via.c ****                 update_tri_layer(1, 2, 3);
+ 396              		.loc 1 169 17 view .LVU91
+ 397 0030 0120     		movs	r0, #1
+ 398              	.LVL31:
+ 399              	.L28:
+ 179:quantum/via.c ****                 update_tri_layer(1, 2, 3);
+ 400              		.loc 1 179 17 is_stmt 0 view .LVU92
+ 401 0032 FFF7FEFF 		bl	layer_off
+ 402              	.LVL32:
+ 180:quantum/via.c ****             }
+ 403              		.loc 1 180 17 is_stmt 1 view .LVU93
+ 404 0036 0322     		movs	r2, #3
+ 405 0038 0221     		movs	r1, #2
+ 406 003a 0120     		movs	r0, #1
+ 407 003c FFF7FEFF 		bl	update_tri_layer
+ 408              	.LVL33:
+ 409 0040 EBE7     		b	.L26
+ 410              	.LVL34:
+ 411              	.L23:
+ 173:quantum/via.c ****         case FN_MO23:
+ 412              		.loc 1 173 13 view .LVU94
+ 175:quantum/via.c ****                 layer_on(2);
+ 413              		.loc 1 175 13 view .LVU95
+ 179:quantum/via.c ****                 update_tri_layer(1, 2, 3);
+ 414              		.loc 1 179 17 view .LVU96
+ 415 0042 0220     		movs	r0, #2
+ 416              	.LVL35:
+ 179:quantum/via.c ****                 update_tri_layer(1, 2, 3);
+ 417              		.loc 1 179 17 is_stmt 0 view .LVU97
+ 418 0044 F5E7     		b	.L28
+ 419              	.LVL36:
+ 420              	.L19:
+ 163:quantum/via.c ****         case FN_MO13:
+ 421              		.loc 1 163 5 is_stmt 1 view .LVU98
+ 422 0046 45F61073 		movw	r3, #24336
+ 423 004a 9842     		cmp	r0, r3
+ 424 004c F0D0     		beq	.L22
+ 425 004e 45F61173 		movw	r3, #24337
+ 426 0052 9842     		cmp	r0, r3
+ 427 0054 F5D0     		beq	.L23
+ 428 0056 0124     		movs	r4, #1
+ 429 0058 DFE7     		b	.L26
+ 430              	.L20:
+ 163:quantum/via.c ****         case FN_MO13:
+ 431              		.loc 1 163 5 view .LVU99
+ 432 005a 45F61073 		movw	r3, #24336
+ 433 005e 9842     		cmp	r0, r3
+ 434 0060 DDD0     		beq	.L24
+ 435 0062 45F61173 		movw	r3, #24337
+ 436 0066 9842     		cmp	r0, r3
+ 437 0068 D7D1     		bne	.L26
+ 176:quantum/via.c ****                 update_tri_layer(1, 2, 3);
+ 438              		.loc 1 176 17 view .LVU100
+ 439 006a 0220     		movs	r0, #2
+ 440              	.LVL37:
+ 176:quantum/via.c ****                 update_tri_layer(1, 2, 3);
+ 441              		.loc 1 176 17 is_stmt 0 view .LVU101
+ 442 006c D8E7     		b	.L29
+ 443              		.cfi_endproc
+ 444              	.LFE298:
+ 446              		.section	.text.raw_hid_receive_kb,"ax",%progbits
+ 447              		.align	1
+ 448              		.weak	raw_hid_receive_kb
+ 449              		.syntax unified
+ 450              		.thumb
+ 451              		.thumb_func
+ 452              		.fpu fpv4-sp-d16
+ 454              	raw_hid_receive_kb:
+ 455              	.LVL38:
+ 456              	.LFB299:
+ 187:quantum/via.c **** 
+ 188:quantum/via.c **** // Keyboard level code can override this to handle custom messages from VIA.
+ 189:quantum/via.c **** // See raw_hid_receive() implementation.
+ 190:quantum/via.c **** // DO NOT call raw_hid_send() in the override function.
+ 191:quantum/via.c **** __attribute__((weak)) void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
+ 457              		.loc 1 191 78 is_stmt 1 view -0
+ 458              		.cfi_startproc
+ 459              		@ args = 0, pretend = 0, frame = 0
+ 460              		@ frame_needed = 0, uses_anonymous_args = 0
+ 461              		@ link register save eliminated.
+ 192:quantum/via.c ****     uint8_t *command_id = &(data[0]);
+ 462              		.loc 1 192 5 view .LVU103
+ 193:quantum/via.c ****     *command_id         = id_unhandled;
+ 463              		.loc 1 193 5 view .LVU104
+ 464              		.loc 1 193 25 is_stmt 0 view .LVU105
+ 465 0000 FF23     		movs	r3, #255
+ 466 0002 0370     		strb	r3, [r0]
+ 194:quantum/via.c **** }
+ 467              		.loc 1 194 1 view .LVU106
+ 468 0004 7047     		bx	lr
+ 469              		.cfi_endproc
+ 470              	.LFE299:
+ 472              		.section	.text.raw_hid_receive,"ax",%progbits
+ 473              		.align	1
+ 474              		.global	raw_hid_receive
+ 475              		.syntax unified
+ 476              		.thumb
+ 477              		.thumb_func
+ 478              		.fpu fpv4-sp-d16
+ 480              	raw_hid_receive:
+ 481              	.LVL39:
+ 482              	.LFB300:
+ 195:quantum/via.c **** 
+ 196:quantum/via.c **** // VIA handles received HID messages first, and will route to
+ 197:quantum/via.c **** // raw_hid_receive_kb() for command IDs that are not handled here.
+ 198:quantum/via.c **** // This gives the keyboard code level the ability to handle the command
+ 199:quantum/via.c **** // specifically.
+ 200:quantum/via.c **** //
+ 201:quantum/via.c **** // raw_hid_send() is called at the end, with the same buffer, which was
+ 202:quantum/via.c **** // possibly modified with returned values.
+ 203:quantum/via.c **** void raw_hid_receive(uint8_t *data, uint8_t length) {
+ 483              		.loc 1 203 53 is_stmt 1 view -0
+ 484              		.cfi_startproc
+ 485              		@ args = 0, pretend = 0, frame = 0
+ 486              		@ frame_needed = 0, uses_anonymous_args = 0
+ 204:quantum/via.c ****     uint8_t *command_id   = &(data[0]);
+ 487              		.loc 1 204 5 view .LVU108
+ 205:quantum/via.c ****     uint8_t *command_data = &(data[1]);
+ 488              		.loc 1 205 5 view .LVU109
+ 206:quantum/via.c ****     switch (*command_id) {
+ 489              		.loc 1 206 5 view .LVU110
+ 203:quantum/via.c ****     uint8_t *command_id   = &(data[0]);
+ 490              		.loc 1 203 53 is_stmt 0 view .LVU111
+ 491 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 492              		.cfi_def_cfa_offset 24
+ 493              		.cfi_offset 3, -24
+ 494              		.cfi_offset 4, -20
+ 495              		.cfi_offset 5, -16
+ 496              		.cfi_offset 6, -12
+ 497              		.cfi_offset 7, -8
+ 498              		.cfi_offset 14, -4
+ 499 0002 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 500 0004 013B     		subs	r3, r3, #1
+ 203:quantum/via.c ****     uint8_t *command_id   = &(data[0]);
+ 501              		.loc 1 203 53 view .LVU112
+ 502 0006 0446     		mov	r4, r0
+ 503 0008 0D46     		mov	r5, r1
+ 504 000a 122B     		cmp	r3, #18
+ 505 000c 54D8     		bhi	.L32
+ 506 000e DFE803F0 		tbb	[pc, r3]
+ 507              	.L34:
+ 508 0012 0A       		.byte	(.L47-.L34)/2
+ 509 0013 14       		.byte	(.L46-.L34)/2
+ 510 0014 38       		.byte	(.L45-.L34)/2
+ 511 0015 41       		.byte	(.L44-.L34)/2
+ 512 0016 47       		.byte	(.L43-.L34)/2
+ 513 0017 50       		.byte	(.L42-.L34)/2
+ 514 0018 53       		.byte	(.L32-.L34)/2
+ 515 0019 53       		.byte	(.L32-.L34)/2
+ 516 001a 53       		.byte	(.L32-.L34)/2
+ 517 001b 53       		.byte	(.L32-.L34)/2
+ 518 001c 53       		.byte	(.L32-.L34)/2
+ 519 001d 56       		.byte	(.L41-.L34)/2
+ 520 001e 5A       		.byte	(.L40-.L34)/2
+ 521 001f 60       		.byte	(.L39-.L34)/2
+ 522 0020 69       		.byte	(.L38-.L34)/2
+ 523 0021 72       		.byte	(.L37-.L34)/2
+ 524 0022 75       		.byte	(.L36-.L34)/2
+ 525 0023 78       		.byte	(.L35-.L34)/2
+ 526 0024 81       		.byte	(.L33-.L34)/2
+ 527 0025 00       		.p2align 1
+ 528              	.L47:
+ 207:quantum/via.c ****         case id_get_protocol_version: {
+ 208:quantum/via.c ****             command_data[0] = VIA_PROTOCOL_VERSION >> 8;
+ 529              		.loc 1 208 13 is_stmt 1 view .LVU113
+ 530              		.loc 1 208 29 is_stmt 0 view .LVU114
+ 531 0026 0023     		movs	r3, #0
+ 532 0028 4370     		strb	r3, [r0, #1]
+ 209:quantum/via.c ****             command_data[1] = VIA_PROTOCOL_VERSION & 0xFF;
+ 533              		.loc 1 209 13 is_stmt 1 view .LVU115
+ 534              		.loc 1 209 29 is_stmt 0 view .LVU116
+ 535 002a 0923     		movs	r3, #9
+ 536 002c 8370     		strb	r3, [r0, #2]
+ 210:quantum/via.c ****             break;
+ 537              		.loc 1 210 13 is_stmt 1 view .LVU117
+ 538              	.LVL40:
+ 539              	.L48:
+ 211:quantum/via.c ****         }
+ 212:quantum/via.c ****         case id_get_keyboard_value: {
+ 213:quantum/via.c ****             switch (command_data[0]) {
+ 214:quantum/via.c ****                 case id_uptime: {
+ 215:quantum/via.c ****                     uint32_t value  = timer_read32();
+ 216:quantum/via.c ****                     command_data[1] = (value >> 24) & 0xFF;
+ 217:quantum/via.c ****                     command_data[2] = (value >> 16) & 0xFF;
+ 218:quantum/via.c ****                     command_data[3] = (value >> 8) & 0xFF;
+ 219:quantum/via.c ****                     command_data[4] = value & 0xFF;
+ 220:quantum/via.c ****                     break;
+ 221:quantum/via.c ****                 }
+ 222:quantum/via.c ****                 case id_layout_options: {
+ 223:quantum/via.c ****                     uint32_t value  = via_get_layout_options();
+ 224:quantum/via.c ****                     command_data[1] = (value >> 24) & 0xFF;
+ 225:quantum/via.c ****                     command_data[2] = (value >> 16) & 0xFF;
+ 226:quantum/via.c ****                     command_data[3] = (value >> 8) & 0xFF;
+ 227:quantum/via.c ****                     command_data[4] = value & 0xFF;
+ 228:quantum/via.c ****                     break;
+ 229:quantum/via.c ****                 }
+ 230:quantum/via.c ****                 case id_switch_matrix_state: {
+ 231:quantum/via.c **** #if ((MATRIX_COLS / 8 + 1) * MATRIX_ROWS <= 28)
+ 232:quantum/via.c ****                     uint8_t i = 1;
+ 233:quantum/via.c ****                     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+ 234:quantum/via.c ****                         matrix_row_t value = matrix_get_row(row);
+ 235:quantum/via.c **** #    if (MATRIX_COLS > 24)
+ 236:quantum/via.c ****                         command_data[i++] = (value >> 24) & 0xFF;
+ 237:quantum/via.c **** #    endif
+ 238:quantum/via.c **** #    if (MATRIX_COLS > 16)
+ 239:quantum/via.c ****                         command_data[i++] = (value >> 16) & 0xFF;
+ 240:quantum/via.c **** #    endif
+ 241:quantum/via.c **** #    if (MATRIX_COLS > 8)
+ 242:quantum/via.c ****                         command_data[i++] = (value >> 8) & 0xFF;
+ 243:quantum/via.c **** #    endif
+ 244:quantum/via.c ****                         command_data[i++] = value & 0xFF;
+ 245:quantum/via.c ****                     }
+ 246:quantum/via.c **** #endif
+ 247:quantum/via.c ****                     break;
+ 248:quantum/via.c ****                 }
+ 249:quantum/via.c ****                 default: {
+ 250:quantum/via.c ****                     raw_hid_receive_kb(data, length);
+ 251:quantum/via.c ****                     break;
+ 252:quantum/via.c ****                 }
+ 253:quantum/via.c ****             }
+ 254:quantum/via.c ****             break;
+ 255:quantum/via.c ****         }
+ 256:quantum/via.c ****         case id_set_keyboard_value: {
+ 257:quantum/via.c ****             switch (command_data[0]) {
+ 258:quantum/via.c ****                 case id_layout_options: {
+ 259:quantum/via.c ****                     uint32_t value = ((uint32_t)command_data[1] << 24) | ((uint32_t)command_data[2]
+ 260:quantum/via.c ****                     via_set_layout_options(value);
+ 261:quantum/via.c ****                     break;
+ 262:quantum/via.c ****                 }
+ 263:quantum/via.c ****                 default: {
+ 264:quantum/via.c ****                     raw_hid_receive_kb(data, length);
+ 265:quantum/via.c ****                     break;
+ 266:quantum/via.c ****                 }
+ 267:quantum/via.c ****             }
+ 268:quantum/via.c ****             break;
+ 269:quantum/via.c ****         }
+ 270:quantum/via.c ****         case id_dynamic_keymap_get_keycode: {
+ 271:quantum/via.c ****             uint16_t keycode = dynamic_keymap_get_keycode(command_data[0], command_data[1], command
+ 272:quantum/via.c ****             command_data[3]  = keycode >> 8;
+ 273:quantum/via.c ****             command_data[4]  = keycode & 0xFF;
+ 274:quantum/via.c ****             break;
+ 275:quantum/via.c ****         }
+ 276:quantum/via.c ****         case id_dynamic_keymap_set_keycode: {
+ 277:quantum/via.c ****             dynamic_keymap_set_keycode(command_data[0], command_data[1], command_data[2], (command_
+ 278:quantum/via.c ****             break;
+ 279:quantum/via.c ****         }
+ 280:quantum/via.c ****         case id_dynamic_keymap_reset: {
+ 281:quantum/via.c ****             dynamic_keymap_reset();
+ 282:quantum/via.c ****             break;
+ 283:quantum/via.c ****         }
+ 284:quantum/via.c ****         case id_lighting_set_value: {
+ 285:quantum/via.c **** #if defined(VIA_QMK_BACKLIGHT_ENABLE)
+ 286:quantum/via.c ****             via_qmk_backlight_set_value(command_data);
+ 287:quantum/via.c **** #endif
+ 288:quantum/via.c **** #if defined(VIA_QMK_RGBLIGHT_ENABLE)
+ 289:quantum/via.c ****             via_qmk_rgblight_set_value(command_data);
+ 290:quantum/via.c **** #endif
+ 291:quantum/via.c **** #if defined(VIA_CUSTOM_LIGHTING_ENABLE)
+ 292:quantum/via.c ****             raw_hid_receive_kb(data, length);
+ 293:quantum/via.c **** #endif
+ 294:quantum/via.c **** #if !defined(VIA_QMK_BACKLIGHT_ENABLE) && !defined(VIA_QMK_RGBLIGHT_ENABLE) && !defined(VIA_CUSTOM_
+ 295:quantum/via.c ****             // Return the unhandled state
+ 296:quantum/via.c ****             *command_id = id_unhandled;
+ 297:quantum/via.c **** #endif
+ 298:quantum/via.c ****             break;
+ 299:quantum/via.c ****         }
+ 300:quantum/via.c ****         case id_lighting_get_value: {
+ 301:quantum/via.c **** #if defined(VIA_QMK_BACKLIGHT_ENABLE)
+ 302:quantum/via.c ****             via_qmk_backlight_get_value(command_data);
+ 303:quantum/via.c **** #endif
+ 304:quantum/via.c **** #if defined(VIA_QMK_RGBLIGHT_ENABLE)
+ 305:quantum/via.c ****             via_qmk_rgblight_get_value(command_data);
+ 306:quantum/via.c **** #endif
+ 307:quantum/via.c **** #if defined(VIA_CUSTOM_LIGHTING_ENABLE)
+ 308:quantum/via.c ****             raw_hid_receive_kb(data, length);
+ 309:quantum/via.c **** #endif
+ 310:quantum/via.c **** #if !defined(VIA_QMK_BACKLIGHT_ENABLE) && !defined(VIA_QMK_RGBLIGHT_ENABLE) && !defined(VIA_CUSTOM_
+ 311:quantum/via.c ****             // Return the unhandled state
+ 312:quantum/via.c ****             *command_id = id_unhandled;
+ 313:quantum/via.c **** #endif
+ 314:quantum/via.c ****             break;
+ 315:quantum/via.c ****         }
+ 316:quantum/via.c ****         case id_lighting_save: {
+ 317:quantum/via.c **** #if defined(VIA_QMK_BACKLIGHT_ENABLE)
+ 318:quantum/via.c ****             eeconfig_update_backlight_current();
+ 319:quantum/via.c **** #endif
+ 320:quantum/via.c **** #if defined(VIA_QMK_RGBLIGHT_ENABLE)
+ 321:quantum/via.c ****             eeconfig_update_rgblight_current();
+ 322:quantum/via.c **** #endif
+ 323:quantum/via.c **** #if defined(VIA_CUSTOM_LIGHTING_ENABLE)
+ 324:quantum/via.c ****             raw_hid_receive_kb(data, length);
+ 325:quantum/via.c **** #endif
+ 326:quantum/via.c **** #if !defined(VIA_QMK_BACKLIGHT_ENABLE) && !defined(VIA_QMK_RGBLIGHT_ENABLE) && !defined(VIA_CUSTOM_
+ 327:quantum/via.c ****             // Return the unhandled state
+ 328:quantum/via.c ****             *command_id = id_unhandled;
+ 329:quantum/via.c **** #endif
+ 330:quantum/via.c ****             break;
+ 331:quantum/via.c ****         }
+ 332:quantum/via.c ****         case id_dynamic_keymap_macro_get_count: {
+ 333:quantum/via.c ****             command_data[0] = dynamic_keymap_macro_get_count();
+ 334:quantum/via.c ****             break;
+ 335:quantum/via.c ****         }
+ 336:quantum/via.c ****         case id_dynamic_keymap_macro_get_buffer_size: {
+ 337:quantum/via.c ****             uint16_t size   = dynamic_keymap_macro_get_buffer_size();
+ 338:quantum/via.c ****             command_data[0] = size >> 8;
+ 339:quantum/via.c ****             command_data[1] = size & 0xFF;
+ 340:quantum/via.c ****             break;
+ 341:quantum/via.c ****         }
+ 342:quantum/via.c ****         case id_dynamic_keymap_macro_get_buffer: {
+ 343:quantum/via.c ****             uint16_t offset = (command_data[0] << 8) | command_data[1];
+ 344:quantum/via.c ****             uint16_t size   = command_data[2];  // size <= 28
+ 345:quantum/via.c ****             dynamic_keymap_macro_get_buffer(offset, size, &command_data[3]);
+ 346:quantum/via.c ****             break;
+ 347:quantum/via.c ****         }
+ 348:quantum/via.c ****         case id_dynamic_keymap_macro_set_buffer: {
+ 349:quantum/via.c ****             uint16_t offset = (command_data[0] << 8) | command_data[1];
+ 350:quantum/via.c ****             uint16_t size   = command_data[2];  // size <= 28
+ 351:quantum/via.c ****             dynamic_keymap_macro_set_buffer(offset, size, &command_data[3]);
+ 352:quantum/via.c ****             break;
+ 353:quantum/via.c ****         }
+ 354:quantum/via.c ****         case id_dynamic_keymap_macro_reset: {
+ 355:quantum/via.c ****             dynamic_keymap_macro_reset();
+ 356:quantum/via.c ****             break;
+ 357:quantum/via.c ****         }
+ 358:quantum/via.c ****         case id_dynamic_keymap_get_layer_count: {
+ 359:quantum/via.c ****             command_data[0] = dynamic_keymap_get_layer_count();
+ 360:quantum/via.c ****             break;
+ 361:quantum/via.c ****         }
+ 362:quantum/via.c ****         case id_dynamic_keymap_get_buffer: {
+ 363:quantum/via.c ****             uint16_t offset = (command_data[0] << 8) | command_data[1];
+ 364:quantum/via.c ****             uint16_t size   = command_data[2];  // size <= 28
+ 365:quantum/via.c ****             dynamic_keymap_get_buffer(offset, size, &command_data[3]);
+ 366:quantum/via.c ****             break;
+ 367:quantum/via.c ****         }
+ 368:quantum/via.c ****         case id_dynamic_keymap_set_buffer: {
+ 369:quantum/via.c ****             uint16_t offset = (command_data[0] << 8) | command_data[1];
+ 370:quantum/via.c ****             uint16_t size   = command_data[2];  // size <= 28
+ 371:quantum/via.c ****             dynamic_keymap_set_buffer(offset, size, &command_data[3]);
+ 372:quantum/via.c ****             break;
+ 373:quantum/via.c ****         }
+ 374:quantum/via.c ****         default: {
+ 375:quantum/via.c ****             // The command ID is not known
+ 376:quantum/via.c ****             // Return the unhandled state
+ 377:quantum/via.c ****             *command_id = id_unhandled;
+ 378:quantum/via.c ****             break;
+ 379:quantum/via.c ****         }
+ 380:quantum/via.c ****     }
+ 381:quantum/via.c **** 
+ 382:quantum/via.c ****     // Return the same buffer, optionally with values changed
+ 383:quantum/via.c ****     // (i.e. returning state to the host, or the unhandled state).
+ 384:quantum/via.c ****     raw_hid_send(data, length);
+ 540              		.loc 1 384 5 view .LVU118
+ 541 002e 2946     		mov	r1, r5
+ 542 0030 2046     		mov	r0, r4
+ 385:quantum/via.c **** }
+ 543              		.loc 1 385 1 is_stmt 0 view .LVU119
+ 544 0032 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
+ 545              		.cfi_remember_state
+ 546              		.cfi_restore 14
+ 547              		.cfi_restore 7
+ 548              		.cfi_restore 6
+ 549              		.cfi_restore 5
+ 550              		.cfi_restore 4
+ 551              		.cfi_restore 3
+ 552              		.cfi_def_cfa_offset 0
+ 553              	.LVL41:
+ 384:quantum/via.c **** }
+ 554              		.loc 1 384 5 view .LVU120
+ 555 0036 FFF7FEBF 		b	raw_hid_send
+ 556              	.LVL42:
+ 557              	.L46:
+ 558              		.cfi_restore_state
+ 213:quantum/via.c ****                 case id_uptime: {
+ 559              		.loc 1 213 13 is_stmt 1 view .LVU121
+ 213:quantum/via.c ****                 case id_uptime: {
+ 560              		.loc 1 213 33 is_stmt 0 view .LVU122
+ 561 003a 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 562 003c 022B     		cmp	r3, #2
+ 563 003e 0DD0     		beq	.L49
+ 564 0040 032B     		cmp	r3, #3
+ 565 0042 0ED0     		beq	.L50
+ 566 0044 012B     		cmp	r3, #1
+ 567 0046 17D1     		bne	.L51
+ 568              	.LBB6:
+ 215:quantum/via.c ****                     command_data[1] = (value >> 24) & 0xFF;
+ 569              		.loc 1 215 21 is_stmt 1 view .LVU123
+ 215:quantum/via.c ****                     command_data[1] = (value >> 24) & 0xFF;
+ 570              		.loc 1 215 39 is_stmt 0 view .LVU124
+ 571 0048 FFF7FEFF 		bl	timer_read32
+ 572              	.LVL43:
+ 216:quantum/via.c ****                     command_data[2] = (value >> 16) & 0xFF;
+ 573              		.loc 1 216 21 is_stmt 1 view .LVU125
+ 574              	.L56:
+ 216:quantum/via.c ****                     command_data[2] = (value >> 16) & 0xFF;
+ 575              		.loc 1 216 21 is_stmt 0 view .LVU126
+ 576              	.LBE6:
+ 577              	.LBB7:
+ 224:quantum/via.c ****                     command_data[2] = (value >> 16) & 0xFF;
+ 578              		.loc 1 224 21 is_stmt 1 view .LVU127
+ 224:quantum/via.c ****                     command_data[2] = (value >> 16) & 0xFF;
+ 579              		.loc 1 224 46 is_stmt 0 view .LVU128
+ 580 004c 030E     		lsrs	r3, r0, #24
+ 224:quantum/via.c ****                     command_data[2] = (value >> 16) & 0xFF;
+ 581              		.loc 1 224 37 view .LVU129
+ 582 004e A370     		strb	r3, [r4, #2]
+ 225:quantum/via.c ****                     command_data[3] = (value >> 8) & 0xFF;
+ 583              		.loc 1 225 21 is_stmt 1 view .LVU130
+ 225:quantum/via.c ****                     command_data[3] = (value >> 8) & 0xFF;
+ 584              		.loc 1 225 46 is_stmt 0 view .LVU131
+ 585 0050 030C     		lsrs	r3, r0, #16
+ 225:quantum/via.c ****                     command_data[3] = (value >> 8) & 0xFF;
+ 586              		.loc 1 225 37 view .LVU132
+ 587 0052 E370     		strb	r3, [r4, #3]
+ 226:quantum/via.c ****                     command_data[4] = value & 0xFF;
+ 588              		.loc 1 226 21 is_stmt 1 view .LVU133
+ 589              	.LVL44:
+ 590              	.L54:
+ 226:quantum/via.c ****                     command_data[4] = value & 0xFF;
+ 591              		.loc 1 226 21 is_stmt 0 view .LVU134
+ 592              	.LBE7:
+ 593              	.LBB8:
+ 272:quantum/via.c ****             command_data[4]  = keycode & 0xFF;
+ 594              		.loc 1 272 13 is_stmt 1 view .LVU135
+ 272:quantum/via.c ****             command_data[4]  = keycode & 0xFF;
+ 595              		.loc 1 272 30 is_stmt 0 view .LVU136
+ 596 0054 030A     		lsrs	r3, r0, #8
+ 597 0056 2371     		strb	r3, [r4, #4]
+ 273:quantum/via.c ****             break;
+ 598              		.loc 1 273 13 is_stmt 1 view .LVU137
+ 273:quantum/via.c ****             break;
+ 599              		.loc 1 273 30 is_stmt 0 view .LVU138
+ 600 0058 6071     		strb	r0, [r4, #5]
+ 274:quantum/via.c ****         }
+ 601              		.loc 1 274 13 is_stmt 1 view .LVU139
+ 602 005a E8E7     		b	.L48
+ 603              	.LVL45:
+ 604              	.L49:
+ 274:quantum/via.c ****         }
+ 605              		.loc 1 274 13 is_stmt 0 view .LVU140
+ 606              	.LBE8:
+ 607              	.LBB9:
+ 223:quantum/via.c ****                     command_data[1] = (value >> 24) & 0xFF;
+ 608              		.loc 1 223 21 is_stmt 1 view .LVU141
+ 223:quantum/via.c ****                     command_data[1] = (value >> 24) & 0xFF;
+ 609              		.loc 1 223 39 is_stmt 0 view .LVU142
+ 610 005c FFF7FEFF 		bl	via_get_layout_options
+ 611              	.LVL46:
+ 223:quantum/via.c ****                     command_data[1] = (value >> 24) & 0xFF;
+ 612              		.loc 1 223 39 view .LVU143
+ 613 0060 F4E7     		b	.L56
+ 614              	.LVL47:
+ 615              	.L50:
+ 223:quantum/via.c ****                     command_data[1] = (value >> 24) & 0xFF;
+ 616              		.loc 1 223 39 view .LVU144
+ 617 0062 471C     		adds	r7, r0, #1
+ 618              	.LBE9:
+ 619 0064 0026     		movs	r6, #0
+ 620              	.LVL48:
+ 621              	.L52:
+ 622              	.LBB10:
+ 623              	.LBB11:
+ 624              	.LBB12:
+ 234:quantum/via.c **** #    if (MATRIX_COLS > 24)
+ 625              		.loc 1 234 25 is_stmt 1 discriminator 3 view .LVU145
+ 234:quantum/via.c **** #    if (MATRIX_COLS > 24)
+ 626              		.loc 1 234 46 is_stmt 0 discriminator 3 view .LVU146
+ 627 0066 F0B2     		uxtb	r0, r6
+ 628 0068 FFF7FEFF 		bl	matrix_get_row
+ 629              	.LVL49:
+ 244:quantum/via.c ****                     }
+ 630              		.loc 1 244 25 is_stmt 1 discriminator 3 view .LVU147
+ 244:quantum/via.c ****                     }
+ 631              		.loc 1 244 25 is_stmt 0 discriminator 3 view .LVU148
+ 632              	.LBE12:
+ 233:quantum/via.c ****                         matrix_row_t value = matrix_get_row(row);
+ 633              		.loc 1 233 21 discriminator 3 view .LVU149
+ 634 006c 0136     		adds	r6, r6, #1
+ 635              	.LVL50:
+ 233:quantum/via.c ****                         matrix_row_t value = matrix_get_row(row);
+ 636              		.loc 1 233 21 discriminator 3 view .LVU150
+ 637 006e 0B2E     		cmp	r6, #11
+ 638              	.LBB13:
+ 244:quantum/via.c ****                     }
+ 639              		.loc 1 244 43 discriminator 3 view .LVU151
+ 640 0070 07F8010F 		strb	r0, [r7, #1]!
+ 641              	.LBE13:
+ 233:quantum/via.c ****                         matrix_row_t value = matrix_get_row(row);
+ 642              		.loc 1 233 62 is_stmt 1 discriminator 3 view .LVU152
+ 233:quantum/via.c ****                         matrix_row_t value = matrix_get_row(row);
+ 643              		.loc 1 233 43 discriminator 3 view .LVU153
+ 233:quantum/via.c ****                         matrix_row_t value = matrix_get_row(row);
+ 644              		.loc 1 233 21 is_stmt 0 discriminator 3 view .LVU154
+ 645 0074 F7D1     		bne	.L52
+ 646 0076 DAE7     		b	.L48
+ 647              	.LVL51:
+ 648              	.L51:
+ 233:quantum/via.c ****                         matrix_row_t value = matrix_get_row(row);
+ 649              		.loc 1 233 21 discriminator 3 view .LVU155
+ 650              	.LBE11:
+ 651              	.LBE10:
+ 250:quantum/via.c ****                     break;
+ 652              		.loc 1 250 21 is_stmt 1 view .LVU156
+ 653 0078 2946     		mov	r1, r5
+ 654              	.LVL52:
+ 250:quantum/via.c ****                     break;
+ 655              		.loc 1 250 21 is_stmt 0 view .LVU157
+ 656 007a 2046     		mov	r0, r4
+ 657              	.LVL53:
+ 250:quantum/via.c ****                     break;
+ 658              		.loc 1 250 21 view .LVU158
+ 659 007c FFF7FEFF 		bl	raw_hid_receive_kb
+ 660              	.LVL54:
+ 251:quantum/via.c ****                 }
+ 661              		.loc 1 251 21 is_stmt 1 view .LVU159
+ 662 0080 D5E7     		b	.L48
+ 663              	.LVL55:
+ 664              	.L45:
+ 257:quantum/via.c ****                 case id_layout_options: {
+ 665              		.loc 1 257 13 view .LVU160
+ 666 0082 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 667 0084 022B     		cmp	r3, #2
+ 668 0086 F7D1     		bne	.L51
+ 669              	.LBB14:
+ 259:quantum/via.c ****                     via_set_layout_options(value);
+ 670              		.loc 1 259 21 view .LVU161
+ 671              	.LVL56:
+ 260:quantum/via.c ****                     break;
+ 672              		.loc 1 260 21 view .LVU162
+ 673 0088 D0F80200 		ldr	r0, [r0, #2]	@ unaligned
+ 674              	.LVL57:
+ 260:quantum/via.c ****                     break;
+ 675              		.loc 1 260 21 is_stmt 0 view .LVU163
+ 676 008c 00BA     		rev	r0, r0
+ 677 008e FFF7FEFF 		bl	via_set_layout_options
+ 678              	.LVL58:
+ 261:quantum/via.c ****                 }
+ 679              		.loc 1 261 21 is_stmt 1 view .LVU164
+ 680 0092 CCE7     		b	.L48
+ 681              	.LVL59:
+ 682              	.L44:
+ 261:quantum/via.c ****                 }
+ 683              		.loc 1 261 21 is_stmt 0 view .LVU165
+ 684              	.LBE14:
+ 685              	.LBB15:
+ 271:quantum/via.c ****             command_data[3]  = keycode >> 8;
+ 686              		.loc 1 271 13 is_stmt 1 view .LVU166
+ 271:quantum/via.c ****             command_data[3]  = keycode >> 8;
+ 687              		.loc 1 271 32 is_stmt 0 view .LVU167
+ 688 0094 C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
+ 689 0096 8178     		ldrb	r1, [r0, #2]	@ zero_extendqisi2
+ 690              	.LVL60:
+ 271:quantum/via.c ****             command_data[3]  = keycode >> 8;
+ 691              		.loc 1 271 32 view .LVU168
+ 692 0098 4078     		ldrb	r0, [r0, #1]	@ zero_extendqisi2
+ 693              	.LVL61:
+ 271:quantum/via.c ****             command_data[3]  = keycode >> 8;
+ 694              		.loc 1 271 32 view .LVU169
+ 695 009a FFF7FEFF 		bl	dynamic_keymap_get_keycode
+ 696              	.LVL62:
+ 697 009e D9E7     		b	.L54
+ 698              	.LVL63:
+ 699              	.L43:
+ 271:quantum/via.c ****             command_data[3]  = keycode >> 8;
+ 700              		.loc 1 271 32 view .LVU170
+ 701              	.LBE15:
+ 277:quantum/via.c ****             break;
+ 702              		.loc 1 277 13 is_stmt 1 view .LVU171
+ 703 00a0 8388     		ldrh	r3, [r0, #4]	@ unaligned
+ 704 00a2 C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
+ 705 00a4 8178     		ldrb	r1, [r0, #2]	@ zero_extendqisi2
+ 706              	.LVL64:
+ 277:quantum/via.c ****             break;
+ 707              		.loc 1 277 13 is_stmt 0 view .LVU172
+ 708 00a6 4078     		ldrb	r0, [r0, #1]	@ zero_extendqisi2
+ 709              	.LVL65:
+ 277:quantum/via.c ****             break;
+ 710              		.loc 1 277 13 view .LVU173
+ 711 00a8 5BBA     		rev16	r3, r3
+ 712 00aa 9BB2     		uxth	r3, r3
+ 713 00ac FFF7FEFF 		bl	dynamic_keymap_set_keycode
+ 714              	.LVL66:
+ 278:quantum/via.c ****         }
+ 715              		.loc 1 278 13 is_stmt 1 view .LVU174
+ 716 00b0 BDE7     		b	.L48
+ 717              	.LVL67:
+ 718              	.L42:
+ 281:quantum/via.c ****             break;
+ 719              		.loc 1 281 13 view .LVU175
+ 720 00b2 FFF7FEFF 		bl	dynamic_keymap_reset
+ 721              	.LVL68:
+ 282:quantum/via.c ****         }
+ 722              		.loc 1 282 13 view .LVU176
+ 723 00b6 BAE7     		b	.L48
+ 724              	.LVL69:
+ 725              	.L32:
+ 296:quantum/via.c **** #endif
+ 726              		.loc 1 296 13 view .LVU177
+ 296:quantum/via.c **** #endif
+ 727              		.loc 1 296 25 is_stmt 0 view .LVU178
+ 728 00b8 FF23     		movs	r3, #255
+ 729 00ba 0370     		strb	r3, [r0]
+ 298:quantum/via.c ****         }
+ 730              		.loc 1 298 13 is_stmt 1 view .LVU179
+ 731 00bc B7E7     		b	.L48
+ 732              	.L41:
+ 333:quantum/via.c ****             break;
+ 733              		.loc 1 333 13 view .LVU180
+ 333:quantum/via.c ****             break;
+ 734              		.loc 1 333 31 is_stmt 0 view .LVU181
+ 735 00be FFF7FEFF 		bl	dynamic_keymap_macro_get_count
+ 736              	.LVL70:
+ 737              	.L55:
+ 359:quantum/via.c ****             break;
+ 738              		.loc 1 359 29 view .LVU182
+ 739 00c2 6070     		strb	r0, [r4, #1]
+ 360:quantum/via.c ****         }
+ 740              		.loc 1 360 13 is_stmt 1 view .LVU183
+ 741 00c4 B3E7     		b	.L48
+ 742              	.LVL71:
+ 743              	.L40:
+ 744              	.LBB16:
+ 337:quantum/via.c ****             command_data[0] = size >> 8;
+ 745              		.loc 1 337 13 view .LVU184
+ 337:quantum/via.c ****             command_data[0] = size >> 8;
+ 746              		.loc 1 337 31 is_stmt 0 view .LVU185
+ 747 00c6 FFF7FEFF 		bl	dynamic_keymap_macro_get_buffer_size
+ 748              	.LVL72:
+ 338:quantum/via.c ****             command_data[1] = size & 0xFF;
+ 749              		.loc 1 338 13 is_stmt 1 view .LVU186
+ 338:quantum/via.c ****             command_data[1] = size & 0xFF;
+ 750              		.loc 1 338 29 is_stmt 0 view .LVU187
+ 751 00ca 030A     		lsrs	r3, r0, #8
+ 752 00cc 6370     		strb	r3, [r4, #1]
+ 339:quantum/via.c ****             break;
+ 753              		.loc 1 339 13 is_stmt 1 view .LVU188
+ 339:quantum/via.c ****             break;
+ 754              		.loc 1 339 29 is_stmt 0 view .LVU189
+ 755 00ce A070     		strb	r0, [r4, #2]
+ 340:quantum/via.c ****         }
+ 756              		.loc 1 340 13 is_stmt 1 view .LVU190
+ 757 00d0 ADE7     		b	.L48
+ 758              	.LVL73:
+ 759              	.L39:
+ 340:quantum/via.c ****         }
+ 760              		.loc 1 340 13 is_stmt 0 view .LVU191
+ 761              	.LBE16:
+ 762              	.LBB17:
+ 343:quantum/via.c ****             uint16_t size   = command_data[2];  // size <= 28
+ 763              		.loc 1 343 13 is_stmt 1 view .LVU192
+ 344:quantum/via.c ****             dynamic_keymap_macro_get_buffer(offset, size, &command_data[3]);
+ 764              		.loc 1 344 13 view .LVU193
+ 345:quantum/via.c ****             break;
+ 765              		.loc 1 345 13 view .LVU194
+ 766 00d2 B0F80100 		ldrh	r0, [r0, #1]	@ unaligned
+ 767              	.LVL74:
+ 345:quantum/via.c ****             break;
+ 768              		.loc 1 345 13 is_stmt 0 view .LVU195
+ 769 00d6 E178     		ldrb	r1, [r4, #3]	@ zero_extendqisi2
+ 770              	.LVL75:
+ 345:quantum/via.c ****             break;
+ 771              		.loc 1 345 13 view .LVU196
+ 772 00d8 40BA     		rev16	r0, r0
+ 773 00da 221D     		adds	r2, r4, #4
+ 774 00dc 80B2     		uxth	r0, r0
+ 775 00de FFF7FEFF 		bl	dynamic_keymap_macro_get_buffer
+ 776              	.LVL76:
+ 346:quantum/via.c ****         }
+ 777              		.loc 1 346 13 is_stmt 1 view .LVU197
+ 778 00e2 A4E7     		b	.L48
+ 779              	.LVL77:
+ 780              	.L38:
+ 346:quantum/via.c ****         }
+ 781              		.loc 1 346 13 is_stmt 0 view .LVU198
+ 782              	.LBE17:
+ 783              	.LBB18:
+ 349:quantum/via.c ****             uint16_t size   = command_data[2];  // size <= 28
+ 784              		.loc 1 349 13 is_stmt 1 view .LVU199
+ 350:quantum/via.c ****             dynamic_keymap_macro_set_buffer(offset, size, &command_data[3]);
+ 785              		.loc 1 350 13 view .LVU200
+ 351:quantum/via.c ****             break;
+ 786              		.loc 1 351 13 view .LVU201
+ 787 00e4 B0F80100 		ldrh	r0, [r0, #1]	@ unaligned
+ 788              	.LVL78:
+ 351:quantum/via.c ****             break;
+ 789              		.loc 1 351 13 is_stmt 0 view .LVU202
+ 790 00e8 E178     		ldrb	r1, [r4, #3]	@ zero_extendqisi2
+ 791              	.LVL79:
+ 351:quantum/via.c ****             break;
+ 792              		.loc 1 351 13 view .LVU203
+ 793 00ea 40BA     		rev16	r0, r0
+ 794 00ec 221D     		adds	r2, r4, #4
+ 795 00ee 80B2     		uxth	r0, r0
+ 796 00f0 FFF7FEFF 		bl	dynamic_keymap_macro_set_buffer
+ 797              	.LVL80:
+ 352:quantum/via.c ****         }
+ 798              		.loc 1 352 13 is_stmt 1 view .LVU204
+ 799 00f4 9BE7     		b	.L48
+ 800              	.LVL81:
+ 801              	.L37:
+ 352:quantum/via.c ****         }
+ 802              		.loc 1 352 13 is_stmt 0 view .LVU205
+ 803              	.LBE18:
+ 355:quantum/via.c ****             break;
+ 804              		.loc 1 355 13 is_stmt 1 view .LVU206
+ 805 00f6 FFF7FEFF 		bl	dynamic_keymap_macro_reset
+ 806              	.LVL82:
+ 356:quantum/via.c ****         }
+ 807              		.loc 1 356 13 view .LVU207
+ 808 00fa 98E7     		b	.L48
+ 809              	.LVL83:
+ 810              	.L36:
+ 359:quantum/via.c ****             break;
+ 811              		.loc 1 359 13 view .LVU208
+ 359:quantum/via.c ****             break;
+ 812              		.loc 1 359 31 is_stmt 0 view .LVU209
+ 813 00fc FFF7FEFF 		bl	dynamic_keymap_get_layer_count
+ 814              	.LVL84:
+ 359:quantum/via.c ****             break;
+ 815              		.loc 1 359 31 view .LVU210
+ 816 0100 DFE7     		b	.L55
+ 817              	.LVL85:
+ 818              	.L35:
+ 819              	.LBB19:
+ 363:quantum/via.c ****             uint16_t size   = command_data[2];  // size <= 28
+ 820              		.loc 1 363 13 is_stmt 1 view .LVU211
+ 364:quantum/via.c ****             dynamic_keymap_get_buffer(offset, size, &command_data[3]);
+ 821              		.loc 1 364 13 view .LVU212
+ 365:quantum/via.c ****             break;
+ 822              		.loc 1 365 13 view .LVU213
+ 823 0102 B0F80100 		ldrh	r0, [r0, #1]	@ unaligned
+ 824              	.LVL86:
+ 365:quantum/via.c ****             break;
+ 825              		.loc 1 365 13 is_stmt 0 view .LVU214
+ 826 0106 E178     		ldrb	r1, [r4, #3]	@ zero_extendqisi2
+ 827              	.LVL87:
+ 365:quantum/via.c ****             break;
+ 828              		.loc 1 365 13 view .LVU215
+ 829 0108 40BA     		rev16	r0, r0
+ 830 010a 221D     		adds	r2, r4, #4
+ 831 010c 80B2     		uxth	r0, r0
+ 832 010e FFF7FEFF 		bl	dynamic_keymap_get_buffer
+ 833              	.LVL88:
+ 366:quantum/via.c ****         }
+ 834              		.loc 1 366 13 is_stmt 1 view .LVU216
+ 835 0112 8CE7     		b	.L48
+ 836              	.LVL89:
+ 837              	.L33:
+ 366:quantum/via.c ****         }
+ 838              		.loc 1 366 13 is_stmt 0 view .LVU217
+ 839              	.LBE19:
+ 840              	.LBB20:
+ 369:quantum/via.c ****             uint16_t size   = command_data[2];  // size <= 28
+ 841              		.loc 1 369 13 is_stmt 1 view .LVU218
+ 370:quantum/via.c ****             dynamic_keymap_set_buffer(offset, size, &command_data[3]);
+ 842              		.loc 1 370 13 view .LVU219
+ 371:quantum/via.c ****             break;
+ 843              		.loc 1 371 13 view .LVU220
+ 844 0114 B0F80100 		ldrh	r0, [r0, #1]	@ unaligned
+ 845              	.LVL90:
+ 371:quantum/via.c ****             break;
+ 846              		.loc 1 371 13 is_stmt 0 view .LVU221
+ 847 0118 E178     		ldrb	r1, [r4, #3]	@ zero_extendqisi2
+ 848              	.LVL91:
+ 371:quantum/via.c ****             break;
+ 849              		.loc 1 371 13 view .LVU222
+ 850 011a 40BA     		rev16	r0, r0
+ 851 011c 221D     		adds	r2, r4, #4
+ 852 011e 80B2     		uxth	r0, r0
+ 853 0120 FFF7FEFF 		bl	dynamic_keymap_set_buffer
+ 854              	.LVL92:
+ 372:quantum/via.c ****         }
+ 855              		.loc 1 372 13 is_stmt 1 view .LVU223
+ 856 0124 83E7     		b	.L48
+ 857              	.LBE20:
+ 858              		.cfi_endproc
+ 859              	.LFE300:
+ 861              		.text
+ 862              	.Letext0:
+ 863              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 864              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 865              		.file 4 "quantum/matrix.h"
+ 866              		.file 5 "tmk_core/common/keyboard.h"
+ 867              		.file 6 "tmk_core/common/action.h"
+ 868              		.file 7 "quantum/via.h"
+ 869              		.file 8 "tmk_core/common/timer.h"
+ 870              		.file 9 "quantum/dynamic_keymap.h"
+ 871              		.file 10 "tmk_core/common/raw_hid.h"
+ 872              		.file 11 "tmk_core/common/action_layer.h"
+ 873              		.file 12 "quantum/quantum.h"
+ 874              		.file 13 "./tmk_core/common/eeprom.h"
+ 875              		.file 14 "tmk_core/common/eeconfig.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 via.c
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:18     .text.via_eeprom_is_valid:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:26     .text.via_eeprom_is_valid:0000000000000000 via_eeprom_is_valid
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:77     .text.via_eeprom_set_valid:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:84     .text.via_eeprom_set_valid:0000000000000000 via_eeprom_set_valid
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:138    .text.via_eeprom_reset:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:145    .text.via_eeprom_reset:0000000000000000 via_eeprom_reset
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:174    .text.via_init_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:181    .text.via_init_kb:0000000000000000 via_init_kb
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:194    .text.via_get_layout_options:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:201    .text.via_get_layout_options:0000000000000000 via_get_layout_options
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:238    .text.via_set_layout_options:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:245    .text.via_set_layout_options:0000000000000000 via_set_layout_options
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:270    .text.via_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:277    .text.via_init:0000000000000000 via_init
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:326    .text.process_record_via:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:333    .text.process_record_via:0000000000000000 process_record_via
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:447    .text.raw_hid_receive_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:454    .text.raw_hid_receive_kb:0000000000000000 raw_hid_receive_kb
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:473    .text.raw_hid_receive:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:480    .text.raw_hid_receive:0000000000000000 raw_hid_receive
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:508    .text.raw_hid_receive:0000000000000012 $d
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:527    .text.raw_hid_receive:0000000000000025 $d
+C:\Users\lhanj\AppData\Local\Temp\ccKf5ibs.s:527    .text.raw_hid_receive:0000000000000026 $t
+
+UNDEFINED SYMBOLS
+eeprom_read_byte
+eeprom_update_byte
+eeconfig_disable
+dynamic_keymap_reset
+dynamic_keymap_macro_reset
+dynamic_keymap_macro_send
+layer_on
+update_tri_layer
+layer_off
+raw_hid_send
+timer_read32
+matrix_get_row
+dynamic_keymap_get_keycode
+dynamic_keymap_set_keycode
+dynamic_keymap_macro_get_count
+dynamic_keymap_macro_get_buffer_size
+dynamic_keymap_macro_get_buffer
+dynamic_keymap_macro_set_buffer
+dynamic_keymap_get_layer_count
+dynamic_keymap_get_buffer
+dynamic_keymap_set_buffer

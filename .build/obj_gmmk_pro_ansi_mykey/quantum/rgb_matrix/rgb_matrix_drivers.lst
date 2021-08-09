@@ -1,0 +1,349 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"rgb_matrix_drivers.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.flush,"ax",%progbits
+  18              		.align	1
+  19              		.arch armv7e-m
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	flush:
+  26              	.LFB292:
+  27              		.file 1 "quantum/rgb_matrix/rgb_matrix_drivers.c"
+   1:quantum/rgb_matrix/rgb_matrix_drivers.c **** /* Copyright 2018 James Laird-Wah
+   2:quantum/rgb_matrix/rgb_matrix_drivers.c ****  *
+   3:quantum/rgb_matrix/rgb_matrix_drivers.c ****  * This program is free software: you can redistribute it and/or modify
+   4:quantum/rgb_matrix/rgb_matrix_drivers.c ****  * it under the terms of the GNU General Public License as published by
+   5:quantum/rgb_matrix/rgb_matrix_drivers.c ****  * the Free Software Foundation, either version 2 of the License, or
+   6:quantum/rgb_matrix/rgb_matrix_drivers.c ****  * (at your option) any later version.
+   7:quantum/rgb_matrix/rgb_matrix_drivers.c ****  *
+   8:quantum/rgb_matrix/rgb_matrix_drivers.c ****  * This program is distributed in the hope that it will be useful,
+   9:quantum/rgb_matrix/rgb_matrix_drivers.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  10:quantum/rgb_matrix/rgb_matrix_drivers.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  11:quantum/rgb_matrix/rgb_matrix_drivers.c ****  * GNU General Public License for more details.
+  12:quantum/rgb_matrix/rgb_matrix_drivers.c ****  *
+  13:quantum/rgb_matrix/rgb_matrix_drivers.c ****  * You should have received a copy of the GNU General Public License
+  14:quantum/rgb_matrix/rgb_matrix_drivers.c ****  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  15:quantum/rgb_matrix/rgb_matrix_drivers.c ****  */
+  16:quantum/rgb_matrix/rgb_matrix_drivers.c **** 
+  17:quantum/rgb_matrix/rgb_matrix_drivers.c **** #include "rgb_matrix.h"
+  18:quantum/rgb_matrix/rgb_matrix_drivers.c **** 
+  19:quantum/rgb_matrix/rgb_matrix_drivers.c **** /* Each driver needs to define the struct
+  20:quantum/rgb_matrix/rgb_matrix_drivers.c ****  *    const rgb_matrix_driver_t rgb_matrix_driver;
+  21:quantum/rgb_matrix/rgb_matrix_drivers.c ****  * All members must be provided.
+  22:quantum/rgb_matrix/rgb_matrix_drivers.c ****  * Keyboard custom drivers can define this in their own files, it should only
+  23:quantum/rgb_matrix/rgb_matrix_drivers.c ****  * be here if shared between boards.
+  24:quantum/rgb_matrix/rgb_matrix_drivers.c ****  */
+  25:quantum/rgb_matrix/rgb_matrix_drivers.c **** 
+  26:quantum/rgb_matrix/rgb_matrix_drivers.c **** #if defined(IS31FL3731) || defined(IS31FL3733) || defined(IS31FL3737) || defined(IS31FL3741)
+  27:quantum/rgb_matrix/rgb_matrix_drivers.c **** 
+  28:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    include "i2c_master.h"
+  29:quantum/rgb_matrix/rgb_matrix_drivers.c **** 
+  30:quantum/rgb_matrix/rgb_matrix_drivers.c **** static void init(void) {
+  31:quantum/rgb_matrix/rgb_matrix_drivers.c ****     i2c_init();
+  32:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    ifdef IS31FL3731
+  33:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3731_init(DRIVER_ADDR_1);
+  34:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_2
+  35:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3731_init(DRIVER_ADDR_2);
+  36:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+  37:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_3
+  38:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3731_init(DRIVER_ADDR_3);
+  39:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+  40:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_4
+  41:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3731_init(DRIVER_ADDR_4);
+  42:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+  43:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    elif defined(IS31FL3733)
+  44:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifndef DRIVER_SYNC_1
+  45:quantum/rgb_matrix/rgb_matrix_drivers.c **** #            define DRIVER_SYNC_1 0
+  46:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+  47:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3733_init(DRIVER_ADDR_1, DRIVER_SYNC_1);
+  48:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        if defined DRIVER_ADDR_2 && (DRIVER_ADDR_1 != DRIVER_ADDR_2)
+  49:quantum/rgb_matrix/rgb_matrix_drivers.c **** #            ifndef DRIVER_SYNC_2
+  50:quantum/rgb_matrix/rgb_matrix_drivers.c **** #                define DRIVER_SYNC_2 0
+  51:quantum/rgb_matrix/rgb_matrix_drivers.c **** #            endif
+  52:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3733_init(DRIVER_ADDR_2, DRIVER_SYNC_2);
+  53:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+  54:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_3
+  55:quantum/rgb_matrix/rgb_matrix_drivers.c **** #            ifndef DRIVER_SYNC_3
+  56:quantum/rgb_matrix/rgb_matrix_drivers.c **** #                define DRIVER_SYNC_3 0
+  57:quantum/rgb_matrix/rgb_matrix_drivers.c **** #            endif
+  58:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3733_init(DRIVER_ADDR_3, DRIVER_SYNC_3);
+  59:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+  60:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_4
+  61:quantum/rgb_matrix/rgb_matrix_drivers.c **** #            ifndef DRIVER_SYNC_4
+  62:quantum/rgb_matrix/rgb_matrix_drivers.c **** #                define DRIVER_SYNC_4 0
+  63:quantum/rgb_matrix/rgb_matrix_drivers.c **** #            endif
+  64:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3733_init(DRIVER_ADDR_4, DRIVER_SYNC_4);
+  65:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+  66:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    elif defined(IS31FL3737)
+  67:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3737_init(DRIVER_ADDR_1);
+  68:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        if defined(DRIVER_ADDR_2) && (DRIVER_ADDR_2 != DRIVER_ADDR_1)  // provides backward compat
+  69:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3737_init(DRIVER_ADDR_2);
+  70:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+  71:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    else
+  72:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3741_init(DRIVER_ADDR_1);
+  73:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    endif
+  74:quantum/rgb_matrix/rgb_matrix_drivers.c ****     for (int index = 0; index < DRIVER_LED_TOTAL; index++) {
+  75:quantum/rgb_matrix/rgb_matrix_drivers.c ****         bool enabled = true;
+  76:quantum/rgb_matrix/rgb_matrix_drivers.c ****         // This only caches it for later
+  77:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    ifdef IS31FL3731
+  78:quantum/rgb_matrix/rgb_matrix_drivers.c ****         IS31FL3731_set_led_control_register(index, enabled, enabled, enabled);
+  79:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    elif defined(IS31FL3733)
+  80:quantum/rgb_matrix/rgb_matrix_drivers.c ****         IS31FL3733_set_led_control_register(index, enabled, enabled, enabled);
+  81:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    elif defined(IS31FL3737)
+  82:quantum/rgb_matrix/rgb_matrix_drivers.c ****         IS31FL3737_set_led_control_register(index, enabled, enabled, enabled);
+  83:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    else
+  84:quantum/rgb_matrix/rgb_matrix_drivers.c ****         IS31FL3741_set_led_control_register(index, enabled, enabled, enabled);
+  85:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    endif
+  86:quantum/rgb_matrix/rgb_matrix_drivers.c ****     }
+  87:quantum/rgb_matrix/rgb_matrix_drivers.c ****     // This actually updates the LED drivers
+  88:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    ifdef IS31FL3731
+  89:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3731_update_led_control_registers(DRIVER_ADDR_1, 0);
+  90:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_2
+  91:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3731_update_led_control_registers(DRIVER_ADDR_2, 1);
+  92:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+  93:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_3
+  94:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3731_update_led_control_registers(DRIVER_ADDR_3, 2);
+  95:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+  96:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_4
+  97:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3731_update_led_control_registers(DRIVER_ADDR_4, 3);
+  98:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+  99:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    elif defined(IS31FL3733)
+ 100:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3733_update_led_control_registers(DRIVER_ADDR_1, 0);
+ 101:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_2
+ 102:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3733_update_led_control_registers(DRIVER_ADDR_2, 1);
+ 103:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+ 104:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_3
+ 105:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3733_update_led_control_registers(DRIVER_ADDR_3, 2);
+ 106:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+ 107:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_4
+ 108:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3733_update_led_control_registers(DRIVER_ADDR_4, 3);
+ 109:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+ 110:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    elif defined(IS31FL3737)
+ 111:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3737_update_led_control_registers(DRIVER_ADDR_1, 0);
+ 112:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        if defined(DRIVER_ADDR_2) && (DRIVER_ADDR_2 != DRIVER_ADDR_1)  // provides backward compat
+ 113:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3737_update_led_control_registers(DRIVER_ADDR_2, 1);
+ 114:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+ 115:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    else
+ 116:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3741_update_led_control_registers(DRIVER_ADDR_1, 0);
+ 117:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    endif
+ 118:quantum/rgb_matrix/rgb_matrix_drivers.c **** }
+ 119:quantum/rgb_matrix/rgb_matrix_drivers.c **** 
+ 120:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    ifdef IS31FL3731
+ 121:quantum/rgb_matrix/rgb_matrix_drivers.c **** static void flush(void) {
+ 122:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3731_update_pwm_buffers(DRIVER_ADDR_1, 0);
+ 123:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_2
+ 124:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3731_update_pwm_buffers(DRIVER_ADDR_2, 1);
+ 125:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+ 126:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_3
+ 127:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3731_update_pwm_buffers(DRIVER_ADDR_3, 2);
+ 128:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+ 129:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_4
+ 130:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3731_update_pwm_buffers(DRIVER_ADDR_4, 3);
+ 131:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+ 132:quantum/rgb_matrix/rgb_matrix_drivers.c **** }
+ 133:quantum/rgb_matrix/rgb_matrix_drivers.c **** 
+ 134:quantum/rgb_matrix/rgb_matrix_drivers.c **** const rgb_matrix_driver_t rgb_matrix_driver = {
+ 135:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .init          = init,
+ 136:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .flush         = flush,
+ 137:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .set_color     = IS31FL3731_set_color,
+ 138:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .set_color_all = IS31FL3731_set_color_all,
+ 139:quantum/rgb_matrix/rgb_matrix_drivers.c **** };
+ 140:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    elif defined(IS31FL3733)
+ 141:quantum/rgb_matrix/rgb_matrix_drivers.c **** static void flush(void) {
+ 142:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3733_update_pwm_buffers(DRIVER_ADDR_1, 0);
+ 143:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_2
+ 144:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3733_update_pwm_buffers(DRIVER_ADDR_2, 1);
+ 145:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+ 146:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_3
+ 147:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3733_update_pwm_buffers(DRIVER_ADDR_3, 2);
+ 148:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+ 149:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        ifdef DRIVER_ADDR_4
+ 150:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3733_update_pwm_buffers(DRIVER_ADDR_4, 3);
+ 151:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+ 152:quantum/rgb_matrix/rgb_matrix_drivers.c **** }
+ 153:quantum/rgb_matrix/rgb_matrix_drivers.c **** 
+ 154:quantum/rgb_matrix/rgb_matrix_drivers.c **** const rgb_matrix_driver_t rgb_matrix_driver = {
+ 155:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .init = init,
+ 156:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .flush = flush,
+ 157:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .set_color = IS31FL3733_set_color,
+ 158:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .set_color_all = IS31FL3733_set_color_all,
+ 159:quantum/rgb_matrix/rgb_matrix_drivers.c **** };
+ 160:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    elif defined(IS31FL3737)
+ 161:quantum/rgb_matrix/rgb_matrix_drivers.c **** static void flush(void) {
+ 162:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3737_update_pwm_buffers(DRIVER_ADDR_1, 0);
+ 163:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        if defined(DRIVER_ADDR_2) && (DRIVER_ADDR_2 != DRIVER_ADDR_1)  // provides backward compat
+ 164:quantum/rgb_matrix/rgb_matrix_drivers.c ****     IS31FL3737_update_pwm_buffers(DRIVER_ADDR_2, 1);
+ 165:quantum/rgb_matrix/rgb_matrix_drivers.c **** #        endif
+ 166:quantum/rgb_matrix/rgb_matrix_drivers.c **** }
+ 167:quantum/rgb_matrix/rgb_matrix_drivers.c **** 
+ 168:quantum/rgb_matrix/rgb_matrix_drivers.c **** const rgb_matrix_driver_t rgb_matrix_driver = {
+ 169:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .init = init,
+ 170:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .flush = flush,
+ 171:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .set_color = IS31FL3737_set_color,
+ 172:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .set_color_all = IS31FL3737_set_color_all,
+ 173:quantum/rgb_matrix/rgb_matrix_drivers.c **** };
+ 174:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    else
+ 175:quantum/rgb_matrix/rgb_matrix_drivers.c **** static void flush(void) { IS31FL3741_update_pwm_buffers(DRIVER_ADDR_1, DRIVER_ADDR_2); }
+ 176:quantum/rgb_matrix/rgb_matrix_drivers.c **** 
+ 177:quantum/rgb_matrix/rgb_matrix_drivers.c **** const rgb_matrix_driver_t rgb_matrix_driver = {
+ 178:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .init = init,
+ 179:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .flush = flush,
+ 180:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .set_color = IS31FL3741_set_color,
+ 181:quantum/rgb_matrix/rgb_matrix_drivers.c ****     .set_color_all = IS31FL3741_set_color_all,
+ 182:quantum/rgb_matrix/rgb_matrix_drivers.c **** };
+ 183:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    endif
+ 184:quantum/rgb_matrix/rgb_matrix_drivers.c **** 
+ 185:quantum/rgb_matrix/rgb_matrix_drivers.c **** #elif defined(AW20216)
+ 186:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    include "spi_master.h"
+ 187:quantum/rgb_matrix/rgb_matrix_drivers.c **** static void init(void) {
+ 188:quantum/rgb_matrix/rgb_matrix_drivers.c ****     spi_init();
+ 189:quantum/rgb_matrix/rgb_matrix_drivers.c ****     AW20216_init(DRIVER_1_CS, DRIVER_1_EN);
+ 190:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    ifdef DRIVER_2_CS
+ 191:quantum/rgb_matrix/rgb_matrix_drivers.c ****     AW20216_init(DRIVER_2_CS, DRIVER_2_EN);
+ 192:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    endif
+ 193:quantum/rgb_matrix/rgb_matrix_drivers.c **** }
+ 194:quantum/rgb_matrix/rgb_matrix_drivers.c **** 
+ 195:quantum/rgb_matrix/rgb_matrix_drivers.c **** static void flush(void) {
+  28              		.loc 1 195 25 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+ 196:quantum/rgb_matrix/rgb_matrix_drivers.c ****     AW20216_update_pwm_buffers(DRIVER_1_CS, 0);
+  32              		.loc 1 196 5 view .LVU1
+ 195:quantum/rgb_matrix/rgb_matrix_drivers.c ****     AW20216_update_pwm_buffers(DRIVER_1_CS, 0);
+  33              		.loc 1 195 25 is_stmt 0 view .LVU2
+  34 0000 08B5     		push	{r3, lr}
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  38              		.loc 1 196 5 view .LVU3
+  39 0002 0548     		ldr	r0, .L2
+  40 0004 0021     		movs	r1, #0
+  41 0006 FFF7FEFF 		bl	AW20216_update_pwm_buffers
+  42              	.LVL0:
+ 197:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    ifdef DRIVER_2_CS
+ 198:quantum/rgb_matrix/rgb_matrix_drivers.c ****     AW20216_update_pwm_buffers(DRIVER_2_CS, 1);
+  43              		.loc 1 198 5 is_stmt 1 view .LVU4
+ 199:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    endif
+ 200:quantum/rgb_matrix/rgb_matrix_drivers.c **** }
+  44              		.loc 1 200 1 is_stmt 0 view .LVU5
+  45 000a BDE80840 		pop	{r3, lr}
+  46              		.cfi_restore 14
+  47              		.cfi_restore 3
+  48              		.cfi_def_cfa_offset 0
+ 198:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    endif
+  49              		.loc 1 198 5 view .LVU6
+  50 000e 0348     		ldr	r0, .L2+4
+  51 0010 0121     		movs	r1, #1
+  52 0012 FFF7FEBF 		b	AW20216_update_pwm_buffers
+  53              	.LVL1:
+  54              	.L3:
+  55 0016 00BF     		.align	2
+  56              	.L2:
+  57 0018 0D040048 		.word	1207960589
+  58 001c 0E040048 		.word	1207960590
+  59              		.cfi_endproc
+  60              	.LFE292:
+  62              		.section	.text.init,"ax",%progbits
+  63              		.align	1
+  64              		.syntax unified
+  65              		.thumb
+  66              		.thumb_func
+  67              		.fpu fpv4-sp-d16
+  69              	init:
+  70              	.LFB291:
+ 187:quantum/rgb_matrix/rgb_matrix_drivers.c ****     spi_init();
+  71              		.loc 1 187 24 is_stmt 1 view -0
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+ 188:quantum/rgb_matrix/rgb_matrix_drivers.c ****     AW20216_init(DRIVER_1_CS, DRIVER_1_EN);
+  75              		.loc 1 188 5 view .LVU8
+ 187:quantum/rgb_matrix/rgb_matrix_drivers.c ****     spi_init();
+  76              		.loc 1 187 24 is_stmt 0 view .LVU9
+  77 0000 08B5     		push	{r3, lr}
+  78              		.cfi_def_cfa_offset 8
+  79              		.cfi_offset 3, -8
+  80              		.cfi_offset 14, -4
+ 188:quantum/rgb_matrix/rgb_matrix_drivers.c ****     AW20216_init(DRIVER_1_CS, DRIVER_1_EN);
+  81              		.loc 1 188 5 view .LVU10
+  82 0002 FFF7FEFF 		bl	spi_init
+  83              	.LVL2:
+ 189:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    ifdef DRIVER_2_CS
+  84              		.loc 1 189 5 is_stmt 1 view .LVU11
+  85 0006 0549     		ldr	r1, .L5
+  86 0008 0548     		ldr	r0, .L5+4
+  87 000a FFF7FEFF 		bl	AW20216_init
+  88              	.LVL3:
+ 191:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    endif
+  89              		.loc 1 191 5 view .LVU12
+ 193:quantum/rgb_matrix/rgb_matrix_drivers.c **** 
+  90              		.loc 1 193 1 is_stmt 0 view .LVU13
+  91 000e BDE80840 		pop	{r3, lr}
+  92              		.cfi_restore 14
+  93              		.cfi_restore 3
+  94              		.cfi_def_cfa_offset 0
+ 191:quantum/rgb_matrix/rgb_matrix_drivers.c **** #    endif
+  95              		.loc 1 191 5 view .LVU14
+  96 0012 0249     		ldr	r1, .L5
+  97 0014 0348     		ldr	r0, .L5+8
+  98 0016 FFF7FEBF 		b	AW20216_init
+  99              	.LVL4:
+ 100              	.L6:
+ 101 001a 00BF     		.align	2
+ 102              	.L5:
+ 103 001c 0D080048 		.word	1207961613
+ 104 0020 0D040048 		.word	1207960589
+ 105 0024 0E040048 		.word	1207960590
+ 106              		.cfi_endproc
+ 107              	.LFE291:
+ 109              		.global	rgb_matrix_driver
+ 110              		.section	.rodata.rgb_matrix_driver,"a"
+ 111              		.align	2
+ 114              	rgb_matrix_driver:
+ 115 0000 00000000 		.word	init
+ 116 0004 00000000 		.word	AW20216_set_color
+ 117 0008 00000000 		.word	AW20216_set_color_all
+ 118 000c 00000000 		.word	flush
+ 119              		.text
+ 120              	.Letext0:
+ 121              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 122              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 123              		.file 4 "./lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/stm32_gpio.h"
+ 124              		.file 5 "./lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.h"
+ 125              		.file 6 "quantum/rgb_matrix/rgb_matrix.h"
+ 126              		.file 7 "drivers/led/aw20216.h"
+ 127              		.file 8 "drivers/chibios/spi_master.h"
+ 128              		.file 9 "quantum/sequencer/sequencer.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 rgb_matrix_drivers.c
+C:\Users\lhanj\AppData\Local\Temp\ccPEOnMX.s:18     .text.flush:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccPEOnMX.s:25     .text.flush:0000000000000000 flush
+C:\Users\lhanj\AppData\Local\Temp\ccPEOnMX.s:57     .text.flush:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\ccPEOnMX.s:63     .text.init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccPEOnMX.s:69     .text.init:0000000000000000 init
+C:\Users\lhanj\AppData\Local\Temp\ccPEOnMX.s:103    .text.init:000000000000001c $d
+C:\Users\lhanj\AppData\Local\Temp\ccPEOnMX.s:114    .rodata.rgb_matrix_driver:0000000000000000 rgb_matrix_driver
+C:\Users\lhanj\AppData\Local\Temp\ccPEOnMX.s:111    .rodata.rgb_matrix_driver:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+AW20216_update_pwm_buffers
+spi_init
+AW20216_init
+AW20216_set_color
+AW20216_set_color_all

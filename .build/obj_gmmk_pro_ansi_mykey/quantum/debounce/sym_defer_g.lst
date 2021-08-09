@@ -1,0 +1,361 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"sym_defer_g.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.debounce_init,"ax",%progbits
+  18              		.align	1
+  19              		.global	debounce_init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	debounce_init:
+  27              	.LVL0:
+  28              	.LFB291:
+  29              		.file 1 "quantum/debounce/sym_defer_g.c"
+   1:quantum/debounce/sym_defer_g.c **** /*
+   2:quantum/debounce/sym_defer_g.c **** Copyright 2017 Alex Ong<the.onga@gmail.com>
+   3:quantum/debounce/sym_defer_g.c **** Copyright 2021 Simon Arlott
+   4:quantum/debounce/sym_defer_g.c **** This program is free software: you can redistribute it and/or modify
+   5:quantum/debounce/sym_defer_g.c **** it under the terms of the GNU General Public License as published by
+   6:quantum/debounce/sym_defer_g.c **** the Free Software Foundation, either version 2 of the License, or
+   7:quantum/debounce/sym_defer_g.c **** (at your option) any later version.
+   8:quantum/debounce/sym_defer_g.c **** This program is distributed in the hope that it will be useful,
+   9:quantum/debounce/sym_defer_g.c **** but WITHOUT ANY WARRANTY; without even the implied warranty of
+  10:quantum/debounce/sym_defer_g.c **** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  11:quantum/debounce/sym_defer_g.c **** GNU General Public License for more details.
+  12:quantum/debounce/sym_defer_g.c **** You should have received a copy of the GNU General Public License
+  13:quantum/debounce/sym_defer_g.c **** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  14:quantum/debounce/sym_defer_g.c **** */
+  15:quantum/debounce/sym_defer_g.c **** 
+  16:quantum/debounce/sym_defer_g.c **** /*
+  17:quantum/debounce/sym_defer_g.c **** Basic global debounce algorithm. Used in 99% of keyboards at time of implementation
+  18:quantum/debounce/sym_defer_g.c **** When no state changes have occured for DEBOUNCE milliseconds, we push the state.
+  19:quantum/debounce/sym_defer_g.c **** */
+  20:quantum/debounce/sym_defer_g.c **** #include "matrix.h"
+  21:quantum/debounce/sym_defer_g.c **** #include "timer.h"
+  22:quantum/debounce/sym_defer_g.c **** #include "quantum.h"
+  23:quantum/debounce/sym_defer_g.c **** #ifndef DEBOUNCE
+  24:quantum/debounce/sym_defer_g.c **** #    define DEBOUNCE 5
+  25:quantum/debounce/sym_defer_g.c **** #endif
+  26:quantum/debounce/sym_defer_g.c **** 
+  27:quantum/debounce/sym_defer_g.c **** #if DEBOUNCE > 0
+  28:quantum/debounce/sym_defer_g.c **** static bool debouncing = false;
+  29:quantum/debounce/sym_defer_g.c **** static fast_timer_t debouncing_time;
+  30:quantum/debounce/sym_defer_g.c **** 
+  31:quantum/debounce/sym_defer_g.c **** void debounce_init(uint8_t num_rows) {}
+  30              		.loc 1 31 38 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  35              		.loc 1 31 39 view .LVU1
+  36 0000 7047     		bx	lr
+  37              		.cfi_endproc
+  38              	.LFE291:
+  40              		.section	.text.debounce,"ax",%progbits
+  41              		.align	1
+  42              		.global	debounce
+  43              		.syntax unified
+  44              		.thumb
+  45              		.thumb_func
+  46              		.fpu fpv4-sp-d16
+  48              	debounce:
+  49              	.LVL1:
+  50              	.LFB292:
+  32:quantum/debounce/sym_defer_g.c **** 
+  33:quantum/debounce/sym_defer_g.c **** void debounce(matrix_row_t raw[], matrix_row_t cooked[], uint8_t num_rows, bool changed) {
+  51              		.loc 1 33 90 view -0
+  52              		.cfi_startproc
+  53              		@ args = 0, pretend = 0, frame = 0
+  54              		@ frame_needed = 0, uses_anonymous_args = 0
+  34:quantum/debounce/sym_defer_g.c ****     if (changed) {
+  55              		.loc 1 34 5 view .LVU3
+  33:quantum/debounce/sym_defer_g.c ****     if (changed) {
+  56              		.loc 1 33 90 is_stmt 0 view .LVU4
+  57 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  58              		.cfi_def_cfa_offset 24
+  59              		.cfi_offset 3, -24
+  60              		.cfi_offset 4, -20
+  61              		.cfi_offset 5, -16
+  62              		.cfi_offset 6, -12
+  63              		.cfi_offset 7, -8
+  64              		.cfi_offset 14, -4
+  65 0002 0F4C     		ldr	r4, .L13
+  33:quantum/debounce/sym_defer_g.c ****     if (changed) {
+  66              		.loc 1 33 90 view .LVU5
+  67 0004 0646     		mov	r6, r0
+  68 0006 0F46     		mov	r7, r1
+  69 0008 1546     		mov	r5, r2
+  70              		.loc 1 34 8 view .LVU6
+  71 000a 2BB1     		cbz	r3, .L3
+  35:quantum/debounce/sym_defer_g.c ****         debouncing      = true;
+  72              		.loc 1 35 9 is_stmt 1 view .LVU7
+  73              		.loc 1 35 25 is_stmt 0 view .LVU8
+  74 000c 0123     		movs	r3, #1
+  75              	.LVL2:
+  76              		.loc 1 35 25 view .LVU9
+  77 000e 2370     		strb	r3, [r4]
+  36:quantum/debounce/sym_defer_g.c ****         debouncing_time = timer_read_fast();
+  78              		.loc 1 36 9 is_stmt 1 view .LVU10
+  79              	.LBB7:
+  80              	.LBI7:
+  81              		.file 2 "tmk_core/common/timer.h"
+   1:tmk_core/common/timer.h **** /*
+   2:tmk_core/common/timer.h **** Copyright 2011 Jun Wako <wakojun@gmail.com>
+   3:tmk_core/common/timer.h **** Copyright 2021 Simon Arlott
+   4:tmk_core/common/timer.h **** 
+   5:tmk_core/common/timer.h **** This program is free software: you can redistribute it and/or modify
+   6:tmk_core/common/timer.h **** it under the terms of the GNU General Public License as published by
+   7:tmk_core/common/timer.h **** the Free Software Foundation, either version 2 of the License, or
+   8:tmk_core/common/timer.h **** (at your option) any later version.
+   9:tmk_core/common/timer.h **** 
+  10:tmk_core/common/timer.h **** This program is distributed in the hope that it will be useful,
+  11:tmk_core/common/timer.h **** but WITHOUT ANY WARRANTY; without even the implied warranty of
+  12:tmk_core/common/timer.h **** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  13:tmk_core/common/timer.h **** GNU General Public License for more details.
+  14:tmk_core/common/timer.h **** 
+  15:tmk_core/common/timer.h **** You should have received a copy of the GNU General Public License
+  16:tmk_core/common/timer.h **** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  17:tmk_core/common/timer.h **** */
+  18:tmk_core/common/timer.h **** 
+  19:tmk_core/common/timer.h **** #pragma once
+  20:tmk_core/common/timer.h **** 
+  21:tmk_core/common/timer.h **** #if __has_include_next("_timer.h")
+  22:tmk_core/common/timer.h **** #    include_next "_timer.h" /* Include the platform's _timer.h */
+  23:tmk_core/common/timer.h **** #endif
+  24:tmk_core/common/timer.h **** 
+  25:tmk_core/common/timer.h **** #include <stdint.h>
+  26:tmk_core/common/timer.h **** 
+  27:tmk_core/common/timer.h **** #define TIMER_DIFF(a, b, max) ((max == UINT8_MAX) ? ((uint8_t)((a) - (b))) : ((max == UINT16_MAX) ?
+  28:tmk_core/common/timer.h **** #define TIMER_DIFF_8(a, b) TIMER_DIFF(a, b, UINT8_MAX)
+  29:tmk_core/common/timer.h **** #define TIMER_DIFF_16(a, b) TIMER_DIFF(a, b, UINT16_MAX)
+  30:tmk_core/common/timer.h **** #define TIMER_DIFF_32(a, b) TIMER_DIFF(a, b, UINT32_MAX)
+  31:tmk_core/common/timer.h **** #define TIMER_DIFF_RAW(a, b) TIMER_DIFF_8(a, b)
+  32:tmk_core/common/timer.h **** 
+  33:tmk_core/common/timer.h **** #ifdef __cplusplus
+  34:tmk_core/common/timer.h **** extern "C" {
+  35:tmk_core/common/timer.h **** #endif
+  36:tmk_core/common/timer.h **** 
+  37:tmk_core/common/timer.h **** extern volatile uint32_t timer_count;
+  38:tmk_core/common/timer.h **** 
+  39:tmk_core/common/timer.h **** void     timer_init(void);
+  40:tmk_core/common/timer.h **** void     timer_clear(void);
+  41:tmk_core/common/timer.h **** uint16_t timer_read(void);
+  42:tmk_core/common/timer.h **** uint32_t timer_read32(void);
+  43:tmk_core/common/timer.h **** uint16_t timer_elapsed(uint16_t last);
+  44:tmk_core/common/timer.h **** uint32_t timer_elapsed32(uint32_t last);
+  45:tmk_core/common/timer.h **** 
+  46:tmk_core/common/timer.h **** // Utility functions to check if a future time has expired & autmatically handle time wrapping if c
+  47:tmk_core/common/timer.h **** #define timer_expired(current, future) ((uint16_t)(current - future) < UINT16_MAX / 2)
+  48:tmk_core/common/timer.h **** #define timer_expired32(current, future) ((uint32_t)(current - future) < UINT32_MAX / 2)
+  49:tmk_core/common/timer.h **** 
+  50:tmk_core/common/timer.h **** // Use an appropriate timer integer size based on architecture (16-bit will overflow sooner)
+  51:tmk_core/common/timer.h **** #if FAST_TIMER_T_SIZE < 32
+  52:tmk_core/common/timer.h **** #    define TIMER_DIFF_FAST(a, b) TIMER_DIFF_16(a, b)
+  53:tmk_core/common/timer.h **** #    define timer_expired_fast(current, future) timer_expired(current, future)
+  54:tmk_core/common/timer.h **** typedef uint16_t fast_timer_t;
+  55:tmk_core/common/timer.h **** fast_timer_t inline timer_read_fast(void) { return timer_read(); }
+  56:tmk_core/common/timer.h **** fast_timer_t inline timer_elapsed_fast(fast_timer_t last) { return timer_elapsed(last); }
+  57:tmk_core/common/timer.h **** #else
+  58:tmk_core/common/timer.h **** #    define TIMER_DIFF_FAST(a, b) TIMER_DIFF_32(a, b)
+  59:tmk_core/common/timer.h **** #    define timer_expired_fast(current, future) timer_expired32(current, future)
+  60:tmk_core/common/timer.h **** typedef uint32_t fast_timer_t;
+  61:tmk_core/common/timer.h **** fast_timer_t inline timer_read_fast(void) { return timer_read32(); }
+  82              		.loc 2 61 21 view .LVU11
+  83              	.LBB8:
+  84              		.loc 2 61 45 view .LVU12
+  85              		.loc 2 61 52 is_stmt 0 view .LVU13
+  86 0010 FFF7FEFF 		bl	timer_read32
+  87              	.LVL3:
+  88              		.loc 2 61 52 view .LVU14
+  89              	.LBE8:
+  90              	.LBE7:
+  91              		.loc 1 36 25 view .LVU15
+  92 0014 0B4B     		ldr	r3, .L13+4
+  93 0016 1860     		str	r0, [r3]
+  94              	.L3:
+  37:quantum/debounce/sym_defer_g.c ****     }
+  38:quantum/debounce/sym_defer_g.c **** 
+  39:quantum/debounce/sym_defer_g.c ****     if (debouncing && timer_elapsed_fast(debouncing_time) >= DEBOUNCE) {
+  95              		.loc 1 39 5 is_stmt 1 view .LVU16
+  96              		.loc 1 39 8 is_stmt 0 view .LVU17
+  97 0018 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+  98 001a 2BB1     		cbz	r3, .L2
+  99              	.LVL4:
+ 100              	.LBB9:
+ 101              	.LBI9:
+  62:tmk_core/common/timer.h **** fast_timer_t inline timer_elapsed_fast(fast_timer_t last) { return timer_elapsed32(last); }
+ 102              		.loc 2 62 21 is_stmt 1 discriminator 1 view .LVU18
+ 103              	.LBB10:
+ 104              		.loc 2 62 61 discriminator 1 view .LVU19
+ 105              	.LBE10:
+ 106              	.LBE9:
+ 107              		.loc 1 39 23 is_stmt 0 discriminator 1 view .LVU20
+ 108 001c 094B     		ldr	r3, .L13+4
+ 109              	.LBB12:
+ 110              	.LBB11:
+ 111              		.loc 2 62 68 discriminator 1 view .LVU21
+ 112 001e 1868     		ldr	r0, [r3]
+ 113 0020 FFF7FEFF 		bl	timer_elapsed32
+ 114              	.LVL5:
+ 115              		.loc 2 62 68 discriminator 1 view .LVU22
+ 116              	.LBE11:
+ 117              	.LBE12:
+ 118              		.loc 1 39 20 discriminator 1 view .LVU23
+ 119 0024 0428     		cmp	r0, #4
+ 120 0026 08D8     		bhi	.L9
+ 121              	.L2:
+  40:quantum/debounce/sym_defer_g.c ****         for (int i = 0; i < num_rows; i++) {
+  41:quantum/debounce/sym_defer_g.c ****             cooked[i] = raw[i];
+  42:quantum/debounce/sym_defer_g.c ****         }
+  43:quantum/debounce/sym_defer_g.c ****         debouncing = false;
+  44:quantum/debounce/sym_defer_g.c ****     }
+  45:quantum/debounce/sym_defer_g.c **** }
+ 122              		.loc 1 45 1 view .LVU24
+ 123 0028 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 124              	.LVL6:
+ 125              	.L8:
+ 126              	.LBB13:
+  41:quantum/debounce/sym_defer_g.c ****         }
+ 127              		.loc 1 41 13 is_stmt 1 discriminator 3 view .LVU25
+  41:quantum/debounce/sym_defer_g.c ****         }
+ 128              		.loc 1 41 28 is_stmt 0 discriminator 3 view .LVU26
+ 129 002a F25C     		ldrb	r2, [r6, r3]	@ zero_extendqisi2
+  41:quantum/debounce/sym_defer_g.c ****         }
+ 130              		.loc 1 41 23 discriminator 3 view .LVU27
+ 131 002c FA54     		strb	r2, [r7, r3]
+  40:quantum/debounce/sym_defer_g.c ****         for (int i = 0; i < num_rows; i++) {
+ 132              		.loc 1 40 39 is_stmt 1 discriminator 3 view .LVU28
+  40:quantum/debounce/sym_defer_g.c ****         for (int i = 0; i < num_rows; i++) {
+ 133              		.loc 1 40 40 is_stmt 0 discriminator 3 view .LVU29
+ 134 002e 0133     		adds	r3, r3, #1
+ 135              	.LVL7:
+ 136              	.L6:
+  40:quantum/debounce/sym_defer_g.c ****         for (int i = 0; i < num_rows; i++) {
+ 137              		.loc 1 40 25 is_stmt 1 discriminator 1 view .LVU30
+  40:quantum/debounce/sym_defer_g.c ****         for (int i = 0; i < num_rows; i++) {
+ 138              		.loc 1 40 9 is_stmt 0 discriminator 1 view .LVU31
+ 139 0030 9D42     		cmp	r5, r3
+ 140 0032 FADC     		bgt	.L8
+ 141              	.LBE13:
+  43:quantum/debounce/sym_defer_g.c ****     }
+ 142              		.loc 1 43 9 is_stmt 1 view .LVU32
+  43:quantum/debounce/sym_defer_g.c ****     }
+ 143              		.loc 1 43 20 is_stmt 0 view .LVU33
+ 144 0034 0023     		movs	r3, #0
+ 145              	.LVL8:
+  43:quantum/debounce/sym_defer_g.c ****     }
+ 146              		.loc 1 43 20 view .LVU34
+ 147 0036 2370     		strb	r3, [r4]
+ 148              		.loc 1 45 1 view .LVU35
+ 149 0038 F6E7     		b	.L2
+ 150              	.L9:
+ 151              	.LBB14:
+  40:quantum/debounce/sym_defer_g.c ****         for (int i = 0; i < num_rows; i++) {
+ 152              		.loc 1 40 18 view .LVU36
+ 153 003a 0023     		movs	r3, #0
+ 154 003c F8E7     		b	.L6
+ 155              	.L14:
+ 156 003e 00BF     		.align	2
+ 157              	.L13:
+ 158 0040 00000000 		.word	.LANCHOR0
+ 159 0044 00000000 		.word	.LANCHOR1
+ 160              	.LBE14:
+ 161              		.cfi_endproc
+ 162              	.LFE292:
+ 164              		.section	.text.debounce_active,"ax",%progbits
+ 165              		.align	1
+ 166              		.global	debounce_active
+ 167              		.syntax unified
+ 168              		.thumb
+ 169              		.thumb_func
+ 170              		.fpu fpv4-sp-d16
+ 172              	debounce_active:
+ 173              	.LFB293:
+  46:quantum/debounce/sym_defer_g.c **** 
+  47:quantum/debounce/sym_defer_g.c **** bool debounce_active(void) { return debouncing; }
+ 174              		.loc 1 47 28 is_stmt 1 view -0
+ 175              		.cfi_startproc
+ 176              		@ args = 0, pretend = 0, frame = 0
+ 177              		@ frame_needed = 0, uses_anonymous_args = 0
+ 178              		@ link register save eliminated.
+ 179              		.loc 1 47 30 view .LVU38
+ 180              		.loc 1 47 49 is_stmt 0 view .LVU39
+ 181 0000 014B     		ldr	r3, .L16
+ 182 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 183 0004 7047     		bx	lr
+ 184              	.L17:
+ 185 0006 00BF     		.align	2
+ 186              	.L16:
+ 187 0008 00000000 		.word	.LANCHOR0
+ 188              		.cfi_endproc
+ 189              	.LFE293:
+ 191              		.section	.text.debounce_free,"ax",%progbits
+ 192              		.align	1
+ 193              		.global	debounce_free
+ 194              		.syntax unified
+ 195              		.thumb
+ 196              		.thumb_func
+ 197              		.fpu fpv4-sp-d16
+ 199              	debounce_free:
+ 200              	.LFB294:
+  48:quantum/debounce/sym_defer_g.c **** 
+  49:quantum/debounce/sym_defer_g.c **** void debounce_free(void) {}
+ 201              		.loc 1 49 26 is_stmt 1 view -0
+ 202              		.cfi_startproc
+ 203              		@ args = 0, pretend = 0, frame = 0
+ 204              		@ frame_needed = 0, uses_anonymous_args = 0
+ 205              		@ link register save eliminated.
+ 206              		.loc 1 49 27 view .LVU41
+ 207 0000 7047     		bx	lr
+ 208              		.cfi_endproc
+ 209              	.LFE294:
+ 211              		.section	.bss.debouncing,"aw",%nobits
+ 212              		.set	.LANCHOR0,. + 0
+ 215              	debouncing:
+ 216 0000 00       		.space	1
+ 217              		.section	.bss.debouncing_time,"aw",%nobits
+ 218              		.align	2
+ 219              		.set	.LANCHOR1,. + 0
+ 222              	debouncing_time:
+ 223 0000 00000000 		.space	4
+ 224              		.text
+ 225              	.Letext0:
+ 226              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 227              		.file 4 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 228              		.file 5 "quantum/matrix.h"
+ 229              		.file 6 "quantum/sequencer/sequencer.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 sym_defer_g.c
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:18     .text.debounce_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:26     .text.debounce_init:0000000000000000 debounce_init
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:41     .text.debounce:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:48     .text.debounce:0000000000000000 debounce
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:158    .text.debounce:0000000000000040 $d
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:165    .text.debounce_active:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:172    .text.debounce_active:0000000000000000 debounce_active
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:187    .text.debounce_active:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:192    .text.debounce_free:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:199    .text.debounce_free:0000000000000000 debounce_free
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:215    .bss.debouncing:0000000000000000 debouncing
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:216    .bss.debouncing:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:218    .bss.debouncing_time:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccgYgCJv.s:222    .bss.debouncing_time:0000000000000000 debouncing_time
+
+UNDEFINED SYMBOLS
+timer_read32
+timer_elapsed32

@@ -1,0 +1,485 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"hal_pal_lld.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text._pal_lld_init,"ax",%progbits
+  18              		.align	1
+  19              		.global	_pal_lld_init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	_pal_lld_init:
+  27              	.LFB278:
+  28              		.file 1 "lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c"
+   1:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /*
+   2:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+   3:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+   4:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     Licensed under the Apache License, Version 2.0 (the "License");
+   5:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     you may not use this file except in compliance with the License.
+   6:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     You may obtain a copy of the License at
+   7:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+   8:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         http://www.apache.org/licenses/LICENSE-2.0
+   9:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  10:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     Unless required by applicable law or agreed to in writing, software
+  11:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     distributed under the License is distributed on an "AS IS" BASIS,
+  12:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     See the License for the specific language governing permissions and
+  14:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     limitations under the License.
+  15:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** */
+  16:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  17:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /**
+  18:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @file    GPIOv2/hal_pal_lld.c
+  19:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @brief   STM32 PAL low level driver code.
+  20:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  *
+  21:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @addtogroup PAL
+  22:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @{
+  23:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  */
+  24:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  25:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** #include "hal.h"
+  26:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  27:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** #if HAL_USE_PAL || defined(__DOXYGEN__)
+  28:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  29:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /*===========================================================================*/
+  30:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /* Driver local definitions.                                                 */
+  31:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /*===========================================================================*/
+  32:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  33:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /*===========================================================================*/
+  34:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /* Driver exported variables.                                                */
+  35:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /*===========================================================================*/
+  36:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  37:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** #if (PAL_USE_WAIT == TRUE) || (PAL_USE_CALLBACKS == TRUE) || defined(__DOXYGEN__)
+  38:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /**
+  39:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @brief   Event records for the 16 GPIO EXTI channels.
+  40:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  */
+  41:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** palevent_t _pal_events[16];
+  42:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** #endif
+  43:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  44:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /*===========================================================================*/
+  45:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /* Driver local variables and types.                                         */
+  46:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /*===========================================================================*/
+  47:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  48:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /*===========================================================================*/
+  49:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /* Driver local functions.                                                   */
+  50:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /*===========================================================================*/
+  51:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  52:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /*===========================================================================*/
+  53:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /* Driver interrupt handlers.                                                */
+  54:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /*===========================================================================*/
+  55:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  56:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /*===========================================================================*/
+  57:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /* Driver exported functions.                                                */
+  58:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /*===========================================================================*/
+  59:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  60:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /**
+  61:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @brief   PAL driver initialization.
+  62:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  *
+  63:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @notapi
+  64:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  */
+  65:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** void _pal_lld_init(void) {
+  29              		.loc 1 65 26 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  66:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  67:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** #if PAL_USE_CALLBACKS || PAL_USE_WAIT || defined(__DOXYGEN__)
+  68:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   unsigned i;
+  69:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  70:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   for (i = 0; i < 16; i++) {
+  71:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     _pal_init_event(i);
+  72:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   }
+  73:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** #endif
+  74:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** }
+  34              		.loc 1 74 1 view .LVU1
+  35 0000 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE278:
+  39              		.section	.text._pal_lld_setgroupmode,"ax",%progbits
+  40              		.align	1
+  41              		.global	_pal_lld_setgroupmode
+  42              		.syntax unified
+  43              		.thumb
+  44              		.thumb_func
+  45              		.fpu fpv4-sp-d16
+  47              	_pal_lld_setgroupmode:
+  48              	.LVL0:
+  49              	.LFB279:
+  75:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  76:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** /**
+  77:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @brief   Pads mode setup.
+  78:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @details This function programs a pads group belonging to the same port
+  79:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  *          with the specified mode.
+  80:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @note    @p PAL_MODE_UNCONNECTED is implemented as push pull at minimum
+  81:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  *          speed.
+  82:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  *
+  83:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @param[in] port      the port identifier
+  84:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @param[in] mask      the group mask
+  85:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @param[in] mode      the mode
+  86:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  *
+  87:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  * @notapi
+  88:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****  */
+  89:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** void _pal_lld_setgroupmode(ioportid_t port,
+  90:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****                            ioportmask_t mask,
+  91:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****                            iomode_t mode) {
+  50              		.loc 1 91 43 view -0
+  51              		.cfi_startproc
+  52              		@ args = 0, pretend = 0, frame = 8
+  53              		@ frame_needed = 0, uses_anonymous_args = 0
+  92:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  93:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t moder   = (mode & PAL_STM32_MODE_MASK) >> 0;
+  54              		.loc 1 93 3 view .LVU3
+  91:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+  55              		.loc 1 91 43 is_stmt 0 view .LVU4
+  56 0000 2DE9F74F 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  57              		.cfi_def_cfa_offset 48
+  58              		.cfi_offset 4, -36
+  59              		.cfi_offset 5, -32
+  60              		.cfi_offset 6, -28
+  61              		.cfi_offset 7, -24
+  62              		.cfi_offset 8, -20
+  63              		.cfi_offset 9, -16
+  64              		.cfi_offset 10, -12
+  65              		.cfi_offset 11, -8
+  66              		.cfi_offset 14, -4
+  94:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t otyper  = (mode & PAL_STM32_OTYPE_MASK) >> 2;
+  95:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t ospeedr = (mode & PAL_STM32_OSPEED_MASK) >> 3;
+  96:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t pupdr   = (mode & PAL_STM32_PUPDR_MASK) >> 5;
+  97:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t altr    = (mode & PAL_STM32_ALTERNATE_MASK) >> 7;
+  67              		.loc 1 97 12 view .LVU5
+  68 0004 C2F3C313 		ubfx	r3, r2, #7, #4
+  93:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t otyper  = (mode & PAL_STM32_OTYPE_MASK) >> 2;
+  69              		.loc 1 93 12 view .LVU6
+  70 0008 02F0030A 		and	r10, r2, #3
+  71              	.LVL1:
+  94:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t otyper  = (mode & PAL_STM32_OTYPE_MASK) >> 2;
+  72              		.loc 1 94 3 is_stmt 1 view .LVU7
+  94:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t otyper  = (mode & PAL_STM32_OTYPE_MASK) >> 2;
+  73              		.loc 1 94 12 is_stmt 0 view .LVU8
+  74 000c C2F38009 		ubfx	r9, r2, #2, #1
+  75              	.LVL2:
+  95:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t pupdr   = (mode & PAL_STM32_PUPDR_MASK) >> 5;
+  76              		.loc 1 95 3 is_stmt 1 view .LVU9
+  95:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t pupdr   = (mode & PAL_STM32_PUPDR_MASK) >> 5;
+  77              		.loc 1 95 12 is_stmt 0 view .LVU10
+  78 0010 C2F3C108 		ubfx	r8, r2, #3, #2
+  79              	.LVL3:
+  96:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t altr    = (mode & PAL_STM32_ALTERNATE_MASK) >> 7;
+  80              		.loc 1 96 3 is_stmt 1 view .LVU11
+  96:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t altr    = (mode & PAL_STM32_ALTERNATE_MASK) >> 7;
+  81              		.loc 1 96 12 is_stmt 0 view .LVU12
+  82 0014 C2F3411E 		ubfx	lr, r2, #5, #2
+  83              	.LVL4:
+  84              		.loc 1 97 3 is_stmt 1 view .LVU13
+  85              		.loc 1 97 12 is_stmt 0 view .LVU14
+  86 0018 0193     		str	r3, [sp, #4]
+  87              	.LVL5:
+  98:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t bit     = 0;
+  88              		.loc 1 98 3 is_stmt 1 view .LVU15
+  93:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   uint32_t otyper  = (mode & PAL_STM32_OTYPE_MASK) >> 2;
+  89              		.loc 1 93 12 is_stmt 0 view .LVU16
+  90 001a 5746     		mov	r7, r10
+  91              		.loc 1 98 12 view .LVU17
+  92 001c 0022     		movs	r2, #0
+  93              	.LVL6:
+  94              	.LBB2:
+  99:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   while (true) {
+ 100:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     if ((mask & 1) != 0) {
+ 101:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       uint32_t altrmask, m1, m2, m4;
+ 102:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+ 103:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       altrmask = altr << ((bit & 7) * 4);
+ 104:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       m1 = 1 << bit;
+ 105:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       m2 = 3 << (bit * 2);
+ 106:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       m4 = 15 << ((bit & 7) * 4);
+  95              		.loc 1 106 15 view .LVU18
+  96 001e 4FF00F0B 		mov	fp, #15
+  97              	.LVL7:
+  98              	.L9:
+  99              		.loc 1 106 15 view .LVU19
+ 100              	.LBE2:
+  99:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   while (true) {
+ 101              		.loc 1 99 3 is_stmt 1 view .LVU20
+ 100:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       uint32_t altrmask, m1, m2, m4;
+ 102              		.loc 1 100 5 view .LVU21
+ 100:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       uint32_t altrmask, m1, m2, m4;
+ 103              		.loc 1 100 8 is_stmt 0 view .LVU22
+ 104 0022 CB07     		lsls	r3, r1, #31
+ 105 0024 37D5     		bpl	.L3
+ 106              	.LBB3:
+ 101:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** 
+ 107              		.loc 1 101 7 is_stmt 1 view .LVU23
+ 103:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       m1 = 1 << bit;
+ 108              		.loc 1 103 7 view .LVU24
+ 103:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       m1 = 1 << bit;
+ 109              		.loc 1 103 16 is_stmt 0 view .LVU25
+ 110 0026 019C     		ldr	r4, [sp, #4]
+ 103:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       m1 = 1 << bit;
+ 111              		.loc 1 103 32 view .LVU26
+ 112 0028 02F00703 		and	r3, r2, #7
+ 103:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       m1 = 1 << bit;
+ 113              		.loc 1 103 37 view .LVU27
+ 114 002c 9B00     		lsls	r3, r3, #2
+ 103:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       m1 = 1 << bit;
+ 115              		.loc 1 103 16 view .LVU28
+ 116 002e 04FA03FC 		lsl	ip, r4, r3
+ 117              	.LVL8:
+ 104:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       m2 = 3 << (bit * 2);
+ 118              		.loc 1 104 7 is_stmt 1 view .LVU29
+ 105:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       m4 = 15 << ((bit & 7) * 4);
+ 119              		.loc 1 105 7 view .LVU30
+ 120              		.loc 1 106 7 view .LVU31
+ 107:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       port->OTYPER  = (port->OTYPER & ~m1) | otyper;
+ 121              		.loc 1 107 7 view .LVU32
+ 104:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       m2 = 3 << (bit * 2);
+ 122              		.loc 1 104 14 is_stmt 0 view .LVU33
+ 123 0032 0125     		movs	r5, #1
+ 124              		.loc 1 107 28 view .LVU34
+ 125 0034 4468     		ldr	r4, [r0, #4]
+ 104:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       m2 = 3 << (bit * 2);
+ 126              		.loc 1 104 14 view .LVU35
+ 127 0036 9540     		lsls	r5, r5, r2
+ 128              	.LVL9:
+ 129              		.loc 1 107 37 view .LVU36
+ 130 0038 24EA0504 		bic	r4, r4, r5
+ 131              		.loc 1 107 44 view .LVU37
+ 132 003c 44EA0904 		orr	r4, r4, r9
+ 133              		.loc 1 107 21 view .LVU38
+ 134 0040 4460     		str	r4, [r0, #4]
+ 108:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       port->OSPEEDR = (port->OSPEEDR & ~m2) | ospeedr;
+ 135              		.loc 1 108 7 is_stmt 1 view .LVU39
+ 136              		.loc 1 108 28 is_stmt 0 view .LVU40
+ 137 0042 8568     		ldr	r5, [r0, #8]
+ 138              	.LVL10:
+ 105:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       m4 = 15 << ((bit & 7) * 4);
+ 139              		.loc 1 105 14 view .LVU41
+ 140 0044 0324     		movs	r4, #3
+ 141 0046 5600     		lsls	r6, r2, #1
+ 142 0048 04FA06F6 		lsl	r6, r4, r6
+ 143              	.LVL11:
+ 144              		.loc 1 108 38 view .LVU42
+ 145 004c 25EA0605 		bic	r5, r5, r6
+ 146              		.loc 1 108 45 view .LVU43
+ 147 0050 45EA0805 		orr	r5, r5, r8
+ 148              		.loc 1 108 21 view .LVU44
+ 149 0054 8560     		str	r5, [r0, #8]
+ 109:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       port->PUPDR   = (port->PUPDR & ~m2) | pupdr;
+ 150              		.loc 1 109 7 is_stmt 1 view .LVU45
+ 151              		.loc 1 109 28 is_stmt 0 view .LVU46
+ 152 0056 C568     		ldr	r5, [r0, #12]
+ 153              		.loc 1 109 36 view .LVU47
+ 154 0058 25EA0605 		bic	r5, r5, r6
+ 155              		.loc 1 109 43 view .LVU48
+ 156 005c 45EA0E05 		orr	r5, r5, lr
+ 106:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       port->OTYPER  = (port->OTYPER & ~m1) | otyper;
+ 157              		.loc 1 106 15 view .LVU49
+ 158 0060 0BFA03F3 		lsl	r3, fp, r3
+ 159              	.LVL12:
+ 110:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       if ((mode & PAL_STM32_MODE_MASK) == PAL_STM32_MODE_ALTERNATE) {
+ 160              		.loc 1 110 10 view .LVU50
+ 161 0064 BAF1020F 		cmp	r10, #2
+ 108:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       port->PUPDR   = (port->PUPDR & ~m2) | pupdr;
+ 162              		.loc 1 108 40 view .LVU51
+ 163 0068 6FEA0604 		mvn	r4, r6
+ 109:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       if ((mode & PAL_STM32_MODE_MASK) == PAL_STM32_MODE_ALTERNATE) {
+ 164              		.loc 1 109 21 view .LVU52
+ 165 006c C560     		str	r5, [r0, #12]
+ 166              		.loc 1 110 7 is_stmt 1 view .LVU53
+ 111:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         /* If going in alternate mode then the alternate number is set
+ 112:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****            before switching mode in order to avoid glitches.*/
+ 113:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         if (bit < 8)
+ 114:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****           port->AFRL = (port->AFRL & ~m4) | altrmask;
+ 167              		.loc 1 114 38 is_stmt 0 view .LVU54
+ 168 006e 6FEA0303 		mvn	r3, r3
+ 110:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         /* If going in alternate mode then the alternate number is set
+ 169              		.loc 1 110 10 view .LVU55
+ 170 0072 1BD1     		bne	.L4
+ 113:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****           port->AFRL = (port->AFRL & ~m4) | altrmask;
+ 171              		.loc 1 113 9 is_stmt 1 view .LVU56
+ 113:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****           port->AFRL = (port->AFRL & ~m4) | altrmask;
+ 172              		.loc 1 113 12 is_stmt 0 view .LVU57
+ 173 0074 072A     		cmp	r2, #7
+ 174              		.loc 1 114 11 is_stmt 1 view .LVU58
+ 175              		.loc 1 114 29 is_stmt 0 view .LVU59
+ 176 0076 95BF     		itete	ls
+ 177 0078 056A     		ldrls	r5, [r0, #32]
+ 115:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         else
+ 116:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****           port->AFRH = (port->AFRH & ~m4) | altrmask;
+ 178              		.loc 1 116 29 view .LVU60
+ 179 007a 456A     		ldrhi	r5, [r0, #36]
+ 114:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         else
+ 180              		.loc 1 114 36 view .LVU61
+ 181 007c 2B40     		andls	r3, r3, r5
+ 182              		.loc 1 116 36 view .LVU62
+ 183 007e 2B40     		andhi	r3, r3, r5
+ 114:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         else
+ 184              		.loc 1 114 43 view .LVU63
+ 185 0080 95BF     		itete	ls
+ 186 0082 43EA0C03 		orrls	r3, r3, ip
+ 187              		.loc 1 116 43 view .LVU64
+ 188 0086 43EA0C03 		orrhi	r3, r3, ip
+ 114:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         else
+ 189              		.loc 1 114 22 view .LVU65
+ 190 008a 0362     		strls	r3, [r0, #32]
+ 191              		.loc 1 116 11 is_stmt 1 view .LVU66
+ 192              		.loc 1 116 22 is_stmt 0 view .LVU67
+ 193 008c 4362     		strhi	r3, [r0, #36]
+ 117:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         port->MODER   = (port->MODER & ~m2) | moder;
+ 194              		.loc 1 117 9 is_stmt 1 view .LVU68
+ 195              		.loc 1 117 30 is_stmt 0 view .LVU69
+ 196 008e 0368     		ldr	r3, [r0]
+ 197              		.loc 1 117 38 view .LVU70
+ 198 0090 1C40     		ands	r4, r4, r3
+ 199              		.loc 1 117 45 view .LVU71
+ 200 0092 3C43     		orrs	r4, r4, r7
+ 201              		.loc 1 117 23 view .LVU72
+ 202 0094 0460     		str	r4, [r0]
+ 203              	.LVL13:
+ 204              	.L3:
+ 205              		.loc 1 117 23 view .LVU73
+ 206              	.LBE3:
+ 118:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       }
+ 119:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       else {
+ 120:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         /* If going into a non-alternate mode then the mode is switched
+ 121:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****            before setting the alternate mode in order to avoid glitches.*/
+ 122:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         port->MODER   = (port->MODER & ~m2) | moder;
+ 123:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         if (bit < 8)
+ 124:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****           port->AFRL = (port->AFRL & ~m4) | altrmask;
+ 125:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         else
+ 126:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****           port->AFRH = (port->AFRH & ~m4) | altrmask;
+ 127:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       }
+ 128:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     }
+ 129:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     mask >>= 1;
+ 207              		.loc 1 129 5 is_stmt 1 view .LVU74
+ 130:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     if (!mask)
+ 208              		.loc 1 130 5 view .LVU75
+ 209              		.loc 1 130 8 is_stmt 0 view .LVU76
+ 210 0096 4908     		lsrs	r1, r1, #1
+ 211              	.LVL14:
+ 212              		.loc 1 130 8 view .LVU77
+ 213 0098 1AD0     		beq	.L13
+ 131:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       return;
+ 132:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     otyper <<= 1;
+ 214              		.loc 1 132 5 is_stmt 1 view .LVU78
+ 215              		.loc 1 132 12 is_stmt 0 view .LVU79
+ 216 009a 4FEA4909 		lsl	r9, r9, #1
+ 217              	.LVL15:
+ 133:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     ospeedr <<= 2;
+ 218              		.loc 1 133 5 is_stmt 1 view .LVU80
+ 219              		.loc 1 133 13 is_stmt 0 view .LVU81
+ 220 009e 4FEA8808 		lsl	r8, r8, #2
+ 221              	.LVL16:
+ 134:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     pupdr <<= 2;
+ 222              		.loc 1 134 5 is_stmt 1 view .LVU82
+ 223              		.loc 1 134 11 is_stmt 0 view .LVU83
+ 224 00a2 4FEA8E0E 		lsl	lr, lr, #2
+ 225              	.LVL17:
+ 135:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     moder <<= 2;
+ 226              		.loc 1 135 5 is_stmt 1 view .LVU84
+ 227              		.loc 1 135 11 is_stmt 0 view .LVU85
+ 228 00a6 BF00     		lsls	r7, r7, #2
+ 229              	.LVL18:
+ 136:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     bit++;
+ 230              		.loc 1 136 5 is_stmt 1 view .LVU86
+ 231              		.loc 1 136 8 is_stmt 0 view .LVU87
+ 232 00a8 0132     		adds	r2, r2, #1
+ 233              	.LVL19:
+  99:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****     if ((mask & 1) != 0) {
+ 234              		.loc 1 99 9 is_stmt 1 view .LVU88
+ 100:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       uint32_t altrmask, m1, m2, m4;
+ 235              		.loc 1 100 8 is_stmt 0 view .LVU89
+ 236 00aa BAE7     		b	.L9
+ 237              	.LVL20:
+ 238              	.L4:
+ 239              	.LBB4:
+ 122:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         if (bit < 8)
+ 240              		.loc 1 122 9 is_stmt 1 view .LVU90
+ 122:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         if (bit < 8)
+ 241              		.loc 1 122 30 is_stmt 0 view .LVU91
+ 242 00ac 0568     		ldr	r5, [r0]
+ 122:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         if (bit < 8)
+ 243              		.loc 1 122 38 view .LVU92
+ 244 00ae 2C40     		ands	r4, r4, r5
+ 122:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         if (bit < 8)
+ 245              		.loc 1 122 45 view .LVU93
+ 246 00b0 3C43     		orrs	r4, r4, r7
+ 123:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****           port->AFRL = (port->AFRL & ~m4) | altrmask;
+ 247              		.loc 1 123 12 view .LVU94
+ 248 00b2 072A     		cmp	r2, #7
+ 122:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         if (bit < 8)
+ 249              		.loc 1 122 23 view .LVU95
+ 250 00b4 0460     		str	r4, [r0]
+ 123:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****           port->AFRL = (port->AFRL & ~m4) | altrmask;
+ 251              		.loc 1 123 9 is_stmt 1 view .LVU96
+ 124:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         else
+ 252              		.loc 1 124 11 view .LVU97
+ 124:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         else
+ 253              		.loc 1 124 29 is_stmt 0 view .LVU98
+ 254 00b6 95BF     		itete	ls
+ 255 00b8 046A     		ldrls	r4, [r0, #32]
+ 126:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       }
+ 256              		.loc 1 126 29 view .LVU99
+ 257 00ba 446A     		ldrhi	r4, [r0, #36]
+ 124:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         else
+ 258              		.loc 1 124 36 view .LVU100
+ 259 00bc 2340     		andls	r3, r3, r4
+ 126:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       }
+ 260              		.loc 1 126 36 view .LVU101
+ 261 00be 2340     		andhi	r3, r3, r4
+ 124:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         else
+ 262              		.loc 1 124 43 view .LVU102
+ 263 00c0 95BF     		itete	ls
+ 264 00c2 43EA0C03 		orrls	r3, r3, ip
+ 126:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       }
+ 265              		.loc 1 126 43 view .LVU103
+ 266 00c6 43EA0C03 		orrhi	r3, r3, ip
+ 124:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****         else
+ 267              		.loc 1 124 22 view .LVU104
+ 268 00ca 0362     		strls	r3, [r0, #32]
+ 126:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       }
+ 269              		.loc 1 126 11 is_stmt 1 view .LVU105
+ 126:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       }
+ 270              		.loc 1 126 22 is_stmt 0 view .LVU106
+ 271 00cc 4362     		strhi	r3, [r0, #36]
+ 272 00ce E2E7     		b	.L3
+ 273              	.LVL21:
+ 274              	.L13:
+ 126:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****       }
+ 275              		.loc 1 126 22 view .LVU107
+ 276              	.LBE4:
+ 137:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c ****   }
+ 138:lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.c **** }
+ 277              		.loc 1 138 1 view .LVU108
+ 278 00d0 03B0     		add	sp, sp, #12
+ 279              		.cfi_def_cfa_offset 36
+ 280              		@ sp needed
+ 281 00d2 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 282              		.loc 1 138 1 view .LVU109
+ 283              		.cfi_endproc
+ 284              	.LFE279:
+ 286              		.text
+ 287              	.Letext0:
+ 288              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 289              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 290              		.file 4 "./lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/stm32_gpio.h"
+ 291              		.file 5 "./lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 hal_pal_lld.c
+C:\Users\lhanj\AppData\Local\Temp\ccgLEaOt.s:18     .text._pal_lld_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccgLEaOt.s:26     .text._pal_lld_init:0000000000000000 _pal_lld_init
+C:\Users\lhanj\AppData\Local\Temp\ccgLEaOt.s:40     .text._pal_lld_setgroupmode:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccgLEaOt.s:47     .text._pal_lld_setgroupmode:0000000000000000 _pal_lld_setgroupmode
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,2372 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"action_util.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.add_key,"ax",%progbits
+  18              		.align	1
+  19              		.global	add_key
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	add_key:
+  27              	.LVL0:
+  28              	.LFB280:
+  29              		.file 1 "tmk_core/common/action_util.h"
+   1:tmk_core/common/action_util.h **** /*
+   2:tmk_core/common/action_util.h **** Copyright 2013 Jun Wako <wakojun@gmail.com>
+   3:tmk_core/common/action_util.h **** 
+   4:tmk_core/common/action_util.h **** This program is free software: you can redistribute it and/or modify
+   5:tmk_core/common/action_util.h **** it under the terms of the GNU General Public License as published by
+   6:tmk_core/common/action_util.h **** the Free Software Foundation, either version 2 of the License, or
+   7:tmk_core/common/action_util.h **** (at your option) any later version.
+   8:tmk_core/common/action_util.h **** 
+   9:tmk_core/common/action_util.h **** This program is distributed in the hope that it will be useful,
+  10:tmk_core/common/action_util.h **** but WITHOUT ANY WARRANTY; without even the implied warranty of
+  11:tmk_core/common/action_util.h **** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  12:tmk_core/common/action_util.h **** GNU General Public License for more details.
+  13:tmk_core/common/action_util.h **** 
+  14:tmk_core/common/action_util.h **** You should have received a copy of the GNU General Public License
+  15:tmk_core/common/action_util.h **** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  16:tmk_core/common/action_util.h **** */
+  17:tmk_core/common/action_util.h **** 
+  18:tmk_core/common/action_util.h **** #pragma once
+  19:tmk_core/common/action_util.h **** 
+  20:tmk_core/common/action_util.h **** #include <stdint.h>
+  21:tmk_core/common/action_util.h **** #include "report.h"
+  22:tmk_core/common/action_util.h **** 
+  23:tmk_core/common/action_util.h **** #ifdef __cplusplus
+  24:tmk_core/common/action_util.h **** extern "C" {
+  25:tmk_core/common/action_util.h **** #endif
+  26:tmk_core/common/action_util.h **** 
+  27:tmk_core/common/action_util.h **** extern report_keyboard_t *keyboard_report;
+  28:tmk_core/common/action_util.h **** 
+  29:tmk_core/common/action_util.h **** void send_keyboard_report(void);
+  30:tmk_core/common/action_util.h **** 
+  31:tmk_core/common/action_util.h **** /* key */
+  32:tmk_core/common/action_util.h **** inline void add_key(uint8_t key) { add_key_to_report(keyboard_report, key); }
+  30              		.loc 1 32 34 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  35              		.loc 1 32 36 view .LVU1
+  36 0000 024B     		ldr	r3, .L2
+  37              		.loc 1 32 34 is_stmt 0 view .LVU2
+  38 0002 0146     		mov	r1, r0
+  39              		.loc 1 32 36 view .LVU3
+  40 0004 1868     		ldr	r0, [r3]
+  41              	.LVL1:
+  42              		.loc 1 32 36 view .LVU4
+  43 0006 FFF7FEBF 		b	add_key_to_report
+  44              	.LVL2:
+  45              	.L3:
+  46 000a 00BF     		.align	2
+  47              	.L2:
+  48 000c 00000000 		.word	.LANCHOR0
+  49              		.cfi_endproc
+  50              	.LFE280:
+  52              		.section	.text.del_key,"ax",%progbits
+  53              		.align	1
+  54              		.global	del_key
+  55              		.syntax unified
+  56              		.thumb
+  57              		.thumb_func
+  58              		.fpu fpv4-sp-d16
+  60              	del_key:
+  61              	.LVL3:
+  62              	.LFB281:
+  33:tmk_core/common/action_util.h **** 
+  34:tmk_core/common/action_util.h **** inline void del_key(uint8_t key) { del_key_from_report(keyboard_report, key); }
+  63              		.loc 1 34 34 is_stmt 1 view -0
+  64              		.cfi_startproc
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67              		@ link register save eliminated.
+  68              		.loc 1 34 36 view .LVU6
+  69 0000 024B     		ldr	r3, .L5
+  70              		.loc 1 34 34 is_stmt 0 view .LVU7
+  71 0002 0146     		mov	r1, r0
+  72              		.loc 1 34 36 view .LVU8
+  73 0004 1868     		ldr	r0, [r3]
+  74              	.LVL4:
+  75              		.loc 1 34 36 view .LVU9
+  76 0006 FFF7FEBF 		b	del_key_from_report
+  77              	.LVL5:
+  78              	.L6:
+  79 000a 00BF     		.align	2
+  80              	.L5:
+  81 000c 00000000 		.word	.LANCHOR0
+  82              		.cfi_endproc
+  83              	.LFE281:
+  85              		.section	.text.clear_keys,"ax",%progbits
+  86              		.align	1
+  87              		.global	clear_keys
+  88              		.syntax unified
+  89              		.thumb
+  90              		.thumb_func
+  91              		.fpu fpv4-sp-d16
+  93              	clear_keys:
+  94              	.LFB282:
+  35:tmk_core/common/action_util.h **** 
+  36:tmk_core/common/action_util.h **** inline void clear_keys(void) { clear_keys_from_report(keyboard_report); }
+  95              		.loc 1 36 30 is_stmt 1 view -0
+  96              		.cfi_startproc
+  97              		@ args = 0, pretend = 0, frame = 0
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+  99              		@ link register save eliminated.
+ 100              		.loc 1 36 32 view .LVU11
+ 101 0000 014B     		ldr	r3, .L8
+ 102 0002 1868     		ldr	r0, [r3]
+ 103 0004 FFF7FEBF 		b	clear_keys_from_report
+ 104              	.LVL6:
+ 105              	.L9:
+ 106              		.align	2
+ 107              	.L8:
+ 108 0008 00000000 		.word	.LANCHOR0
+ 109              		.cfi_endproc
+ 110              	.LFE282:
+ 112              		.section	.text.get_oneshot_locked_mods,"ax",%progbits
+ 113              		.align	1
+ 114              		.global	get_oneshot_locked_mods
+ 115              		.syntax unified
+ 116              		.thumb
+ 117              		.thumb_func
+ 118              		.fpu fpv4-sp-d16
+ 120              	get_oneshot_locked_mods:
+ 121              	.LFB288:
+ 122              		.file 2 "tmk_core/common/action_util.c"
+   1:tmk_core/common/action_util.c **** /*
+   2:tmk_core/common/action_util.c **** Copyright 2013 Jun Wako <wakojun@gmail.com>
+   3:tmk_core/common/action_util.c **** 
+   4:tmk_core/common/action_util.c **** This program is free software: you can redistribute it and/or modify
+   5:tmk_core/common/action_util.c **** it under the terms of the GNU General Public License as published by
+   6:tmk_core/common/action_util.c **** the Free Software Foundation, either version 2 of the License, or
+   7:tmk_core/common/action_util.c **** (at your option) any later version.
+   8:tmk_core/common/action_util.c **** 
+   9:tmk_core/common/action_util.c **** This program is distributed in the hope that it will be useful,
+  10:tmk_core/common/action_util.c **** but WITHOUT ANY WARRANTY; without even the implied warranty of
+  11:tmk_core/common/action_util.c **** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  12:tmk_core/common/action_util.c **** GNU General Public License for more details.
+  13:tmk_core/common/action_util.c **** 
+  14:tmk_core/common/action_util.c **** You should have received a copy of the GNU General Public License
+  15:tmk_core/common/action_util.c **** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  16:tmk_core/common/action_util.c **** */
+  17:tmk_core/common/action_util.c **** #include "host.h"
+  18:tmk_core/common/action_util.c **** #include "report.h"
+  19:tmk_core/common/action_util.c **** #include "debug.h"
+  20:tmk_core/common/action_util.c **** #include "action_util.h"
+  21:tmk_core/common/action_util.c **** #include "action_layer.h"
+  22:tmk_core/common/action_util.c **** #include "timer.h"
+  23:tmk_core/common/action_util.c **** #include "keycode_config.h"
+  24:tmk_core/common/action_util.c **** 
+  25:tmk_core/common/action_util.c **** extern keymap_config_t keymap_config;
+  26:tmk_core/common/action_util.c **** 
+  27:tmk_core/common/action_util.c **** static uint8_t real_mods  = 0;
+  28:tmk_core/common/action_util.c **** static uint8_t weak_mods  = 0;
+  29:tmk_core/common/action_util.c **** static uint8_t macro_mods = 0;
+  30:tmk_core/common/action_util.c **** #ifdef KEY_OVERRIDE_ENABLE
+  31:tmk_core/common/action_util.c **** static uint8_t weak_override_mods = 0;
+  32:tmk_core/common/action_util.c **** static uint8_t suppressed_mods    = 0;
+  33:tmk_core/common/action_util.c **** #endif
+  34:tmk_core/common/action_util.c **** 
+  35:tmk_core/common/action_util.c **** #ifdef USB_6KRO_ENABLE
+  36:tmk_core/common/action_util.c **** #    define RO_ADD(a, b) ((a + b) % KEYBOARD_REPORT_KEYS)
+  37:tmk_core/common/action_util.c **** #    define RO_SUB(a, b) ((a - b + KEYBOARD_REPORT_KEYS) % KEYBOARD_REPORT_KEYS)
+  38:tmk_core/common/action_util.c **** #    define RO_INC(a) RO_ADD(a, 1)
+  39:tmk_core/common/action_util.c **** #    define RO_DEC(a) RO_SUB(a, 1)
+  40:tmk_core/common/action_util.c **** static int8_t cb_head  = 0;
+  41:tmk_core/common/action_util.c **** static int8_t cb_tail  = 0;
+  42:tmk_core/common/action_util.c **** static int8_t cb_count = 0;
+  43:tmk_core/common/action_util.c **** #endif
+  44:tmk_core/common/action_util.c **** 
+  45:tmk_core/common/action_util.c **** // TODO: pointer variable is not needed
+  46:tmk_core/common/action_util.c **** // report_keyboard_t keyboard_report = {};
+  47:tmk_core/common/action_util.c **** report_keyboard_t *keyboard_report = &(report_keyboard_t){};
+  48:tmk_core/common/action_util.c **** 
+  49:tmk_core/common/action_util.c **** extern inline void add_key(uint8_t key);
+  50:tmk_core/common/action_util.c **** extern inline void del_key(uint8_t key);
+  51:tmk_core/common/action_util.c **** extern inline void clear_keys(void);
+  52:tmk_core/common/action_util.c **** 
+  53:tmk_core/common/action_util.c **** #ifndef NO_ACTION_ONESHOT
+  54:tmk_core/common/action_util.c **** static uint8_t oneshot_mods        = 0;
+  55:tmk_core/common/action_util.c **** static uint8_t oneshot_locked_mods = 0;
+  56:tmk_core/common/action_util.c **** uint8_t        get_oneshot_locked_mods(void) { return oneshot_locked_mods; }
+ 123              		.loc 2 56 46 view -0
+ 124              		.cfi_startproc
+ 125              		@ args = 0, pretend = 0, frame = 0
+ 126              		@ frame_needed = 0, uses_anonymous_args = 0
+ 127              		@ link register save eliminated.
+ 128              		.loc 2 56 48 view .LVU13
+ 129              		.loc 2 56 76 is_stmt 0 view .LVU14
+ 130 0000 014B     		ldr	r3, .L11
+ 131 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 132 0004 7047     		bx	lr
+ 133              	.L12:
+ 134 0006 00BF     		.align	2
+ 135              	.L11:
+ 136 0008 00000000 		.word	.LANCHOR1
+ 137              		.cfi_endproc
+ 138              	.LFE288:
+ 140              		.section	.text.has_oneshot_mods_timed_out,"ax",%progbits
+ 141              		.align	1
+ 142              		.global	has_oneshot_mods_timed_out
+ 143              		.syntax unified
+ 144              		.thumb
+ 145              		.thumb_func
+ 146              		.fpu fpv4-sp-d16
+ 148              	has_oneshot_mods_timed_out:
+ 149              	.LFB291:
+  57:tmk_core/common/action_util.c **** void           set_oneshot_locked_mods(uint8_t mods) {
+  58:tmk_core/common/action_util.c ****     if (mods != oneshot_locked_mods) {
+  59:tmk_core/common/action_util.c ****         oneshot_locked_mods = mods;
+  60:tmk_core/common/action_util.c ****         oneshot_locked_mods_changed_kb(oneshot_locked_mods);
+  61:tmk_core/common/action_util.c ****     }
+  62:tmk_core/common/action_util.c **** }
+  63:tmk_core/common/action_util.c **** void clear_oneshot_locked_mods(void) {
+  64:tmk_core/common/action_util.c ****     if (oneshot_locked_mods) {
+  65:tmk_core/common/action_util.c ****         oneshot_locked_mods = 0;
+  66:tmk_core/common/action_util.c ****         oneshot_locked_mods_changed_kb(oneshot_locked_mods);
+  67:tmk_core/common/action_util.c ****     }
+  68:tmk_core/common/action_util.c **** }
+  69:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+  70:tmk_core/common/action_util.c **** static uint16_t oneshot_time = 0;
+  71:tmk_core/common/action_util.c **** bool            has_oneshot_mods_timed_out(void) { return TIMER_DIFF_16(timer_read(), oneshot_time)
+  72:tmk_core/common/action_util.c **** #    else
+  73:tmk_core/common/action_util.c **** bool has_oneshot_mods_timed_out(void) { return false; }
+ 150              		.loc 2 73 39 is_stmt 1 view -0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 0
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154              		@ link register save eliminated.
+ 155              		.loc 2 73 41 view .LVU16
+ 156              		.loc 2 73 55 is_stmt 0 view .LVU17
+ 157 0000 0020     		movs	r0, #0
+ 158 0002 7047     		bx	lr
+ 159              		.cfi_endproc
+ 160              	.LFE291:
+ 162              		.section	.text.get_oneshot_layer,"ax",%progbits
+ 163              		.align	1
+ 164              		.global	get_oneshot_layer
+ 165              		.syntax unified
+ 166              		.thumb
+ 167              		.thumb_func
+ 168              		.fpu fpv4-sp-d16
+ 170              	get_oneshot_layer:
+ 171              	.LFB292:
+  74:tmk_core/common/action_util.c **** #    endif
+  75:tmk_core/common/action_util.c **** #endif
+  76:tmk_core/common/action_util.c **** 
+  77:tmk_core/common/action_util.c **** /* oneshot layer */
+  78:tmk_core/common/action_util.c **** #ifndef NO_ACTION_ONESHOT
+  79:tmk_core/common/action_util.c **** /** \brief oneshot_layer_data bits
+  80:tmk_core/common/action_util.c ****  * LLLL LSSS
+  81:tmk_core/common/action_util.c ****  * where:
+  82:tmk_core/common/action_util.c ****  *   L => are layer bits
+  83:tmk_core/common/action_util.c ****  *   S => oneshot state bits
+  84:tmk_core/common/action_util.c ****  */
+  85:tmk_core/common/action_util.c **** static int8_t oneshot_layer_data = 0;
+  86:tmk_core/common/action_util.c **** 
+  87:tmk_core/common/action_util.c **** inline uint8_t get_oneshot_layer(void) { return oneshot_layer_data >> 3; }
+ 172              		.loc 2 87 40 is_stmt 1 view -0
+ 173              		.cfi_startproc
+ 174              		@ args = 0, pretend = 0, frame = 0
+ 175              		@ frame_needed = 0, uses_anonymous_args = 0
+ 176              		@ link register save eliminated.
+ 177              		.loc 2 87 42 view .LVU19
+ 178              		.loc 2 87 68 is_stmt 0 view .LVU20
+ 179 0000 024B     		ldr	r3, .L15
+ 180 0002 93F90000 		ldrsb	r0, [r3]
+ 181              		.loc 2 87 74 view .LVU21
+ 182 0006 C0F3C700 		ubfx	r0, r0, #3, #8
+ 183 000a 7047     		bx	lr
+ 184              	.L16:
+ 185              		.align	2
+ 186              	.L15:
+ 187 000c 00000000 		.word	.LANCHOR2
+ 188              		.cfi_endproc
+ 189              	.LFE292:
+ 191              		.section	.text.get_oneshot_layer_state,"ax",%progbits
+ 192              		.align	1
+ 193              		.global	get_oneshot_layer_state
+ 194              		.syntax unified
+ 195              		.thumb
+ 196              		.thumb_func
+ 197              		.fpu fpv4-sp-d16
+ 199              	get_oneshot_layer_state:
+ 200              	.LFB293:
+  88:tmk_core/common/action_util.c **** inline uint8_t get_oneshot_layer_state(void) { return oneshot_layer_data & 0b111; }
+ 201              		.loc 2 88 46 is_stmt 1 view -0
+ 202              		.cfi_startproc
+ 203              		@ args = 0, pretend = 0, frame = 0
+ 204              		@ frame_needed = 0, uses_anonymous_args = 0
+ 205              		@ link register save eliminated.
+ 206              		.loc 2 88 48 view .LVU23
+ 207              		.loc 2 88 74 is_stmt 0 view .LVU24
+ 208 0000 024B     		ldr	r3, .L18
+ 209 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 210              		.loc 2 88 83 view .LVU25
+ 211 0004 00F00700 		and	r0, r0, #7
+ 212 0008 7047     		bx	lr
+ 213              	.L19:
+ 214 000a 00BF     		.align	2
+ 215              	.L18:
+ 216 000c 00000000 		.word	.LANCHOR2
+ 217              		.cfi_endproc
+ 218              	.LFE293:
+ 220              		.section	.text.is_oneshot_layer_active,"ax",%progbits
+ 221              		.align	1
+ 222              		.global	is_oneshot_layer_active
+ 223              		.syntax unified
+ 224              		.thumb
+ 225              		.thumb_func
+ 226              		.fpu fpv4-sp-d16
+ 228              	is_oneshot_layer_active:
+ 229              	.LFB297:
+  89:tmk_core/common/action_util.c **** 
+  90:tmk_core/common/action_util.c **** #    ifdef SWAP_HANDS_ENABLE
+  91:tmk_core/common/action_util.c **** enum {
+  92:tmk_core/common/action_util.c ****     SHO_OFF,
+  93:tmk_core/common/action_util.c ****     SHO_ACTIVE,   // Swap hands button was pressed, and we didn't send any swapped keys yet
+  94:tmk_core/common/action_util.c ****     SHO_PRESSED,  // Swap hands button is currently pressed
+  95:tmk_core/common/action_util.c ****     SHO_USED,     // Swap hands button is still pressed, and we already sent swapped keys
+  96:tmk_core/common/action_util.c **** } swap_hands_oneshot = SHO_OFF;
+  97:tmk_core/common/action_util.c **** #    endif
+  98:tmk_core/common/action_util.c **** 
+  99:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 100:tmk_core/common/action_util.c **** static uint16_t oneshot_layer_time = 0;
+ 101:tmk_core/common/action_util.c **** inline bool     has_oneshot_layer_timed_out() { return TIMER_DIFF_16(timer_read(), oneshot_layer_ti
+ 102:tmk_core/common/action_util.c **** #        ifdef SWAP_HANDS_ENABLE
+ 103:tmk_core/common/action_util.c **** static uint16_t oneshot_swaphands_time = 0;
+ 104:tmk_core/common/action_util.c **** inline bool     has_oneshot_swaphands_timed_out() { return TIMER_DIFF_16(timer_read(), oneshot_swap
+ 105:tmk_core/common/action_util.c **** #        endif
+ 106:tmk_core/common/action_util.c **** #    endif
+ 107:tmk_core/common/action_util.c **** 
+ 108:tmk_core/common/action_util.c **** #    ifdef SWAP_HANDS_ENABLE
+ 109:tmk_core/common/action_util.c **** 
+ 110:tmk_core/common/action_util.c **** void set_oneshot_swaphands(void) {
+ 111:tmk_core/common/action_util.c ****     swap_hands_oneshot = SHO_PRESSED;
+ 112:tmk_core/common/action_util.c ****     swap_hands         = true;
+ 113:tmk_core/common/action_util.c **** #        if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 114:tmk_core/common/action_util.c ****     oneshot_swaphands_time = timer_read();
+ 115:tmk_core/common/action_util.c ****     if (oneshot_layer_time != 0) {
+ 116:tmk_core/common/action_util.c ****         oneshot_layer_time = oneshot_swaphands_time;
+ 117:tmk_core/common/action_util.c ****     }
+ 118:tmk_core/common/action_util.c **** #        endif
+ 119:tmk_core/common/action_util.c **** }
+ 120:tmk_core/common/action_util.c **** 
+ 121:tmk_core/common/action_util.c **** void release_oneshot_swaphands(void) {
+ 122:tmk_core/common/action_util.c ****     if (swap_hands_oneshot == SHO_PRESSED) {
+ 123:tmk_core/common/action_util.c ****         swap_hands_oneshot = SHO_ACTIVE;
+ 124:tmk_core/common/action_util.c ****     }
+ 125:tmk_core/common/action_util.c ****     if (swap_hands_oneshot == SHO_USED) {
+ 126:tmk_core/common/action_util.c ****         clear_oneshot_swaphands();
+ 127:tmk_core/common/action_util.c ****     }
+ 128:tmk_core/common/action_util.c **** }
+ 129:tmk_core/common/action_util.c **** 
+ 130:tmk_core/common/action_util.c **** void use_oneshot_swaphands(void) {
+ 131:tmk_core/common/action_util.c ****     if (swap_hands_oneshot == SHO_PRESSED) {
+ 132:tmk_core/common/action_util.c ****         swap_hands_oneshot = SHO_USED;
+ 133:tmk_core/common/action_util.c ****     }
+ 134:tmk_core/common/action_util.c ****     if (swap_hands_oneshot == SHO_ACTIVE) {
+ 135:tmk_core/common/action_util.c ****         clear_oneshot_swaphands();
+ 136:tmk_core/common/action_util.c ****     }
+ 137:tmk_core/common/action_util.c **** }
+ 138:tmk_core/common/action_util.c **** 
+ 139:tmk_core/common/action_util.c **** void clear_oneshot_swaphands(void) {
+ 140:tmk_core/common/action_util.c ****     swap_hands_oneshot = SHO_OFF;
+ 141:tmk_core/common/action_util.c ****     swap_hands         = false;
+ 142:tmk_core/common/action_util.c **** #        if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 143:tmk_core/common/action_util.c ****     oneshot_swaphands_time = 0;
+ 144:tmk_core/common/action_util.c **** #        endif
+ 145:tmk_core/common/action_util.c **** }
+ 146:tmk_core/common/action_util.c **** 
+ 147:tmk_core/common/action_util.c **** #    endif
+ 148:tmk_core/common/action_util.c **** 
+ 149:tmk_core/common/action_util.c **** /** \brief Set oneshot layer
+ 150:tmk_core/common/action_util.c ****  *
+ 151:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 152:tmk_core/common/action_util.c ****  */
+ 153:tmk_core/common/action_util.c **** void set_oneshot_layer(uint8_t layer, uint8_t state) {
+ 154:tmk_core/common/action_util.c ****     if (!keymap_config.oneshot_disable) {
+ 155:tmk_core/common/action_util.c ****         oneshot_layer_data = layer << 3 | state;
+ 156:tmk_core/common/action_util.c ****         layer_on(layer);
+ 157:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 158:tmk_core/common/action_util.c ****         oneshot_layer_time = timer_read();
+ 159:tmk_core/common/action_util.c **** #    endif
+ 160:tmk_core/common/action_util.c ****         oneshot_layer_changed_kb(get_oneshot_layer());
+ 161:tmk_core/common/action_util.c ****     } else {
+ 162:tmk_core/common/action_util.c ****         layer_on(layer);
+ 163:tmk_core/common/action_util.c ****     }
+ 164:tmk_core/common/action_util.c **** }
+ 165:tmk_core/common/action_util.c **** /** \brief Reset oneshot layer
+ 166:tmk_core/common/action_util.c ****  *
+ 167:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 168:tmk_core/common/action_util.c ****  */
+ 169:tmk_core/common/action_util.c **** void reset_oneshot_layer(void) {
+ 170:tmk_core/common/action_util.c ****     oneshot_layer_data = 0;
+ 171:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 172:tmk_core/common/action_util.c ****     oneshot_layer_time = 0;
+ 173:tmk_core/common/action_util.c **** #    endif
+ 174:tmk_core/common/action_util.c ****     oneshot_layer_changed_kb(get_oneshot_layer());
+ 175:tmk_core/common/action_util.c **** }
+ 176:tmk_core/common/action_util.c **** /** \brief Clear oneshot layer
+ 177:tmk_core/common/action_util.c ****  *
+ 178:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 179:tmk_core/common/action_util.c ****  */
+ 180:tmk_core/common/action_util.c **** void clear_oneshot_layer_state(oneshot_fullfillment_t state) {
+ 181:tmk_core/common/action_util.c ****     uint8_t start_state = oneshot_layer_data;
+ 182:tmk_core/common/action_util.c ****     oneshot_layer_data &= ~state;
+ 183:tmk_core/common/action_util.c ****     if ((!get_oneshot_layer_state() && start_state != oneshot_layer_data) || keymap_config.oneshot_
+ 184:tmk_core/common/action_util.c ****         layer_off(get_oneshot_layer());
+ 185:tmk_core/common/action_util.c ****         reset_oneshot_layer();
+ 186:tmk_core/common/action_util.c ****     }
+ 187:tmk_core/common/action_util.c **** }
+ 188:tmk_core/common/action_util.c **** /** \brief Is oneshot layer active
+ 189:tmk_core/common/action_util.c ****  *
+ 190:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 191:tmk_core/common/action_util.c ****  */
+ 192:tmk_core/common/action_util.c **** bool is_oneshot_layer_active(void) { return get_oneshot_layer_state(); }
+ 230              		.loc 2 192 36 is_stmt 1 view -0
+ 231              		.cfi_startproc
+ 232              		@ args = 0, pretend = 0, frame = 0
+ 233              		@ frame_needed = 0, uses_anonymous_args = 0
+ 234              		@ link register save eliminated.
+ 235              		.loc 2 192 38 view .LVU27
+ 236              	.LBB12:
+ 237              	.LBI12:
+  88:tmk_core/common/action_util.c **** inline uint8_t get_oneshot_layer_state(void) { return oneshot_layer_data & 0b111; }
+ 238              		.loc 2 88 16 view .LVU28
+ 239              	.LBB13:
+  88:tmk_core/common/action_util.c **** inline uint8_t get_oneshot_layer_state(void) { return oneshot_layer_data & 0b111; }
+ 240              		.loc 2 88 48 view .LVU29
+  88:tmk_core/common/action_util.c **** inline uint8_t get_oneshot_layer_state(void) { return oneshot_layer_data & 0b111; }
+ 241              		.loc 2 88 74 is_stmt 0 view .LVU30
+ 242 0000 034B     		ldr	r3, .L21
+ 243 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 244              	.LBE13:
+ 245              	.LBE12:
+ 246              		.loc 2 192 72 view .LVU31
+ 247 0004 10F00700 		ands	r0, r0, #7
+ 248 0008 18BF     		it	ne
+ 249 000a 0120     		movne	r0, #1
+ 250 000c 7047     		bx	lr
+ 251              	.L22:
+ 252 000e 00BF     		.align	2
+ 253              	.L21:
+ 254 0010 00000000 		.word	.LANCHOR2
+ 255              		.cfi_endproc
+ 256              	.LFE297:
+ 258              		.section	.text.oneshot_set,"ax",%progbits
+ 259              		.align	1
+ 260              		.global	oneshot_set
+ 261              		.syntax unified
+ 262              		.thumb
+ 263              		.thumb_func
+ 264              		.fpu fpv4-sp-d16
+ 266              	oneshot_set:
+ 267              	.LVL7:
+ 268              	.LFB298:
+ 193:tmk_core/common/action_util.c **** 
+ 194:tmk_core/common/action_util.c **** /** \brief set oneshot
+ 195:tmk_core/common/action_util.c ****  *
+ 196:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 197:tmk_core/common/action_util.c ****  */
+ 198:tmk_core/common/action_util.c **** void oneshot_set(bool active) {
+ 269              		.loc 2 198 31 is_stmt 1 view -0
+ 270              		.cfi_startproc
+ 271              		@ args = 0, pretend = 0, frame = 0
+ 272              		@ frame_needed = 0, uses_anonymous_args = 0
+ 273              		@ link register save eliminated.
+ 199:tmk_core/common/action_util.c ****     if (keymap_config.oneshot_disable != active) {
+ 274              		.loc 2 199 5 view .LVU33
+ 275              		.loc 2 199 22 is_stmt 0 view .LVU34
+ 276 0000 064A     		ldr	r2, .L25
+ 277 0002 5378     		ldrb	r3, [r2, #1]	@ zero_extendqisi2
+ 278              		.loc 2 199 8 view .LVU35
+ 279 0004 C3F38001 		ubfx	r1, r3, #2, #1
+ 280 0008 8142     		cmp	r1, r0
+ 281 000a 05D0     		beq	.L23
+ 282              	.LVL8:
+ 283              	.LBB16:
+ 284              	.LBI16:
+ 198:tmk_core/common/action_util.c ****     if (keymap_config.oneshot_disable != active) {
+ 285              		.loc 2 198 6 is_stmt 1 view .LVU36
+ 286              	.LBB17:
+ 200:tmk_core/common/action_util.c ****         keymap_config.oneshot_disable = active;
+ 287              		.loc 2 200 9 view .LVU37
+ 288              		.loc 2 200 39 is_stmt 0 view .LVU38
+ 289 000c 60F38203 		bfi	r3, r0, #2, #1
+ 290 0010 5370     		strb	r3, [r2, #1]
+ 201:tmk_core/common/action_util.c ****         eeconfig_update_keymap(keymap_config.raw);
+ 291              		.loc 2 201 9 is_stmt 1 view .LVU39
+ 292 0012 1088     		ldrh	r0, [r2]
+ 293              	.LVL9:
+ 294              		.loc 2 201 9 is_stmt 0 view .LVU40
+ 295 0014 FFF7FEBF 		b	eeconfig_update_keymap
+ 296              	.LVL10:
+ 297              	.L23:
+ 298              		.loc 2 201 9 view .LVU41
+ 299              	.LBE17:
+ 300              	.LBE16:
+ 202:tmk_core/common/action_util.c ****         dprintf("Oneshot: active: %d\n", active);
+ 203:tmk_core/common/action_util.c ****     }
+ 204:tmk_core/common/action_util.c **** }
+ 301              		.loc 2 204 1 view .LVU42
+ 302 0018 7047     		bx	lr
+ 303              	.L26:
+ 304 001a 00BF     		.align	2
+ 305              	.L25:
+ 306 001c 00000000 		.word	keymap_config
+ 307              		.cfi_endproc
+ 308              	.LFE298:
+ 310              		.section	.text.oneshot_toggle,"ax",%progbits
+ 311              		.align	1
+ 312              		.global	oneshot_toggle
+ 313              		.syntax unified
+ 314              		.thumb
+ 315              		.thumb_func
+ 316              		.fpu fpv4-sp-d16
+ 318              	oneshot_toggle:
+ 319              	.LFB299:
+ 205:tmk_core/common/action_util.c **** 
+ 206:tmk_core/common/action_util.c **** /** \brief toggle oneshot
+ 207:tmk_core/common/action_util.c ****  *
+ 208:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 209:tmk_core/common/action_util.c ****  */
+ 210:tmk_core/common/action_util.c **** void oneshot_toggle(void) { oneshot_set(!keymap_config.oneshot_disable); }
+ 320              		.loc 2 210 27 is_stmt 1 view -0
+ 321              		.cfi_startproc
+ 322              		@ args = 0, pretend = 0, frame = 0
+ 323              		@ frame_needed = 0, uses_anonymous_args = 0
+ 324              		@ link register save eliminated.
+ 325              		.loc 2 210 29 view .LVU44
+ 326              		.loc 2 210 55 is_stmt 0 view .LVU45
+ 327 0000 044B     		ldr	r3, .L28
+ 328 0002 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 329 0004 C0F38000 		ubfx	r0, r0, #2, #1
+ 330              		.loc 2 210 1 view .LVU46
+ 331 0008 80F00100 		eor	r0, r0, #1
+ 332              		.loc 2 210 29 view .LVU47
+ 333 000c 00F00100 		and	r0, r0, #1
+ 334 0010 FFF7FEBF 		b	oneshot_set
+ 335              	.LVL11:
+ 336              	.L29:
+ 337              		.align	2
+ 338              	.L28:
+ 339 0014 00000000 		.word	keymap_config
+ 340              		.cfi_endproc
+ 341              	.LFE299:
+ 343              		.section	.text.oneshot_enable,"ax",%progbits
+ 344              		.align	1
+ 345              		.global	oneshot_enable
+ 346              		.syntax unified
+ 347              		.thumb
+ 348              		.thumb_func
+ 349              		.fpu fpv4-sp-d16
+ 351              	oneshot_enable:
+ 352              	.LFB300:
+ 211:tmk_core/common/action_util.c **** 
+ 212:tmk_core/common/action_util.c **** /** \brief enable oneshot
+ 213:tmk_core/common/action_util.c ****  *
+ 214:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 215:tmk_core/common/action_util.c ****  */
+ 216:tmk_core/common/action_util.c **** void oneshot_enable(void) { oneshot_set(true); }
+ 353              		.loc 2 216 27 is_stmt 1 view -0
+ 354              		.cfi_startproc
+ 355              		@ args = 0, pretend = 0, frame = 0
+ 356              		@ frame_needed = 0, uses_anonymous_args = 0
+ 357              		@ link register save eliminated.
+ 358              		.loc 2 216 29 view .LVU49
+ 359 0000 0120     		movs	r0, #1
+ 360 0002 FFF7FEBF 		b	oneshot_set
+ 361              	.LVL12:
+ 362              		.cfi_endproc
+ 363              	.LFE300:
+ 365              		.section	.text.oneshot_disable,"ax",%progbits
+ 366              		.align	1
+ 367              		.global	oneshot_disable
+ 368              		.syntax unified
+ 369              		.thumb
+ 370              		.thumb_func
+ 371              		.fpu fpv4-sp-d16
+ 373              	oneshot_disable:
+ 374              	.LFB301:
+ 217:tmk_core/common/action_util.c **** 
+ 218:tmk_core/common/action_util.c **** /** \brief disable oneshot
+ 219:tmk_core/common/action_util.c ****  *
+ 220:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 221:tmk_core/common/action_util.c ****  */
+ 222:tmk_core/common/action_util.c **** void oneshot_disable(void) { oneshot_set(false); }
+ 375              		.loc 2 222 28 view -0
+ 376              		.cfi_startproc
+ 377              		@ args = 0, pretend = 0, frame = 0
+ 378              		@ frame_needed = 0, uses_anonymous_args = 0
+ 379              		@ link register save eliminated.
+ 380              		.loc 2 222 30 view .LVU51
+ 381 0000 0020     		movs	r0, #0
+ 382 0002 FFF7FEBF 		b	oneshot_set
+ 383              	.LVL13:
+ 384              		.cfi_endproc
+ 385              	.LFE301:
+ 387              		.section	.text.is_oneshot_enabled,"ax",%progbits
+ 388              		.align	1
+ 389              		.global	is_oneshot_enabled
+ 390              		.syntax unified
+ 391              		.thumb
+ 392              		.thumb_func
+ 393              		.fpu fpv4-sp-d16
+ 395              	is_oneshot_enabled:
+ 396              	.LFB302:
+ 223:tmk_core/common/action_util.c **** 
+ 224:tmk_core/common/action_util.c **** bool is_oneshot_enabled(void) { return keymap_config.oneshot_disable; }
+ 397              		.loc 2 224 31 view -0
+ 398              		.cfi_startproc
+ 399              		@ args = 0, pretend = 0, frame = 0
+ 400              		@ frame_needed = 0, uses_anonymous_args = 0
+ 401              		@ link register save eliminated.
+ 402              		.loc 2 224 33 view .LVU53
+ 403              		.loc 2 224 53 is_stmt 0 view .LVU54
+ 404 0000 024B     		ldr	r3, .L33
+ 405 0002 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 406              		.loc 2 224 71 view .LVU55
+ 407 0004 C0F38000 		ubfx	r0, r0, #2, #1
+ 408 0008 7047     		bx	lr
+ 409              	.L34:
+ 410 000a 00BF     		.align	2
+ 411              	.L33:
+ 412 000c 00000000 		.word	keymap_config
+ 413              		.cfi_endproc
+ 414              	.LFE302:
+ 416              		.section	.text.get_mods,"ax",%progbits
+ 417              		.align	1
+ 418              		.global	get_mods
+ 419              		.syntax unified
+ 420              		.thumb
+ 421              		.thumb_func
+ 422              		.fpu fpv4-sp-d16
+ 424              	get_mods:
+ 425              	.LFB304:
+ 225:tmk_core/common/action_util.c **** 
+ 226:tmk_core/common/action_util.c **** #endif
+ 227:tmk_core/common/action_util.c **** 
+ 228:tmk_core/common/action_util.c **** /** \brief Send keyboard report
+ 229:tmk_core/common/action_util.c ****  *
+ 230:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 231:tmk_core/common/action_util.c ****  */
+ 232:tmk_core/common/action_util.c **** void send_keyboard_report(void) {
+ 233:tmk_core/common/action_util.c ****     keyboard_report->mods = real_mods;
+ 234:tmk_core/common/action_util.c ****     keyboard_report->mods |= weak_mods;
+ 235:tmk_core/common/action_util.c ****     keyboard_report->mods |= macro_mods;
+ 236:tmk_core/common/action_util.c **** 
+ 237:tmk_core/common/action_util.c **** #ifndef NO_ACTION_ONESHOT
+ 238:tmk_core/common/action_util.c ****     if (oneshot_mods) {
+ 239:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 240:tmk_core/common/action_util.c ****         if (has_oneshot_mods_timed_out()) {
+ 241:tmk_core/common/action_util.c ****             dprintf("Oneshot: timeout\n");
+ 242:tmk_core/common/action_util.c ****             clear_oneshot_mods();
+ 243:tmk_core/common/action_util.c ****         }
+ 244:tmk_core/common/action_util.c **** #    endif
+ 245:tmk_core/common/action_util.c ****         keyboard_report->mods |= oneshot_mods;
+ 246:tmk_core/common/action_util.c ****         if (has_anykey(keyboard_report)) {
+ 247:tmk_core/common/action_util.c ****             clear_oneshot_mods();
+ 248:tmk_core/common/action_util.c ****         }
+ 249:tmk_core/common/action_util.c ****     }
+ 250:tmk_core/common/action_util.c **** 
+ 251:tmk_core/common/action_util.c **** #endif
+ 252:tmk_core/common/action_util.c **** 
+ 253:tmk_core/common/action_util.c **** #ifdef KEY_OVERRIDE_ENABLE
+ 254:tmk_core/common/action_util.c ****     // These need to be last to be able to properly control key overrides
+ 255:tmk_core/common/action_util.c ****     keyboard_report->mods &= ~suppressed_mods;
+ 256:tmk_core/common/action_util.c ****     keyboard_report->mods |= weak_override_mods;
+ 257:tmk_core/common/action_util.c **** #endif
+ 258:tmk_core/common/action_util.c **** 
+ 259:tmk_core/common/action_util.c ****     host_keyboard_send(keyboard_report);
+ 260:tmk_core/common/action_util.c **** }
+ 261:tmk_core/common/action_util.c **** 
+ 262:tmk_core/common/action_util.c **** /** \brief Get mods
+ 263:tmk_core/common/action_util.c ****  *
+ 264:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 265:tmk_core/common/action_util.c ****  */
+ 266:tmk_core/common/action_util.c **** uint8_t get_mods(void) { return real_mods; }
+ 426              		.loc 2 266 24 is_stmt 1 view -0
+ 427              		.cfi_startproc
+ 428              		@ args = 0, pretend = 0, frame = 0
+ 429              		@ frame_needed = 0, uses_anonymous_args = 0
+ 430              		@ link register save eliminated.
+ 431              		.loc 2 266 26 view .LVU57
+ 432              		.loc 2 266 44 is_stmt 0 view .LVU58
+ 433 0000 014B     		ldr	r3, .L36
+ 434 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 435 0004 7047     		bx	lr
+ 436              	.L37:
+ 437 0006 00BF     		.align	2
+ 438              	.L36:
+ 439 0008 00000000 		.word	.LANCHOR3
+ 440              		.cfi_endproc
+ 441              	.LFE304:
+ 443              		.section	.text.add_mods,"ax",%progbits
+ 444              		.align	1
+ 445              		.global	add_mods
+ 446              		.syntax unified
+ 447              		.thumb
+ 448              		.thumb_func
+ 449              		.fpu fpv4-sp-d16
+ 451              	add_mods:
+ 452              	.LVL14:
+ 453              	.LFB305:
+ 267:tmk_core/common/action_util.c **** /** \brief add mods
+ 268:tmk_core/common/action_util.c ****  *
+ 269:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 270:tmk_core/common/action_util.c ****  */
+ 271:tmk_core/common/action_util.c **** void add_mods(uint8_t mods) { real_mods |= mods; }
+ 454              		.loc 2 271 29 is_stmt 1 view -0
+ 455              		.cfi_startproc
+ 456              		@ args = 0, pretend = 0, frame = 0
+ 457              		@ frame_needed = 0, uses_anonymous_args = 0
+ 458              		@ link register save eliminated.
+ 459              		.loc 2 271 31 view .LVU60
+ 460              		.loc 2 271 41 is_stmt 0 view .LVU61
+ 461 0000 024B     		ldr	r3, .L39
+ 462 0002 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 463 0004 1043     		orrs	r0, r0, r2
+ 464              	.LVL15:
+ 465              		.loc 2 271 41 view .LVU62
+ 466 0006 1870     		strb	r0, [r3]
+ 467              		.loc 2 271 50 view .LVU63
+ 468 0008 7047     		bx	lr
+ 469              	.L40:
+ 470 000a 00BF     		.align	2
+ 471              	.L39:
+ 472 000c 00000000 		.word	.LANCHOR3
+ 473              		.cfi_endproc
+ 474              	.LFE305:
+ 476              		.section	.text.del_mods,"ax",%progbits
+ 477              		.align	1
+ 478              		.global	del_mods
+ 479              		.syntax unified
+ 480              		.thumb
+ 481              		.thumb_func
+ 482              		.fpu fpv4-sp-d16
+ 484              	del_mods:
+ 485              	.LVL16:
+ 486              	.LFB306:
+ 272:tmk_core/common/action_util.c **** /** \brief del mods
+ 273:tmk_core/common/action_util.c ****  *
+ 274:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 275:tmk_core/common/action_util.c ****  */
+ 276:tmk_core/common/action_util.c **** void del_mods(uint8_t mods) { real_mods &= ~mods; }
+ 487              		.loc 2 276 29 is_stmt 1 view -0
+ 488              		.cfi_startproc
+ 489              		@ args = 0, pretend = 0, frame = 0
+ 490              		@ frame_needed = 0, uses_anonymous_args = 0
+ 491              		@ link register save eliminated.
+ 492              		.loc 2 276 31 view .LVU65
+ 493              		.loc 2 276 41 is_stmt 0 view .LVU66
+ 494 0000 024A     		ldr	r2, .L42
+ 495 0002 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 496 0004 23EA0000 		bic	r0, r3, r0
+ 497              	.LVL17:
+ 498              		.loc 2 276 41 view .LVU67
+ 499 0008 1070     		strb	r0, [r2]
+ 500              		.loc 2 276 51 view .LVU68
+ 501 000a 7047     		bx	lr
+ 502              	.L43:
+ 503              		.align	2
+ 504              	.L42:
+ 505 000c 00000000 		.word	.LANCHOR3
+ 506              		.cfi_endproc
+ 507              	.LFE306:
+ 509              		.section	.text.set_mods,"ax",%progbits
+ 510              		.align	1
+ 511              		.global	set_mods
+ 512              		.syntax unified
+ 513              		.thumb
+ 514              		.thumb_func
+ 515              		.fpu fpv4-sp-d16
+ 517              	set_mods:
+ 518              	.LVL18:
+ 519              	.LFB307:
+ 277:tmk_core/common/action_util.c **** /** \brief set mods
+ 278:tmk_core/common/action_util.c ****  *
+ 279:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 280:tmk_core/common/action_util.c ****  */
+ 281:tmk_core/common/action_util.c **** void set_mods(uint8_t mods) { real_mods = mods; }
+ 520              		.loc 2 281 29 is_stmt 1 view -0
+ 521              		.cfi_startproc
+ 522              		@ args = 0, pretend = 0, frame = 0
+ 523              		@ frame_needed = 0, uses_anonymous_args = 0
+ 524              		@ link register save eliminated.
+ 525              		.loc 2 281 31 view .LVU70
+ 526              		.loc 2 281 41 is_stmt 0 view .LVU71
+ 527 0000 014B     		ldr	r3, .L45
+ 528 0002 1870     		strb	r0, [r3]
+ 529              		.loc 2 281 49 view .LVU72
+ 530 0004 7047     		bx	lr
+ 531              	.L46:
+ 532 0006 00BF     		.align	2
+ 533              	.L45:
+ 534 0008 00000000 		.word	.LANCHOR3
+ 535              		.cfi_endproc
+ 536              	.LFE307:
+ 538              		.section	.text.clear_mods,"ax",%progbits
+ 539              		.align	1
+ 540              		.global	clear_mods
+ 541              		.syntax unified
+ 542              		.thumb
+ 543              		.thumb_func
+ 544              		.fpu fpv4-sp-d16
+ 546              	clear_mods:
+ 547              	.LFB308:
+ 282:tmk_core/common/action_util.c **** /** \brief clear mods
+ 283:tmk_core/common/action_util.c ****  *
+ 284:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 285:tmk_core/common/action_util.c ****  */
+ 286:tmk_core/common/action_util.c **** void clear_mods(void) { real_mods = 0; }
+ 548              		.loc 2 286 23 is_stmt 1 view -0
+ 549              		.cfi_startproc
+ 550              		@ args = 0, pretend = 0, frame = 0
+ 551              		@ frame_needed = 0, uses_anonymous_args = 0
+ 552              		@ link register save eliminated.
+ 553              		.loc 2 286 25 view .LVU74
+ 554              		.loc 2 286 35 is_stmt 0 view .LVU75
+ 555 0000 014B     		ldr	r3, .L48
+ 556 0002 0022     		movs	r2, #0
+ 557 0004 1A70     		strb	r2, [r3]
+ 558              		.loc 2 286 40 view .LVU76
+ 559 0006 7047     		bx	lr
+ 560              	.L49:
+ 561              		.align	2
+ 562              	.L48:
+ 563 0008 00000000 		.word	.LANCHOR3
+ 564              		.cfi_endproc
+ 565              	.LFE308:
+ 567              		.section	.text.get_weak_mods,"ax",%progbits
+ 568              		.align	1
+ 569              		.global	get_weak_mods
+ 570              		.syntax unified
+ 571              		.thumb
+ 572              		.thumb_func
+ 573              		.fpu fpv4-sp-d16
+ 575              	get_weak_mods:
+ 576              	.LFB309:
+ 287:tmk_core/common/action_util.c **** 
+ 288:tmk_core/common/action_util.c **** /** \brief get weak mods
+ 289:tmk_core/common/action_util.c ****  *
+ 290:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 291:tmk_core/common/action_util.c ****  */
+ 292:tmk_core/common/action_util.c **** uint8_t get_weak_mods(void) { return weak_mods; }
+ 577              		.loc 2 292 29 is_stmt 1 view -0
+ 578              		.cfi_startproc
+ 579              		@ args = 0, pretend = 0, frame = 0
+ 580              		@ frame_needed = 0, uses_anonymous_args = 0
+ 581              		@ link register save eliminated.
+ 582              		.loc 2 292 31 view .LVU78
+ 583              		.loc 2 292 49 is_stmt 0 view .LVU79
+ 584 0000 014B     		ldr	r3, .L51
+ 585 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 586 0004 7047     		bx	lr
+ 587              	.L52:
+ 588 0006 00BF     		.align	2
+ 589              	.L51:
+ 590 0008 00000000 		.word	.LANCHOR4
+ 591              		.cfi_endproc
+ 592              	.LFE309:
+ 594              		.section	.text.add_weak_mods,"ax",%progbits
+ 595              		.align	1
+ 596              		.global	add_weak_mods
+ 597              		.syntax unified
+ 598              		.thumb
+ 599              		.thumb_func
+ 600              		.fpu fpv4-sp-d16
+ 602              	add_weak_mods:
+ 603              	.LVL19:
+ 604              	.LFB310:
+ 293:tmk_core/common/action_util.c **** /** \brief add weak mods
+ 294:tmk_core/common/action_util.c ****  *
+ 295:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 296:tmk_core/common/action_util.c ****  */
+ 297:tmk_core/common/action_util.c **** void add_weak_mods(uint8_t mods) { weak_mods |= mods; }
+ 605              		.loc 2 297 34 is_stmt 1 view -0
+ 606              		.cfi_startproc
+ 607              		@ args = 0, pretend = 0, frame = 0
+ 608              		@ frame_needed = 0, uses_anonymous_args = 0
+ 609              		@ link register save eliminated.
+ 610              		.loc 2 297 36 view .LVU81
+ 611              		.loc 2 297 46 is_stmt 0 view .LVU82
+ 612 0000 024B     		ldr	r3, .L54
+ 613 0002 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 614 0004 1043     		orrs	r0, r0, r2
+ 615              	.LVL20:
+ 616              		.loc 2 297 46 view .LVU83
+ 617 0006 1870     		strb	r0, [r3]
+ 618              		.loc 2 297 55 view .LVU84
+ 619 0008 7047     		bx	lr
+ 620              	.L55:
+ 621 000a 00BF     		.align	2
+ 622              	.L54:
+ 623 000c 00000000 		.word	.LANCHOR4
+ 624              		.cfi_endproc
+ 625              	.LFE310:
+ 627              		.section	.text.del_weak_mods,"ax",%progbits
+ 628              		.align	1
+ 629              		.global	del_weak_mods
+ 630              		.syntax unified
+ 631              		.thumb
+ 632              		.thumb_func
+ 633              		.fpu fpv4-sp-d16
+ 635              	del_weak_mods:
+ 636              	.LVL21:
+ 637              	.LFB311:
+ 298:tmk_core/common/action_util.c **** /** \brief del weak mods
+ 299:tmk_core/common/action_util.c ****  *
+ 300:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 301:tmk_core/common/action_util.c ****  */
+ 302:tmk_core/common/action_util.c **** void del_weak_mods(uint8_t mods) { weak_mods &= ~mods; }
+ 638              		.loc 2 302 34 is_stmt 1 view -0
+ 639              		.cfi_startproc
+ 640              		@ args = 0, pretend = 0, frame = 0
+ 641              		@ frame_needed = 0, uses_anonymous_args = 0
+ 642              		@ link register save eliminated.
+ 643              		.loc 2 302 36 view .LVU86
+ 644              		.loc 2 302 46 is_stmt 0 view .LVU87
+ 645 0000 024A     		ldr	r2, .L57
+ 646 0002 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 647 0004 23EA0000 		bic	r0, r3, r0
+ 648              	.LVL22:
+ 649              		.loc 2 302 46 view .LVU88
+ 650 0008 1070     		strb	r0, [r2]
+ 651              		.loc 2 302 56 view .LVU89
+ 652 000a 7047     		bx	lr
+ 653              	.L58:
+ 654              		.align	2
+ 655              	.L57:
+ 656 000c 00000000 		.word	.LANCHOR4
+ 657              		.cfi_endproc
+ 658              	.LFE311:
+ 660              		.section	.text.set_weak_mods,"ax",%progbits
+ 661              		.align	1
+ 662              		.global	set_weak_mods
+ 663              		.syntax unified
+ 664              		.thumb
+ 665              		.thumb_func
+ 666              		.fpu fpv4-sp-d16
+ 668              	set_weak_mods:
+ 669              	.LVL23:
+ 670              	.LFB312:
+ 303:tmk_core/common/action_util.c **** /** \brief set weak mods
+ 304:tmk_core/common/action_util.c ****  *
+ 305:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 306:tmk_core/common/action_util.c ****  */
+ 307:tmk_core/common/action_util.c **** void set_weak_mods(uint8_t mods) { weak_mods = mods; }
+ 671              		.loc 2 307 34 is_stmt 1 view -0
+ 672              		.cfi_startproc
+ 673              		@ args = 0, pretend = 0, frame = 0
+ 674              		@ frame_needed = 0, uses_anonymous_args = 0
+ 675              		@ link register save eliminated.
+ 676              		.loc 2 307 36 view .LVU91
+ 677              		.loc 2 307 46 is_stmt 0 view .LVU92
+ 678 0000 014B     		ldr	r3, .L60
+ 679 0002 1870     		strb	r0, [r3]
+ 680              		.loc 2 307 54 view .LVU93
+ 681 0004 7047     		bx	lr
+ 682              	.L61:
+ 683 0006 00BF     		.align	2
+ 684              	.L60:
+ 685 0008 00000000 		.word	.LANCHOR4
+ 686              		.cfi_endproc
+ 687              	.LFE312:
+ 689              		.section	.text.clear_weak_mods,"ax",%progbits
+ 690              		.align	1
+ 691              		.global	clear_weak_mods
+ 692              		.syntax unified
+ 693              		.thumb
+ 694              		.thumb_func
+ 695              		.fpu fpv4-sp-d16
+ 697              	clear_weak_mods:
+ 698              	.LFB313:
+ 308:tmk_core/common/action_util.c **** /** \brief clear weak mods
+ 309:tmk_core/common/action_util.c ****  *
+ 310:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 311:tmk_core/common/action_util.c ****  */
+ 312:tmk_core/common/action_util.c **** void clear_weak_mods(void) { weak_mods = 0; }
+ 699              		.loc 2 312 28 is_stmt 1 view -0
+ 700              		.cfi_startproc
+ 701              		@ args = 0, pretend = 0, frame = 0
+ 702              		@ frame_needed = 0, uses_anonymous_args = 0
+ 703              		@ link register save eliminated.
+ 704              		.loc 2 312 30 view .LVU95
+ 705              		.loc 2 312 40 is_stmt 0 view .LVU96
+ 706 0000 014B     		ldr	r3, .L63
+ 707 0002 0022     		movs	r2, #0
+ 708 0004 1A70     		strb	r2, [r3]
+ 709              		.loc 2 312 45 view .LVU97
+ 710 0006 7047     		bx	lr
+ 711              	.L64:
+ 712              		.align	2
+ 713              	.L63:
+ 714 0008 00000000 		.word	.LANCHOR4
+ 715              		.cfi_endproc
+ 716              	.LFE313:
+ 718              		.section	.text.get_macro_mods,"ax",%progbits
+ 719              		.align	1
+ 720              		.global	get_macro_mods
+ 721              		.syntax unified
+ 722              		.thumb
+ 723              		.thumb_func
+ 724              		.fpu fpv4-sp-d16
+ 726              	get_macro_mods:
+ 727              	.LFB314:
+ 313:tmk_core/common/action_util.c **** 
+ 314:tmk_core/common/action_util.c **** #ifdef KEY_OVERRIDE_ENABLE
+ 315:tmk_core/common/action_util.c **** /** \brief set weak mods used by key overrides. DO not call this manually
+ 316:tmk_core/common/action_util.c ****  */
+ 317:tmk_core/common/action_util.c **** void set_weak_override_mods(uint8_t mods) { weak_override_mods = mods; }
+ 318:tmk_core/common/action_util.c **** /** \brief clear weak mods used by key overrides. DO not call this manually
+ 319:tmk_core/common/action_util.c ****  */
+ 320:tmk_core/common/action_util.c **** void clear_weak_override_mods(void) { weak_override_mods = 0; }
+ 321:tmk_core/common/action_util.c **** 
+ 322:tmk_core/common/action_util.c **** /** \brief set suppressed mods used by key overrides. DO not call this manually
+ 323:tmk_core/common/action_util.c ****  */
+ 324:tmk_core/common/action_util.c **** void set_suppressed_override_mods(uint8_t mods) { suppressed_mods = mods; }
+ 325:tmk_core/common/action_util.c **** /** \brief clear suppressed mods used by key overrides. DO not call this manually
+ 326:tmk_core/common/action_util.c ****  */
+ 327:tmk_core/common/action_util.c **** void clear_suppressed_override_mods(void) { suppressed_mods = 0; }
+ 328:tmk_core/common/action_util.c **** #endif
+ 329:tmk_core/common/action_util.c **** 
+ 330:tmk_core/common/action_util.c **** /* macro modifier */
+ 331:tmk_core/common/action_util.c **** /** \brief get macro mods
+ 332:tmk_core/common/action_util.c ****  *
+ 333:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 334:tmk_core/common/action_util.c ****  */
+ 335:tmk_core/common/action_util.c **** uint8_t get_macro_mods(void) { return macro_mods; }
+ 728              		.loc 2 335 30 is_stmt 1 view -0
+ 729              		.cfi_startproc
+ 730              		@ args = 0, pretend = 0, frame = 0
+ 731              		@ frame_needed = 0, uses_anonymous_args = 0
+ 732              		@ link register save eliminated.
+ 733              		.loc 2 335 32 view .LVU99
+ 734              		.loc 2 335 51 is_stmt 0 view .LVU100
+ 735 0000 014B     		ldr	r3, .L66
+ 736 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 737 0004 7047     		bx	lr
+ 738              	.L67:
+ 739 0006 00BF     		.align	2
+ 740              	.L66:
+ 741 0008 00000000 		.word	.LANCHOR5
+ 742              		.cfi_endproc
+ 743              	.LFE314:
+ 745              		.section	.text.add_macro_mods,"ax",%progbits
+ 746              		.align	1
+ 747              		.global	add_macro_mods
+ 748              		.syntax unified
+ 749              		.thumb
+ 750              		.thumb_func
+ 751              		.fpu fpv4-sp-d16
+ 753              	add_macro_mods:
+ 754              	.LVL24:
+ 755              	.LFB315:
+ 336:tmk_core/common/action_util.c **** /** \brief add macro mods
+ 337:tmk_core/common/action_util.c ****  *
+ 338:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 339:tmk_core/common/action_util.c ****  */
+ 340:tmk_core/common/action_util.c **** void add_macro_mods(uint8_t mods) { macro_mods |= mods; }
+ 756              		.loc 2 340 35 is_stmt 1 view -0
+ 757              		.cfi_startproc
+ 758              		@ args = 0, pretend = 0, frame = 0
+ 759              		@ frame_needed = 0, uses_anonymous_args = 0
+ 760              		@ link register save eliminated.
+ 761              		.loc 2 340 37 view .LVU102
+ 762              		.loc 2 340 48 is_stmt 0 view .LVU103
+ 763 0000 024B     		ldr	r3, .L69
+ 764 0002 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 765 0004 1043     		orrs	r0, r0, r2
+ 766              	.LVL25:
+ 767              		.loc 2 340 48 view .LVU104
+ 768 0006 1870     		strb	r0, [r3]
+ 769              		.loc 2 340 57 view .LVU105
+ 770 0008 7047     		bx	lr
+ 771              	.L70:
+ 772 000a 00BF     		.align	2
+ 773              	.L69:
+ 774 000c 00000000 		.word	.LANCHOR5
+ 775              		.cfi_endproc
+ 776              	.LFE315:
+ 778              		.section	.text.del_macro_mods,"ax",%progbits
+ 779              		.align	1
+ 780              		.global	del_macro_mods
+ 781              		.syntax unified
+ 782              		.thumb
+ 783              		.thumb_func
+ 784              		.fpu fpv4-sp-d16
+ 786              	del_macro_mods:
+ 787              	.LVL26:
+ 788              	.LFB316:
+ 341:tmk_core/common/action_util.c **** /** \brief del macro mods
+ 342:tmk_core/common/action_util.c ****  *
+ 343:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 344:tmk_core/common/action_util.c ****  */
+ 345:tmk_core/common/action_util.c **** void del_macro_mods(uint8_t mods) { macro_mods &= ~mods; }
+ 789              		.loc 2 345 35 is_stmt 1 view -0
+ 790              		.cfi_startproc
+ 791              		@ args = 0, pretend = 0, frame = 0
+ 792              		@ frame_needed = 0, uses_anonymous_args = 0
+ 793              		@ link register save eliminated.
+ 794              		.loc 2 345 37 view .LVU107
+ 795              		.loc 2 345 48 is_stmt 0 view .LVU108
+ 796 0000 024A     		ldr	r2, .L72
+ 797 0002 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 798 0004 23EA0000 		bic	r0, r3, r0
+ 799              	.LVL27:
+ 800              		.loc 2 345 48 view .LVU109
+ 801 0008 1070     		strb	r0, [r2]
+ 802              		.loc 2 345 58 view .LVU110
+ 803 000a 7047     		bx	lr
+ 804              	.L73:
+ 805              		.align	2
+ 806              	.L72:
+ 807 000c 00000000 		.word	.LANCHOR5
+ 808              		.cfi_endproc
+ 809              	.LFE316:
+ 811              		.section	.text.set_macro_mods,"ax",%progbits
+ 812              		.align	1
+ 813              		.global	set_macro_mods
+ 814              		.syntax unified
+ 815              		.thumb
+ 816              		.thumb_func
+ 817              		.fpu fpv4-sp-d16
+ 819              	set_macro_mods:
+ 820              	.LVL28:
+ 821              	.LFB317:
+ 346:tmk_core/common/action_util.c **** /** \brief set macro mods
+ 347:tmk_core/common/action_util.c ****  *
+ 348:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 349:tmk_core/common/action_util.c ****  */
+ 350:tmk_core/common/action_util.c **** void set_macro_mods(uint8_t mods) { macro_mods = mods; }
+ 822              		.loc 2 350 35 is_stmt 1 view -0
+ 823              		.cfi_startproc
+ 824              		@ args = 0, pretend = 0, frame = 0
+ 825              		@ frame_needed = 0, uses_anonymous_args = 0
+ 826              		@ link register save eliminated.
+ 827              		.loc 2 350 37 view .LVU112
+ 828              		.loc 2 350 48 is_stmt 0 view .LVU113
+ 829 0000 014B     		ldr	r3, .L75
+ 830 0002 1870     		strb	r0, [r3]
+ 831              		.loc 2 350 56 view .LVU114
+ 832 0004 7047     		bx	lr
+ 833              	.L76:
+ 834 0006 00BF     		.align	2
+ 835              	.L75:
+ 836 0008 00000000 		.word	.LANCHOR5
+ 837              		.cfi_endproc
+ 838              	.LFE317:
+ 840              		.section	.text.clear_macro_mods,"ax",%progbits
+ 841              		.align	1
+ 842              		.global	clear_macro_mods
+ 843              		.syntax unified
+ 844              		.thumb
+ 845              		.thumb_func
+ 846              		.fpu fpv4-sp-d16
+ 848              	clear_macro_mods:
+ 849              	.LFB318:
+ 351:tmk_core/common/action_util.c **** /** \brief clear macro mods
+ 352:tmk_core/common/action_util.c ****  *
+ 353:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 354:tmk_core/common/action_util.c ****  */
+ 355:tmk_core/common/action_util.c **** void clear_macro_mods(void) { macro_mods = 0; }
+ 850              		.loc 2 355 29 is_stmt 1 view -0
+ 851              		.cfi_startproc
+ 852              		@ args = 0, pretend = 0, frame = 0
+ 853              		@ frame_needed = 0, uses_anonymous_args = 0
+ 854              		@ link register save eliminated.
+ 855              		.loc 2 355 31 view .LVU116
+ 856              		.loc 2 355 42 is_stmt 0 view .LVU117
+ 857 0000 014B     		ldr	r3, .L78
+ 858 0002 0022     		movs	r2, #0
+ 859 0004 1A70     		strb	r2, [r3]
+ 860              		.loc 2 355 47 view .LVU118
+ 861 0006 7047     		bx	lr
+ 862              	.L79:
+ 863              		.align	2
+ 864              	.L78:
+ 865 0008 00000000 		.word	.LANCHOR5
+ 866              		.cfi_endproc
+ 867              	.LFE318:
+ 869              		.section	.text.get_oneshot_mods,"ax",%progbits
+ 870              		.align	1
+ 871              		.global	get_oneshot_mods
+ 872              		.syntax unified
+ 873              		.thumb
+ 874              		.thumb_func
+ 875              		.fpu fpv4-sp-d16
+ 877              	get_oneshot_mods:
+ 878              	.LFB319:
+ 356:tmk_core/common/action_util.c **** 
+ 357:tmk_core/common/action_util.c **** #ifndef NO_ACTION_ONESHOT
+ 358:tmk_core/common/action_util.c **** /** \brief get oneshot mods
+ 359:tmk_core/common/action_util.c ****  *
+ 360:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 361:tmk_core/common/action_util.c ****  */
+ 362:tmk_core/common/action_util.c **** uint8_t get_oneshot_mods(void) { return oneshot_mods; }
+ 879              		.loc 2 362 32 is_stmt 1 view -0
+ 880              		.cfi_startproc
+ 881              		@ args = 0, pretend = 0, frame = 0
+ 882              		@ frame_needed = 0, uses_anonymous_args = 0
+ 883              		@ link register save eliminated.
+ 884              		.loc 2 362 34 view .LVU120
+ 885              		.loc 2 362 55 is_stmt 0 view .LVU121
+ 886 0000 014B     		ldr	r3, .L81
+ 887 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 888 0004 7047     		bx	lr
+ 889              	.L82:
+ 890 0006 00BF     		.align	2
+ 891              	.L81:
+ 892 0008 00000000 		.word	.LANCHOR6
+ 893              		.cfi_endproc
+ 894              	.LFE319:
+ 896              		.section	.text.oneshot_locked_mods_changed_user,"ax",%progbits
+ 897              		.align	1
+ 898              		.weak	oneshot_locked_mods_changed_user
+ 899              		.syntax unified
+ 900              		.thumb
+ 901              		.thumb_func
+ 902              		.fpu fpv4-sp-d16
+ 904              	oneshot_locked_mods_changed_user:
+ 905              	.LVL29:
+ 906              	.LFB324:
+ 363:tmk_core/common/action_util.c **** 
+ 364:tmk_core/common/action_util.c **** void add_oneshot_mods(uint8_t mods) {
+ 365:tmk_core/common/action_util.c ****     if ((oneshot_mods & mods) != mods) {
+ 366:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 367:tmk_core/common/action_util.c ****         oneshot_time = timer_read();
+ 368:tmk_core/common/action_util.c **** #    endif
+ 369:tmk_core/common/action_util.c ****         oneshot_mods |= mods;
+ 370:tmk_core/common/action_util.c ****         oneshot_mods_changed_kb(mods);
+ 371:tmk_core/common/action_util.c ****     }
+ 372:tmk_core/common/action_util.c **** }
+ 373:tmk_core/common/action_util.c **** 
+ 374:tmk_core/common/action_util.c **** void del_oneshot_mods(uint8_t mods) {
+ 375:tmk_core/common/action_util.c ****     if (oneshot_mods & mods) {
+ 376:tmk_core/common/action_util.c ****         oneshot_mods &= ~mods;
+ 377:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 378:tmk_core/common/action_util.c ****         oneshot_time = oneshot_mods ? timer_read() : 0;
+ 379:tmk_core/common/action_util.c **** #    endif
+ 380:tmk_core/common/action_util.c ****         oneshot_mods_changed_kb(oneshot_mods);
+ 381:tmk_core/common/action_util.c ****     }
+ 382:tmk_core/common/action_util.c **** }
+ 383:tmk_core/common/action_util.c **** 
+ 384:tmk_core/common/action_util.c **** /** \brief set oneshot mods
+ 385:tmk_core/common/action_util.c ****  *
+ 386:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 387:tmk_core/common/action_util.c ****  */
+ 388:tmk_core/common/action_util.c **** void set_oneshot_mods(uint8_t mods) {
+ 389:tmk_core/common/action_util.c ****     if (!keymap_config.oneshot_disable) {
+ 390:tmk_core/common/action_util.c ****         if (oneshot_mods != mods) {
+ 391:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 392:tmk_core/common/action_util.c ****             oneshot_time = timer_read();
+ 393:tmk_core/common/action_util.c **** #    endif
+ 394:tmk_core/common/action_util.c ****             oneshot_mods = mods;
+ 395:tmk_core/common/action_util.c ****             oneshot_mods_changed_kb(mods);
+ 396:tmk_core/common/action_util.c ****         }
+ 397:tmk_core/common/action_util.c ****     }
+ 398:tmk_core/common/action_util.c **** }
+ 399:tmk_core/common/action_util.c **** 
+ 400:tmk_core/common/action_util.c **** /** \brief clear oneshot mods
+ 401:tmk_core/common/action_util.c ****  *
+ 402:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 403:tmk_core/common/action_util.c ****  */
+ 404:tmk_core/common/action_util.c **** void clear_oneshot_mods(void) {
+ 405:tmk_core/common/action_util.c ****     if (oneshot_mods) {
+ 406:tmk_core/common/action_util.c ****         oneshot_mods = 0;
+ 407:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 408:tmk_core/common/action_util.c ****         oneshot_time = 0;
+ 409:tmk_core/common/action_util.c **** #    endif
+ 410:tmk_core/common/action_util.c ****         oneshot_mods_changed_kb(oneshot_mods);
+ 411:tmk_core/common/action_util.c ****     }
+ 412:tmk_core/common/action_util.c **** }
+ 413:tmk_core/common/action_util.c **** #endif
+ 414:tmk_core/common/action_util.c **** 
+ 415:tmk_core/common/action_util.c **** /** \brief Called when the one shot modifiers have been changed.
+ 416:tmk_core/common/action_util.c ****  *
+ 417:tmk_core/common/action_util.c ****  * \param mods Contains the active modifiers active after the change.
+ 418:tmk_core/common/action_util.c ****  */
+ 419:tmk_core/common/action_util.c **** __attribute__((weak)) void oneshot_locked_mods_changed_user(uint8_t mods) {}
+ 907              		.loc 2 419 75 is_stmt 1 view -0
+ 908              		.cfi_startproc
+ 909              		@ args = 0, pretend = 0, frame = 0
+ 910              		@ frame_needed = 0, uses_anonymous_args = 0
+ 911              		@ link register save eliminated.
+ 912              		.loc 2 419 76 view .LVU123
+ 913 0000 7047     		bx	lr
+ 914              		.cfi_endproc
+ 915              	.LFE324:
+ 917              		.section	.text.oneshot_locked_mods_changed_kb,"ax",%progbits
+ 918              		.align	1
+ 919              		.weak	oneshot_locked_mods_changed_kb
+ 920              		.syntax unified
+ 921              		.thumb
+ 922              		.thumb_func
+ 923              		.fpu fpv4-sp-d16
+ 925              	oneshot_locked_mods_changed_kb:
+ 926              	.LVL30:
+ 927              	.LFB325:
+ 420:tmk_core/common/action_util.c **** 
+ 421:tmk_core/common/action_util.c **** /** \brief Called when the locked one shot modifiers have been changed.
+ 422:tmk_core/common/action_util.c ****  *
+ 423:tmk_core/common/action_util.c ****  * \param mods Contains the active modifiers active after the change.
+ 424:tmk_core/common/action_util.c ****  */
+ 425:tmk_core/common/action_util.c **** __attribute__((weak)) void oneshot_locked_mods_changed_kb(uint8_t mods) { oneshot_locked_mods_chang
+ 928              		.loc 2 425 73 view -0
+ 929              		.cfi_startproc
+ 930              		@ args = 0, pretend = 0, frame = 0
+ 931              		@ frame_needed = 0, uses_anonymous_args = 0
+ 932              		.loc 2 425 75 view .LVU125
+ 933              		.loc 2 425 73 is_stmt 0 view .LVU126
+ 934 0000 08B5     		push	{r3, lr}
+ 935              		.cfi_def_cfa_offset 8
+ 936              		.cfi_offset 3, -8
+ 937              		.cfi_offset 14, -4
+ 938              		.loc 2 425 75 view .LVU127
+ 939 0002 FFF7FEFF 		bl	oneshot_locked_mods_changed_user
+ 940              	.LVL31:
+ 941              		.loc 2 425 115 view .LVU128
+ 942 0006 08BD     		pop	{r3, pc}
+ 943              		.cfi_endproc
+ 944              	.LFE325:
+ 946              		.section	.text.set_oneshot_locked_mods,"ax",%progbits
+ 947              		.align	1
+ 948              		.global	set_oneshot_locked_mods
+ 949              		.syntax unified
+ 950              		.thumb
+ 951              		.thumb_func
+ 952              		.fpu fpv4-sp-d16
+ 954              	set_oneshot_locked_mods:
+ 955              	.LVL32:
+ 956              	.LFB289:
+  57:tmk_core/common/action_util.c ****     if (mods != oneshot_locked_mods) {
+ 957              		.loc 2 57 54 is_stmt 1 view -0
+ 958              		.cfi_startproc
+ 959              		@ args = 0, pretend = 0, frame = 0
+ 960              		@ frame_needed = 0, uses_anonymous_args = 0
+  58:tmk_core/common/action_util.c ****         oneshot_locked_mods = mods;
+ 961              		.loc 2 58 5 view .LVU130
+  57:tmk_core/common/action_util.c ****     if (mods != oneshot_locked_mods) {
+ 962              		.loc 2 57 54 is_stmt 0 view .LVU131
+ 963 0000 08B5     		push	{r3, lr}
+ 964              		.cfi_def_cfa_offset 8
+ 965              		.cfi_offset 3, -8
+ 966              		.cfi_offset 14, -4
+  58:tmk_core/common/action_util.c ****         oneshot_locked_mods = mods;
+ 967              		.loc 2 58 14 view .LVU132
+ 968 0002 044A     		ldr	r2, .L87
+  58:tmk_core/common/action_util.c ****         oneshot_locked_mods = mods;
+ 969              		.loc 2 58 8 view .LVU133
+ 970 0004 1178     		ldrb	r1, [r2]	@ zero_extendqisi2
+ 971 0006 8142     		cmp	r1, r0
+ 972 0008 02D0     		beq	.L85
+  59:tmk_core/common/action_util.c ****         oneshot_locked_mods_changed_kb(oneshot_locked_mods);
+ 973              		.loc 2 59 9 is_stmt 1 view .LVU134
+  59:tmk_core/common/action_util.c ****         oneshot_locked_mods_changed_kb(oneshot_locked_mods);
+ 974              		.loc 2 59 29 is_stmt 0 view .LVU135
+ 975 000a 1070     		strb	r0, [r2]
+  60:tmk_core/common/action_util.c ****     }
+ 976              		.loc 2 60 9 is_stmt 1 view .LVU136
+ 977 000c FFF7FEFF 		bl	oneshot_locked_mods_changed_kb
+ 978              	.LVL33:
+ 979              	.L85:
+  62:tmk_core/common/action_util.c **** void clear_oneshot_locked_mods(void) {
+ 980              		.loc 2 62 1 is_stmt 0 view .LVU137
+ 981 0010 08BD     		pop	{r3, pc}
+ 982              	.L88:
+ 983 0012 00BF     		.align	2
+ 984              	.L87:
+ 985 0014 00000000 		.word	.LANCHOR1
+ 986              		.cfi_endproc
+ 987              	.LFE289:
+ 989              		.section	.text.clear_oneshot_locked_mods,"ax",%progbits
+ 990              		.align	1
+ 991              		.global	clear_oneshot_locked_mods
+ 992              		.syntax unified
+ 993              		.thumb
+ 994              		.thumb_func
+ 995              		.fpu fpv4-sp-d16
+ 997              	clear_oneshot_locked_mods:
+ 998              	.LFB290:
+  63:tmk_core/common/action_util.c ****     if (oneshot_locked_mods) {
+ 999              		.loc 2 63 38 is_stmt 1 view -0
+ 1000              		.cfi_startproc
+ 1001              		@ args = 0, pretend = 0, frame = 0
+ 1002              		@ frame_needed = 0, uses_anonymous_args = 0
+  64:tmk_core/common/action_util.c ****         oneshot_locked_mods = 0;
+ 1003              		.loc 2 64 5 view .LVU139
+  63:tmk_core/common/action_util.c ****     if (oneshot_locked_mods) {
+ 1004              		.loc 2 63 38 is_stmt 0 view .LVU140
+ 1005 0000 08B5     		push	{r3, lr}
+ 1006              		.cfi_def_cfa_offset 8
+ 1007              		.cfi_offset 3, -8
+ 1008              		.cfi_offset 14, -4
+  64:tmk_core/common/action_util.c ****         oneshot_locked_mods = 0;
+ 1009              		.loc 2 64 9 view .LVU141
+ 1010 0002 044B     		ldr	r3, .L94
+  64:tmk_core/common/action_util.c ****         oneshot_locked_mods = 0;
+ 1011              		.loc 2 64 8 view .LVU142
+ 1012 0004 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 1013 0006 1AB1     		cbz	r2, .L89
+  65:tmk_core/common/action_util.c ****         oneshot_locked_mods_changed_kb(oneshot_locked_mods);
+ 1014              		.loc 2 65 9 is_stmt 1 view .LVU143
+  65:tmk_core/common/action_util.c ****         oneshot_locked_mods_changed_kb(oneshot_locked_mods);
+ 1015              		.loc 2 65 29 is_stmt 0 view .LVU144
+ 1016 0008 0020     		movs	r0, #0
+ 1017 000a 1870     		strb	r0, [r3]
+  66:tmk_core/common/action_util.c ****     }
+ 1018              		.loc 2 66 9 is_stmt 1 view .LVU145
+ 1019 000c FFF7FEFF 		bl	oneshot_locked_mods_changed_kb
+ 1020              	.LVL34:
+ 1021              	.L89:
+  68:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1022              		.loc 2 68 1 is_stmt 0 view .LVU146
+ 1023 0010 08BD     		pop	{r3, pc}
+ 1024              	.L95:
+ 1025 0012 00BF     		.align	2
+ 1026              	.L94:
+ 1027 0014 00000000 		.word	.LANCHOR1
+ 1028              		.cfi_endproc
+ 1029              	.LFE290:
+ 1031              		.section	.text.oneshot_mods_changed_user,"ax",%progbits
+ 1032              		.align	1
+ 1033              		.weak	oneshot_mods_changed_user
+ 1034              		.syntax unified
+ 1035              		.thumb
+ 1036              		.thumb_func
+ 1037              		.fpu fpv4-sp-d16
+ 1039              	oneshot_mods_changed_user:
+ 1040              	.LFB334:
+ 1041              		.cfi_startproc
+ 1042              		@ args = 0, pretend = 0, frame = 0
+ 1043              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1044              		@ link register save eliminated.
+ 1045 0000 7047     		bx	lr
+ 1046              		.cfi_endproc
+ 1047              	.LFE334:
+ 1049              		.section	.text.oneshot_mods_changed_kb,"ax",%progbits
+ 1050              		.align	1
+ 1051              		.weak	oneshot_mods_changed_kb
+ 1052              		.syntax unified
+ 1053              		.thumb
+ 1054              		.thumb_func
+ 1055              		.fpu fpv4-sp-d16
+ 1057              	oneshot_mods_changed_kb:
+ 1058              	.LVL35:
+ 1059              	.LFB327:
+ 426:tmk_core/common/action_util.c **** 
+ 427:tmk_core/common/action_util.c **** /** \brief Called when the one shot modifiers have been changed.
+ 428:tmk_core/common/action_util.c ****  *
+ 429:tmk_core/common/action_util.c ****  * \param mods Contains the active modifiers active after the change.
+ 430:tmk_core/common/action_util.c ****  */
+ 431:tmk_core/common/action_util.c **** __attribute__((weak)) void oneshot_mods_changed_user(uint8_t mods) {}
+ 432:tmk_core/common/action_util.c **** 
+ 433:tmk_core/common/action_util.c **** /** \brief Called when the one shot modifiers have been changed.
+ 434:tmk_core/common/action_util.c ****  *
+ 435:tmk_core/common/action_util.c ****  * \param mods Contains the active modifiers active after the change.
+ 436:tmk_core/common/action_util.c ****  */
+ 437:tmk_core/common/action_util.c **** __attribute__((weak)) void oneshot_mods_changed_kb(uint8_t mods) { oneshot_mods_changed_user(mods);
+ 1060              		.loc 2 437 66 is_stmt 1 view -0
+ 1061              		.cfi_startproc
+ 1062              		@ args = 0, pretend = 0, frame = 0
+ 1063              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1064              		.loc 2 437 68 view .LVU148
+ 1065              		.loc 2 437 66 is_stmt 0 view .LVU149
+ 1066 0000 08B5     		push	{r3, lr}
+ 1067              		.cfi_def_cfa_offset 8
+ 1068              		.cfi_offset 3, -8
+ 1069              		.cfi_offset 14, -4
+ 1070              		.loc 2 437 68 view .LVU150
+ 1071 0002 FFF7FEFF 		bl	oneshot_mods_changed_user
+ 1072              	.LVL36:
+ 1073              		.loc 2 437 101 view .LVU151
+ 1074 0006 08BD     		pop	{r3, pc}
+ 1075              		.cfi_endproc
+ 1076              	.LFE327:
+ 1078              		.section	.text.add_oneshot_mods,"ax",%progbits
+ 1079              		.align	1
+ 1080              		.global	add_oneshot_mods
+ 1081              		.syntax unified
+ 1082              		.thumb
+ 1083              		.thumb_func
+ 1084              		.fpu fpv4-sp-d16
+ 1086              	add_oneshot_mods:
+ 1087              	.LVL37:
+ 1088              	.LFB320:
+ 364:tmk_core/common/action_util.c ****     if ((oneshot_mods & mods) != mods) {
+ 1089              		.loc 2 364 37 is_stmt 1 view -0
+ 1090              		.cfi_startproc
+ 1091              		@ args = 0, pretend = 0, frame = 0
+ 1092              		@ frame_needed = 0, uses_anonymous_args = 0
+ 365:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1093              		.loc 2 365 5 view .LVU153
+ 364:tmk_core/common/action_util.c ****     if ((oneshot_mods & mods) != mods) {
+ 1094              		.loc 2 364 37 is_stmt 0 view .LVU154
+ 1095 0000 08B5     		push	{r3, lr}
+ 1096              		.cfi_def_cfa_offset 8
+ 1097              		.cfi_offset 3, -8
+ 1098              		.cfi_offset 14, -4
+ 365:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1099              		.loc 2 365 31 view .LVU155
+ 1100 0002 0549     		ldr	r1, .L100
+ 1101 0004 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 365:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1102              		.loc 2 365 8 view .LVU156
+ 1103 0006 30EA030C 		bics	ip, r0, r3
+ 1104 000a 03D0     		beq	.L98
+ 369:tmk_core/common/action_util.c ****         oneshot_mods_changed_kb(mods);
+ 1105              		.loc 2 369 9 is_stmt 1 view .LVU157
+ 369:tmk_core/common/action_util.c ****         oneshot_mods_changed_kb(mods);
+ 1106              		.loc 2 369 22 is_stmt 0 view .LVU158
+ 1107 000c 0343     		orrs	r3, r3, r0
+ 1108 000e 0B70     		strb	r3, [r1]
+ 370:tmk_core/common/action_util.c ****     }
+ 1109              		.loc 2 370 9 is_stmt 1 view .LVU159
+ 1110 0010 FFF7FEFF 		bl	oneshot_mods_changed_kb
+ 1111              	.LVL38:
+ 1112              	.L98:
+ 372:tmk_core/common/action_util.c **** 
+ 1113              		.loc 2 372 1 is_stmt 0 view .LVU160
+ 1114 0014 08BD     		pop	{r3, pc}
+ 1115              	.L101:
+ 1116 0016 00BF     		.align	2
+ 1117              	.L100:
+ 1118 0018 00000000 		.word	.LANCHOR6
+ 1119              		.cfi_endproc
+ 1120              	.LFE320:
+ 1122              		.section	.text.del_oneshot_mods,"ax",%progbits
+ 1123              		.align	1
+ 1124              		.global	del_oneshot_mods
+ 1125              		.syntax unified
+ 1126              		.thumb
+ 1127              		.thumb_func
+ 1128              		.fpu fpv4-sp-d16
+ 1130              	del_oneshot_mods:
+ 1131              	.LVL39:
+ 1132              	.LFB321:
+ 374:tmk_core/common/action_util.c ****     if (oneshot_mods & mods) {
+ 1133              		.loc 2 374 37 is_stmt 1 view -0
+ 1134              		.cfi_startproc
+ 1135              		@ args = 0, pretend = 0, frame = 0
+ 1136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 375:tmk_core/common/action_util.c ****         oneshot_mods &= ~mods;
+ 1137              		.loc 2 375 5 view .LVU162
+ 374:tmk_core/common/action_util.c ****     if (oneshot_mods & mods) {
+ 1138              		.loc 2 374 37 is_stmt 0 view .LVU163
+ 1139 0000 08B5     		push	{r3, lr}
+ 1140              		.cfi_def_cfa_offset 8
+ 1141              		.cfi_offset 3, -8
+ 1142              		.cfi_offset 14, -4
+ 375:tmk_core/common/action_util.c ****         oneshot_mods &= ~mods;
+ 1143              		.loc 2 375 9 view .LVU164
+ 1144 0002 054A     		ldr	r2, .L107
+ 1145 0004 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 375:tmk_core/common/action_util.c ****         oneshot_mods &= ~mods;
+ 1146              		.loc 2 375 8 view .LVU165
+ 1147 0006 0342     		tst	r3, r0
+ 1148 0008 04D0     		beq	.L102
+ 376:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1149              		.loc 2 376 9 is_stmt 1 view .LVU166
+ 376:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1150              		.loc 2 376 22 is_stmt 0 view .LVU167
+ 1151 000a 23EA0000 		bic	r0, r3, r0
+ 1152              	.LVL40:
+ 376:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1153              		.loc 2 376 22 view .LVU168
+ 1154 000e 1070     		strb	r0, [r2]
+ 380:tmk_core/common/action_util.c ****     }
+ 1155              		.loc 2 380 9 is_stmt 1 view .LVU169
+ 1156 0010 FFF7FEFF 		bl	oneshot_mods_changed_kb
+ 1157              	.LVL41:
+ 1158              	.L102:
+ 382:tmk_core/common/action_util.c **** 
+ 1159              		.loc 2 382 1 is_stmt 0 view .LVU170
+ 1160 0014 08BD     		pop	{r3, pc}
+ 1161              	.L108:
+ 1162 0016 00BF     		.align	2
+ 1163              	.L107:
+ 1164 0018 00000000 		.word	.LANCHOR6
+ 1165              		.cfi_endproc
+ 1166              	.LFE321:
+ 1168              		.section	.text.set_oneshot_mods,"ax",%progbits
+ 1169              		.align	1
+ 1170              		.global	set_oneshot_mods
+ 1171              		.syntax unified
+ 1172              		.thumb
+ 1173              		.thumb_func
+ 1174              		.fpu fpv4-sp-d16
+ 1176              	set_oneshot_mods:
+ 1177              	.LVL42:
+ 1178              	.LFB322:
+ 388:tmk_core/common/action_util.c ****     if (!keymap_config.oneshot_disable) {
+ 1179              		.loc 2 388 37 is_stmt 1 view -0
+ 1180              		.cfi_startproc
+ 1181              		@ args = 0, pretend = 0, frame = 0
+ 1182              		@ frame_needed = 0, uses_anonymous_args = 0
+ 389:tmk_core/common/action_util.c ****         if (oneshot_mods != mods) {
+ 1183              		.loc 2 389 5 view .LVU172
+ 389:tmk_core/common/action_util.c ****         if (oneshot_mods != mods) {
+ 1184              		.loc 2 389 23 is_stmt 0 view .LVU173
+ 1185 0000 064A     		ldr	r2, .L111
+ 1186 0002 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+ 389:tmk_core/common/action_util.c ****         if (oneshot_mods != mods) {
+ 1187              		.loc 2 389 8 view .LVU174
+ 1188 0004 5207     		lsls	r2, r2, #29
+ 388:tmk_core/common/action_util.c ****     if (!keymap_config.oneshot_disable) {
+ 1189              		.loc 2 388 37 view .LVU175
+ 1190 0006 08B5     		push	{r3, lr}
+ 1191              		.cfi_def_cfa_offset 8
+ 1192              		.cfi_offset 3, -8
+ 1193              		.cfi_offset 14, -4
+ 389:tmk_core/common/action_util.c ****         if (oneshot_mods != mods) {
+ 1194              		.loc 2 389 8 view .LVU176
+ 1195 0008 06D4     		bmi	.L109
+ 390:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1196              		.loc 2 390 9 is_stmt 1 view .LVU177
+ 390:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1197              		.loc 2 390 26 is_stmt 0 view .LVU178
+ 1198 000a 054A     		ldr	r2, .L111+4
+ 390:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1199              		.loc 2 390 12 view .LVU179
+ 1200 000c 1178     		ldrb	r1, [r2]	@ zero_extendqisi2
+ 1201 000e 8142     		cmp	r1, r0
+ 1202 0010 02D0     		beq	.L109
+ 394:tmk_core/common/action_util.c ****             oneshot_mods_changed_kb(mods);
+ 1203              		.loc 2 394 13 is_stmt 1 view .LVU180
+ 394:tmk_core/common/action_util.c ****             oneshot_mods_changed_kb(mods);
+ 1204              		.loc 2 394 26 is_stmt 0 view .LVU181
+ 1205 0012 1070     		strb	r0, [r2]
+ 395:tmk_core/common/action_util.c ****         }
+ 1206              		.loc 2 395 13 is_stmt 1 view .LVU182
+ 1207 0014 FFF7FEFF 		bl	oneshot_mods_changed_kb
+ 1208              	.LVL43:
+ 1209              	.L109:
+ 398:tmk_core/common/action_util.c **** 
+ 1210              		.loc 2 398 1 is_stmt 0 view .LVU183
+ 1211 0018 08BD     		pop	{r3, pc}
+ 1212              	.L112:
+ 1213 001a 00BF     		.align	2
+ 1214              	.L111:
+ 1215 001c 00000000 		.word	keymap_config
+ 1216 0020 00000000 		.word	.LANCHOR6
+ 1217              		.cfi_endproc
+ 1218              	.LFE322:
+ 1220              		.section	.text.clear_oneshot_mods,"ax",%progbits
+ 1221              		.align	1
+ 1222              		.global	clear_oneshot_mods
+ 1223              		.syntax unified
+ 1224              		.thumb
+ 1225              		.thumb_func
+ 1226              		.fpu fpv4-sp-d16
+ 1228              	clear_oneshot_mods:
+ 1229              	.LFB323:
+ 404:tmk_core/common/action_util.c ****     if (oneshot_mods) {
+ 1230              		.loc 2 404 31 is_stmt 1 view -0
+ 1231              		.cfi_startproc
+ 1232              		@ args = 0, pretend = 0, frame = 0
+ 1233              		@ frame_needed = 0, uses_anonymous_args = 0
+ 405:tmk_core/common/action_util.c ****         oneshot_mods = 0;
+ 1234              		.loc 2 405 5 view .LVU185
+ 404:tmk_core/common/action_util.c ****     if (oneshot_mods) {
+ 1235              		.loc 2 404 31 is_stmt 0 view .LVU186
+ 1236 0000 08B5     		push	{r3, lr}
+ 1237              		.cfi_def_cfa_offset 8
+ 1238              		.cfi_offset 3, -8
+ 1239              		.cfi_offset 14, -4
+ 405:tmk_core/common/action_util.c ****         oneshot_mods = 0;
+ 1240              		.loc 2 405 9 view .LVU187
+ 1241 0002 044B     		ldr	r3, .L118
+ 405:tmk_core/common/action_util.c ****         oneshot_mods = 0;
+ 1242              		.loc 2 405 8 view .LVU188
+ 1243 0004 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 1244 0006 1AB1     		cbz	r2, .L113
+ 1245              	.LBB20:
+ 1246              	.LBI20:
+ 404:tmk_core/common/action_util.c ****     if (oneshot_mods) {
+ 1247              		.loc 2 404 6 is_stmt 1 view .LVU189
+ 1248              	.LBB21:
+ 406:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1249              		.loc 2 406 9 view .LVU190
+ 406:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1250              		.loc 2 406 22 is_stmt 0 view .LVU191
+ 1251 0008 0020     		movs	r0, #0
+ 1252 000a 1870     		strb	r0, [r3]
+ 410:tmk_core/common/action_util.c ****     }
+ 1253              		.loc 2 410 9 is_stmt 1 view .LVU192
+ 1254 000c FFF7FEFF 		bl	oneshot_mods_changed_kb
+ 1255              	.LVL44:
+ 1256              	.L113:
+ 1257              	.LBE21:
+ 1258              	.LBE20:
+ 412:tmk_core/common/action_util.c **** #endif
+ 1259              		.loc 2 412 1 is_stmt 0 view .LVU193
+ 1260 0010 08BD     		pop	{r3, pc}
+ 1261              	.L119:
+ 1262 0012 00BF     		.align	2
+ 1263              	.L118:
+ 1264 0014 00000000 		.word	.LANCHOR6
+ 1265              		.cfi_endproc
+ 1266              	.LFE323:
+ 1268              		.section	.text.send_keyboard_report,"ax",%progbits
+ 1269              		.align	1
+ 1270              		.global	send_keyboard_report
+ 1271              		.syntax unified
+ 1272              		.thumb
+ 1273              		.thumb_func
+ 1274              		.fpu fpv4-sp-d16
+ 1276              	send_keyboard_report:
+ 1277              	.LFB303:
+ 232:tmk_core/common/action_util.c ****     keyboard_report->mods = real_mods;
+ 1278              		.loc 2 232 33 is_stmt 1 view -0
+ 1279              		.cfi_startproc
+ 1280              		@ args = 0, pretend = 0, frame = 0
+ 1281              		@ frame_needed = 0, uses_anonymous_args = 0
+ 233:tmk_core/common/action_util.c ****     keyboard_report->mods |= weak_mods;
+ 1282              		.loc 2 233 5 view .LVU195
+ 232:tmk_core/common/action_util.c ****     keyboard_report->mods = real_mods;
+ 1283              		.loc 2 232 33 is_stmt 0 view .LVU196
+ 1284 0000 10B5     		push	{r4, lr}
+ 1285              		.cfi_def_cfa_offset 8
+ 1286              		.cfi_offset 4, -8
+ 1287              		.cfi_offset 14, -4
+ 234:tmk_core/common/action_util.c ****     keyboard_report->mods |= macro_mods;
+ 1288              		.loc 2 234 27 view .LVU197
+ 1289 0002 0D4B     		ldr	r3, .L127
+ 1290 0004 0D4A     		ldr	r2, .L127+4
+ 1291 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1292 0008 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 233:tmk_core/common/action_util.c ****     keyboard_report->mods |= weak_mods;
+ 1293              		.loc 2 233 20 view .LVU198
+ 1294 000a 0D4C     		ldr	r4, .L127+8
+ 234:tmk_core/common/action_util.c ****     keyboard_report->mods |= macro_mods;
+ 1295              		.loc 2 234 27 view .LVU199
+ 1296 000c 1343     		orrs	r3, r3, r2
+ 235:tmk_core/common/action_util.c **** 
+ 1297              		.loc 2 235 27 view .LVU200
+ 1298 000e 0D4A     		ldr	r2, .L127+12
+ 233:tmk_core/common/action_util.c ****     keyboard_report->mods |= weak_mods;
+ 1299              		.loc 2 233 20 view .LVU201
+ 1300 0010 2068     		ldr	r0, [r4]
+ 234:tmk_core/common/action_util.c ****     keyboard_report->mods |= macro_mods;
+ 1301              		.loc 2 234 5 is_stmt 1 view .LVU202
+ 235:tmk_core/common/action_util.c **** 
+ 1302              		.loc 2 235 5 view .LVU203
+ 235:tmk_core/common/action_util.c **** 
+ 1303              		.loc 2 235 27 is_stmt 0 view .LVU204
+ 1304 0012 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 1305 0014 1343     		orrs	r3, r3, r2
+ 238:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1306              		.loc 2 238 9 view .LVU205
+ 1307 0016 0C4A     		ldr	r2, .L127+16
+ 235:tmk_core/common/action_util.c **** 
+ 1308              		.loc 2 235 27 view .LVU206
+ 1309 0018 0370     		strb	r3, [r0]
+ 238:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1310              		.loc 2 238 5 is_stmt 1 view .LVU207
+ 238:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1311              		.loc 2 238 9 is_stmt 0 view .LVU208
+ 1312 001a 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 238:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1313              		.loc 2 238 8 view .LVU209
+ 1314 001c 32B1     		cbz	r2, .L122
+ 245:tmk_core/common/action_util.c ****         if (has_anykey(keyboard_report)) {
+ 1315              		.loc 2 245 9 is_stmt 1 view .LVU210
+ 245:tmk_core/common/action_util.c ****         if (has_anykey(keyboard_report)) {
+ 1316              		.loc 2 245 31 is_stmt 0 view .LVU211
+ 1317 001e 1343     		orrs	r3, r3, r2
+ 1318 0020 0370     		strb	r3, [r0]
+ 246:tmk_core/common/action_util.c ****             clear_oneshot_mods();
+ 1319              		.loc 2 246 9 is_stmt 1 view .LVU212
+ 246:tmk_core/common/action_util.c ****             clear_oneshot_mods();
+ 1320              		.loc 2 246 13 is_stmt 0 view .LVU213
+ 1321 0022 FFF7FEFF 		bl	has_anykey
+ 1322              	.LVL45:
+ 246:tmk_core/common/action_util.c ****             clear_oneshot_mods();
+ 1323              		.loc 2 246 12 view .LVU214
+ 1324 0026 08B1     		cbz	r0, .L122
+ 247:tmk_core/common/action_util.c ****         }
+ 1325              		.loc 2 247 13 is_stmt 1 view .LVU215
+ 1326 0028 FFF7FEFF 		bl	clear_oneshot_mods
+ 1327              	.LVL46:
+ 1328              	.L122:
+ 259:tmk_core/common/action_util.c **** }
+ 1329              		.loc 2 259 5 view .LVU216
+ 1330 002c 2068     		ldr	r0, [r4]
+ 260:tmk_core/common/action_util.c **** 
+ 1331              		.loc 2 260 1 is_stmt 0 view .LVU217
+ 1332 002e BDE81040 		pop	{r4, lr}
+ 1333              		.cfi_restore 14
+ 1334              		.cfi_restore 4
+ 1335              		.cfi_def_cfa_offset 0
+ 259:tmk_core/common/action_util.c **** }
+ 1336              		.loc 2 259 5 view .LVU218
+ 1337 0032 FFF7FEBF 		b	host_keyboard_send
+ 1338              	.LVL47:
+ 1339              	.L128:
+ 1340 0036 00BF     		.align	2
+ 1341              	.L127:
+ 1342 0038 00000000 		.word	.LANCHOR3
+ 1343 003c 00000000 		.word	.LANCHOR4
+ 1344 0040 00000000 		.word	.LANCHOR0
+ 1345 0044 00000000 		.word	.LANCHOR5
+ 1346 0048 00000000 		.word	.LANCHOR6
+ 1347              		.cfi_endproc
+ 1348              	.LFE303:
+ 1350              		.section	.text.oneshot_layer_changed_user,"ax",%progbits
+ 1351              		.align	1
+ 1352              		.weak	oneshot_layer_changed_user
+ 1353              		.syntax unified
+ 1354              		.thumb
+ 1355              		.thumb_func
+ 1356              		.fpu fpv4-sp-d16
+ 1358              	oneshot_layer_changed_user:
+ 1359              	.LFB336:
+ 1360              		.cfi_startproc
+ 1361              		@ args = 0, pretend = 0, frame = 0
+ 1362              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1363              		@ link register save eliminated.
+ 1364 0000 7047     		bx	lr
+ 1365              		.cfi_endproc
+ 1366              	.LFE336:
+ 1368              		.section	.text.oneshot_layer_changed_kb,"ax",%progbits
+ 1369              		.align	1
+ 1370              		.weak	oneshot_layer_changed_kb
+ 1371              		.syntax unified
+ 1372              		.thumb
+ 1373              		.thumb_func
+ 1374              		.fpu fpv4-sp-d16
+ 1376              	oneshot_layer_changed_kb:
+ 1377              	.LVL48:
+ 1378              	.LFB329:
+ 438:tmk_core/common/action_util.c **** 
+ 439:tmk_core/common/action_util.c **** /** \brief Called when the one shot layers have been changed.
+ 440:tmk_core/common/action_util.c ****  *
+ 441:tmk_core/common/action_util.c ****  * \param layer Contains the layer that is toggled on, or zero when toggled off.
+ 442:tmk_core/common/action_util.c ****  */
+ 443:tmk_core/common/action_util.c **** __attribute__((weak)) void oneshot_layer_changed_user(uint8_t layer) {}
+ 444:tmk_core/common/action_util.c **** 
+ 445:tmk_core/common/action_util.c **** /** \brief Called when the one shot layers have been changed.
+ 446:tmk_core/common/action_util.c ****  *
+ 447:tmk_core/common/action_util.c ****  * \param layer Contains the layer that is toggled on, or zero when toggled off.
+ 448:tmk_core/common/action_util.c ****  */
+ 449:tmk_core/common/action_util.c **** __attribute__((weak)) void oneshot_layer_changed_kb(uint8_t layer) { oneshot_layer_changed_user(lay
+ 1379              		.loc 2 449 68 is_stmt 1 view -0
+ 1380              		.cfi_startproc
+ 1381              		@ args = 0, pretend = 0, frame = 0
+ 1382              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1383              		.loc 2 449 70 view .LVU220
+ 1384              		.loc 2 449 68 is_stmt 0 view .LVU221
+ 1385 0000 08B5     		push	{r3, lr}
+ 1386              		.cfi_def_cfa_offset 8
+ 1387              		.cfi_offset 3, -8
+ 1388              		.cfi_offset 14, -4
+ 1389              		.loc 2 449 70 view .LVU222
+ 1390 0002 FFF7FEFF 		bl	oneshot_layer_changed_user
+ 1391              	.LVL49:
+ 1392              		.loc 2 449 105 view .LVU223
+ 1393 0006 08BD     		pop	{r3, pc}
+ 1394              		.cfi_endproc
+ 1395              	.LFE329:
+ 1397              		.section	.text.set_oneshot_layer,"ax",%progbits
+ 1398              		.align	1
+ 1399              		.global	set_oneshot_layer
+ 1400              		.syntax unified
+ 1401              		.thumb
+ 1402              		.thumb_func
+ 1403              		.fpu fpv4-sp-d16
+ 1405              	set_oneshot_layer:
+ 1406              	.LVL50:
+ 1407              	.LFB294:
+ 153:tmk_core/common/action_util.c ****     if (!keymap_config.oneshot_disable) {
+ 1408              		.loc 2 153 54 is_stmt 1 view -0
+ 1409              		.cfi_startproc
+ 1410              		@ args = 0, pretend = 0, frame = 0
+ 1411              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154:tmk_core/common/action_util.c ****         oneshot_layer_data = layer << 3 | state;
+ 1412              		.loc 2 154 5 view .LVU225
+ 154:tmk_core/common/action_util.c ****         oneshot_layer_data = layer << 3 | state;
+ 1413              		.loc 2 154 23 is_stmt 0 view .LVU226
+ 1414 0000 0A4A     		ldr	r2, .L135
+ 1415 0002 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+ 154:tmk_core/common/action_util.c ****         oneshot_layer_data = layer << 3 | state;
+ 1416              		.loc 2 154 8 view .LVU227
+ 1417 0004 5207     		lsls	r2, r2, #29
+ 153:tmk_core/common/action_util.c ****     if (!keymap_config.oneshot_disable) {
+ 1418              		.loc 2 153 54 view .LVU228
+ 1419 0006 10B5     		push	{r4, lr}
+ 1420              		.cfi_def_cfa_offset 8
+ 1421              		.cfi_offset 4, -8
+ 1422              		.cfi_offset 14, -4
+ 154:tmk_core/common/action_util.c ****         oneshot_layer_data = layer << 3 | state;
+ 1423              		.loc 2 154 8 view .LVU229
+ 1424 0008 0CD4     		bmi	.L132
+ 155:tmk_core/common/action_util.c ****         layer_on(layer);
+ 1425              		.loc 2 155 9 is_stmt 1 view .LVU230
+ 155:tmk_core/common/action_util.c ****         layer_on(layer);
+ 1426              		.loc 2 155 28 is_stmt 0 view .LVU231
+ 1427 000a 094C     		ldr	r4, .L135+4
+ 155:tmk_core/common/action_util.c ****         layer_on(layer);
+ 1428              		.loc 2 155 41 view .LVU232
+ 1429 000c 41EAC001 		orr	r1, r1, r0, lsl #3
+ 1430              	.LVL51:
+ 155:tmk_core/common/action_util.c ****         layer_on(layer);
+ 1431              		.loc 2 155 28 view .LVU233
+ 1432 0010 2170     		strb	r1, [r4]
+ 156:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1433              		.loc 2 156 9 is_stmt 1 view .LVU234
+ 1434 0012 FFF7FEFF 		bl	layer_on
+ 1435              	.LVL52:
+ 160:tmk_core/common/action_util.c ****     } else {
+ 1436              		.loc 2 160 9 view .LVU235
+ 1437              	.LBB22:
+ 1438              	.LBI22:
+  87:tmk_core/common/action_util.c **** inline uint8_t get_oneshot_layer_state(void) { return oneshot_layer_data & 0b111; }
+ 1439              		.loc 2 87 16 view .LVU236
+ 1440              	.LBB23:
+  87:tmk_core/common/action_util.c **** inline uint8_t get_oneshot_layer_state(void) { return oneshot_layer_data & 0b111; }
+ 1441              		.loc 2 87 42 view .LVU237
+  87:tmk_core/common/action_util.c **** inline uint8_t get_oneshot_layer_state(void) { return oneshot_layer_data & 0b111; }
+ 1442              		.loc 2 87 68 is_stmt 0 view .LVU238
+ 1443 0016 94F90000 		ldrsb	r0, [r4]
+ 1444              	.LBE23:
+ 1445              	.LBE22:
+ 160:tmk_core/common/action_util.c ****     } else {
+ 1446              		.loc 2 160 9 view .LVU239
+ 1447 001a C0F3C700 		ubfx	r0, r0, #3, #8
+ 1448 001e FFF7FEFF 		bl	oneshot_layer_changed_kb
+ 1449              	.LVL53:
+ 164:tmk_core/common/action_util.c **** /** \brief Reset oneshot layer
+ 1450              		.loc 2 164 1 view .LVU240
+ 1451 0022 10BD     		pop	{r4, pc}
+ 1452              	.LVL54:
+ 1453              	.L132:
+ 162:tmk_core/common/action_util.c ****     }
+ 1454              		.loc 2 162 9 is_stmt 1 view .LVU241
+ 164:tmk_core/common/action_util.c **** /** \brief Reset oneshot layer
+ 1455              		.loc 2 164 1 is_stmt 0 view .LVU242
+ 1456 0024 BDE81040 		pop	{r4, lr}
+ 1457              		.cfi_restore 14
+ 1458              		.cfi_restore 4
+ 1459              		.cfi_def_cfa_offset 0
+ 162:tmk_core/common/action_util.c ****     }
+ 1460              		.loc 2 162 9 view .LVU243
+ 1461 0028 FFF7FEBF 		b	layer_on
+ 1462              	.LVL55:
+ 1463              	.L136:
+ 162:tmk_core/common/action_util.c ****     }
+ 1464              		.loc 2 162 9 view .LVU244
+ 1465              		.align	2
+ 1466              	.L135:
+ 1467 002c 00000000 		.word	keymap_config
+ 1468 0030 00000000 		.word	.LANCHOR2
+ 1469              		.cfi_endproc
+ 1470              	.LFE294:
+ 1472              		.section	.text.reset_oneshot_layer,"ax",%progbits
+ 1473              		.align	1
+ 1474              		.global	reset_oneshot_layer
+ 1475              		.syntax unified
+ 1476              		.thumb
+ 1477              		.thumb_func
+ 1478              		.fpu fpv4-sp-d16
+ 1480              	reset_oneshot_layer:
+ 1481              	.LFB295:
+ 169:tmk_core/common/action_util.c ****     oneshot_layer_data = 0;
+ 1482              		.loc 2 169 32 is_stmt 1 view -0
+ 1483              		.cfi_startproc
+ 1484              		@ args = 0, pretend = 0, frame = 0
+ 1485              		@ frame_needed = 0, uses_anonymous_args = 0
+ 170:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1486              		.loc 2 170 5 view .LVU246
+ 169:tmk_core/common/action_util.c ****     oneshot_layer_data = 0;
+ 1487              		.loc 2 169 32 is_stmt 0 view .LVU247
+ 1488 0000 08B5     		push	{r3, lr}
+ 1489              		.cfi_def_cfa_offset 8
+ 1490              		.cfi_offset 3, -8
+ 1491              		.cfi_offset 14, -4
+ 170:tmk_core/common/action_util.c **** #    if (defined(ONESHOT_TIMEOUT) && (ONESHOT_TIMEOUT > 0))
+ 1492              		.loc 2 170 24 view .LVU248
+ 1493 0002 034B     		ldr	r3, .L138
+ 1494 0004 0020     		movs	r0, #0
+ 1495 0006 1870     		strb	r0, [r3]
+ 174:tmk_core/common/action_util.c **** }
+ 1496              		.loc 2 174 5 is_stmt 1 view .LVU249
+  87:tmk_core/common/action_util.c **** inline uint8_t get_oneshot_layer_state(void) { return oneshot_layer_data & 0b111; }
+ 1497              		.loc 2 87 42 view .LVU250
+ 174:tmk_core/common/action_util.c **** }
+ 1498              		.loc 2 174 5 is_stmt 0 view .LVU251
+ 1499 0008 FFF7FEFF 		bl	oneshot_layer_changed_kb
+ 1500              	.LVL56:
+ 175:tmk_core/common/action_util.c **** /** \brief Clear oneshot layer
+ 1501              		.loc 2 175 1 view .LVU252
+ 1502 000c 08BD     		pop	{r3, pc}
+ 1503              	.L139:
+ 1504 000e 00BF     		.align	2
+ 1505              	.L138:
+ 1506 0010 00000000 		.word	.LANCHOR2
+ 1507              		.cfi_endproc
+ 1508              	.LFE295:
+ 1510              		.section	.text.clear_oneshot_layer_state,"ax",%progbits
+ 1511              		.align	1
+ 1512              		.global	clear_oneshot_layer_state
+ 1513              		.syntax unified
+ 1514              		.thumb
+ 1515              		.thumb_func
+ 1516              		.fpu fpv4-sp-d16
+ 1518              	clear_oneshot_layer_state:
+ 1519              	.LVL57:
+ 1520              	.LFB296:
+ 180:tmk_core/common/action_util.c ****     uint8_t start_state = oneshot_layer_data;
+ 1521              		.loc 2 180 62 is_stmt 1 view -0
+ 1522              		.cfi_startproc
+ 1523              		@ args = 0, pretend = 0, frame = 0
+ 1524              		@ frame_needed = 0, uses_anonymous_args = 0
+ 181:tmk_core/common/action_util.c ****     oneshot_layer_data &= ~state;
+ 1525              		.loc 2 181 5 view .LVU254
+ 180:tmk_core/common/action_util.c ****     uint8_t start_state = oneshot_layer_data;
+ 1526              		.loc 2 180 62 is_stmt 0 view .LVU255
+ 1527 0000 08B5     		push	{r3, lr}
+ 1528              		.cfi_def_cfa_offset 8
+ 1529              		.cfi_offset 3, -8
+ 1530              		.cfi_offset 14, -4
+ 181:tmk_core/common/action_util.c ****     oneshot_layer_data &= ~state;
+ 1531              		.loc 2 181 13 view .LVU256
+ 1532 0002 0C4A     		ldr	r2, .L144
+ 1533 0004 92F90030 		ldrsb	r3, [r2]
+ 1534              	.LVL58:
+ 182:tmk_core/common/action_util.c ****     if ((!get_oneshot_layer_state() && start_state != oneshot_layer_data) || keymap_config.oneshot_
+ 1535              		.loc 2 182 5 is_stmt 1 view .LVU257
+ 182:tmk_core/common/action_util.c ****     if ((!get_oneshot_layer_state() && start_state != oneshot_layer_data) || keymap_config.oneshot_
+ 1536              		.loc 2 182 24 is_stmt 0 view .LVU258
+ 1537 0008 23EA0000 		bic	r0, r3, r0
+ 1538              	.LVL59:
+ 182:tmk_core/common/action_util.c ****     if ((!get_oneshot_layer_state() && start_state != oneshot_layer_data) || keymap_config.oneshot_
+ 1539              		.loc 2 182 24 view .LVU259
+ 1540 000c 40B2     		sxtb	r0, r0
+ 1541 000e 1070     		strb	r0, [r2]
+ 183:tmk_core/common/action_util.c ****         layer_off(get_oneshot_layer());
+ 1542              		.loc 2 183 5 is_stmt 1 view .LVU260
+ 1543              	.LBB24:
+ 1544              	.LBI24:
+  88:tmk_core/common/action_util.c **** 
+ 1545              		.loc 2 88 16 view .LVU261
+ 1546              	.LBB25:
+  88:tmk_core/common/action_util.c **** 
+ 1547              		.loc 2 88 48 view .LVU262
+ 1548              	.LBE25:
+ 1549              	.LBE24:
+ 183:tmk_core/common/action_util.c ****         layer_off(get_oneshot_layer());
+ 1550              		.loc 2 183 8 is_stmt 0 view .LVU263
+ 1551 0010 4207     		lsls	r2, r0, #29
+ 1552 0012 02D1     		bne	.L141
+ 183:tmk_core/common/action_util.c ****         layer_off(get_oneshot_layer());
+ 1553              		.loc 2 183 52 discriminator 1 view .LVU264
+ 1554 0014 DBB2     		uxtb	r3, r3
+ 183:tmk_core/common/action_util.c ****         layer_off(get_oneshot_layer());
+ 1555              		.loc 2 183 37 discriminator 1 view .LVU265
+ 1556 0016 8342     		cmp	r3, r0
+ 1557 0018 03D1     		bne	.L142
+ 1558              	.LVL60:
+ 1559              	.L141:
+ 183:tmk_core/common/action_util.c ****         layer_off(get_oneshot_layer());
+ 1560              		.loc 2 183 75 discriminator 3 view .LVU266
+ 1561 001a 074B     		ldr	r3, .L144+4
+ 1562 001c 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1563 001e 5B07     		lsls	r3, r3, #29
+ 1564 0020 07D5     		bpl	.L140
+ 1565              	.L142:
+ 184:tmk_core/common/action_util.c ****         reset_oneshot_layer();
+ 1566              		.loc 2 184 9 is_stmt 1 view .LVU267
+ 1567              	.LBB26:
+ 1568              	.LBI26:
+  87:tmk_core/common/action_util.c **** inline uint8_t get_oneshot_layer_state(void) { return oneshot_layer_data & 0b111; }
+ 1569              		.loc 2 87 16 view .LVU268
+ 1570              	.LBB27:
+  87:tmk_core/common/action_util.c **** inline uint8_t get_oneshot_layer_state(void) { return oneshot_layer_data & 0b111; }
+ 1571              		.loc 2 87 42 view .LVU269
+ 1572              	.LBE27:
+ 1573              	.LBE26:
+ 184:tmk_core/common/action_util.c ****         reset_oneshot_layer();
+ 1574              		.loc 2 184 9 is_stmt 0 view .LVU270
+ 1575 0022 C0F3C700 		ubfx	r0, r0, #3, #8
+ 1576 0026 FFF7FEFF 		bl	layer_off
+ 1577              	.LVL61:
+ 185:tmk_core/common/action_util.c ****     }
+ 1578              		.loc 2 185 9 is_stmt 1 view .LVU271
+ 187:tmk_core/common/action_util.c **** /** \brief Is oneshot layer active
+ 1579              		.loc 2 187 1 is_stmt 0 view .LVU272
+ 1580 002a BDE80840 		pop	{r3, lr}
+ 1581              		.cfi_remember_state
+ 1582              		.cfi_restore 14
+ 1583              		.cfi_restore 3
+ 1584              		.cfi_def_cfa_offset 0
+ 185:tmk_core/common/action_util.c ****     }
+ 1585              		.loc 2 185 9 view .LVU273
+ 1586 002e FFF7FEBF 		b	reset_oneshot_layer
+ 1587              	.LVL62:
+ 1588              	.L140:
+ 1589              		.cfi_restore_state
+ 187:tmk_core/common/action_util.c **** /** \brief Is oneshot layer active
+ 1590              		.loc 2 187 1 view .LVU274
+ 1591 0032 08BD     		pop	{r3, pc}
+ 1592              	.L145:
+ 1593              		.align	2
+ 1594              	.L144:
+ 1595 0034 00000000 		.word	.LANCHOR2
+ 1596 0038 00000000 		.word	keymap_config
+ 1597              		.cfi_endproc
+ 1598              	.LFE296:
+ 1600              		.section	.text.has_anymod,"ax",%progbits
+ 1601              		.align	1
+ 1602              		.global	has_anymod
+ 1603              		.syntax unified
+ 1604              		.thumb
+ 1605              		.thumb_func
+ 1606              		.fpu fpv4-sp-d16
+ 1608              	has_anymod:
+ 1609              	.LFB330:
+ 450:tmk_core/common/action_util.c **** 
+ 451:tmk_core/common/action_util.c **** /** \brief inspect keyboard state
+ 452:tmk_core/common/action_util.c ****  *
+ 453:tmk_core/common/action_util.c ****  * FIXME: needs doc
+ 454:tmk_core/common/action_util.c ****  */
+ 455:tmk_core/common/action_util.c **** uint8_t has_anymod(void) { return bitpop(real_mods); }
+ 1610              		.loc 2 455 26 is_stmt 1 view -0
+ 1611              		.cfi_startproc
+ 1612              		@ args = 0, pretend = 0, frame = 0
+ 1613              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1614              		@ link register save eliminated.
+ 1615              		.loc 2 455 28 view .LVU276
+ 1616              		.loc 2 455 35 is_stmt 0 view .LVU277
+ 1617 0000 014B     		ldr	r3, .L147
+ 1618 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 1619 0004 FFF7FEBF 		b	bitpop
+ 1620              	.LVL63:
+ 1621              	.L148:
+ 1622              		.align	2
+ 1623              	.L147:
+ 1624 0008 00000000 		.word	.LANCHOR3
+ 1625              		.cfi_endproc
+ 1626              	.LFE330:
+ 1628              		.global	keyboard_report
+ 1629              		.section	.bss.__compound_literal.0,"aw",%nobits
+ 1632              	__compound_literal.0:
+ 1633 0000 00000000 		.space	32
+ 1633      00000000 
+ 1633      00000000 
+ 1633      00000000 
+ 1633      00000000 
+ 1634              		.section	.bss.macro_mods,"aw",%nobits
+ 1635              		.set	.LANCHOR5,. + 0
+ 1638              	macro_mods:
+ 1639 0000 00       		.space	1
+ 1640              		.section	.bss.oneshot_layer_data,"aw",%nobits
+ 1641              		.set	.LANCHOR2,. + 0
+ 1644              	oneshot_layer_data:
+ 1645 0000 00       		.space	1
+ 1646              		.section	.bss.oneshot_locked_mods,"aw",%nobits
+ 1647              		.set	.LANCHOR1,. + 0
+ 1650              	oneshot_locked_mods:
+ 1651 0000 00       		.space	1
+ 1652              		.section	.bss.oneshot_mods,"aw",%nobits
+ 1653              		.set	.LANCHOR6,. + 0
+ 1656              	oneshot_mods:
+ 1657 0000 00       		.space	1
+ 1658              		.section	.bss.real_mods,"aw",%nobits
+ 1659              		.set	.LANCHOR3,. + 0
+ 1662              	real_mods:
+ 1663 0000 00       		.space	1
+ 1664              		.section	.bss.weak_mods,"aw",%nobits
+ 1665              		.set	.LANCHOR4,. + 0
+ 1668              	weak_mods:
+ 1669 0000 00       		.space	1
+ 1670              		.section	.data.keyboard_report,"aw"
+ 1671              		.align	2
+ 1672              		.set	.LANCHOR0,. + 0
+ 1675              	keyboard_report:
+ 1676 0000 00000000 		.word	__compound_literal.0
+ 1677              		.text
+ 1678              	.Letext0:
+ 1679              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1680              		.file 4 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1681              		.file 5 "tmk_core/common/report.h"
+ 1682              		.file 6 "quantum/keycode_config.h"
+ 1683              		.file 7 "quantum/bitwise.h"
+ 1684              		.file 8 "tmk_core/common/host.h"
+ 1685              		.file 9 "tmk_core/common/action_layer.h"
+ 1686              		.file 10 "tmk_core/common/eeconfig.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 action_util.c
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:18     .text.add_key:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:26     .text.add_key:0000000000000000 add_key
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:48     .text.add_key:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:53     .text.del_key:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:60     .text.del_key:0000000000000000 del_key
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:81     .text.del_key:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:86     .text.clear_keys:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:93     .text.clear_keys:0000000000000000 clear_keys
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:108    .text.clear_keys:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:113    .text.get_oneshot_locked_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:120    .text.get_oneshot_locked_mods:0000000000000000 get_oneshot_locked_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:136    .text.get_oneshot_locked_mods:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:141    .text.has_oneshot_mods_timed_out:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:148    .text.has_oneshot_mods_timed_out:0000000000000000 has_oneshot_mods_timed_out
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:163    .text.get_oneshot_layer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:170    .text.get_oneshot_layer:0000000000000000 get_oneshot_layer
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:187    .text.get_oneshot_layer:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:192    .text.get_oneshot_layer_state:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:199    .text.get_oneshot_layer_state:0000000000000000 get_oneshot_layer_state
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:216    .text.get_oneshot_layer_state:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:221    .text.is_oneshot_layer_active:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:228    .text.is_oneshot_layer_active:0000000000000000 is_oneshot_layer_active
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:254    .text.is_oneshot_layer_active:0000000000000010 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:259    .text.oneshot_set:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:266    .text.oneshot_set:0000000000000000 oneshot_set
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:306    .text.oneshot_set:000000000000001c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:311    .text.oneshot_toggle:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:318    .text.oneshot_toggle:0000000000000000 oneshot_toggle
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:339    .text.oneshot_toggle:0000000000000014 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:344    .text.oneshot_enable:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:351    .text.oneshot_enable:0000000000000000 oneshot_enable
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:366    .text.oneshot_disable:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:373    .text.oneshot_disable:0000000000000000 oneshot_disable
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:388    .text.is_oneshot_enabled:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:395    .text.is_oneshot_enabled:0000000000000000 is_oneshot_enabled
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:412    .text.is_oneshot_enabled:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:417    .text.get_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:424    .text.get_mods:0000000000000000 get_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:439    .text.get_mods:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:444    .text.add_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:451    .text.add_mods:0000000000000000 add_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:472    .text.add_mods:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:477    .text.del_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:484    .text.del_mods:0000000000000000 del_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:505    .text.del_mods:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:510    .text.set_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:517    .text.set_mods:0000000000000000 set_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:534    .text.set_mods:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:539    .text.clear_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:546    .text.clear_mods:0000000000000000 clear_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:563    .text.clear_mods:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:568    .text.get_weak_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:575    .text.get_weak_mods:0000000000000000 get_weak_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:590    .text.get_weak_mods:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:595    .text.add_weak_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:602    .text.add_weak_mods:0000000000000000 add_weak_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:623    .text.add_weak_mods:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:628    .text.del_weak_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:635    .text.del_weak_mods:0000000000000000 del_weak_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:656    .text.del_weak_mods:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:661    .text.set_weak_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:668    .text.set_weak_mods:0000000000000000 set_weak_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:685    .text.set_weak_mods:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:690    .text.clear_weak_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:697    .text.clear_weak_mods:0000000000000000 clear_weak_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:714    .text.clear_weak_mods:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:719    .text.get_macro_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:726    .text.get_macro_mods:0000000000000000 get_macro_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:741    .text.get_macro_mods:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:746    .text.add_macro_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:753    .text.add_macro_mods:0000000000000000 add_macro_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:774    .text.add_macro_mods:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:779    .text.del_macro_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:786    .text.del_macro_mods:0000000000000000 del_macro_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:807    .text.del_macro_mods:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:812    .text.set_macro_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:819    .text.set_macro_mods:0000000000000000 set_macro_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:836    .text.set_macro_mods:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:841    .text.clear_macro_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:848    .text.clear_macro_mods:0000000000000000 clear_macro_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:865    .text.clear_macro_mods:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:870    .text.get_oneshot_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:877    .text.get_oneshot_mods:0000000000000000 get_oneshot_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:892    .text.get_oneshot_mods:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:897    .text.oneshot_locked_mods_changed_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:904    .text.oneshot_locked_mods_changed_user:0000000000000000 oneshot_locked_mods_changed_user
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:918    .text.oneshot_locked_mods_changed_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:925    .text.oneshot_locked_mods_changed_kb:0000000000000000 oneshot_locked_mods_changed_kb
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:947    .text.set_oneshot_locked_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:954    .text.set_oneshot_locked_mods:0000000000000000 set_oneshot_locked_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:985    .text.set_oneshot_locked_mods:0000000000000014 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:990    .text.clear_oneshot_locked_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:997    .text.clear_oneshot_locked_mods:0000000000000000 clear_oneshot_locked_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1027   .text.clear_oneshot_locked_mods:0000000000000014 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1032   .text.oneshot_mods_changed_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1039   .text.oneshot_mods_changed_user:0000000000000000 oneshot_mods_changed_user
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1050   .text.oneshot_mods_changed_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1057   .text.oneshot_mods_changed_kb:0000000000000000 oneshot_mods_changed_kb
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1079   .text.add_oneshot_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1086   .text.add_oneshot_mods:0000000000000000 add_oneshot_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1118   .text.add_oneshot_mods:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1123   .text.del_oneshot_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1130   .text.del_oneshot_mods:0000000000000000 del_oneshot_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1164   .text.del_oneshot_mods:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1169   .text.set_oneshot_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1176   .text.set_oneshot_mods:0000000000000000 set_oneshot_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1215   .text.set_oneshot_mods:000000000000001c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1221   .text.clear_oneshot_mods:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1228   .text.clear_oneshot_mods:0000000000000000 clear_oneshot_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1264   .text.clear_oneshot_mods:0000000000000014 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1269   .text.send_keyboard_report:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1276   .text.send_keyboard_report:0000000000000000 send_keyboard_report
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1342   .text.send_keyboard_report:0000000000000038 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1351   .text.oneshot_layer_changed_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1358   .text.oneshot_layer_changed_user:0000000000000000 oneshot_layer_changed_user
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1369   .text.oneshot_layer_changed_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1376   .text.oneshot_layer_changed_kb:0000000000000000 oneshot_layer_changed_kb
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1398   .text.set_oneshot_layer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1405   .text.set_oneshot_layer:0000000000000000 set_oneshot_layer
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1467   .text.set_oneshot_layer:000000000000002c $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1473   .text.reset_oneshot_layer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1480   .text.reset_oneshot_layer:0000000000000000 reset_oneshot_layer
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1506   .text.reset_oneshot_layer:0000000000000010 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1511   .text.clear_oneshot_layer_state:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1518   .text.clear_oneshot_layer_state:0000000000000000 clear_oneshot_layer_state
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1595   .text.clear_oneshot_layer_state:0000000000000034 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1601   .text.has_anymod:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1608   .text.has_anymod:0000000000000000 has_anymod
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1624   .text.has_anymod:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1675   .data.keyboard_report:0000000000000000 keyboard_report
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1632   .bss.__compound_literal.0:0000000000000000 __compound_literal.0
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1633   .bss.__compound_literal.0:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1638   .bss.macro_mods:0000000000000000 macro_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1639   .bss.macro_mods:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1644   .bss.oneshot_layer_data:0000000000000000 oneshot_layer_data
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1645   .bss.oneshot_layer_data:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1650   .bss.oneshot_locked_mods:0000000000000000 oneshot_locked_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1651   .bss.oneshot_locked_mods:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1656   .bss.oneshot_mods:0000000000000000 oneshot_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1657   .bss.oneshot_mods:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1662   .bss.real_mods:0000000000000000 real_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1663   .bss.real_mods:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1668   .bss.weak_mods:0000000000000000 weak_mods
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1669   .bss.weak_mods:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUViRCc.s:1671   .data.keyboard_report:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+add_key_to_report
+del_key_from_report
+clear_keys_from_report
+eeconfig_update_keymap
+keymap_config
+has_anykey
+host_keyboard_send
+layer_on
+layer_off
+bitpop

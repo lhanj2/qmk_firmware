@@ -1,0 +1,711 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"keycode_config.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.keycode_config,"ax",%progbits
+  18              		.align	1
+  19              		.global	keycode_config
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	keycode_config:
+  27              	.LVL0:
+  28              	.LFB0:
+  29              		.file 1 "quantum/keycode_config.c"
+   1:quantum/keycode_config.c **** /* Copyright 2016 Jack Humbert
+   2:quantum/keycode_config.c ****  *
+   3:quantum/keycode_config.c ****  * This program is free software: you can redistribute it and/or modify
+   4:quantum/keycode_config.c ****  * it under the terms of the GNU General Public License as published by
+   5:quantum/keycode_config.c ****  * the Free Software Foundation, either version 2 of the License, or
+   6:quantum/keycode_config.c ****  * (at your option) any later version.
+   7:quantum/keycode_config.c ****  *
+   8:quantum/keycode_config.c ****  * This program is distributed in the hope that it will be useful,
+   9:quantum/keycode_config.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  10:quantum/keycode_config.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  11:quantum/keycode_config.c ****  * GNU General Public License for more details.
+  12:quantum/keycode_config.c ****  *
+  13:quantum/keycode_config.c ****  * You should have received a copy of the GNU General Public License
+  14:quantum/keycode_config.c ****  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  15:quantum/keycode_config.c ****  */
+  16:quantum/keycode_config.c **** 
+  17:quantum/keycode_config.c **** #include "keycode_config.h"
+  18:quantum/keycode_config.c **** 
+  19:quantum/keycode_config.c **** extern keymap_config_t keymap_config;
+  20:quantum/keycode_config.c **** 
+  21:quantum/keycode_config.c **** /** \brief keycode_config
+  22:quantum/keycode_config.c ****  *
+  23:quantum/keycode_config.c ****  * This function is used to check a specific keycode against the bootmagic config,
+  24:quantum/keycode_config.c ****  * and will return the corrected keycode, when appropriate.
+  25:quantum/keycode_config.c ****  */
+  26:quantum/keycode_config.c **** uint16_t keycode_config(uint16_t keycode) {
+  30              		.loc 1 26 43 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  27:quantum/keycode_config.c ****     switch (keycode) {
+  35              		.loc 1 27 5 view .LVU1
+  36 0000 E728     		cmp	r0, #231
+  37 0002 4DD8     		bhi	.L2
+  38 0004 DF28     		cmp	r0, #223
+  39 0006 07D8     		bhi	.L3
+  40 0008 3128     		cmp	r0, #49
+  41 000a 61D0     		beq	.L4
+  42 000c 0ED8     		bhi	.L5
+  43 000e 2928     		cmp	r0, #41
+  44 0010 57D0     		beq	.L6
+  45 0012 2A28     		cmp	r0, #42
+  46 0014 63D0     		beq	.L7
+  47 0016 7047     		bx	lr
+  48              	.L3:
+  49 0018 A0F1E003 		sub	r3, r0, #224
+  50 001c 072B     		cmp	r3, #7
+  51 001e 3FD8     		bhi	.L2
+  52 0020 DFE803F0 		tbb	[pc, r3]
+  53              	.L9:
+  54 0024 12       		.byte	(.L14-.L9)/2
+  55 0025 3E       		.byte	(.L2-.L9)/2
+  56 0026 21       		.byte	(.L13-.L9)/2
+  57 0027 26       		.byte	(.L12-.L9)/2
+  58 0028 30       		.byte	(.L11-.L9)/2
+  59 0029 3E       		.byte	(.L2-.L9)/2
+  60 002a 3A       		.byte	(.L10-.L9)/2
+  61 002b 3F       		.byte	(.L8-.L9)/2
+  62              		.p2align 1
+  63              	.L5:
+  64 002c 3928     		cmp	r0, #57
+  65 002e 04D0     		beq	.L15
+  66 0030 8228     		cmp	r0, #130
+  67 0032 02D0     		beq	.L15
+  68 0034 3528     		cmp	r0, #53
+  69 0036 3DD0     		beq	.L16
+  70 0038 7047     		bx	lr
+  71              	.L15:
+  28:quantum/keycode_config.c ****         case KC_CAPSLOCK:
+  29:quantum/keycode_config.c ****         case KC_LOCKING_CAPS:
+  30:quantum/keycode_config.c ****             if (keymap_config.swap_control_capslock || keymap_config.capslock_to_control) {
+  72              		.loc 1 30 13 view .LVU2
+  73              		.loc 1 30 53 is_stmt 0 view .LVU3
+  74 003a 304B     		ldr	r3, .L62
+  75 003c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  31:quantum/keycode_config.c ****                 return KC_LCTL;
+  76              		.loc 1 31 24 view .LVU4
+  77 003e 13F0030F 		tst	r3, #3
+  78 0042 18BF     		it	ne
+  79 0044 E020     		movne	r0, #224
+  80              	.LVL1:
+  81              		.loc 1 31 24 view .LVU5
+  82 0046 7047     		bx	lr
+  83              	.LVL2:
+  84              	.L14:
+  32:quantum/keycode_config.c ****             }
+  33:quantum/keycode_config.c ****             return keycode;
+  34:quantum/keycode_config.c ****         case KC_LCTL:
+  35:quantum/keycode_config.c ****             if (keymap_config.swap_control_capslock) {
+  85              		.loc 1 35 13 is_stmt 1 view .LVU6
+  86              		.loc 1 35 17 is_stmt 0 view .LVU7
+  87 0048 2C4A     		ldr	r2, .L62
+  88 004a 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  89              		.loc 1 35 16 view .LVU8
+  90 004c D907     		lsls	r1, r3, #31
+  91 004e 4DD4     		bmi	.L17
+  36:quantum/keycode_config.c ****                 return KC_CAPSLOCK;
+  37:quantum/keycode_config.c ****             }
+  38:quantum/keycode_config.c ****             if (keymap_config.swap_lctl_lgui) {
+  92              		.loc 1 38 13 is_stmt 1 view .LVU9
+  93              		.loc 1 38 17 is_stmt 0 view .LVU10
+  94 0050 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+  95              		.loc 1 38 16 view .LVU11
+  96 0052 12F0010F 		tst	r2, #1
+  97              	.L60:
+  39:quantum/keycode_config.c ****                 if (keymap_config.no_gui) {
+  40:quantum/keycode_config.c ****                     return KC_NO;
+  41:quantum/keycode_config.c ****                 }
+  42:quantum/keycode_config.c ****                 return KC_LGUI;
+  43:quantum/keycode_config.c ****             }
+  44:quantum/keycode_config.c ****             return KC_LCTL;
+  45:quantum/keycode_config.c ****         case KC_LALT:
+  46:quantum/keycode_config.c ****             if (keymap_config.swap_lalt_lgui) {
+  98              		.loc 1 46 16 view .LVU12
+  99 0056 23D0     		beq	.L2
+  47:quantum/keycode_config.c ****                 if (keymap_config.no_gui) {
+ 100              		.loc 1 47 17 is_stmt 1 view .LVU13
+  48:quantum/keycode_config.c ****                     return KC_NO;
+  49:quantum/keycode_config.c ****                 }
+  50:quantum/keycode_config.c ****                 return KC_LGUI;
+  51:quantum/keycode_config.c ****             }
+  52:quantum/keycode_config.c ****             return KC_LALT;
+  53:quantum/keycode_config.c ****         case KC_LGUI:
+  54:quantum/keycode_config.c ****             if (keymap_config.swap_lalt_lgui) {
+  55:quantum/keycode_config.c ****                 return KC_LALT;
+  56:quantum/keycode_config.c ****             }
+  57:quantum/keycode_config.c ****             if (keymap_config.swap_lctl_lgui) {
+  58:quantum/keycode_config.c ****                 return KC_LCTRL;
+  59:quantum/keycode_config.c ****             }
+  60:quantum/keycode_config.c ****             if (keymap_config.no_gui) {
+  61:quantum/keycode_config.c ****                 return KC_NO;
+ 101              		.loc 1 61 24 is_stmt 0 view .LVU14
+ 102 0058 13F0100F 		tst	r3, #16
+ 103 005c 08BF     		it	eq
+ 104 005e E320     		moveq	r0, #227
+ 105              	.LVL3:
+ 106              	.L57:
+ 107              		.loc 1 61 24 view .LVU15
+ 108 0060 18BF     		it	ne
+ 109 0062 0020     		movne	r0, #0
+ 110 0064 7047     		bx	lr
+ 111              	.LVL4:
+ 112              	.L13:
+  46:quantum/keycode_config.c ****                 if (keymap_config.no_gui) {
+ 113              		.loc 1 46 13 is_stmt 1 view .LVU16
+  46:quantum/keycode_config.c ****                 if (keymap_config.no_gui) {
+ 114              		.loc 1 46 17 is_stmt 0 view .LVU17
+ 115 0066 254B     		ldr	r3, .L62
+ 116 0068 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  46:quantum/keycode_config.c ****                 if (keymap_config.no_gui) {
+ 117              		.loc 1 46 16 view .LVU18
+ 118 006a 13F0040F 		tst	r3, #4
+ 119 006e F2E7     		b	.L60
+ 120              	.L12:
+  54:quantum/keycode_config.c ****                 return KC_LALT;
+ 121              		.loc 1 54 13 is_stmt 1 view .LVU19
+  54:quantum/keycode_config.c ****                 return KC_LALT;
+ 122              		.loc 1 54 17 is_stmt 0 view .LVU20
+ 123 0070 224A     		ldr	r2, .L62
+ 124 0072 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  54:quantum/keycode_config.c ****                 return KC_LALT;
+ 125              		.loc 1 54 16 view .LVU21
+ 126 0074 5907     		lsls	r1, r3, #29
+ 127 0076 3BD4     		bmi	.L20
+  57:quantum/keycode_config.c ****                 return KC_LCTRL;
+ 128              		.loc 1 57 13 is_stmt 1 view .LVU22
+  57:quantum/keycode_config.c ****                 return KC_LCTRL;
+ 129              		.loc 1 57 17 is_stmt 0 view .LVU23
+ 130 0078 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+  57:quantum/keycode_config.c ****                 return KC_LCTRL;
+ 131              		.loc 1 57 16 view .LVU24
+ 132 007a D207     		lsls	r2, r2, #31
+ 133 007c 3AD4     		bmi	.L21
+ 134              	.L58:
+  60:quantum/keycode_config.c ****                 return KC_NO;
+ 135              		.loc 1 60 13 is_stmt 1 view .LVU25
+ 136              		.loc 1 61 24 is_stmt 0 view .LVU26
+ 137 007e 13F0100F 		tst	r3, #16
+ 138 0082 EDE7     		b	.L57
+ 139              	.L11:
+  62:quantum/keycode_config.c ****             }
+  63:quantum/keycode_config.c ****             return KC_LGUI;
+  64:quantum/keycode_config.c ****         case KC_RCTL:
+  65:quantum/keycode_config.c ****             if (keymap_config.swap_rctl_rgui) {
+ 140              		.loc 1 65 13 is_stmt 1 view .LVU27
+ 141              		.loc 1 65 17 is_stmt 0 view .LVU28
+ 142 0084 1D4B     		ldr	r3, .L62
+ 143 0086 5A78     		ldrb	r2, [r3, #1]	@ zero_extendqisi2
+ 144              		.loc 1 65 16 view .LVU29
+ 145 0088 9107     		lsls	r1, r2, #30
+ 146 008a 09D5     		bpl	.L2
+  66:quantum/keycode_config.c ****                 if (keymap_config.no_gui) {
+ 147              		.loc 1 66 17 is_stmt 1 view .LVU30
+ 148              		.loc 1 66 21 is_stmt 0 view .LVU31
+ 149 008c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 150              	.L61:
+  67:quantum/keycode_config.c ****                     return KC_NO;
+  68:quantum/keycode_config.c ****                 }
+  69:quantum/keycode_config.c ****                 return KC_RGUI;
+  70:quantum/keycode_config.c ****             }
+  71:quantum/keycode_config.c ****             return KC_RCTL;
+  72:quantum/keycode_config.c ****         case KC_RALT:
+  73:quantum/keycode_config.c ****             if (keymap_config.swap_ralt_rgui) {
+  74:quantum/keycode_config.c ****                 if (keymap_config.no_gui) {
+ 151              		.loc 1 74 17 is_stmt 1 view .LVU32
+  61:quantum/keycode_config.c ****             }
+ 152              		.loc 1 61 24 is_stmt 0 view .LVU33
+ 153 008e 13F0100F 		tst	r3, #16
+ 154 0092 08BF     		it	eq
+ 155 0094 E720     		moveq	r0, #231
+ 156              	.LVL5:
+  61:quantum/keycode_config.c ****             }
+ 157              		.loc 1 61 24 view .LVU34
+ 158 0096 E3E7     		b	.L57
+ 159              	.LVL6:
+ 160              	.L10:
+  73:quantum/keycode_config.c ****                 if (keymap_config.no_gui) {
+ 161              		.loc 1 73 13 is_stmt 1 view .LVU35
+  73:quantum/keycode_config.c ****                 if (keymap_config.no_gui) {
+ 162              		.loc 1 73 17 is_stmt 0 view .LVU36
+ 163 0098 184B     		ldr	r3, .L62
+ 164 009a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  73:quantum/keycode_config.c ****                 if (keymap_config.no_gui) {
+ 165              		.loc 1 73 16 view .LVU37
+ 166 009c 1A07     		lsls	r2, r3, #28
+ 167 009e F6D4     		bmi	.L61
+ 168              	.LVL7:
+ 169              	.L2:
+  75:quantum/keycode_config.c ****                     return KC_NO;
+  76:quantum/keycode_config.c ****                 }
+  77:quantum/keycode_config.c ****                 return KC_RGUI;
+  78:quantum/keycode_config.c ****             }
+  79:quantum/keycode_config.c ****             return KC_RALT;
+  80:quantum/keycode_config.c ****         case KC_RGUI:
+  81:quantum/keycode_config.c ****             if (keymap_config.swap_ralt_rgui) {
+  82:quantum/keycode_config.c ****                 return KC_RALT;
+  83:quantum/keycode_config.c ****             }
+  84:quantum/keycode_config.c ****             if (keymap_config.swap_rctl_rgui) {
+  85:quantum/keycode_config.c ****                 return KC_RCTL;
+  86:quantum/keycode_config.c ****             }
+  87:quantum/keycode_config.c ****             if (keymap_config.no_gui) {
+  88:quantum/keycode_config.c ****                 return KC_NO;
+  89:quantum/keycode_config.c ****             }
+  90:quantum/keycode_config.c ****             return KC_RGUI;
+  91:quantum/keycode_config.c ****         case KC_GRAVE:
+  92:quantum/keycode_config.c ****             if (keymap_config.swap_grave_esc) {
+  93:quantum/keycode_config.c ****                 return KC_ESC;
+  94:quantum/keycode_config.c ****             }
+  95:quantum/keycode_config.c ****             return KC_GRAVE;
+  96:quantum/keycode_config.c ****         case KC_ESC:
+  97:quantum/keycode_config.c ****             if (keymap_config.swap_grave_esc) {
+  98:quantum/keycode_config.c ****                 return KC_GRAVE;
+  99:quantum/keycode_config.c ****             }
+ 100:quantum/keycode_config.c ****             return KC_ESC;
+ 101:quantum/keycode_config.c ****         case KC_BSLASH:
+ 102:quantum/keycode_config.c ****             if (keymap_config.swap_backslash_backspace) {
+ 103:quantum/keycode_config.c ****                 return KC_BSPACE;
+ 104:quantum/keycode_config.c ****             }
+ 105:quantum/keycode_config.c ****             return KC_BSLASH;
+ 106:quantum/keycode_config.c ****         case KC_BSPACE:
+ 107:quantum/keycode_config.c ****             if (keymap_config.swap_backslash_backspace) {
+ 108:quantum/keycode_config.c ****                 return KC_BSLASH;
+ 109:quantum/keycode_config.c ****             }
+ 110:quantum/keycode_config.c ****             return KC_BSPACE;
+ 111:quantum/keycode_config.c ****         default:
+ 112:quantum/keycode_config.c ****             return keycode;
+ 113:quantum/keycode_config.c ****     }
+ 114:quantum/keycode_config.c **** }
+ 170              		.loc 1 114 1 view .LVU38
+ 171 00a0 7047     		bx	lr
+ 172              	.LVL8:
+ 173              	.L8:
+  81:quantum/keycode_config.c ****                 return KC_RALT;
+ 174              		.loc 1 81 13 is_stmt 1 view .LVU39
+  81:quantum/keycode_config.c ****                 return KC_RALT;
+ 175              		.loc 1 81 17 is_stmt 0 view .LVU40
+ 176 00a2 164A     		ldr	r2, .L62
+ 177 00a4 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  81:quantum/keycode_config.c ****                 return KC_RALT;
+ 178              		.loc 1 81 16 view .LVU41
+ 179 00a6 1907     		lsls	r1, r3, #28
+ 180 00a8 26D4     		bmi	.L25
+  84:quantum/keycode_config.c ****                 return KC_RCTL;
+ 181              		.loc 1 84 13 is_stmt 1 view .LVU42
+  84:quantum/keycode_config.c ****                 return KC_RCTL;
+ 182              		.loc 1 84 17 is_stmt 0 view .LVU43
+ 183 00aa 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+  84:quantum/keycode_config.c ****                 return KC_RCTL;
+ 184              		.loc 1 84 16 view .LVU44
+ 185 00ac 9207     		lsls	r2, r2, #30
+ 186 00ae E6D5     		bpl	.L58
+  71:quantum/keycode_config.c ****         case KC_RALT:
+ 187              		.loc 1 71 20 view .LVU45
+ 188 00b0 E420     		movs	r0, #228
+ 189              	.LVL9:
+  71:quantum/keycode_config.c ****         case KC_RALT:
+ 190              		.loc 1 71 20 view .LVU46
+ 191 00b2 F5E7     		b	.L2
+ 192              	.LVL10:
+ 193              	.L16:
+  92:quantum/keycode_config.c ****                 return KC_ESC;
+ 194              		.loc 1 92 13 is_stmt 1 view .LVU47
+  92:quantum/keycode_config.c ****                 return KC_ESC;
+ 195              		.loc 1 92 17 is_stmt 0 view .LVU48
+ 196 00b4 114B     		ldr	r3, .L62
+ 197 00b6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  93:quantum/keycode_config.c ****             }
+ 198              		.loc 1 93 24 view .LVU49
+ 199 00b8 13F0200F 		tst	r3, #32
+ 200 00bc 18BF     		it	ne
+ 201 00be 2920     		movne	r0, #41
+ 202              	.LVL11:
+  93:quantum/keycode_config.c ****             }
+ 203              		.loc 1 93 24 view .LVU50
+ 204 00c0 7047     		bx	lr
+ 205              	.LVL12:
+ 206              	.L6:
+  97:quantum/keycode_config.c ****                 return KC_GRAVE;
+ 207              		.loc 1 97 13 is_stmt 1 view .LVU51
+  97:quantum/keycode_config.c ****                 return KC_GRAVE;
+ 208              		.loc 1 97 17 is_stmt 0 view .LVU52
+ 209 00c2 0E4B     		ldr	r3, .L62
+ 210 00c4 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  98:quantum/keycode_config.c ****             }
+ 211              		.loc 1 98 24 view .LVU53
+ 212 00c6 13F0200F 		tst	r3, #32
+ 213 00ca 18BF     		it	ne
+ 214 00cc 3520     		movne	r0, #53
+ 215              	.LVL13:
+  98:quantum/keycode_config.c ****             }
+ 216              		.loc 1 98 24 view .LVU54
+ 217 00ce 7047     		bx	lr
+ 218              	.LVL14:
+ 219              	.L4:
+ 102:quantum/keycode_config.c ****                 return KC_BSPACE;
+ 220              		.loc 1 102 13 is_stmt 1 view .LVU55
+ 102:quantum/keycode_config.c ****                 return KC_BSPACE;
+ 221              		.loc 1 102 17 is_stmt 0 view .LVU56
+ 222 00d0 0A4B     		ldr	r3, .L62
+ 223 00d2 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 103:quantum/keycode_config.c ****             }
+ 224              		.loc 1 103 24 view .LVU57
+ 225 00d4 13F0400F 		tst	r3, #64
+ 226 00d8 18BF     		it	ne
+ 227 00da 2A20     		movne	r0, #42
+ 228              	.LVL15:
+ 103:quantum/keycode_config.c ****             }
+ 229              		.loc 1 103 24 view .LVU58
+ 230 00dc 7047     		bx	lr
+ 231              	.LVL16:
+ 232              	.L7:
+ 107:quantum/keycode_config.c ****                 return KC_BSLASH;
+ 233              		.loc 1 107 13 is_stmt 1 view .LVU59
+ 107:quantum/keycode_config.c ****                 return KC_BSLASH;
+ 234              		.loc 1 107 17 is_stmt 0 view .LVU60
+ 235 00de 074B     		ldr	r3, .L62
+ 236 00e0 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 108:quantum/keycode_config.c ****             }
+ 237              		.loc 1 108 24 view .LVU61
+ 238 00e2 13F0400F 		tst	r3, #64
+ 239 00e6 18BF     		it	ne
+ 240 00e8 3120     		movne	r0, #49
+ 241              	.LVL17:
+ 108:quantum/keycode_config.c ****             }
+ 242              		.loc 1 108 24 view .LVU62
+ 243 00ea 7047     		bx	lr
+ 244              	.LVL18:
+ 245              	.L17:
+  36:quantum/keycode_config.c ****             }
+ 246              		.loc 1 36 24 view .LVU63
+ 247 00ec 3920     		movs	r0, #57
+ 248              	.LVL19:
+  36:quantum/keycode_config.c ****             }
+ 249              		.loc 1 36 24 view .LVU64
+ 250 00ee 7047     		bx	lr
+ 251              	.LVL20:
+ 252              	.L20:
+  52:quantum/keycode_config.c ****         case KC_LGUI:
+ 253              		.loc 1 52 20 view .LVU65
+ 254 00f0 E220     		movs	r0, #226
+ 255              	.LVL21:
+  52:quantum/keycode_config.c ****         case KC_LGUI:
+ 256              		.loc 1 52 20 view .LVU66
+ 257 00f2 7047     		bx	lr
+ 258              	.LVL22:
+ 259              	.L21:
+  44:quantum/keycode_config.c ****         case KC_LALT:
+ 260              		.loc 1 44 20 view .LVU67
+ 261 00f4 E020     		movs	r0, #224
+ 262              	.LVL23:
+  44:quantum/keycode_config.c ****         case KC_LALT:
+ 263              		.loc 1 44 20 view .LVU68
+ 264 00f6 7047     		bx	lr
+ 265              	.LVL24:
+ 266              	.L25:
+  79:quantum/keycode_config.c ****         case KC_RGUI:
+ 267              		.loc 1 79 20 view .LVU69
+ 268 00f8 E620     		movs	r0, #230
+ 269              	.LVL25:
+  79:quantum/keycode_config.c ****         case KC_RGUI:
+ 270              		.loc 1 79 20 view .LVU70
+ 271 00fa 7047     		bx	lr
+ 272              	.L63:
+ 273              		.align	2
+ 274              	.L62:
+ 275 00fc 00000000 		.word	keymap_config
+ 276              		.cfi_endproc
+ 277              	.LFE0:
+ 279              		.section	.text.mod_config,"ax",%progbits
+ 280              		.align	1
+ 281              		.global	mod_config
+ 282              		.syntax unified
+ 283              		.thumb
+ 284              		.thumb_func
+ 285              		.fpu fpv4-sp-d16
+ 287              	mod_config:
+ 288              	.LVL26:
+ 289              	.LFB1:
+ 115:quantum/keycode_config.c **** 
+ 116:quantum/keycode_config.c **** /** \brief mod_config
+ 117:quantum/keycode_config.c ****  *
+ 118:quantum/keycode_config.c ****  *  This function checks the mods passed to it against the bootmagic config,
+ 119:quantum/keycode_config.c ****  *  and will remove or replace mods, based on that.
+ 120:quantum/keycode_config.c ****  */
+ 121:quantum/keycode_config.c **** 
+ 122:quantum/keycode_config.c **** uint8_t mod_config(uint8_t mod) {
+ 290              		.loc 1 122 33 is_stmt 1 view -0
+ 291              		.cfi_startproc
+ 292              		@ args = 0, pretend = 0, frame = 0
+ 293              		@ frame_needed = 0, uses_anonymous_args = 0
+ 294              		@ link register save eliminated.
+ 123:quantum/keycode_config.c ****     if (keymap_config.swap_lalt_lgui) {
+ 295              		.loc 1 123 5 view .LVU72
+ 296              		.loc 1 123 9 is_stmt 0 view .LVU73
+ 297 0000 294A     		ldr	r2, .L89
+ 298 0002 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 299              		.loc 1 123 8 view .LVU74
+ 300 0004 5907     		lsls	r1, r3, #29
+ 301 0006 07D5     		bpl	.L65
+ 124:quantum/keycode_config.c ****         if ((mod & MOD_RGUI) == MOD_LGUI) {
+ 302              		.loc 1 124 9 is_stmt 1 view .LVU75
+ 303              		.loc 1 124 12 is_stmt 0 view .LVU76
+ 304 0008 00F01801 		and	r1, r0, #24
+ 305 000c 0829     		cmp	r1, #8
+ 306 000e 27D1     		bne	.L66
+ 125:quantum/keycode_config.c ****             mod &= ~MOD_LGUI;
+ 307              		.loc 1 125 13 is_stmt 1 view .LVU77
+ 308              		.loc 1 125 17 is_stmt 0 view .LVU78
+ 309 0010 00F0F700 		and	r0, r0, #247
+ 310              	.LVL27:
+ 126:quantum/keycode_config.c ****             mod |= MOD_LALT;
+ 311              		.loc 1 126 13 is_stmt 1 view .LVU79
+ 312              		.loc 1 126 17 is_stmt 0 view .LVU80
+ 313 0014 40F00400 		orr	r0, r0, #4
+ 314              	.LVL28:
+ 315              	.L65:
+ 127:quantum/keycode_config.c ****         } else if ((mod & MOD_RALT) == MOD_LALT) {
+ 128:quantum/keycode_config.c ****             mod &= ~MOD_LALT;
+ 129:quantum/keycode_config.c ****             mod |= MOD_LGUI;
+ 130:quantum/keycode_config.c ****         }
+ 131:quantum/keycode_config.c ****     }
+ 132:quantum/keycode_config.c ****     if (keymap_config.swap_ralt_rgui) {
+ 316              		.loc 1 132 5 is_stmt 1 view .LVU81
+ 317              		.loc 1 132 8 is_stmt 0 view .LVU82
+ 318 0018 1907     		lsls	r1, r3, #28
+ 319 001a 07D5     		bpl	.L67
+ 133:quantum/keycode_config.c ****         if ((mod & MOD_RGUI) == MOD_RGUI) {
+ 320              		.loc 1 133 9 is_stmt 1 view .LVU83
+ 321              		.loc 1 133 12 is_stmt 0 view .LVU84
+ 322 001c 00F01801 		and	r1, r0, #24
+ 323 0020 1829     		cmp	r1, #24
+ 324 0022 26D1     		bne	.L68
+ 134:quantum/keycode_config.c ****             mod &= ~MOD_RGUI;
+ 325              		.loc 1 134 13 is_stmt 1 view .LVU85
+ 326              		.loc 1 134 17 is_stmt 0 view .LVU86
+ 327 0024 00F0E700 		and	r0, r0, #231
+ 328              	.LVL29:
+ 135:quantum/keycode_config.c ****             mod |= MOD_RALT;
+ 329              		.loc 1 135 13 is_stmt 1 view .LVU87
+ 330              		.loc 1 135 17 is_stmt 0 view .LVU88
+ 331 0028 40F01400 		orr	r0, r0, #20
+ 332              	.LVL30:
+ 333              	.L67:
+ 136:quantum/keycode_config.c ****         } else if ((mod & MOD_RALT) == MOD_RALT) {
+ 137:quantum/keycode_config.c ****             mod &= ~MOD_RALT;
+ 138:quantum/keycode_config.c ****             mod |= MOD_RGUI;
+ 139:quantum/keycode_config.c ****         }
+ 140:quantum/keycode_config.c ****     }
+ 141:quantum/keycode_config.c ****     if (keymap_config.swap_lctl_lgui) {
+ 334              		.loc 1 141 5 is_stmt 1 view .LVU89
+ 335              		.loc 1 141 9 is_stmt 0 view .LVU90
+ 336 002c 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+ 337              		.loc 1 141 8 view .LVU91
+ 338 002e D107     		lsls	r1, r2, #31
+ 339 0030 07D5     		bpl	.L69
+ 142:quantum/keycode_config.c ****         if ((mod & MOD_RGUI) == MOD_LGUI) {
+ 340              		.loc 1 142 9 is_stmt 1 view .LVU92
+ 341              		.loc 1 142 12 is_stmt 0 view .LVU93
+ 342 0032 00F01801 		and	r1, r0, #24
+ 343 0036 0829     		cmp	r1, #8
+ 344 0038 24D1     		bne	.L70
+ 143:quantum/keycode_config.c ****             mod &= ~MOD_LGUI;
+ 345              		.loc 1 143 13 is_stmt 1 view .LVU94
+ 346              		.loc 1 143 17 is_stmt 0 view .LVU95
+ 347 003a 00F0F700 		and	r0, r0, #247
+ 348              	.LVL31:
+ 144:quantum/keycode_config.c ****             mod |= MOD_LCTL;
+ 349              		.loc 1 144 13 is_stmt 1 view .LVU96
+ 350              		.loc 1 144 17 is_stmt 0 view .LVU97
+ 351 003e 40F00100 		orr	r0, r0, #1
+ 352              	.LVL32:
+ 353              	.L69:
+ 145:quantum/keycode_config.c ****         } else if ((mod & MOD_RCTL) == MOD_LCTL) {
+ 146:quantum/keycode_config.c ****             mod &= ~MOD_LCTL;
+ 147:quantum/keycode_config.c ****             mod |= MOD_LGUI;
+ 148:quantum/keycode_config.c ****         }
+ 149:quantum/keycode_config.c ****     }
+ 150:quantum/keycode_config.c ****     if (keymap_config.swap_rctl_rgui) {
+ 354              		.loc 1 150 5 is_stmt 1 view .LVU98
+ 355              		.loc 1 150 8 is_stmt 0 view .LVU99
+ 356 0042 9207     		lsls	r2, r2, #30
+ 357 0044 07D5     		bpl	.L71
+ 151:quantum/keycode_config.c ****         if ((mod & MOD_RGUI) == MOD_RGUI) {
+ 358              		.loc 1 151 9 is_stmt 1 view .LVU100
+ 359              		.loc 1 151 12 is_stmt 0 view .LVU101
+ 360 0046 00F01802 		and	r2, r0, #24
+ 361 004a 182A     		cmp	r2, #24
+ 362 004c 23D1     		bne	.L72
+ 152:quantum/keycode_config.c ****             mod &= ~MOD_RGUI;
+ 363              		.loc 1 152 13 is_stmt 1 view .LVU102
+ 364              		.loc 1 152 17 is_stmt 0 view .LVU103
+ 365 004e 00F0E700 		and	r0, r0, #231
+ 366              	.LVL33:
+ 153:quantum/keycode_config.c ****             mod |= MOD_RCTL;
+ 367              		.loc 1 153 13 is_stmt 1 view .LVU104
+ 368              		.loc 1 153 17 is_stmt 0 view .LVU105
+ 369 0052 40F01100 		orr	r0, r0, #17
+ 370              	.LVL34:
+ 371              	.L71:
+ 154:quantum/keycode_config.c ****         } else if ((mod & MOD_RCTL) == MOD_RCTL) {
+ 155:quantum/keycode_config.c ****             mod &= ~MOD_RCTL;
+ 156:quantum/keycode_config.c ****             mod |= MOD_RGUI;
+ 157:quantum/keycode_config.c ****         }
+ 158:quantum/keycode_config.c ****     }
+ 159:quantum/keycode_config.c ****     if (keymap_config.no_gui) {
+ 372              		.loc 1 159 5 is_stmt 1 view .LVU106
+ 373              		.loc 1 159 8 is_stmt 0 view .LVU107
+ 374 0056 DB06     		lsls	r3, r3, #27
+ 160:quantum/keycode_config.c ****         mod &= ~MOD_LGUI;
+ 375              		.loc 1 160 9 is_stmt 1 view .LVU108
+ 376              	.LVL35:
+ 161:quantum/keycode_config.c ****         mod &= ~MOD_RGUI;
+ 377              		.loc 1 161 9 view .LVU109
+ 378              		.loc 1 161 13 is_stmt 0 view .LVU110
+ 379 0058 48BF     		it	mi
+ 380 005a 00F0E700 		andmi	r0, r0, #231
+ 381              	.LVL36:
+ 162:quantum/keycode_config.c ****     }
+ 163:quantum/keycode_config.c **** 
+ 164:quantum/keycode_config.c ****     return mod;
+ 382              		.loc 1 164 5 is_stmt 1 view .LVU111
+ 165:quantum/keycode_config.c **** }
+ 383              		.loc 1 165 1 is_stmt 0 view .LVU112
+ 384 005e 7047     		bx	lr
+ 385              	.L66:
+ 127:quantum/keycode_config.c ****             mod &= ~MOD_LALT;
+ 386              		.loc 1 127 16 is_stmt 1 view .LVU113
+ 127:quantum/keycode_config.c ****             mod &= ~MOD_LALT;
+ 387              		.loc 1 127 19 is_stmt 0 view .LVU114
+ 388 0060 00F01401 		and	r1, r0, #20
+ 389 0064 0429     		cmp	r1, #4
+ 128:quantum/keycode_config.c ****             mod |= MOD_LGUI;
+ 390              		.loc 1 128 13 is_stmt 1 view .LVU115
+ 128:quantum/keycode_config.c ****             mod |= MOD_LGUI;
+ 391              		.loc 1 128 17 is_stmt 0 view .LVU116
+ 392 0066 04BF     		itt	eq
+ 393 0068 00F0FB00 		andeq	r0, r0, #251
+ 394              	.LVL37:
+ 129:quantum/keycode_config.c ****         }
+ 395              		.loc 1 129 13 is_stmt 1 view .LVU117
+ 129:quantum/keycode_config.c ****         }
+ 396              		.loc 1 129 17 is_stmt 0 view .LVU118
+ 397 006c 40F00800 		orreq	r0, r0, #8
+ 398              	.LVL38:
+ 129:quantum/keycode_config.c ****         }
+ 399              		.loc 1 129 17 view .LVU119
+ 400 0070 D2E7     		b	.L65
+ 401              	.L68:
+ 136:quantum/keycode_config.c ****             mod &= ~MOD_RALT;
+ 402              		.loc 1 136 16 is_stmt 1 view .LVU120
+ 136:quantum/keycode_config.c ****             mod &= ~MOD_RALT;
+ 403              		.loc 1 136 19 is_stmt 0 view .LVU121
+ 404 0072 00F01401 		and	r1, r0, #20
+ 405 0076 1429     		cmp	r1, #20
+ 137:quantum/keycode_config.c ****             mod |= MOD_RGUI;
+ 406              		.loc 1 137 13 is_stmt 1 view .LVU122
+ 137:quantum/keycode_config.c ****             mod |= MOD_RGUI;
+ 407              		.loc 1 137 17 is_stmt 0 view .LVU123
+ 408 0078 04BF     		itt	eq
+ 409 007a 00F0EB00 		andeq	r0, r0, #235
+ 410              	.LVL39:
+ 138:quantum/keycode_config.c ****         }
+ 411              		.loc 1 138 13 is_stmt 1 view .LVU124
+ 138:quantum/keycode_config.c ****         }
+ 412              		.loc 1 138 17 is_stmt 0 view .LVU125
+ 413 007e 40F01800 		orreq	r0, r0, #24
+ 414              	.LVL40:
+ 138:quantum/keycode_config.c ****         }
+ 415              		.loc 1 138 17 view .LVU126
+ 416 0082 D3E7     		b	.L67
+ 417              	.L70:
+ 145:quantum/keycode_config.c ****             mod &= ~MOD_LCTL;
+ 418              		.loc 1 145 16 is_stmt 1 view .LVU127
+ 145:quantum/keycode_config.c ****             mod &= ~MOD_LCTL;
+ 419              		.loc 1 145 19 is_stmt 0 view .LVU128
+ 420 0084 00F01101 		and	r1, r0, #17
+ 421 0088 0129     		cmp	r1, #1
+ 146:quantum/keycode_config.c ****             mod |= MOD_LGUI;
+ 422              		.loc 1 146 13 is_stmt 1 view .LVU129
+ 146:quantum/keycode_config.c ****             mod |= MOD_LGUI;
+ 423              		.loc 1 146 17 is_stmt 0 view .LVU130
+ 424 008a 04BF     		itt	eq
+ 425 008c 00F0FE00 		andeq	r0, r0, #254
+ 426              	.LVL41:
+ 147:quantum/keycode_config.c ****         }
+ 427              		.loc 1 147 13 is_stmt 1 view .LVU131
+ 147:quantum/keycode_config.c ****         }
+ 428              		.loc 1 147 17 is_stmt 0 view .LVU132
+ 429 0090 40F00800 		orreq	r0, r0, #8
+ 430              	.LVL42:
+ 147:quantum/keycode_config.c ****         }
+ 431              		.loc 1 147 17 view .LVU133
+ 432 0094 D5E7     		b	.L69
+ 433              	.L72:
+ 154:quantum/keycode_config.c ****             mod &= ~MOD_RCTL;
+ 434              		.loc 1 154 16 is_stmt 1 view .LVU134
+ 154:quantum/keycode_config.c ****             mod &= ~MOD_RCTL;
+ 435              		.loc 1 154 19 is_stmt 0 view .LVU135
+ 436 0096 00F01102 		and	r2, r0, #17
+ 437 009a 112A     		cmp	r2, #17
+ 155:quantum/keycode_config.c ****             mod |= MOD_RGUI;
+ 438              		.loc 1 155 13 is_stmt 1 view .LVU136
+ 155:quantum/keycode_config.c ****             mod |= MOD_RGUI;
+ 439              		.loc 1 155 17 is_stmt 0 view .LVU137
+ 440 009c 04BF     		itt	eq
+ 441 009e 00F0EE00 		andeq	r0, r0, #238
+ 442              	.LVL43:
+ 156:quantum/keycode_config.c ****         }
+ 443              		.loc 1 156 13 is_stmt 1 view .LVU138
+ 156:quantum/keycode_config.c ****         }
+ 444              		.loc 1 156 17 is_stmt 0 view .LVU139
+ 445 00a2 40F01800 		orreq	r0, r0, #24
+ 446              	.LVL44:
+ 156:quantum/keycode_config.c ****         }
+ 447              		.loc 1 156 17 view .LVU140
+ 448 00a6 D6E7     		b	.L71
+ 449              	.L90:
+ 450              		.align	2
+ 451              	.L89:
+ 452 00a8 00000000 		.word	keymap_config
+ 453              		.cfi_endproc
+ 454              	.LFE1:
+ 456              		.text
+ 457              	.Letext0:
+ 458              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 459              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 460              		.file 4 "tmk_core/common/keycode.h"
+ 461              		.file 5 "tmk_core/common/action_code.h"
+ 462              		.file 6 "quantum/keycode_config.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 keycode_config.c
+C:\Users\lhanj\AppData\Local\Temp\ccRqOoec.s:18     .text.keycode_config:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccRqOoec.s:26     .text.keycode_config:0000000000000000 keycode_config
+C:\Users\lhanj\AppData\Local\Temp\ccRqOoec.s:54     .text.keycode_config:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\ccRqOoec.s:62     .text.keycode_config:000000000000002c $t
+C:\Users\lhanj\AppData\Local\Temp\ccRqOoec.s:275    .text.keycode_config:00000000000000fc $d
+C:\Users\lhanj\AppData\Local\Temp\ccRqOoec.s:280    .text.mod_config:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccRqOoec.s:287    .text.mod_config:0000000000000000 mod_config
+C:\Users\lhanj\AppData\Local\Temp\ccRqOoec.s:452    .text.mod_config:00000000000000a8 $d
+
+UNDEFINED SYMBOLS
+keymap_config

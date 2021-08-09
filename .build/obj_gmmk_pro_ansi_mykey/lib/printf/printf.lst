@@ -1,0 +1,3572 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"printf.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text._out_buffer,"ax",%progbits
+  18              		.align	1
+  19              		.arch armv7e-m
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	_out_buffer:
+  26              	.LVL0:
+  27              	.LFB0:
+  28              		.file 1 "lib/printf/printf.c"
+   1:lib/printf/printf.c **** ///////////////////////////////////////////////////////////////////////////////
+   2:lib/printf/printf.c **** // \author (c) Marco Paland (info@paland.com)
+   3:lib/printf/printf.c **** //             2014-2019, PALANDesign Hannover, Germany
+   4:lib/printf/printf.c **** //
+   5:lib/printf/printf.c **** // \license The MIT License (MIT)
+   6:lib/printf/printf.c **** //
+   7:lib/printf/printf.c **** // Permission is hereby granted, free of charge, to any person obtaining a copy
+   8:lib/printf/printf.c **** // of this software and associated documentation files (the "Software"), to deal
+   9:lib/printf/printf.c **** // in the Software without restriction, including without limitation the rights
+  10:lib/printf/printf.c **** // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  11:lib/printf/printf.c **** // copies of the Software, and to permit persons to whom the Software is
+  12:lib/printf/printf.c **** // furnished to do so, subject to the following conditions:
+  13:lib/printf/printf.c **** //
+  14:lib/printf/printf.c **** // The above copyright notice and this permission notice shall be included in
+  15:lib/printf/printf.c **** // all copies or substantial portions of the Software.
+  16:lib/printf/printf.c **** //
+  17:lib/printf/printf.c **** // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  18:lib/printf/printf.c **** // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  19:lib/printf/printf.c **** // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  20:lib/printf/printf.c **** // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  21:lib/printf/printf.c **** // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  22:lib/printf/printf.c **** // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  23:lib/printf/printf.c **** // THE SOFTWARE.
+  24:lib/printf/printf.c **** //
+  25:lib/printf/printf.c **** // \brief Tiny printf, sprintf and (v)snprintf implementation, optimized for speed on
+  26:lib/printf/printf.c **** //        embedded systems with a very limited resources. These routines are thread
+  27:lib/printf/printf.c **** //        safe and reentrant!
+  28:lib/printf/printf.c **** //        Use this instead of the bloated standard/newlib printf cause these use
+  29:lib/printf/printf.c **** //        malloc for printf (and may not be thread safe).
+  30:lib/printf/printf.c **** //
+  31:lib/printf/printf.c **** ///////////////////////////////////////////////////////////////////////////////
+  32:lib/printf/printf.c **** 
+  33:lib/printf/printf.c **** #include <stdbool.h>
+  34:lib/printf/printf.c **** #include <stdint.h>
+  35:lib/printf/printf.c **** 
+  36:lib/printf/printf.c **** #include "printf.h"
+  37:lib/printf/printf.c **** 
+  38:lib/printf/printf.c **** 
+  39:lib/printf/printf.c **** // define this globally (e.g. gcc -DPRINTF_INCLUDE_CONFIG_H ...) to include the
+  40:lib/printf/printf.c **** // printf_config.h header file
+  41:lib/printf/printf.c **** // default: undefined
+  42:lib/printf/printf.c **** #ifdef PRINTF_INCLUDE_CONFIG_H
+  43:lib/printf/printf.c **** #include "printf_config.h"
+  44:lib/printf/printf.c **** #endif
+  45:lib/printf/printf.c **** 
+  46:lib/printf/printf.c **** 
+  47:lib/printf/printf.c **** // 'ntoa' conversion buffer size, this must be big enough to hold one converted
+  48:lib/printf/printf.c **** // numeric number including padded zeros (dynamically created on stack)
+  49:lib/printf/printf.c **** // default: 32 byte
+  50:lib/printf/printf.c **** #ifndef PRINTF_NTOA_BUFFER_SIZE
+  51:lib/printf/printf.c **** #define PRINTF_NTOA_BUFFER_SIZE    32U
+  52:lib/printf/printf.c **** #endif
+  53:lib/printf/printf.c **** 
+  54:lib/printf/printf.c **** // 'ftoa' conversion buffer size, this must be big enough to hold one converted
+  55:lib/printf/printf.c **** // float number including padded zeros (dynamically created on stack)
+  56:lib/printf/printf.c **** // default: 32 byte
+  57:lib/printf/printf.c **** #ifndef PRINTF_FTOA_BUFFER_SIZE
+  58:lib/printf/printf.c **** #define PRINTF_FTOA_BUFFER_SIZE    32U
+  59:lib/printf/printf.c **** #endif
+  60:lib/printf/printf.c **** 
+  61:lib/printf/printf.c **** // support for the floating point type (%f)
+  62:lib/printf/printf.c **** // default: activated
+  63:lib/printf/printf.c **** #ifndef PRINTF_DISABLE_SUPPORT_FLOAT
+  64:lib/printf/printf.c **** #define PRINTF_SUPPORT_FLOAT
+  65:lib/printf/printf.c **** #endif
+  66:lib/printf/printf.c **** 
+  67:lib/printf/printf.c **** // support for exponential floating point notation (%e/%g)
+  68:lib/printf/printf.c **** // default: activated
+  69:lib/printf/printf.c **** #ifndef PRINTF_DISABLE_SUPPORT_EXPONENTIAL
+  70:lib/printf/printf.c **** #define PRINTF_SUPPORT_EXPONENTIAL
+  71:lib/printf/printf.c **** #endif
+  72:lib/printf/printf.c **** 
+  73:lib/printf/printf.c **** // define the default floating point precision
+  74:lib/printf/printf.c **** // default: 6 digits
+  75:lib/printf/printf.c **** #ifndef PRINTF_DEFAULT_FLOAT_PRECISION
+  76:lib/printf/printf.c **** #define PRINTF_DEFAULT_FLOAT_PRECISION  6U
+  77:lib/printf/printf.c **** #endif
+  78:lib/printf/printf.c **** 
+  79:lib/printf/printf.c **** // define the largest float suitable to print with %f
+  80:lib/printf/printf.c **** // default: 1e9
+  81:lib/printf/printf.c **** #ifndef PRINTF_MAX_FLOAT
+  82:lib/printf/printf.c **** #define PRINTF_MAX_FLOAT  1e9
+  83:lib/printf/printf.c **** #endif
+  84:lib/printf/printf.c **** 
+  85:lib/printf/printf.c **** // support for the long long types (%llu or %p)
+  86:lib/printf/printf.c **** // default: activated
+  87:lib/printf/printf.c **** #ifndef PRINTF_DISABLE_SUPPORT_LONG_LONG
+  88:lib/printf/printf.c **** #define PRINTF_SUPPORT_LONG_LONG
+  89:lib/printf/printf.c **** #endif
+  90:lib/printf/printf.c **** 
+  91:lib/printf/printf.c **** // support for the ptrdiff_t type (%t)
+  92:lib/printf/printf.c **** // ptrdiff_t is normally defined in <stddef.h> as long or long long type
+  93:lib/printf/printf.c **** // default: activated
+  94:lib/printf/printf.c **** #ifndef PRINTF_DISABLE_SUPPORT_PTRDIFF_T
+  95:lib/printf/printf.c **** #define PRINTF_SUPPORT_PTRDIFF_T
+  96:lib/printf/printf.c **** #endif
+  97:lib/printf/printf.c **** 
+  98:lib/printf/printf.c **** ///////////////////////////////////////////////////////////////////////////////
+  99:lib/printf/printf.c **** 
+ 100:lib/printf/printf.c **** // internal flag definitions
+ 101:lib/printf/printf.c **** #define FLAGS_ZEROPAD   (1U <<  0U)
+ 102:lib/printf/printf.c **** #define FLAGS_LEFT      (1U <<  1U)
+ 103:lib/printf/printf.c **** #define FLAGS_PLUS      (1U <<  2U)
+ 104:lib/printf/printf.c **** #define FLAGS_SPACE     (1U <<  3U)
+ 105:lib/printf/printf.c **** #define FLAGS_HASH      (1U <<  4U)
+ 106:lib/printf/printf.c **** #define FLAGS_UPPERCASE (1U <<  5U)
+ 107:lib/printf/printf.c **** #define FLAGS_CHAR      (1U <<  6U)
+ 108:lib/printf/printf.c **** #define FLAGS_SHORT     (1U <<  7U)
+ 109:lib/printf/printf.c **** #define FLAGS_LONG      (1U <<  8U)
+ 110:lib/printf/printf.c **** #define FLAGS_LONG_LONG (1U <<  9U)
+ 111:lib/printf/printf.c **** #define FLAGS_PRECISION (1U << 10U)
+ 112:lib/printf/printf.c **** #define FLAGS_ADAPT_EXP (1U << 11U)
+ 113:lib/printf/printf.c **** 
+ 114:lib/printf/printf.c **** 
+ 115:lib/printf/printf.c **** // import float.h for DBL_MAX
+ 116:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_FLOAT)
+ 117:lib/printf/printf.c **** #include <float.h>
+ 118:lib/printf/printf.c **** #endif
+ 119:lib/printf/printf.c **** 
+ 120:lib/printf/printf.c **** 
+ 121:lib/printf/printf.c **** // output function type
+ 122:lib/printf/printf.c **** typedef void (*out_fct_type)(char character, void* buffer, size_t idx, size_t maxlen);
+ 123:lib/printf/printf.c **** 
+ 124:lib/printf/printf.c **** 
+ 125:lib/printf/printf.c **** // wrapper (used as buffer) for output function type
+ 126:lib/printf/printf.c **** typedef struct {
+ 127:lib/printf/printf.c ****   void  (*fct)(char character, void* arg);
+ 128:lib/printf/printf.c ****   void* arg;
+ 129:lib/printf/printf.c **** } out_fct_wrap_type;
+ 130:lib/printf/printf.c **** 
+ 131:lib/printf/printf.c **** 
+ 132:lib/printf/printf.c **** // internal buffer output
+ 133:lib/printf/printf.c **** static inline void _out_buffer(char character, void* buffer, size_t idx, size_t maxlen)
+ 134:lib/printf/printf.c **** {
+  29              		.loc 1 134 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+ 135:lib/printf/printf.c ****   if (idx < maxlen) {
+  34              		.loc 1 135 3 view .LVU1
+  35              		.loc 1 135 6 is_stmt 0 view .LVU2
+  36 0000 9A42     		cmp	r2, r3
+ 136:lib/printf/printf.c ****     ((char*)buffer)[idx] = character;
+  37              		.loc 1 136 5 is_stmt 1 view .LVU3
+  38              		.loc 1 136 26 is_stmt 0 view .LVU4
+  39 0002 38BF     		it	cc
+  40 0004 8854     		strbcc	r0, [r1, r2]
+ 137:lib/printf/printf.c ****   }
+ 138:lib/printf/printf.c **** }
+  41              		.loc 1 138 1 view .LVU5
+  42 0006 7047     		bx	lr
+  43              		.cfi_endproc
+  44              	.LFE0:
+  46              		.section	.text._out_null,"ax",%progbits
+  47              		.align	1
+  48              		.syntax unified
+  49              		.thumb
+  50              		.thumb_func
+  51              		.fpu fpv4-sp-d16
+  53              	_out_null:
+  54              	.LVL1:
+  55              	.LFB1:
+ 139:lib/printf/printf.c **** 
+ 140:lib/printf/printf.c **** 
+ 141:lib/printf/printf.c **** // internal null output
+ 142:lib/printf/printf.c **** static inline void _out_null(char character, void* buffer, size_t idx, size_t maxlen)
+ 143:lib/printf/printf.c **** {
+  56              		.loc 1 143 1 is_stmt 1 view -0
+  57              		.cfi_startproc
+  58              		@ args = 0, pretend = 0, frame = 0
+  59              		@ frame_needed = 0, uses_anonymous_args = 0
+  60              		@ link register save eliminated.
+ 144:lib/printf/printf.c ****   (void)character; (void)buffer; (void)idx; (void)maxlen;
+  61              		.loc 1 144 3 view .LVU7
+  62              		.loc 1 144 20 view .LVU8
+  63              		.loc 1 144 34 view .LVU9
+  64              		.loc 1 144 45 view .LVU10
+ 145:lib/printf/printf.c **** }
+  65              		.loc 1 145 1 is_stmt 0 view .LVU11
+  66 0000 7047     		bx	lr
+  67              		.cfi_endproc
+  68              	.LFE1:
+  70              		.section	.text._ntoa_long,"ax",%progbits
+  71              		.align	1
+  72              		.syntax unified
+  73              		.thumb
+  74              		.thumb_func
+  75              		.fpu fpv4-sp-d16
+  77              	_ntoa_long:
+  78              	.LVL2:
+  79              	.LFB9:
+ 146:lib/printf/printf.c **** 
+ 147:lib/printf/printf.c **** 
+ 148:lib/printf/printf.c **** // internal _putchar wrapper
+ 149:lib/printf/printf.c **** static inline void _out_char(char character, void* buffer, size_t idx, size_t maxlen)
+ 150:lib/printf/printf.c **** {
+ 151:lib/printf/printf.c ****   (void)buffer; (void)idx; (void)maxlen;
+ 152:lib/printf/printf.c ****   if (character) {
+ 153:lib/printf/printf.c ****     _putchar(character);
+ 154:lib/printf/printf.c ****   }
+ 155:lib/printf/printf.c **** }
+ 156:lib/printf/printf.c **** 
+ 157:lib/printf/printf.c **** 
+ 158:lib/printf/printf.c **** // internal output function wrapper
+ 159:lib/printf/printf.c **** static inline void _out_fct(char character, void* buffer, size_t idx, size_t maxlen)
+ 160:lib/printf/printf.c **** {
+ 161:lib/printf/printf.c ****   (void)idx; (void)maxlen;
+ 162:lib/printf/printf.c ****   if (character) {
+ 163:lib/printf/printf.c ****     // buffer is the output fct pointer
+ 164:lib/printf/printf.c ****     ((out_fct_wrap_type*)buffer)->fct(character, ((out_fct_wrap_type*)buffer)->arg);
+ 165:lib/printf/printf.c ****   }
+ 166:lib/printf/printf.c **** }
+ 167:lib/printf/printf.c **** 
+ 168:lib/printf/printf.c **** 
+ 169:lib/printf/printf.c **** // internal secure strlen
+ 170:lib/printf/printf.c **** // \return The length of the string (excluding the terminating 0) limited by 'maxsize'
+ 171:lib/printf/printf.c **** static inline unsigned int _strnlen_s(const char* str, size_t maxsize)
+ 172:lib/printf/printf.c **** {
+ 173:lib/printf/printf.c ****   const char* s;
+ 174:lib/printf/printf.c ****   for (s = str; *s && maxsize--; ++s);
+ 175:lib/printf/printf.c ****   return (unsigned int)(s - str);
+ 176:lib/printf/printf.c **** }
+ 177:lib/printf/printf.c **** 
+ 178:lib/printf/printf.c **** 
+ 179:lib/printf/printf.c **** // internal test if char is a digit (0-9)
+ 180:lib/printf/printf.c **** // \return true if char is a digit
+ 181:lib/printf/printf.c **** static inline bool _is_digit(char ch)
+ 182:lib/printf/printf.c **** {
+ 183:lib/printf/printf.c ****   return (ch >= '0') && (ch <= '9');
+ 184:lib/printf/printf.c **** }
+ 185:lib/printf/printf.c **** 
+ 186:lib/printf/printf.c **** 
+ 187:lib/printf/printf.c **** // internal ASCII string to unsigned int conversion
+ 188:lib/printf/printf.c **** static unsigned int _atoi(const char** str)
+ 189:lib/printf/printf.c **** {
+ 190:lib/printf/printf.c ****   unsigned int i = 0U;
+ 191:lib/printf/printf.c ****   while (_is_digit(**str)) {
+ 192:lib/printf/printf.c ****     i = i * 10U + (unsigned int)(*((*str)++) - '0');
+ 193:lib/printf/printf.c ****   }
+ 194:lib/printf/printf.c ****   return i;
+ 195:lib/printf/printf.c **** }
+ 196:lib/printf/printf.c **** 
+ 197:lib/printf/printf.c **** 
+ 198:lib/printf/printf.c **** // output the specified string in reverse, taking care of any zero-padding
+ 199:lib/printf/printf.c **** static size_t _out_rev(out_fct_type out, char* buffer, size_t idx, size_t maxlen, const char* buf, 
+ 200:lib/printf/printf.c **** {
+ 201:lib/printf/printf.c ****   const size_t start_idx = idx;
+ 202:lib/printf/printf.c **** 
+ 203:lib/printf/printf.c ****   // pad spaces up to given width
+ 204:lib/printf/printf.c ****   if (!(flags & FLAGS_LEFT) && !(flags & FLAGS_ZEROPAD)) {
+ 205:lib/printf/printf.c ****     for (size_t i = len; i < width; i++) {
+ 206:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 207:lib/printf/printf.c ****     }
+ 208:lib/printf/printf.c ****   }
+ 209:lib/printf/printf.c **** 
+ 210:lib/printf/printf.c ****   // reverse string
+ 211:lib/printf/printf.c ****   while (len) {
+ 212:lib/printf/printf.c ****     out(buf[--len], buffer, idx++, maxlen);
+ 213:lib/printf/printf.c ****   }
+ 214:lib/printf/printf.c **** 
+ 215:lib/printf/printf.c ****   // append pad spaces up to given width
+ 216:lib/printf/printf.c ****   if (flags & FLAGS_LEFT) {
+ 217:lib/printf/printf.c ****     while (idx - start_idx < width) {
+ 218:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 219:lib/printf/printf.c ****     }
+ 220:lib/printf/printf.c ****   }
+ 221:lib/printf/printf.c **** 
+ 222:lib/printf/printf.c ****   return idx;
+ 223:lib/printf/printf.c **** }
+ 224:lib/printf/printf.c **** 
+ 225:lib/printf/printf.c **** 
+ 226:lib/printf/printf.c **** // internal itoa format
+ 227:lib/printf/printf.c **** static size_t _ntoa_format(out_fct_type out, char* buffer, size_t idx, size_t maxlen, char* buf, si
+ 228:lib/printf/printf.c **** {
+ 229:lib/printf/printf.c ****   // pad leading zeros
+ 230:lib/printf/printf.c ****   if (!(flags & FLAGS_LEFT)) {
+ 231:lib/printf/printf.c ****     if (width && (flags & FLAGS_ZEROPAD) && (negative || (flags & (FLAGS_PLUS | FLAGS_SPACE)))) {
+ 232:lib/printf/printf.c ****       width--;
+ 233:lib/printf/printf.c ****     }
+ 234:lib/printf/printf.c ****     while ((len < prec) && (len < PRINTF_NTOA_BUFFER_SIZE)) {
+ 235:lib/printf/printf.c ****       buf[len++] = '0';
+ 236:lib/printf/printf.c ****     }
+ 237:lib/printf/printf.c ****     while ((flags & FLAGS_ZEROPAD) && (len < width) && (len < PRINTF_NTOA_BUFFER_SIZE)) {
+ 238:lib/printf/printf.c ****       buf[len++] = '0';
+ 239:lib/printf/printf.c ****     }
+ 240:lib/printf/printf.c ****   }
+ 241:lib/printf/printf.c **** 
+ 242:lib/printf/printf.c ****   // handle hash
+ 243:lib/printf/printf.c ****   if (flags & FLAGS_HASH) {
+ 244:lib/printf/printf.c ****     if (!(flags & FLAGS_PRECISION) && len && ((len == prec) || (len == width))) {
+ 245:lib/printf/printf.c ****       len--;
+ 246:lib/printf/printf.c ****       if (len && (base == 16U)) {
+ 247:lib/printf/printf.c ****         len--;
+ 248:lib/printf/printf.c ****       }
+ 249:lib/printf/printf.c ****     }
+ 250:lib/printf/printf.c ****     if ((base == 16U) && !(flags & FLAGS_UPPERCASE) && (len < PRINTF_NTOA_BUFFER_SIZE)) {
+ 251:lib/printf/printf.c ****       buf[len++] = 'x';
+ 252:lib/printf/printf.c ****     }
+ 253:lib/printf/printf.c ****     else if ((base == 16U) && (flags & FLAGS_UPPERCASE) && (len < PRINTF_NTOA_BUFFER_SIZE)) {
+ 254:lib/printf/printf.c ****       buf[len++] = 'X';
+ 255:lib/printf/printf.c ****     }
+ 256:lib/printf/printf.c ****     else if ((base == 2U) && (len < PRINTF_NTOA_BUFFER_SIZE)) {
+ 257:lib/printf/printf.c ****       buf[len++] = 'b';
+ 258:lib/printf/printf.c ****     }
+ 259:lib/printf/printf.c ****     if (len < PRINTF_NTOA_BUFFER_SIZE) {
+ 260:lib/printf/printf.c ****       buf[len++] = '0';
+ 261:lib/printf/printf.c ****     }
+ 262:lib/printf/printf.c ****   }
+ 263:lib/printf/printf.c **** 
+ 264:lib/printf/printf.c ****   if (len < PRINTF_NTOA_BUFFER_SIZE) {
+ 265:lib/printf/printf.c ****     if (negative) {
+ 266:lib/printf/printf.c ****       buf[len++] = '-';
+ 267:lib/printf/printf.c ****     }
+ 268:lib/printf/printf.c ****     else if (flags & FLAGS_PLUS) {
+ 269:lib/printf/printf.c ****       buf[len++] = '+';  // ignore the space if the '+' exists
+ 270:lib/printf/printf.c ****     }
+ 271:lib/printf/printf.c ****     else if (flags & FLAGS_SPACE) {
+ 272:lib/printf/printf.c ****       buf[len++] = ' ';
+ 273:lib/printf/printf.c ****     }
+ 274:lib/printf/printf.c ****   }
+ 275:lib/printf/printf.c **** 
+ 276:lib/printf/printf.c ****   return _out_rev(out, buffer, idx, maxlen, buf, len, width, flags);
+ 277:lib/printf/printf.c **** }
+ 278:lib/printf/printf.c **** 
+ 279:lib/printf/printf.c **** 
+ 280:lib/printf/printf.c **** // internal itoa for 'long' type
+ 281:lib/printf/printf.c **** static size_t _ntoa_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, unsigned long v
+ 282:lib/printf/printf.c **** {
+  80              		.loc 1 282 1 is_stmt 1 view -0
+  81              		.cfi_startproc
+  82              		@ args = 24, pretend = 0, frame = 40
+  83              		@ frame_needed = 0, uses_anonymous_args = 0
+ 283:lib/printf/printf.c ****   char buf[PRINTF_NTOA_BUFFER_SIZE];
+  84              		.loc 1 283 3 view .LVU13
+ 284:lib/printf/printf.c ****   size_t len = 0U;
+  85              		.loc 1 284 3 view .LVU14
+ 285:lib/printf/printf.c **** 
+ 286:lib/printf/printf.c ****   // no hash for 0 values
+ 287:lib/printf/printf.c ****   if (!value) {
+  86              		.loc 1 287 3 view .LVU15
+ 282:lib/printf/printf.c ****   char buf[PRINTF_NTOA_BUFFER_SIZE];
+  87              		.loc 1 282 1 is_stmt 0 view .LVU16
+  88 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  89              		.cfi_def_cfa_offset 36
+  90              		.cfi_offset 4, -36
+  91              		.cfi_offset 5, -32
+  92              		.cfi_offset 6, -28
+  93              		.cfi_offset 7, -24
+  94              		.cfi_offset 8, -20
+  95              		.cfi_offset 9, -16
+  96              		.cfi_offset 10, -12
+  97              		.cfi_offset 11, -8
+  98              		.cfi_offset 14, -4
+  99 0004 8BB0     		sub	sp, sp, #44
+ 100              		.cfi_def_cfa_offset 80
+ 282:lib/printf/printf.c ****   char buf[PRINTF_NTOA_BUFFER_SIZE];
+ 101              		.loc 1 282 1 view .LVU17
+ 102 0006 0746     		mov	r7, r0
+ 103 0008 149C     		ldr	r4, [sp, #80]
+ 104 000a 9DF854B0 		ldrb	fp, [sp, #84]	@ zero_extendqisi2
+ 105 000e 1698     		ldr	r0, [sp, #88]
+ 106              	.LVL3:
+ 282:lib/printf/printf.c ****   char buf[PRINTF_NTOA_BUFFER_SIZE];
+ 107              		.loc 1 282 1 view .LVU18
+ 108 0010 1646     		mov	r6, r2
+ 109 0012 8846     		mov	r8, r1
+ 110 0014 DDE91852 		ldrd	r5, r2, [sp, #96]
+ 111              	.LVL4:
+ 112              		.loc 1 287 6 view .LVU19
+ 113 0018 0CB9     		cbnz	r4, .L5
+ 288:lib/printf/printf.c ****     flags &= ~FLAGS_HASH;
+ 114              		.loc 1 288 5 is_stmt 1 view .LVU20
+ 115              		.loc 1 288 11 is_stmt 0 view .LVU21
+ 116 001a 22F01002 		bic	r2, r2, #16
+ 117              	.LVL5:
+ 118              	.L5:
+ 289:lib/printf/printf.c ****   }
+ 290:lib/printf/printf.c **** 
+ 291:lib/printf/printf.c ****   // write if precision != 0 and value is != 0
+ 292:lib/printf/printf.c ****   if (!(flags & FLAGS_PRECISION) || value) {
+ 119              		.loc 1 292 3 is_stmt 1 view .LVU22
+ 120              		.loc 1 292 6 is_stmt 0 view .LVU23
+ 121 001e 12F48061 		ands	r1, r2, #1024
+ 122              	.LVL6:
+ 123              		.loc 1 292 6 view .LVU24
+ 124 0022 0191     		str	r1, [sp, #4]
+ 125 0024 00D0     		beq	.L6
+ 126              		.loc 1 292 34 discriminator 1 view .LVU25
+ 127 0026 14B3     		cbz	r4, .L7
+ 128              	.L6:
+ 129 0028 12F0200F 		tst	r2, #32
+ 130 002c 14BF     		ite	ne
+ 131 002e 4FF04109 		movne	r9, #65
+ 132 0032 4FF06109 		moveq	r9, #97
+ 133              	.LBB22:
+ 293:lib/printf/printf.c ****     do {
+ 294:lib/printf/printf.c ****       const char digit = (char)(value % base);
+ 295:lib/printf/printf.c ****       buf[len++] = digit < 10 ? '0' + digit : (flags & FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10;
+ 134              		.loc 1 295 54 view .LVU26
+ 135 0036 A446     		mov	ip, r4
+ 136 0038 0DF1080A 		add	r10, sp, #8
+ 137 003c 0024     		movs	r4, #0
+ 138              		.loc 1 295 18 view .LVU27
+ 139 003e A9F10A09 		sub	r9, r9, #10
+ 140              	.LVL7:
+ 141              	.L10:
+ 142              		.loc 1 295 18 view .LVU28
+ 143              	.LBE22:
+ 293:lib/printf/printf.c ****     do {
+ 144              		.loc 1 293 5 is_stmt 1 view .LVU29
+ 145              	.LBB23:
+ 294:lib/printf/printf.c ****       buf[len++] = digit < 10 ? '0' + digit : (flags & FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10;
+ 146              		.loc 1 294 7 view .LVU30
+ 294:lib/printf/printf.c ****       buf[len++] = digit < 10 ? '0' + digit : (flags & FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10;
+ 147              		.loc 1 294 39 is_stmt 0 view .LVU31
+ 148 0042 BCFBF0FE 		udiv	lr, ip, r0
+ 149 0046 00FB1ECE 		mls	lr, r0, lr, ip
+ 294:lib/printf/printf.c ****       buf[len++] = digit < 10 ? '0' + digit : (flags & FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10;
+ 150              		.loc 1 294 18 view .LVU32
+ 151 004a 5FFA8EF1 		uxtb	r1, lr
+ 152              	.LVL8:
+ 153              		.loc 1 295 7 is_stmt 1 view .LVU33
+ 154              		.loc 1 295 18 is_stmt 0 view .LVU34
+ 155 004e BEF1090F 		cmp	lr, #9
+ 156 0052 94BF     		ite	ls
+ 157 0054 3031     		addls	r1, r1, #48
+ 158              	.LVL9:
+ 159              		.loc 1 295 18 view .LVU35
+ 160 0056 4944     		addhi	r1, r1, r9
+ 161 0058 C9B2     		uxtb	r1, r1
+ 162              	.LBE23:
+ 296:lib/printf/printf.c ****       value /= base;
+ 297:lib/printf/printf.c ****     } while (value && (len < PRINTF_NTOA_BUFFER_SIZE));
+ 163              		.loc 1 297 5 view .LVU36
+ 164 005a 8445     		cmp	ip, r0
+ 165              	.LBB24:
+ 295:lib/printf/printf.c ****       value /= base;
+ 166              		.loc 1 295 18 view .LVU37
+ 167 005c 0AF8011B 		strb	r1, [r10], #1
+ 296:lib/printf/printf.c ****       value /= base;
+ 168              		.loc 1 296 13 view .LVU38
+ 169 0060 BCFBF0F1 		udiv	r1, ip, r0
+ 295:lib/printf/printf.c ****       value /= base;
+ 170              		.loc 1 295 14 view .LVU39
+ 171 0064 04F10104 		add	r4, r4, #1
+ 172              	.LVL10:
+ 296:lib/printf/printf.c ****       value /= base;
+ 173              		.loc 1 296 7 is_stmt 1 view .LVU40
+ 296:lib/printf/printf.c ****       value /= base;
+ 174              		.loc 1 296 7 is_stmt 0 view .LVU41
+ 175              	.LBE24:
+ 176              		.loc 1 297 13 is_stmt 1 view .LVU42
+ 177              		.loc 1 297 5 is_stmt 0 view .LVU43
+ 178 0068 01D3     		bcc	.L7
+ 179              		.loc 1 297 20 discriminator 1 view .LVU44
+ 180 006a 202C     		cmp	r4, #32
+ 181 006c 12D1     		bne	.L41
+ 182              	.LVL11:
+ 183              	.L7:
+ 298:lib/printf/printf.c ****   }
+ 299:lib/printf/printf.c **** 
+ 300:lib/printf/printf.c ****   return _ntoa_format(out, buffer, idx, maxlen, buf, len, negative, (unsigned int)base, prec, width
+ 184              		.loc 1 300 3 is_stmt 1 view .LVU45
+ 185              	.LBB25:
+ 186              	.LBI25:
+ 227:lib/printf/printf.c **** {
+ 187              		.loc 1 227 15 view .LVU46
+ 188              	.LBB26:
+ 230:lib/printf/printf.c ****     if (width && (flags & FLAGS_ZEROPAD) && (negative || (flags & (FLAGS_PLUS | FLAGS_SPACE)))) {
+ 189              		.loc 1 230 3 view .LVU47
+ 230:lib/printf/printf.c ****     if (width && (flags & FLAGS_ZEROPAD) && (negative || (flags & (FLAGS_PLUS | FLAGS_SPACE)))) {
+ 190              		.loc 1 230 6 is_stmt 0 view .LVU48
+ 191 006e 12F0020A 		ands	r10, r2, #2
+ 192 0072 23D1     		bne	.L11
+ 231:lib/printf/printf.c ****       width--;
+ 193              		.loc 1 231 5 is_stmt 1 view .LVU49
+ 231:lib/printf/printf.c ****       width--;
+ 194              		.loc 1 231 25 is_stmt 0 view .LVU50
+ 195 0074 02F0010E 		and	lr, r2, #1
+ 231:lib/printf/printf.c ****       width--;
+ 196              		.loc 1 231 8 view .LVU51
+ 197 0078 4DB1     		cbz	r5, .L12
+ 231:lib/printf/printf.c ****       width--;
+ 198              		.loc 1 231 15 view .LVU52
+ 199 007a BEF1000F 		cmp	lr, #0
+ 200 007e 06D0     		beq	.L12
+ 231:lib/printf/printf.c ****       width--;
+ 201              		.loc 1 231 42 view .LVU53
+ 202 0080 BBF1000F 		cmp	fp, #0
+ 203 0084 02D1     		bne	.L13
+ 231:lib/printf/printf.c ****       width--;
+ 204              		.loc 1 231 55 view .LVU54
+ 205 0086 12F00C0F 		tst	r2, #12
+ 206 008a 00D0     		beq	.L12
+ 207              	.L13:
+ 232:lib/printf/printf.c ****     }
+ 208              		.loc 1 232 7 is_stmt 1 view .LVU55
+ 232:lib/printf/printf.c ****     }
+ 209              		.loc 1 232 12 is_stmt 0 view .LVU56
+ 210 008c 013D     		subs	r5, r5, #1
+ 211              	.LVL12:
+ 212              	.L12:
+ 235:lib/printf/printf.c ****     }
+ 213              		.loc 1 235 18 view .LVU57
+ 214 008e 4FF0300C 		mov	ip, #48
+ 215 0092 07E0     		b	.L14
+ 216              	.LVL13:
+ 217              	.L41:
+ 235:lib/printf/printf.c ****     }
+ 218              		.loc 1 235 18 view .LVU58
+ 219              	.LBE26:
+ 220              	.LBE25:
+ 221              	.LBB35:
+ 296:lib/printf/printf.c ****     } while (value && (len < PRINTF_NTOA_BUFFER_SIZE));
+ 222              		.loc 1 296 13 view .LVU59
+ 223 0094 8C46     		mov	ip, r1
+ 224 0096 D4E7     		b	.L10
+ 225              	.LVL14:
+ 226              	.L15:
+ 296:lib/printf/printf.c ****     } while (value && (len < PRINTF_NTOA_BUFFER_SIZE));
+ 227              		.loc 1 296 13 view .LVU60
+ 228              	.LBE35:
+ 229              	.LBB36:
+ 230              	.LBB33:
+ 234:lib/printf/printf.c ****       buf[len++] = '0';
+ 231              		.loc 1 234 25 view .LVU61
+ 232 0098 202C     		cmp	r4, #32
+ 233 009a 06D0     		beq	.L18
+ 235:lib/printf/printf.c ****     }
+ 234              		.loc 1 235 7 is_stmt 1 view .LVU62
+ 235              	.LVL15:
+ 235:lib/printf/printf.c ****     }
+ 236              		.loc 1 235 18 is_stmt 0 view .LVU63
+ 237 009c 02A9     		add	r1, sp, #8
+ 238              	.LVL16:
+ 235:lib/printf/printf.c ****     }
+ 239              		.loc 1 235 18 view .LVU64
+ 240 009e 01F804C0 		strb	ip, [r1, r4]
+ 241 00a2 0134     		adds	r4, r4, #1
+ 242              	.LVL17:
+ 243              	.L14:
+ 234:lib/printf/printf.c ****       buf[len++] = '0';
+ 244              		.loc 1 234 11 is_stmt 1 view .LVU65
+ 245 00a4 1799     		ldr	r1, [sp, #92]
+ 246 00a6 A142     		cmp	r1, r4
+ 247 00a8 F6D8     		bhi	.L15
+ 248              	.L18:
+ 238:lib/printf/printf.c ****     }
+ 249              		.loc 1 238 18 is_stmt 0 view .LVU66
+ 250 00aa 4FF0300C 		mov	ip, #48
+ 251              	.L16:
+ 237:lib/printf/printf.c ****       buf[len++] = '0';
+ 252              		.loc 1 237 11 is_stmt 1 view .LVU67
+ 253 00ae BEF1000F 		cmp	lr, #0
+ 254 00b2 03D0     		beq	.L11
+ 237:lib/printf/printf.c ****       buf[len++] = '0';
+ 255              		.loc 1 237 36 is_stmt 0 view .LVU68
+ 256 00b4 A542     		cmp	r5, r4
+ 257 00b6 01D9     		bls	.L11
+ 237:lib/printf/printf.c ****       buf[len++] = '0';
+ 258              		.loc 1 237 53 view .LVU69
+ 259 00b8 1F2C     		cmp	r4, #31
+ 260 00ba 42D9     		bls	.L19
+ 261              	.L11:
+ 262              	.LVL18:
+ 243:lib/printf/printf.c ****     if (!(flags & FLAGS_PRECISION) && len && ((len == prec) || (len == width))) {
+ 263              		.loc 1 243 3 is_stmt 1 view .LVU70
+ 243:lib/printf/printf.c ****     if (!(flags & FLAGS_PRECISION) && len && ((len == prec) || (len == width))) {
+ 264              		.loc 1 243 6 is_stmt 0 view .LVU71
+ 265 00bc D106     		lsls	r1, r2, #27
+ 266 00be 20D5     		bpl	.L20
+ 244:lib/printf/printf.c ****       len--;
+ 267              		.loc 1 244 5 is_stmt 1 view .LVU72
+ 244:lib/printf/printf.c ****       len--;
+ 268              		.loc 1 244 8 is_stmt 0 view .LVU73
+ 269 00c0 0199     		ldr	r1, [sp, #4]
+ 270 00c2 0029     		cmp	r1, #0
+ 271 00c4 43D1     		bne	.L21
+ 244:lib/printf/printf.c ****       len--;
+ 272              		.loc 1 244 36 view .LVU74
+ 273 00c6 002C     		cmp	r4, #0
+ 274 00c8 41D0     		beq	.L21
+ 244:lib/printf/printf.c ****       len--;
+ 275              		.loc 1 244 43 view .LVU75
+ 276 00ca 1799     		ldr	r1, [sp, #92]
+ 277 00cc A142     		cmp	r1, r4
+ 278 00ce 01D0     		beq	.L22
+ 244:lib/printf/printf.c ****       len--;
+ 279              		.loc 1 244 61 view .LVU76
+ 280 00d0 AC42     		cmp	r4, r5
+ 281 00d2 3CD1     		bne	.L21
+ 282              	.L22:
+ 245:lib/printf/printf.c ****       if (len && (base == 16U)) {
+ 283              		.loc 1 245 7 is_stmt 1 view .LVU77
+ 284              	.LVL19:
+ 246:lib/printf/printf.c ****         len--;
+ 285              		.loc 1 246 7 view .LVU78
+ 246:lib/printf/printf.c ****         len--;
+ 286              		.loc 1 246 10 is_stmt 0 view .LVU79
+ 287 00d4 611E     		subs	r1, r4, #1
+ 288              	.LVL20:
+ 246:lib/printf/printf.c ****         len--;
+ 289              		.loc 1 246 10 view .LVU80
+ 290 00d6 39D0     		beq	.L42
+ 246:lib/printf/printf.c ****         len--;
+ 291              		.loc 1 246 15 view .LVU81
+ 292 00d8 1028     		cmp	r0, #16
+ 293 00da 42D1     		bne	.L43
+ 247:lib/printf/printf.c ****       }
+ 294              		.loc 1 247 9 is_stmt 1 view .LVU82
+ 247:lib/printf/printf.c ****       }
+ 295              		.loc 1 247 12 is_stmt 0 view .LVU83
+ 296 00dc 023C     		subs	r4, r4, #2
+ 297              	.LVL21:
+ 250:lib/printf/printf.c ****       buf[len++] = 'x';
+ 298              		.loc 1 250 5 is_stmt 1 view .LVU84
+ 299              	.L24:
+ 250:lib/printf/printf.c ****       buf[len++] = 'x';
+ 300              		.loc 1 250 23 is_stmt 0 view .LVU85
+ 301 00de 9106     		lsls	r1, r2, #26
+ 302 00e0 41D4     		bmi	.L25
+ 250:lib/printf/printf.c ****       buf[len++] = 'x';
+ 303              		.loc 1 250 53 view .LVU86
+ 304 00e2 1F2C     		cmp	r4, #31
+ 305 00e4 18D8     		bhi	.L29
+ 251:lib/printf/printf.c ****     }
+ 306              		.loc 1 251 7 is_stmt 1 view .LVU87
+ 307              	.LVL22:
+ 251:lib/printf/printf.c ****     }
+ 308              		.loc 1 251 18 is_stmt 0 view .LVU88
+ 309 00e6 0AA9     		add	r1, sp, #40
+ 310 00e8 2144     		add	r1, r1, r4
+ 311 00ea 7820     		movs	r0, #120
+ 312              	.LVL23:
+ 313              	.L76:
+ 257:lib/printf/printf.c ****     }
+ 314              		.loc 1 257 18 view .LVU89
+ 315 00ec 01F8200C 		strb	r0, [r1, #-32]
+ 316              	.LVL24:
+ 257:lib/printf/printf.c ****     }
+ 317              		.loc 1 257 14 view .LVU90
+ 318 00f0 0134     		adds	r4, r4, #1
+ 319              	.L27:
+ 320              	.LVL25:
+ 259:lib/printf/printf.c ****       buf[len++] = '0';
+ 321              		.loc 1 259 5 is_stmt 1 view .LVU91
+ 259:lib/printf/printf.c ****       buf[len++] = '0';
+ 322              		.loc 1 259 8 is_stmt 0 view .LVU92
+ 323 00f2 1F2C     		cmp	r4, #31
+ 324 00f4 10D8     		bhi	.L29
+ 260:lib/printf/printf.c ****     }
+ 325              		.loc 1 260 7 is_stmt 1 view .LVU93
+ 326              	.LVL26:
+ 260:lib/printf/printf.c ****     }
+ 327              		.loc 1 260 18 is_stmt 0 view .LVU94
+ 328 00f6 0AA9     		add	r1, sp, #40
+ 329 00f8 2144     		add	r1, r1, r4
+ 330 00fa 3020     		movs	r0, #48
+ 331 00fc 01F8200C 		strb	r0, [r1, #-32]
+ 260:lib/printf/printf.c ****     }
+ 332              		.loc 1 260 14 view .LVU95
+ 333 0100 0134     		adds	r4, r4, #1
+ 334              	.LVL27:
+ 335              	.L20:
+ 264:lib/printf/printf.c ****     if (negative) {
+ 336              		.loc 1 264 3 is_stmt 1 view .LVU96
+ 264:lib/printf/printf.c ****     if (negative) {
+ 337              		.loc 1 264 6 is_stmt 0 view .LVU97
+ 338 0102 1F2C     		cmp	r4, #31
+ 339 0104 08D8     		bhi	.L29
+ 265:lib/printf/printf.c ****       buf[len++] = '-';
+ 340              		.loc 1 265 5 is_stmt 1 view .LVU98
+ 265:lib/printf/printf.c ****       buf[len++] = '-';
+ 341              		.loc 1 265 8 is_stmt 0 view .LVU99
+ 342 0106 BBF1000F 		cmp	fp, #0
+ 343 010a 32D0     		beq	.L31
+ 266:lib/printf/printf.c ****     }
+ 344              		.loc 1 266 7 is_stmt 1 view .LVU100
+ 345              	.LVL28:
+ 266:lib/printf/printf.c ****     }
+ 346              		.loc 1 266 18 is_stmt 0 view .LVU101
+ 347 010c 0AA9     		add	r1, sp, #40
+ 348 010e 2144     		add	r1, r1, r4
+ 349 0110 2D20     		movs	r0, #45
+ 350              	.LVL29:
+ 351              	.L77:
+ 272:lib/printf/printf.c ****     }
+ 352              		.loc 1 272 18 view .LVU102
+ 353 0112 01F8200C 		strb	r0, [r1, #-32]
+ 272:lib/printf/printf.c ****     }
+ 354              		.loc 1 272 14 view .LVU103
+ 355 0116 0134     		adds	r4, r4, #1
+ 356              	.L29:
+ 357              	.LVL30:
+ 276:lib/printf/printf.c **** }
+ 358              		.loc 1 276 3 is_stmt 1 view .LVU104
+ 359              	.LBB27:
+ 360              	.LBI27:
+ 199:lib/printf/printf.c **** {
+ 361              		.loc 1 199 15 view .LVU105
+ 362              	.LBB28:
+ 201:lib/printf/printf.c **** 
+ 363              		.loc 1 201 3 view .LVU106
+ 204:lib/printf/printf.c ****     for (size_t i = len; i < width; i++) {
+ 364              		.loc 1 204 3 view .LVU107
+ 204:lib/printf/printf.c ****     for (size_t i = len; i < width; i++) {
+ 365              		.loc 1 204 6 is_stmt 0 view .LVU108
+ 366 0118 9207     		lsls	r2, r2, #30
+ 367              	.LVL31:
+ 204:lib/printf/printf.c ****     for (size_t i = len; i < width; i++) {
+ 368              		.loc 1 204 6 view .LVU109
+ 369 011a 49D0     		beq	.L44
+ 370              	.LBB29:
+ 371 011c B146     		mov	r9, r6
+ 372              	.LVL32:
+ 373              	.L34:
+ 204:lib/printf/printf.c ****     for (size_t i = len; i < width; i++) {
+ 374              		.loc 1 204 6 view .LVU110
+ 375 011e A144     		add	r9, r9, r4
+ 376              	.LVL33:
+ 377              	.L36:
+ 204:lib/printf/printf.c ****     for (size_t i = len; i < width; i++) {
+ 378              		.loc 1 204 6 view .LVU111
+ 379 0120 4846     		mov	r0, r9
+ 380 0122 A9EB0402 		sub	r2, r9, r4
+ 381              	.LVL34:
+ 204:lib/printf/printf.c ****     for (size_t i = len; i < width; i++) {
+ 382              		.loc 1 204 6 view .LVU112
+ 383              	.LBE29:
+ 211:lib/printf/printf.c ****     out(buf[--len], buffer, idx++, maxlen);
+ 384              		.loc 1 211 9 is_stmt 1 view .LVU113
+ 385 0126 002C     		cmp	r4, #0
+ 386 0128 46D1     		bne	.L37
+ 216:lib/printf/printf.c ****     while (idx - start_idx < width) {
+ 387              		.loc 1 216 3 view .LVU114
+ 216:lib/printf/printf.c ****     while (idx - start_idx < width) {
+ 388              		.loc 1 216 6 is_stmt 0 view .LVU115
+ 389 012a BAF1000F 		cmp	r10, #0
+ 390 012e 05D0     		beq	.L4
+ 391 0130 A9EB0609 		sub	r9, r9, r6
+ 392              	.LVL35:
+ 393              	.L39:
+ 217:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 394              		.loc 1 217 11 view .LVU116
+ 395 0134 A945     		cmp	r9, r5
+ 396 0136 06EB0900 		add	r0, r6, r9
+ 397              	.LVL36:
+ 217:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 398              		.loc 1 217 11 is_stmt 1 view .LVU117
+ 399 013a 45D3     		bcc	.L40
+ 400              	.LVL37:
+ 401              	.L4:
+ 217:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 402              		.loc 1 217 11 is_stmt 0 view .LVU118
+ 403              	.LBE28:
+ 404              	.LBE27:
+ 405              	.LBE33:
+ 406              	.LBE36:
+ 301:lib/printf/printf.c **** }
+ 407              		.loc 1 301 1 view .LVU119
+ 408 013c 0BB0     		add	sp, sp, #44
+ 409              		.cfi_remember_state
+ 410              		.cfi_def_cfa_offset 36
+ 411              		@ sp needed
+ 412 013e BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 413              	.LVL38:
+ 414              	.L19:
+ 415              		.cfi_restore_state
+ 416              	.LBB37:
+ 417              	.LBB34:
+ 238:lib/printf/printf.c ****     }
+ 418              		.loc 1 238 7 is_stmt 1 view .LVU120
+ 238:lib/printf/printf.c ****     }
+ 419              		.loc 1 238 18 is_stmt 0 view .LVU121
+ 420 0142 02A9     		add	r1, sp, #8
+ 421              	.LVL39:
+ 238:lib/printf/printf.c ****     }
+ 422              		.loc 1 238 18 view .LVU122
+ 423 0144 01F804C0 		strb	ip, [r1, r4]
+ 424 0148 0134     		adds	r4, r4, #1
+ 425              	.LVL40:
+ 238:lib/printf/printf.c ****     }
+ 426              		.loc 1 238 18 view .LVU123
+ 427 014a B0E7     		b	.L16
+ 428              	.LVL41:
+ 429              	.L42:
+ 238:lib/printf/printf.c ****     }
+ 430              		.loc 1 238 18 view .LVU124
+ 431 014c 0C46     		mov	r4, r1
+ 432              	.LVL42:
+ 433              	.L21:
+ 250:lib/printf/printf.c ****       buf[len++] = 'x';
+ 434              		.loc 1 250 5 is_stmt 1 view .LVU125
+ 250:lib/printf/printf.c ****       buf[len++] = 'x';
+ 435              		.loc 1 250 8 is_stmt 0 view .LVU126
+ 436 014e 1028     		cmp	r0, #16
+ 437 0150 C5D0     		beq	.L24
+ 438              	.L23:
+ 253:lib/printf/printf.c ****       buf[len++] = 'X';
+ 439              		.loc 1 253 10 is_stmt 1 view .LVU127
+ 256:lib/printf/printf.c ****       buf[len++] = 'b';
+ 440              		.loc 1 256 10 view .LVU128
+ 256:lib/printf/printf.c ****       buf[len++] = 'b';
+ 441              		.loc 1 256 13 is_stmt 0 view .LVU129
+ 442 0152 0228     		cmp	r0, #2
+ 443 0154 CDD1     		bne	.L27
+ 256:lib/printf/printf.c ****       buf[len++] = 'b';
+ 444              		.loc 1 256 27 view .LVU130
+ 445 0156 1F2C     		cmp	r4, #31
+ 446 0158 DED8     		bhi	.L29
+ 257:lib/printf/printf.c ****     }
+ 447              		.loc 1 257 7 is_stmt 1 view .LVU131
+ 448              	.LVL43:
+ 257:lib/printf/printf.c ****     }
+ 449              		.loc 1 257 18 is_stmt 0 view .LVU132
+ 450 015a 0AA9     		add	r1, sp, #40
+ 451 015c 2144     		add	r1, r1, r4
+ 452 015e 6220     		movs	r0, #98
+ 453              	.LVL44:
+ 257:lib/printf/printf.c ****     }
+ 454              		.loc 1 257 18 view .LVU133
+ 455 0160 C4E7     		b	.L76
+ 456              	.LVL45:
+ 457              	.L43:
+ 257:lib/printf/printf.c ****     }
+ 458              		.loc 1 257 18 view .LVU134
+ 459 0162 0C46     		mov	r4, r1
+ 460 0164 F5E7     		b	.L23
+ 461              	.LVL46:
+ 462              	.L25:
+ 253:lib/printf/printf.c ****       buf[len++] = 'X';
+ 463              		.loc 1 253 10 is_stmt 1 view .LVU135
+ 253:lib/printf/printf.c ****       buf[len++] = 'X';
+ 464              		.loc 1 253 57 is_stmt 0 view .LVU136
+ 465 0166 1F2C     		cmp	r4, #31
+ 466 0168 D6D8     		bhi	.L29
+ 254:lib/printf/printf.c ****     }
+ 467              		.loc 1 254 7 is_stmt 1 view .LVU137
+ 468              	.LVL47:
+ 254:lib/printf/printf.c ****     }
+ 469              		.loc 1 254 18 is_stmt 0 view .LVU138
+ 470 016a 0AA9     		add	r1, sp, #40
+ 471 016c 2144     		add	r1, r1, r4
+ 472 016e 5820     		movs	r0, #88
+ 473              	.LVL48:
+ 254:lib/printf/printf.c ****     }
+ 474              		.loc 1 254 18 view .LVU139
+ 475 0170 BCE7     		b	.L76
+ 476              	.LVL49:
+ 477              	.L31:
+ 268:lib/printf/printf.c ****       buf[len++] = '+';  // ignore the space if the '+' exists
+ 478              		.loc 1 268 10 is_stmt 1 view .LVU140
+ 268:lib/printf/printf.c ****       buf[len++] = '+';  // ignore the space if the '+' exists
+ 479              		.loc 1 268 13 is_stmt 0 view .LVU141
+ 480 0172 5007     		lsls	r0, r2, #29
+ 481 0174 03D5     		bpl	.L32
+ 269:lib/printf/printf.c ****     }
+ 482              		.loc 1 269 7 is_stmt 1 view .LVU142
+ 483              	.LVL50:
+ 269:lib/printf/printf.c ****     }
+ 484              		.loc 1 269 18 is_stmt 0 view .LVU143
+ 485 0176 0AA9     		add	r1, sp, #40
+ 486 0178 2144     		add	r1, r1, r4
+ 487 017a 2B20     		movs	r0, #43
+ 488 017c C9E7     		b	.L77
+ 489              	.LVL51:
+ 490              	.L32:
+ 271:lib/printf/printf.c ****       buf[len++] = ' ';
+ 491              		.loc 1 271 10 is_stmt 1 view .LVU144
+ 271:lib/printf/printf.c ****       buf[len++] = ' ';
+ 492              		.loc 1 271 13 is_stmt 0 view .LVU145
+ 493 017e 1107     		lsls	r1, r2, #28
+ 494 0180 CAD5     		bpl	.L29
+ 272:lib/printf/printf.c ****     }
+ 495              		.loc 1 272 7 is_stmt 1 view .LVU146
+ 496              	.LVL52:
+ 272:lib/printf/printf.c ****     }
+ 497              		.loc 1 272 18 is_stmt 0 view .LVU147
+ 498 0182 0AA9     		add	r1, sp, #40
+ 499 0184 2144     		add	r1, r1, r4
+ 500 0186 2020     		movs	r0, #32
+ 501 0188 C3E7     		b	.L77
+ 502              	.LVL53:
+ 503              	.L35:
+ 504              	.LBB32:
+ 505              	.LBB31:
+ 506              	.LBB30:
+ 206:lib/printf/printf.c ****     }
+ 507              		.loc 1 206 7 is_stmt 1 view .LVU148
+ 206:lib/printf/printf.c ****     }
+ 508              		.loc 1 206 7 is_stmt 0 view .LVU149
+ 509 018a 4146     		mov	r1, r8
+ 510 018c 2020     		movs	r0, #32
+ 511 018e 0193     		str	r3, [sp, #4]
+ 512 0190 B847     		blx	r7
+ 513              	.LVL54:
+ 205:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 514              		.loc 1 205 37 is_stmt 1 view .LVU150
+ 515 0192 019B     		ldr	r3, [sp, #4]
+ 205:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 516              		.loc 1 205 38 is_stmt 0 view .LVU151
+ 517 0194 09F10109 		add	r9, r9, #1
+ 518              	.LVL55:
+ 519              	.L33:
+ 205:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 520              		.loc 1 205 5 view .LVU152
+ 521 0198 4D45     		cmp	r5, r9
+ 522 019a 0BEB0902 		add	r2, fp, r9
+ 523              	.LVL56:
+ 205:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 524              		.loc 1 205 26 is_stmt 1 view .LVU153
+ 205:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 525              		.loc 1 205 5 is_stmt 0 view .LVU154
+ 526 019e F4D8     		bhi	.L35
+ 527 01a0 A5EB0409 		sub	r9, r5, r4
+ 528              	.LVL57:
+ 205:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 529              		.loc 1 205 5 view .LVU155
+ 530 01a4 A542     		cmp	r5, r4
+ 531 01a6 38BF     		it	cc
+ 532 01a8 4FF00009 		movcc	r9, #0
+ 533 01ac B144     		add	r9, r9, r6
+ 534 01ae B6E7     		b	.L34
+ 535              	.LVL58:
+ 536              	.L44:
+ 205:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 537              		.loc 1 205 17 view .LVU156
+ 538 01b0 A146     		mov	r9, r4
+ 539 01b2 A6EB040B 		sub	fp, r6, r4
+ 540              	.LVL59:
+ 205:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 541              		.loc 1 205 17 view .LVU157
+ 542 01b6 EFE7     		b	.L33
+ 543              	.LVL60:
+ 544              	.L37:
+ 205:lib/printf/printf.c ****       out(' ', buffer, idx++, maxlen);
+ 545              		.loc 1 205 17 view .LVU158
+ 546              	.LBE30:
+ 212:lib/printf/printf.c ****   }
+ 547              		.loc 1 212 5 is_stmt 1 view .LVU159
+ 548 01b8 013C     		subs	r4, r4, #1
+ 549              	.LVL61:
+ 212:lib/printf/printf.c ****   }
+ 550              		.loc 1 212 5 is_stmt 0 view .LVU160
+ 551 01ba 02A8     		add	r0, sp, #8
+ 552              	.LVL62:
+ 212:lib/printf/printf.c ****   }
+ 553              		.loc 1 212 5 view .LVU161
+ 554 01bc 4146     		mov	r1, r8
+ 555 01be 005D     		ldrb	r0, [r0, r4]	@ zero_extendqisi2
+ 556              	.LVL63:
+ 212:lib/printf/printf.c ****   }
+ 557              		.loc 1 212 5 view .LVU162
+ 558 01c0 0193     		str	r3, [sp, #4]
+ 559 01c2 B847     		blx	r7
+ 560              	.LVL64:
+ 561 01c4 019B     		ldr	r3, [sp, #4]
+ 562 01c6 ABE7     		b	.L36
+ 563              	.LVL65:
+ 564              	.L40:
+ 218:lib/printf/printf.c ****     }
+ 565              		.loc 1 218 7 is_stmt 1 view .LVU163
+ 218:lib/printf/printf.c ****     }
+ 566              		.loc 1 218 7 is_stmt 0 view .LVU164
+ 567 01c8 0246     		mov	r2, r0
+ 568 01ca 4146     		mov	r1, r8
+ 569 01cc 2020     		movs	r0, #32
+ 570 01ce 0193     		str	r3, [sp, #4]
+ 571 01d0 09F10109 		add	r9, r9, #1
+ 572 01d4 B847     		blx	r7
+ 573              	.LVL66:
+ 574 01d6 019B     		ldr	r3, [sp, #4]
+ 575 01d8 ACE7     		b	.L39
+ 576              	.LBE31:
+ 577              	.LBE32:
+ 578              	.LBE34:
+ 579              	.LBE37:
+ 580              		.cfi_endproc
+ 581              	.LFE9:
+ 583              		.section	.text._out_char,"ax",%progbits
+ 584              		.align	1
+ 585              		.syntax unified
+ 586              		.thumb
+ 587              		.thumb_func
+ 588              		.fpu fpv4-sp-d16
+ 590              	_out_char:
+ 591              	.LVL67:
+ 592              	.LFB2:
+ 150:lib/printf/printf.c ****   (void)buffer; (void)idx; (void)maxlen;
+ 593              		.loc 1 150 1 is_stmt 1 view -0
+ 594              		.cfi_startproc
+ 595              		@ args = 0, pretend = 0, frame = 0
+ 596              		@ frame_needed = 0, uses_anonymous_args = 0
+ 597              		@ link register save eliminated.
+ 151:lib/printf/printf.c ****   if (character) {
+ 598              		.loc 1 151 3 view .LVU166
+ 151:lib/printf/printf.c ****   if (character) {
+ 599              		.loc 1 151 17 view .LVU167
+ 151:lib/printf/printf.c ****   if (character) {
+ 600              		.loc 1 151 28 view .LVU168
+ 152:lib/printf/printf.c ****     _putchar(character);
+ 601              		.loc 1 152 3 view .LVU169
+ 152:lib/printf/printf.c ****     _putchar(character);
+ 602              		.loc 1 152 6 is_stmt 0 view .LVU170
+ 603 0000 08B1     		cbz	r0, .L78
+ 153:lib/printf/printf.c ****   }
+ 604              		.loc 1 153 5 is_stmt 1 view .LVU171
+ 605 0002 FFF7FEBF 		b	_putchar
+ 606              	.LVL68:
+ 607              	.L78:
+ 155:lib/printf/printf.c **** 
+ 608              		.loc 1 155 1 is_stmt 0 view .LVU172
+ 609 0006 7047     		bx	lr
+ 610              		.cfi_endproc
+ 611              	.LFE2:
+ 613              		.section	.text._out_fct,"ax",%progbits
+ 614              		.align	1
+ 615              		.syntax unified
+ 616              		.thumb
+ 617              		.thumb_func
+ 618              		.fpu fpv4-sp-d16
+ 620              	_out_fct:
+ 621              	.LVL69:
+ 622              	.LFB3:
+ 160:lib/printf/printf.c ****   (void)idx; (void)maxlen;
+ 623              		.loc 1 160 1 is_stmt 1 view -0
+ 624              		.cfi_startproc
+ 625              		@ args = 0, pretend = 0, frame = 0
+ 626              		@ frame_needed = 0, uses_anonymous_args = 0
+ 627              		@ link register save eliminated.
+ 161:lib/printf/printf.c ****   if (character) {
+ 628              		.loc 1 161 3 view .LVU174
+ 161:lib/printf/printf.c ****   if (character) {
+ 629              		.loc 1 161 14 view .LVU175
+ 162:lib/printf/printf.c ****     // buffer is the output fct pointer
+ 630              		.loc 1 162 3 view .LVU176
+ 162:lib/printf/printf.c ****     // buffer is the output fct pointer
+ 631              		.loc 1 162 6 is_stmt 0 view .LVU177
+ 632 0000 10B1     		cbz	r0, .L80
+ 633              	.LVL70:
+ 634              	.LBB40:
+ 635              	.LBI40:
+ 159:lib/printf/printf.c **** {
+ 636              		.loc 1 159 20 is_stmt 1 view .LVU178
+ 637              	.LBB41:
+ 164:lib/printf/printf.c ****   }
+ 638              		.loc 1 164 5 view .LVU179
+ 164:lib/printf/printf.c ****   }
+ 639              		.loc 1 164 6 is_stmt 0 view .LVU180
+ 640 0002 D1E90031 		ldrd	r3, r1, [r1]
+ 641              	.LVL71:
+ 164:lib/printf/printf.c ****   }
+ 642              		.loc 1 164 6 view .LVU181
+ 643 0006 1847     		bx	r3	@ indirect register sibling call
+ 644              	.LVL72:
+ 645              	.L80:
+ 164:lib/printf/printf.c ****   }
+ 646              		.loc 1 164 6 view .LVU182
+ 647              	.LBE41:
+ 648              	.LBE40:
+ 166:lib/printf/printf.c **** 
+ 649              		.loc 1 166 1 view .LVU183
+ 650 0008 7047     		bx	lr
+ 651              		.cfi_endproc
+ 652              	.LFE3:
+ 654              		.section	.text._vsnprintf,"ax",%progbits
+ 655              		.align	1
+ 656              		.syntax unified
+ 657              		.thumb
+ 658              		.thumb_func
+ 659              		.fpu fpv4-sp-d16
+ 661              	_vsnprintf:
+ 662              	.LVL73:
+ 663              	.LFB10:
+ 302:lib/printf/printf.c **** 
+ 303:lib/printf/printf.c **** 
+ 304:lib/printf/printf.c **** // internal itoa for 'long long' type
+ 305:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 306:lib/printf/printf.c **** static size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, unsigned l
+ 307:lib/printf/printf.c **** {
+ 308:lib/printf/printf.c ****   char buf[PRINTF_NTOA_BUFFER_SIZE];
+ 309:lib/printf/printf.c ****   size_t len = 0U;
+ 310:lib/printf/printf.c **** 
+ 311:lib/printf/printf.c ****   // no hash for 0 values
+ 312:lib/printf/printf.c ****   if (!value) {
+ 313:lib/printf/printf.c ****     flags &= ~FLAGS_HASH;
+ 314:lib/printf/printf.c ****   }
+ 315:lib/printf/printf.c **** 
+ 316:lib/printf/printf.c ****   // write if precision != 0 and value is != 0
+ 317:lib/printf/printf.c ****   if (!(flags & FLAGS_PRECISION) || value) {
+ 318:lib/printf/printf.c ****     do {
+ 319:lib/printf/printf.c ****       const char digit = (char)(value % base);
+ 320:lib/printf/printf.c ****       buf[len++] = digit < 10 ? '0' + digit : (flags & FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10;
+ 321:lib/printf/printf.c ****       value /= base;
+ 322:lib/printf/printf.c ****     } while (value && (len < PRINTF_NTOA_BUFFER_SIZE));
+ 323:lib/printf/printf.c ****   }
+ 324:lib/printf/printf.c **** 
+ 325:lib/printf/printf.c ****   return _ntoa_format(out, buffer, idx, maxlen, buf, len, negative, (unsigned int)base, prec, width
+ 326:lib/printf/printf.c **** }
+ 327:lib/printf/printf.c **** #endif  // PRINTF_SUPPORT_LONG_LONG
+ 328:lib/printf/printf.c **** 
+ 329:lib/printf/printf.c **** 
+ 330:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_FLOAT)
+ 331:lib/printf/printf.c **** 
+ 332:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_EXPONENTIAL)
+ 333:lib/printf/printf.c **** // forward declaration so that _ftoa can switch to exp notation for values > PRINTF_MAX_FLOAT
+ 334:lib/printf/printf.c **** static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsign
+ 335:lib/printf/printf.c **** #endif
+ 336:lib/printf/printf.c **** 
+ 337:lib/printf/printf.c **** 
+ 338:lib/printf/printf.c **** // internal ftoa for fixed decimal floating point
+ 339:lib/printf/printf.c **** static size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsign
+ 340:lib/printf/printf.c **** {
+ 341:lib/printf/printf.c ****   char buf[PRINTF_FTOA_BUFFER_SIZE];
+ 342:lib/printf/printf.c ****   size_t len  = 0U;
+ 343:lib/printf/printf.c ****   double diff = 0.0;
+ 344:lib/printf/printf.c **** 
+ 345:lib/printf/printf.c ****   // powers of 10
+ 346:lib/printf/printf.c ****   static const double pow10[] = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 10
+ 347:lib/printf/printf.c **** 
+ 348:lib/printf/printf.c ****   // test for special values
+ 349:lib/printf/printf.c ****   if (value != value)
+ 350:lib/printf/printf.c ****     return _out_rev(out, buffer, idx, maxlen, "nan", 3, width, flags);
+ 351:lib/printf/printf.c ****   if (value < -DBL_MAX)
+ 352:lib/printf/printf.c ****     return _out_rev(out, buffer, idx, maxlen, "fni-", 4, width, flags);
+ 353:lib/printf/printf.c ****   if (value > DBL_MAX)
+ 354:lib/printf/printf.c ****     return _out_rev(out, buffer, idx, maxlen, (flags & FLAGS_PLUS) ? "fni+" : "fni", (flags & FLAGS
+ 355:lib/printf/printf.c **** 
+ 356:lib/printf/printf.c ****   // test for very large values
+ 357:lib/printf/printf.c ****   // standard printf behavior is to print EVERY whole number digit -- which could be 100s of charac
+ 358:lib/printf/printf.c ****   if ((value > PRINTF_MAX_FLOAT) || (value < -PRINTF_MAX_FLOAT)) {
+ 359:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_EXPONENTIAL)
+ 360:lib/printf/printf.c ****     return _etoa(out, buffer, idx, maxlen, value, prec, width, flags);
+ 361:lib/printf/printf.c **** #else
+ 362:lib/printf/printf.c ****     return 0U;
+ 363:lib/printf/printf.c **** #endif
+ 364:lib/printf/printf.c ****   }
+ 365:lib/printf/printf.c **** 
+ 366:lib/printf/printf.c ****   // test for negative
+ 367:lib/printf/printf.c ****   bool negative = false;
+ 368:lib/printf/printf.c ****   if (value < 0) {
+ 369:lib/printf/printf.c ****     negative = true;
+ 370:lib/printf/printf.c ****     value = 0 - value;
+ 371:lib/printf/printf.c ****   }
+ 372:lib/printf/printf.c **** 
+ 373:lib/printf/printf.c ****   // set default precision, if not set explicitly
+ 374:lib/printf/printf.c ****   if (!(flags & FLAGS_PRECISION)) {
+ 375:lib/printf/printf.c ****     prec = PRINTF_DEFAULT_FLOAT_PRECISION;
+ 376:lib/printf/printf.c ****   }
+ 377:lib/printf/printf.c ****   // limit precision to 9, cause a prec >= 10 can lead to overflow errors
+ 378:lib/printf/printf.c ****   while ((len < PRINTF_FTOA_BUFFER_SIZE) && (prec > 9U)) {
+ 379:lib/printf/printf.c ****     buf[len++] = '0';
+ 380:lib/printf/printf.c ****     prec--;
+ 381:lib/printf/printf.c ****   }
+ 382:lib/printf/printf.c **** 
+ 383:lib/printf/printf.c ****   int whole = (int)value;
+ 384:lib/printf/printf.c ****   double tmp = (value - whole) * pow10[prec];
+ 385:lib/printf/printf.c ****   unsigned long frac = (unsigned long)tmp;
+ 386:lib/printf/printf.c ****   diff = tmp - frac;
+ 387:lib/printf/printf.c **** 
+ 388:lib/printf/printf.c ****   if (diff > 0.5) {
+ 389:lib/printf/printf.c ****     ++frac;
+ 390:lib/printf/printf.c ****     // handle rollover, e.g. case 0.99 with prec 1 is 1.0
+ 391:lib/printf/printf.c ****     if (frac >= pow10[prec]) {
+ 392:lib/printf/printf.c ****       frac = 0;
+ 393:lib/printf/printf.c ****       ++whole;
+ 394:lib/printf/printf.c ****     }
+ 395:lib/printf/printf.c ****   }
+ 396:lib/printf/printf.c ****   else if (diff < 0.5) {
+ 397:lib/printf/printf.c ****   }
+ 398:lib/printf/printf.c ****   else if ((frac == 0U) || (frac & 1U)) {
+ 399:lib/printf/printf.c ****     // if halfway, round up if odd OR if last digit is 0
+ 400:lib/printf/printf.c ****     ++frac;
+ 401:lib/printf/printf.c ****   }
+ 402:lib/printf/printf.c **** 
+ 403:lib/printf/printf.c ****   if (prec == 0U) {
+ 404:lib/printf/printf.c ****     diff = value - (double)whole;
+ 405:lib/printf/printf.c ****     if ((!(diff < 0.5) || (diff > 0.5)) && (whole & 1)) {
+ 406:lib/printf/printf.c ****       // exactly 0.5 and ODD, then round up
+ 407:lib/printf/printf.c ****       // 1.5 -> 2, but 2.5 -> 2
+ 408:lib/printf/printf.c ****       ++whole;
+ 409:lib/printf/printf.c ****     }
+ 410:lib/printf/printf.c ****   }
+ 411:lib/printf/printf.c ****   else {
+ 412:lib/printf/printf.c ****     unsigned int count = prec;
+ 413:lib/printf/printf.c ****     // now do fractional part, as an unsigned number
+ 414:lib/printf/printf.c ****     while (len < PRINTF_FTOA_BUFFER_SIZE) {
+ 415:lib/printf/printf.c ****       --count;
+ 416:lib/printf/printf.c ****       buf[len++] = (char)(48U + (frac % 10U));
+ 417:lib/printf/printf.c ****       if (!(frac /= 10U)) {
+ 418:lib/printf/printf.c ****         break;
+ 419:lib/printf/printf.c ****       }
+ 420:lib/printf/printf.c ****     }
+ 421:lib/printf/printf.c ****     // add extra 0s
+ 422:lib/printf/printf.c ****     while ((len < PRINTF_FTOA_BUFFER_SIZE) && (count-- > 0U)) {
+ 423:lib/printf/printf.c ****       buf[len++] = '0';
+ 424:lib/printf/printf.c ****     }
+ 425:lib/printf/printf.c ****     if (len < PRINTF_FTOA_BUFFER_SIZE) {
+ 426:lib/printf/printf.c ****       // add decimal
+ 427:lib/printf/printf.c ****       buf[len++] = '.';
+ 428:lib/printf/printf.c ****     }
+ 429:lib/printf/printf.c ****   }
+ 430:lib/printf/printf.c **** 
+ 431:lib/printf/printf.c ****   // do whole part, number is reversed
+ 432:lib/printf/printf.c ****   while (len < PRINTF_FTOA_BUFFER_SIZE) {
+ 433:lib/printf/printf.c ****     buf[len++] = (char)(48 + (whole % 10));
+ 434:lib/printf/printf.c ****     if (!(whole /= 10)) {
+ 435:lib/printf/printf.c ****       break;
+ 436:lib/printf/printf.c ****     }
+ 437:lib/printf/printf.c ****   }
+ 438:lib/printf/printf.c **** 
+ 439:lib/printf/printf.c ****   // pad leading zeros
+ 440:lib/printf/printf.c ****   if (!(flags & FLAGS_LEFT) && (flags & FLAGS_ZEROPAD)) {
+ 441:lib/printf/printf.c ****     if (width && (negative || (flags & (FLAGS_PLUS | FLAGS_SPACE)))) {
+ 442:lib/printf/printf.c ****       width--;
+ 443:lib/printf/printf.c ****     }
+ 444:lib/printf/printf.c ****     while ((len < width) && (len < PRINTF_FTOA_BUFFER_SIZE)) {
+ 445:lib/printf/printf.c ****       buf[len++] = '0';
+ 446:lib/printf/printf.c ****     }
+ 447:lib/printf/printf.c ****   }
+ 448:lib/printf/printf.c **** 
+ 449:lib/printf/printf.c ****   if (len < PRINTF_FTOA_BUFFER_SIZE) {
+ 450:lib/printf/printf.c ****     if (negative) {
+ 451:lib/printf/printf.c ****       buf[len++] = '-';
+ 452:lib/printf/printf.c ****     }
+ 453:lib/printf/printf.c ****     else if (flags & FLAGS_PLUS) {
+ 454:lib/printf/printf.c ****       buf[len++] = '+';  // ignore the space if the '+' exists
+ 455:lib/printf/printf.c ****     }
+ 456:lib/printf/printf.c ****     else if (flags & FLAGS_SPACE) {
+ 457:lib/printf/printf.c ****       buf[len++] = ' ';
+ 458:lib/printf/printf.c ****     }
+ 459:lib/printf/printf.c ****   }
+ 460:lib/printf/printf.c **** 
+ 461:lib/printf/printf.c ****   return _out_rev(out, buffer, idx, maxlen, buf, len, width, flags);
+ 462:lib/printf/printf.c **** }
+ 463:lib/printf/printf.c **** 
+ 464:lib/printf/printf.c **** 
+ 465:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_EXPONENTIAL)
+ 466:lib/printf/printf.c **** // internal ftoa variant for exponential floating-point type, contributed by Martijn Jasperse <m.ja
+ 467:lib/printf/printf.c **** static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsign
+ 468:lib/printf/printf.c **** {
+ 469:lib/printf/printf.c ****   // check for NaN and special values
+ 470:lib/printf/printf.c ****   if ((value != value) || (value > DBL_MAX) || (value < -DBL_MAX)) {
+ 471:lib/printf/printf.c ****     return _ftoa(out, buffer, idx, maxlen, value, prec, width, flags);
+ 472:lib/printf/printf.c ****   }
+ 473:lib/printf/printf.c **** 
+ 474:lib/printf/printf.c ****   // determine the sign
+ 475:lib/printf/printf.c ****   const bool negative = value < 0;
+ 476:lib/printf/printf.c ****   if (negative) {
+ 477:lib/printf/printf.c ****     value = -value;
+ 478:lib/printf/printf.c ****   }
+ 479:lib/printf/printf.c **** 
+ 480:lib/printf/printf.c ****   // default precision
+ 481:lib/printf/printf.c ****   if (!(flags & FLAGS_PRECISION)) {
+ 482:lib/printf/printf.c ****     prec = PRINTF_DEFAULT_FLOAT_PRECISION;
+ 483:lib/printf/printf.c ****   }
+ 484:lib/printf/printf.c **** 
+ 485:lib/printf/printf.c ****   // determine the decimal exponent
+ 486:lib/printf/printf.c ****   // based on the algorithm by David Gay (https://www.ampl.com/netlib/fp/dtoa.c)
+ 487:lib/printf/printf.c ****   union {
+ 488:lib/printf/printf.c ****     uint64_t U;
+ 489:lib/printf/printf.c ****     double   F;
+ 490:lib/printf/printf.c ****   } conv;
+ 491:lib/printf/printf.c **** 
+ 492:lib/printf/printf.c ****   conv.F = value;
+ 493:lib/printf/printf.c ****   int exp2 = (int)((conv.U >> 52U) & 0x07FFU) - 1023;           // effectively log2
+ 494:lib/printf/printf.c ****   conv.U = (conv.U & ((1ULL << 52U) - 1U)) | (1023ULL << 52U);  // drop the exponent so conv.F is n
+ 495:lib/printf/printf.c ****   // now approximate log10 from the log2 integer part and an expansion of ln around 1.5
+ 496:lib/printf/printf.c ****   int expval = (int)(0.1760912590558 + exp2 * 0.301029995663981 + (conv.F - 1.5) * 0.28952965460216
+ 497:lib/printf/printf.c ****   // now we want to compute 10^expval but we want to be sure it won't overflow
+ 498:lib/printf/printf.c ****   exp2 = (int)(expval * 3.321928094887362 + 0.5);
+ 499:lib/printf/printf.c ****   const double z  = expval * 2.302585092994046 - exp2 * 0.6931471805599453;
+ 500:lib/printf/printf.c ****   const double z2 = z * z;
+ 501:lib/printf/printf.c ****   conv.U = (uint64_t)(exp2 + 1023) << 52U;
+ 502:lib/printf/printf.c ****   // compute exp(z) using continued fractions, see https://en.wikipedia.org/wiki/Exponential_functi
+ 503:lib/printf/printf.c ****   conv.F *= 1 + 2 * z / (2 - z + (z2 / (6 + (z2 / (10 + z2 / 14)))));
+ 504:lib/printf/printf.c ****   // correct for rounding errors
+ 505:lib/printf/printf.c ****   if (value < conv.F) {
+ 506:lib/printf/printf.c ****     expval--;
+ 507:lib/printf/printf.c ****     conv.F /= 10;
+ 508:lib/printf/printf.c ****   }
+ 509:lib/printf/printf.c **** 
+ 510:lib/printf/printf.c ****   // the exponent format is "%+03d" and largest value is "307", so set aside 4-5 characters
+ 511:lib/printf/printf.c ****   unsigned int minwidth = ((expval < 100) && (expval > -100)) ? 4U : 5U;
+ 512:lib/printf/printf.c **** 
+ 513:lib/printf/printf.c ****   // in "%g" mode, "prec" is the number of *significant figures* not decimals
+ 514:lib/printf/printf.c ****   if (flags & FLAGS_ADAPT_EXP) {
+ 515:lib/printf/printf.c ****     // do we want to fall-back to "%f" mode?
+ 516:lib/printf/printf.c ****     if ((value >= 1e-4) && (value < 1e6)) {
+ 517:lib/printf/printf.c ****       if ((int)prec > expval) {
+ 518:lib/printf/printf.c ****         prec = (unsigned)((int)prec - expval - 1);
+ 519:lib/printf/printf.c ****       }
+ 520:lib/printf/printf.c ****       else {
+ 521:lib/printf/printf.c ****         prec = 0;
+ 522:lib/printf/printf.c ****       }
+ 523:lib/printf/printf.c ****       flags |= FLAGS_PRECISION;   // make sure _ftoa respects precision
+ 524:lib/printf/printf.c ****       // no characters in exponent
+ 525:lib/printf/printf.c ****       minwidth = 0U;
+ 526:lib/printf/printf.c ****       expval   = 0;
+ 527:lib/printf/printf.c ****     }
+ 528:lib/printf/printf.c ****     else {
+ 529:lib/printf/printf.c ****       // we use one sigfig for the whole part
+ 530:lib/printf/printf.c ****       if ((prec > 0) && (flags & FLAGS_PRECISION)) {
+ 531:lib/printf/printf.c ****         --prec;
+ 532:lib/printf/printf.c ****       }
+ 533:lib/printf/printf.c ****     }
+ 534:lib/printf/printf.c ****   }
+ 535:lib/printf/printf.c **** 
+ 536:lib/printf/printf.c ****   // will everything fit?
+ 537:lib/printf/printf.c ****   unsigned int fwidth = width;
+ 538:lib/printf/printf.c ****   if (width > minwidth) {
+ 539:lib/printf/printf.c ****     // we didn't fall-back so subtract the characters required for the exponent
+ 540:lib/printf/printf.c ****     fwidth -= minwidth;
+ 541:lib/printf/printf.c ****   } else {
+ 542:lib/printf/printf.c ****     // not enough characters, so go back to default sizing
+ 543:lib/printf/printf.c ****     fwidth = 0U;
+ 544:lib/printf/printf.c ****   }
+ 545:lib/printf/printf.c ****   if ((flags & FLAGS_LEFT) && minwidth) {
+ 546:lib/printf/printf.c ****     // if we're padding on the right, DON'T pad the floating part
+ 547:lib/printf/printf.c ****     fwidth = 0U;
+ 548:lib/printf/printf.c ****   }
+ 549:lib/printf/printf.c **** 
+ 550:lib/printf/printf.c ****   // rescale the float value
+ 551:lib/printf/printf.c ****   if (expval) {
+ 552:lib/printf/printf.c ****     value /= conv.F;
+ 553:lib/printf/printf.c ****   }
+ 554:lib/printf/printf.c **** 
+ 555:lib/printf/printf.c ****   // output the floating part
+ 556:lib/printf/printf.c ****   const size_t start_idx = idx;
+ 557:lib/printf/printf.c ****   idx = _ftoa(out, buffer, idx, maxlen, negative ? -value : value, prec, fwidth, flags & ~FLAGS_ADA
+ 558:lib/printf/printf.c **** 
+ 559:lib/printf/printf.c ****   // output the exponent part
+ 560:lib/printf/printf.c ****   if (minwidth) {
+ 561:lib/printf/printf.c ****     // output the exponential symbol
+ 562:lib/printf/printf.c ****     out((flags & FLAGS_UPPERCASE) ? 'E' : 'e', buffer, idx++, maxlen);
+ 563:lib/printf/printf.c ****     // output the exponent value
+ 564:lib/printf/printf.c ****     idx = _ntoa_long(out, buffer, idx, maxlen, (expval < 0) ? -expval : expval, expval < 0, 10, 0, 
+ 565:lib/printf/printf.c ****     // might need to right-pad spaces
+ 566:lib/printf/printf.c ****     if (flags & FLAGS_LEFT) {
+ 567:lib/printf/printf.c ****       while (idx - start_idx < width) out(' ', buffer, idx++, maxlen);
+ 568:lib/printf/printf.c ****     }
+ 569:lib/printf/printf.c ****   }
+ 570:lib/printf/printf.c ****   return idx;
+ 571:lib/printf/printf.c **** }
+ 572:lib/printf/printf.c **** #endif  // PRINTF_SUPPORT_EXPONENTIAL
+ 573:lib/printf/printf.c **** #endif  // PRINTF_SUPPORT_FLOAT
+ 574:lib/printf/printf.c **** 
+ 575:lib/printf/printf.c **** 
+ 576:lib/printf/printf.c **** // internal vsnprintf
+ 577:lib/printf/printf.c **** static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* format, va_l
+ 578:lib/printf/printf.c **** {
+ 664              		.loc 1 578 1 is_stmt 1 view -0
+ 665              		.cfi_startproc
+ 666              		@ args = 4, pretend = 0, frame = 24
+ 667              		@ frame_needed = 0, uses_anonymous_args = 0
+ 668              		.loc 1 578 1 is_stmt 0 view .LVU185
+ 669 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 670              		.cfi_def_cfa_offset 36
+ 671              		.cfi_offset 4, -36
+ 672              		.cfi_offset 5, -32
+ 673              		.cfi_offset 6, -28
+ 674              		.cfi_offset 7, -24
+ 675              		.cfi_offset 8, -20
+ 676              		.cfi_offset 9, -16
+ 677              		.cfi_offset 10, -12
+ 678              		.cfi_offset 11, -8
+ 679              		.cfi_offset 14, -4
+ 680 0004 8DB0     		sub	sp, sp, #52
+ 681              		.cfi_def_cfa_offset 88
+ 579:lib/printf/printf.c ****   unsigned int flags, width, precision, n;
+ 580:lib/printf/printf.c ****   size_t idx = 0U;
+ 581:lib/printf/printf.c **** 
+ 582:lib/printf/printf.c ****   if (!buffer) {
+ 583:lib/printf/printf.c ****     // use null output function
+ 584:lib/printf/printf.c ****     out = _out_null;
+ 682              		.loc 1 584 9 view .LVU186
+ 683 0006 0029     		cmp	r1, #0
+ 578:lib/printf/printf.c ****   unsigned int flags, width, precision, n;
+ 684              		.loc 1 578 1 view .LVU187
+ 685 0008 0693     		str	r3, [sp, #24]
+ 686              		.loc 1 584 9 view .LVU188
+ 687 000a AE4B     		ldr	r3, .L205
+ 688              	.LVL74:
+ 689              		.loc 1 584 9 view .LVU189
+ 690 000c 169E     		ldr	r6, [sp, #88]
+ 578:lib/printf/printf.c ****   unsigned int flags, width, precision, n;
+ 691              		.loc 1 578 1 view .LVU190
+ 692 000e 9046     		mov	r8, r2
+ 693              	.LVL75:
+ 579:lib/printf/printf.c ****   unsigned int flags, width, precision, n;
+ 694              		.loc 1 579 3 is_stmt 1 view .LVU191
+ 580:lib/printf/printf.c **** 
+ 695              		.loc 1 580 3 view .LVU192
+ 582:lib/printf/printf.c ****     // use null output function
+ 696              		.loc 1 582 3 view .LVU193
+ 697              		.loc 1 584 9 is_stmt 0 view .LVU194
+ 698 0010 14BF     		ite	ne
+ 699 0012 8146     		movne	r9, r0
+ 700 0014 9946     		moveq	r9, r3
+ 701              	.LVL76:
+ 585:lib/printf/printf.c ****   }
+ 586:lib/printf/printf.c **** 
+ 587:lib/printf/printf.c ****   while (*format)
+ 588:lib/printf/printf.c ****   {
+ 589:lib/printf/printf.c ****     // format specifier?  %[flags][width][.precision][length]
+ 590:lib/printf/printf.c ****     if (*format != '%') {
+ 591:lib/printf/printf.c ****       // no
+ 592:lib/printf/printf.c ****       out(*format, buffer, idx++, maxlen);
+ 593:lib/printf/printf.c ****       format++;
+ 594:lib/printf/printf.c ****       continue;
+ 595:lib/printf/printf.c ****     }
+ 596:lib/printf/printf.c ****     else {
+ 597:lib/printf/printf.c ****       // yes, evaluate it
+ 598:lib/printf/printf.c ****       format++;
+ 599:lib/printf/printf.c ****     }
+ 600:lib/printf/printf.c **** 
+ 601:lib/printf/printf.c ****     // evaluate flags
+ 602:lib/printf/printf.c ****     flags = 0U;
+ 603:lib/printf/printf.c ****     do {
+ 604:lib/printf/printf.c ****       switch (*format) {
+ 605:lib/printf/printf.c ****         case '0': flags |= FLAGS_ZEROPAD; format++; n = 1U; break;
+ 606:lib/printf/printf.c ****         case '-': flags |= FLAGS_LEFT;    format++; n = 1U; break;
+ 607:lib/printf/printf.c ****         case '+': flags |= FLAGS_PLUS;    format++; n = 1U; break;
+ 608:lib/printf/printf.c ****         case ' ': flags |= FLAGS_SPACE;   format++; n = 1U; break;
+ 609:lib/printf/printf.c ****         case '#': flags |= FLAGS_HASH;    format++; n = 1U; break;
+ 610:lib/printf/printf.c ****         default :                                   n = 0U; break;
+ 611:lib/printf/printf.c ****       }
+ 612:lib/printf/printf.c ****     } while (n);
+ 613:lib/printf/printf.c **** 
+ 614:lib/printf/printf.c ****     // evaluate width field
+ 615:lib/printf/printf.c ****     width = 0U;
+ 616:lib/printf/printf.c ****     if (_is_digit(*format)) {
+ 617:lib/printf/printf.c ****       width = _atoi(&format);
+ 618:lib/printf/printf.c ****     }
+ 619:lib/printf/printf.c ****     else if (*format == '*') {
+ 620:lib/printf/printf.c ****       const int w = va_arg(va, int);
+ 621:lib/printf/printf.c ****       if (w < 0) {
+ 622:lib/printf/printf.c ****         flags |= FLAGS_LEFT;    // reverse padding
+ 623:lib/printf/printf.c ****         width = (unsigned int)-w;
+ 624:lib/printf/printf.c ****       }
+ 625:lib/printf/printf.c ****       else {
+ 626:lib/printf/printf.c ****         width = (unsigned int)w;
+ 627:lib/printf/printf.c ****       }
+ 628:lib/printf/printf.c ****       format++;
+ 629:lib/printf/printf.c ****     }
+ 630:lib/printf/printf.c **** 
+ 631:lib/printf/printf.c ****     // evaluate precision field
+ 632:lib/printf/printf.c ****     precision = 0U;
+ 633:lib/printf/printf.c ****     if (*format == '.') {
+ 634:lib/printf/printf.c ****       flags |= FLAGS_PRECISION;
+ 635:lib/printf/printf.c ****       format++;
+ 636:lib/printf/printf.c ****       if (_is_digit(*format)) {
+ 637:lib/printf/printf.c ****         precision = _atoi(&format);
+ 638:lib/printf/printf.c ****       }
+ 639:lib/printf/printf.c ****       else if (*format == '*') {
+ 640:lib/printf/printf.c ****         const int prec = (int)va_arg(va, int);
+ 641:lib/printf/printf.c ****         precision = prec > 0 ? (unsigned int)prec : 0U;
+ 642:lib/printf/printf.c ****         format++;
+ 643:lib/printf/printf.c ****       }
+ 644:lib/printf/printf.c ****     }
+ 645:lib/printf/printf.c **** 
+ 646:lib/printf/printf.c ****     // evaluate length field
+ 647:lib/printf/printf.c ****     switch (*format) {
+ 648:lib/printf/printf.c ****       case 'l' :
+ 649:lib/printf/printf.c ****         flags |= FLAGS_LONG;
+ 650:lib/printf/printf.c ****         format++;
+ 651:lib/printf/printf.c ****         if (*format == 'l') {
+ 652:lib/printf/printf.c ****           flags |= FLAGS_LONG_LONG;
+ 653:lib/printf/printf.c ****           format++;
+ 654:lib/printf/printf.c ****         }
+ 655:lib/printf/printf.c ****         break;
+ 656:lib/printf/printf.c ****       case 'h' :
+ 657:lib/printf/printf.c ****         flags |= FLAGS_SHORT;
+ 658:lib/printf/printf.c ****         format++;
+ 659:lib/printf/printf.c ****         if (*format == 'h') {
+ 660:lib/printf/printf.c ****           flags |= FLAGS_CHAR;
+ 661:lib/printf/printf.c ****           format++;
+ 662:lib/printf/printf.c ****         }
+ 663:lib/printf/printf.c ****         break;
+ 664:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_PTRDIFF_T)
+ 665:lib/printf/printf.c ****       case 't' :
+ 666:lib/printf/printf.c ****         flags |= (sizeof(ptrdiff_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
+ 667:lib/printf/printf.c ****         format++;
+ 668:lib/printf/printf.c ****         break;
+ 669:lib/printf/printf.c **** #endif
+ 670:lib/printf/printf.c ****       case 'j' :
+ 671:lib/printf/printf.c ****         flags |= (sizeof(intmax_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
+ 672:lib/printf/printf.c ****         format++;
+ 673:lib/printf/printf.c ****         break;
+ 674:lib/printf/printf.c ****       case 'z' :
+ 675:lib/printf/printf.c ****         flags |= (sizeof(size_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
+ 676:lib/printf/printf.c ****         format++;
+ 677:lib/printf/printf.c ****         break;
+ 678:lib/printf/printf.c ****       default :
+ 679:lib/printf/printf.c ****         break;
+ 680:lib/printf/printf.c ****     }
+ 681:lib/printf/printf.c **** 
+ 682:lib/printf/printf.c ****     // evaluate specifier
+ 683:lib/printf/printf.c ****     switch (*format) {
+ 684:lib/printf/printf.c ****       case 'd' :
+ 685:lib/printf/printf.c ****       case 'i' :
+ 686:lib/printf/printf.c ****       case 'u' :
+ 687:lib/printf/printf.c ****       case 'x' :
+ 688:lib/printf/printf.c ****       case 'X' :
+ 689:lib/printf/printf.c ****       case 'o' :
+ 690:lib/printf/printf.c ****       case 'b' : {
+ 691:lib/printf/printf.c ****         // set the base
+ 692:lib/printf/printf.c ****         unsigned int base;
+ 693:lib/printf/printf.c ****         if (*format == 'x' || *format == 'X') {
+ 694:lib/printf/printf.c ****           base = 16U;
+ 695:lib/printf/printf.c ****         }
+ 696:lib/printf/printf.c ****         else if (*format == 'o') {
+ 697:lib/printf/printf.c ****           base =  8U;
+ 698:lib/printf/printf.c ****         }
+ 699:lib/printf/printf.c ****         else if (*format == 'b') {
+ 700:lib/printf/printf.c ****           base =  2U;
+ 701:lib/printf/printf.c ****         }
+ 702:lib/printf/printf.c ****         else {
+ 703:lib/printf/printf.c ****           base = 10U;
+ 704:lib/printf/printf.c ****           flags &= ~FLAGS_HASH;   // no hash for dec format
+ 705:lib/printf/printf.c ****         }
+ 706:lib/printf/printf.c ****         // uppercase
+ 707:lib/printf/printf.c ****         if (*format == 'X') {
+ 708:lib/printf/printf.c ****           flags |= FLAGS_UPPERCASE;
+ 709:lib/printf/printf.c ****         }
+ 710:lib/printf/printf.c **** 
+ 711:lib/printf/printf.c ****         // no plus or space flag for u, x, X, o, b
+ 712:lib/printf/printf.c ****         if ((*format != 'i') && (*format != 'd')) {
+ 713:lib/printf/printf.c ****           flags &= ~(FLAGS_PLUS | FLAGS_SPACE);
+ 714:lib/printf/printf.c ****         }
+ 715:lib/printf/printf.c **** 
+ 716:lib/printf/printf.c ****         // ignore '0' flag when precision is given
+ 717:lib/printf/printf.c ****         if (flags & FLAGS_PRECISION) {
+ 718:lib/printf/printf.c ****           flags &= ~FLAGS_ZEROPAD;
+ 719:lib/printf/printf.c ****         }
+ 720:lib/printf/printf.c **** 
+ 721:lib/printf/printf.c ****         // convert the integer
+ 722:lib/printf/printf.c ****         if ((*format == 'i') || (*format == 'd')) {
+ 723:lib/printf/printf.c ****           // signed
+ 724:lib/printf/printf.c ****           if (flags & FLAGS_LONG_LONG) {
+ 725:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 726:lib/printf/printf.c ****             const long long value = va_arg(va, long long);
+ 727:lib/printf/printf.c ****             idx = _ntoa_long_long(out, buffer, idx, maxlen, (unsigned long long)(value > 0 ? value 
+ 728:lib/printf/printf.c **** #endif
+ 729:lib/printf/printf.c ****           }
+ 730:lib/printf/printf.c ****           else if (flags & FLAGS_LONG) {
+ 731:lib/printf/printf.c ****             const long value = va_arg(va, long);
+ 732:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned long)(value > 0 ? value : 0 - valu
+ 733:lib/printf/printf.c ****           }
+ 734:lib/printf/printf.c ****           else {
+ 735:lib/printf/printf.c ****             const int value = (flags & FLAGS_CHAR) ? (char)va_arg(va, int) : (flags & FLAGS_SHORT) 
+ 736:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned int)(value > 0 ? value : 0 - value
+ 737:lib/printf/printf.c ****           }
+ 738:lib/printf/printf.c ****         }
+ 739:lib/printf/printf.c ****         else {
+ 740:lib/printf/printf.c ****           // unsigned
+ 741:lib/printf/printf.c ****           if (flags & FLAGS_LONG_LONG) {
+ 742:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 743:lib/printf/printf.c ****             idx = _ntoa_long_long(out, buffer, idx, maxlen, va_arg(va, unsigned long long), false, 
+ 744:lib/printf/printf.c **** #endif
+ 745:lib/printf/printf.c ****           }
+ 746:lib/printf/printf.c ****           else if (flags & FLAGS_LONG) {
+ 747:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, va_arg(va, unsigned long), false, base, prec
+ 748:lib/printf/printf.c ****           }
+ 749:lib/printf/printf.c ****           else {
+ 750:lib/printf/printf.c ****             const unsigned int value = (flags & FLAGS_CHAR) ? (unsigned char)va_arg(va, unsigned in
+ 751:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, value, false, base, precision, width, flags)
+ 752:lib/printf/printf.c ****           }
+ 753:lib/printf/printf.c ****         }
+ 754:lib/printf/printf.c ****         format++;
+ 755:lib/printf/printf.c ****         break;
+ 756:lib/printf/printf.c ****       }
+ 757:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_FLOAT)
+ 758:lib/printf/printf.c ****       case 'f' :
+ 759:lib/printf/printf.c ****       case 'F' :
+ 760:lib/printf/printf.c ****         if (*format == 'F') flags |= FLAGS_UPPERCASE;
+ 761:lib/printf/printf.c ****         idx = _ftoa(out, buffer, idx, maxlen, va_arg(va, double), precision, width, flags);
+ 762:lib/printf/printf.c ****         format++;
+ 763:lib/printf/printf.c ****         break;
+ 764:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_EXPONENTIAL)
+ 765:lib/printf/printf.c ****       case 'e':
+ 766:lib/printf/printf.c ****       case 'E':
+ 767:lib/printf/printf.c ****       case 'g':
+ 768:lib/printf/printf.c ****       case 'G':
+ 769:lib/printf/printf.c ****         if ((*format == 'g')||(*format == 'G')) flags |= FLAGS_ADAPT_EXP;
+ 770:lib/printf/printf.c ****         if ((*format == 'E')||(*format == 'G')) flags |= FLAGS_UPPERCASE;
+ 771:lib/printf/printf.c ****         idx = _etoa(out, buffer, idx, maxlen, va_arg(va, double), precision, width, flags);
+ 772:lib/printf/printf.c ****         format++;
+ 773:lib/printf/printf.c ****         break;
+ 774:lib/printf/printf.c **** #endif  // PRINTF_SUPPORT_EXPONENTIAL
+ 775:lib/printf/printf.c **** #endif  // PRINTF_SUPPORT_FLOAT
+ 776:lib/printf/printf.c ****       case 'c' : {
+ 777:lib/printf/printf.c ****         unsigned int l = 1U;
+ 778:lib/printf/printf.c ****         // pre padding
+ 779:lib/printf/printf.c ****         if (!(flags & FLAGS_LEFT)) {
+ 780:lib/printf/printf.c ****           while (l++ < width) {
+ 781:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 782:lib/printf/printf.c ****           }
+ 783:lib/printf/printf.c ****         }
+ 784:lib/printf/printf.c ****         // char output
+ 785:lib/printf/printf.c ****         out((char)va_arg(va, int), buffer, idx++, maxlen);
+ 786:lib/printf/printf.c ****         // post padding
+ 787:lib/printf/printf.c ****         if (flags & FLAGS_LEFT) {
+ 788:lib/printf/printf.c ****           while (l++ < width) {
+ 789:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 790:lib/printf/printf.c ****           }
+ 791:lib/printf/printf.c ****         }
+ 792:lib/printf/printf.c ****         format++;
+ 793:lib/printf/printf.c ****         break;
+ 794:lib/printf/printf.c ****       }
+ 795:lib/printf/printf.c **** 
+ 796:lib/printf/printf.c ****       case 's' : {
+ 797:lib/printf/printf.c ****         const char* p = va_arg(va, char*);
+ 798:lib/printf/printf.c ****         unsigned int l = _strnlen_s(p, precision ? precision : (size_t)-1);
+ 799:lib/printf/printf.c ****         // pre padding
+ 800:lib/printf/printf.c ****         if (flags & FLAGS_PRECISION) {
+ 801:lib/printf/printf.c ****           l = (l < precision ? l : precision);
+ 802:lib/printf/printf.c ****         }
+ 803:lib/printf/printf.c ****         if (!(flags & FLAGS_LEFT)) {
+ 804:lib/printf/printf.c ****           while (l++ < width) {
+ 805:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 806:lib/printf/printf.c ****           }
+ 807:lib/printf/printf.c ****         }
+ 808:lib/printf/printf.c ****         // string output
+ 809:lib/printf/printf.c ****         while ((*p != 0) && (!(flags & FLAGS_PRECISION) || precision--)) {
+ 810:lib/printf/printf.c ****           out(*(p++), buffer, idx++, maxlen);
+ 811:lib/printf/printf.c ****         }
+ 812:lib/printf/printf.c ****         // post padding
+ 813:lib/printf/printf.c ****         if (flags & FLAGS_LEFT) {
+ 814:lib/printf/printf.c ****           while (l++ < width) {
+ 815:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 816:lib/printf/printf.c ****           }
+ 817:lib/printf/printf.c ****         }
+ 818:lib/printf/printf.c ****         format++;
+ 819:lib/printf/printf.c ****         break;
+ 820:lib/printf/printf.c ****       }
+ 821:lib/printf/printf.c **** 
+ 822:lib/printf/printf.c ****       case 'p' : {
+ 823:lib/printf/printf.c ****         width = sizeof(void*) * 2U;
+ 824:lib/printf/printf.c ****         flags |= FLAGS_ZEROPAD | FLAGS_UPPERCASE;
+ 825:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 826:lib/printf/printf.c ****         const bool is_ll = sizeof(uintptr_t) == sizeof(long long);
+ 827:lib/printf/printf.c ****         if (is_ll) {
+ 828:lib/printf/printf.c ****           idx = _ntoa_long_long(out, buffer, idx, maxlen, (uintptr_t)va_arg(va, void*), false, 16U,
+ 829:lib/printf/printf.c ****         }
+ 830:lib/printf/printf.c ****         else {
+ 831:lib/printf/printf.c **** #endif
+ 832:lib/printf/printf.c ****           idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned long)((uintptr_t)va_arg(va, void*)),
+ 833:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 834:lib/printf/printf.c ****         }
+ 835:lib/printf/printf.c **** #endif
+ 836:lib/printf/printf.c ****         format++;
+ 837:lib/printf/printf.c ****         break;
+ 838:lib/printf/printf.c ****       }
+ 839:lib/printf/printf.c **** 
+ 840:lib/printf/printf.c ****       case '%' :
+ 841:lib/printf/printf.c ****         out('%', buffer, idx++, maxlen);
+ 842:lib/printf/printf.c ****         format++;
+ 843:lib/printf/printf.c ****         break;
+ 844:lib/printf/printf.c **** 
+ 845:lib/printf/printf.c ****       default :
+ 846:lib/printf/printf.c ****         out(*format, buffer, idx++, maxlen);
+ 702              		.loc 1 846 9 view .LVU195
+ 703 0016 0025     		movs	r5, #0
+ 704              	.LVL77:
+ 705              	.L156:
+ 587:lib/printf/printf.c ****   {
+ 706              		.loc 1 587 9 is_stmt 1 view .LVU196
+ 587:lib/printf/printf.c ****   {
+ 707              		.loc 1 587 10 is_stmt 0 view .LVU197
+ 708 0018 069B     		ldr	r3, [sp, #24]
+ 709 001a 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 587:lib/printf/printf.c ****   {
+ 710              		.loc 1 587 9 view .LVU198
+ 711 001c 58B9     		cbnz	r0, .L157
+ 847:lib/printf/printf.c ****         format++;
+ 848:lib/printf/printf.c ****         break;
+ 849:lib/printf/printf.c ****     }
+ 850:lib/printf/printf.c ****   }
+ 851:lib/printf/printf.c **** 
+ 852:lib/printf/printf.c ****   // termination
+ 853:lib/printf/printf.c ****   out((char)0, buffer, idx < maxlen ? idx : maxlen - 1U, maxlen);
+ 712              		.loc 1 853 3 is_stmt 1 view .LVU199
+ 713 001e 4545     		cmp	r5, r8
+ 714 0020 2CBF     		ite	cs
+ 715 0022 08F1FF32 		addcs	r2, r8, #-1
+ 716 0026 2A46     		movcc	r2, r5
+ 717 0028 4346     		mov	r3, r8
+ 718 002a 0020     		movs	r0, #0
+ 719 002c C847     		blx	r9
+ 720              	.LVL78:
+ 854:lib/printf/printf.c **** 
+ 855:lib/printf/printf.c ****   // return written chars without terminating \0
+ 856:lib/printf/printf.c ****   return (int)idx;
+ 721              		.loc 1 856 3 view .LVU200
+ 857:lib/printf/printf.c **** }
+ 722              		.loc 1 857 1 is_stmt 0 view .LVU201
+ 723 002e 2846     		mov	r0, r5
+ 724 0030 0DB0     		add	sp, sp, #52
+ 725              		.cfi_remember_state
+ 726              		.cfi_def_cfa_offset 36
+ 727              		@ sp needed
+ 728 0032 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 729              	.LVL79:
+ 730              	.L157:
+ 731              		.cfi_restore_state
+ 590:lib/printf/printf.c ****       // no
+ 732              		.loc 1 590 5 is_stmt 1 view .LVU202
+ 593:lib/printf/printf.c ****       continue;
+ 733              		.loc 1 593 13 is_stmt 0 view .LVU203
+ 734 0036 069B     		ldr	r3, [sp, #24]
+ 590:lib/printf/printf.c ****       // no
+ 735              		.loc 1 590 8 view .LVU204
+ 736 0038 2528     		cmp	r0, #37
+ 593:lib/printf/printf.c ****       continue;
+ 737              		.loc 1 593 13 view .LVU205
+ 738 003a 03F10103 		add	r3, r3, #1
+ 739              	.LVL80:
+ 593:lib/printf/printf.c ****       continue;
+ 740              		.loc 1 593 13 view .LVU206
+ 741 003e 0693     		str	r3, [sp, #24]
+ 590:lib/printf/printf.c ****       // no
+ 742              		.loc 1 590 8 view .LVU207
+ 743 0040 06D0     		beq	.L160
+ 744              	.LVL81:
+ 745              	.L112:
+ 846:lib/printf/printf.c ****         format++;
+ 746              		.loc 1 846 9 is_stmt 1 view .LVU208
+ 747 0042 2A46     		mov	r2, r5
+ 748 0044 6C1C     		adds	r4, r5, #1
+ 749              	.LVL82:
+ 846:lib/printf/printf.c ****         format++;
+ 750              		.loc 1 846 9 is_stmt 0 view .LVU209
+ 751 0046 4346     		mov	r3, r8
+ 752 0048 0791     		str	r1, [sp, #28]
+ 753 004a C847     		blx	r9
+ 754              	.LVL83:
+ 847:lib/printf/printf.c ****         break;
+ 755              		.loc 1 847 9 is_stmt 1 view .LVU210
+ 848:lib/printf/printf.c ****     }
+ 756              		.loc 1 848 9 view .LVU211
+ 846:lib/printf/printf.c ****         format++;
+ 757              		.loc 1 846 9 is_stmt 0 view .LVU212
+ 758 004c 2546     		mov	r5, r4
+ 759 004e 0EE1     		b	.L203
+ 760              	.LVL84:
+ 761              	.L160:
+ 602:lib/printf/printf.c ****     do {
+ 762              		.loc 1 602 11 view .LVU213
+ 763 0050 0022     		movs	r2, #0
+ 764 0052 06E0     		b	.L84
+ 765              	.LVL85:
+ 766              	.L87:
+ 604:lib/printf/printf.c ****         case '0': flags |= FLAGS_ZEROPAD; format++; n = 1U; break;
+ 767              		.loc 1 604 7 view .LVU214
+ 768 0054 2D2B     		cmp	r3, #45
+ 769 0056 14D0     		beq	.L91
+ 770 0058 302B     		cmp	r3, #48
+ 771 005a 0CD1     		bne	.L90
+ 605:lib/printf/printf.c ****         case '-': flags |= FLAGS_LEFT;    format++; n = 1U; break;
+ 772              		.loc 1 605 19 is_stmt 1 view .LVU215
+ 605:lib/printf/printf.c ****         case '-': flags |= FLAGS_LEFT;    format++; n = 1U; break;
+ 773              		.loc 1 605 25 is_stmt 0 view .LVU216
+ 774 005c 42F00102 		orr	r2, r2, #1
+ 775              	.LVL86:
+ 605:lib/printf/printf.c ****         case '-': flags |= FLAGS_LEFT;    format++; n = 1U; break;
+ 776              		.loc 1 605 43 is_stmt 1 view .LVU217
+ 605:lib/printf/printf.c ****         case '-': flags |= FLAGS_LEFT;    format++; n = 1U; break;
+ 777              		.loc 1 605 53 view .LVU218
+ 605:lib/printf/printf.c ****         case '-': flags |= FLAGS_LEFT;    format++; n = 1U; break;
+ 778              		.loc 1 605 61 view .LVU219
+ 612:lib/printf/printf.c **** 
+ 779              		.loc 1 612 13 view .LVU220
+ 780              	.L95:
+ 781              	.LBB64:
+ 628:lib/printf/printf.c ****     }
+ 782              		.loc 1 628 13 is_stmt 0 view .LVU221
+ 783 0060 0690     		str	r0, [sp, #24]
+ 784              	.LVL87:
+ 785              	.L84:
+ 628:lib/printf/printf.c ****     }
+ 786              		.loc 1 628 13 view .LVU222
+ 787              	.LBE64:
+ 603:lib/printf/printf.c ****       switch (*format) {
+ 788              		.loc 1 603 5 is_stmt 1 view .LVU223
+ 604:lib/printf/printf.c ****         case '0': flags |= FLAGS_ZEROPAD; format++; n = 1U; break;
+ 789              		.loc 1 604 7 view .LVU224
+ 604:lib/printf/printf.c ****         case '0': flags |= FLAGS_ZEROPAD; format++; n = 1U; break;
+ 790              		.loc 1 604 15 is_stmt 0 view .LVU225
+ 791 0062 0698     		ldr	r0, [sp, #24]
+ 792 0064 10F8013B 		ldrb	r3, [r0], #1	@ zero_extendqisi2
+ 604:lib/printf/printf.c ****         case '0': flags |= FLAGS_ZEROPAD; format++; n = 1U; break;
+ 793              		.loc 1 604 7 view .LVU226
+ 794 0068 2B2B     		cmp	r3, #43
+ 795 006a 0DD0     		beq	.L86
+ 796 006c F2D8     		bhi	.L87
+ 797 006e 202B     		cmp	r3, #32
+ 798 0070 0DD0     		beq	.L88
+ 799 0072 232B     		cmp	r3, #35
+ 800 0074 0ED0     		beq	.L89
+ 801              	.L90:
+ 802              	.LVL88:
+ 612:lib/printf/printf.c **** 
+ 803              		.loc 1 612 13 is_stmt 1 view .LVU227
+ 615:lib/printf/printf.c ****     if (_is_digit(*format)) {
+ 804              		.loc 1 615 5 view .LVU228
+ 616:lib/printf/printf.c ****       width = _atoi(&format);
+ 805              		.loc 1 616 5 view .LVU229
+ 806              	.LBB65:
+ 807              	.LBI65:
+ 181:lib/printf/printf.c **** {
+ 808              		.loc 1 181 20 view .LVU230
+ 809              	.LBB66:
+ 183:lib/printf/printf.c **** }
+ 810              		.loc 1 183 3 view .LVU231
+ 183:lib/printf/printf.c **** }
+ 811              		.loc 1 183 3 is_stmt 0 view .LVU232
+ 812              	.LBE66:
+ 813              	.LBE65:
+ 616:lib/printf/printf.c ****       width = _atoi(&format);
+ 814              		.loc 1 616 8 view .LVU233
+ 815 0076 A3F13004 		sub	r4, r3, #48
+ 816 007a 092C     		cmp	r4, #9
+ 817 007c 28D8     		bhi	.L198
+ 818              	.LBB67:
+ 819              	.LBB68:
+ 190:lib/printf/printf.c ****   while (_is_digit(**str)) {
+ 820              		.loc 1 190 16 view .LVU234
+ 821 007e 0027     		movs	r7, #0
+ 822 0080 10E0     		b	.L93
+ 823              	.LVL89:
+ 824              	.L91:
+ 190:lib/printf/printf.c ****   while (_is_digit(**str)) {
+ 825              		.loc 1 190 16 view .LVU235
+ 826              	.LBE68:
+ 827              	.LBE67:
+ 606:lib/printf/printf.c ****         case '+': flags |= FLAGS_PLUS;    format++; n = 1U; break;
+ 828              		.loc 1 606 19 is_stmt 1 view .LVU236
+ 606:lib/printf/printf.c ****         case '+': flags |= FLAGS_PLUS;    format++; n = 1U; break;
+ 829              		.loc 1 606 25 is_stmt 0 view .LVU237
+ 830 0082 42F00202 		orr	r2, r2, #2
+ 831              	.LVL90:
+ 606:lib/printf/printf.c ****         case '+': flags |= FLAGS_PLUS;    format++; n = 1U; break;
+ 832              		.loc 1 606 43 is_stmt 1 view .LVU238
+ 606:lib/printf/printf.c ****         case '+': flags |= FLAGS_PLUS;    format++; n = 1U; break;
+ 833              		.loc 1 606 53 view .LVU239
+ 606:lib/printf/printf.c ****         case '+': flags |= FLAGS_PLUS;    format++; n = 1U; break;
+ 834              		.loc 1 606 61 view .LVU240
+ 612:lib/printf/printf.c **** 
+ 835              		.loc 1 612 13 view .LVU241
+ 836 0086 EBE7     		b	.L95
+ 837              	.LVL91:
+ 838              	.L86:
+ 607:lib/printf/printf.c ****         case ' ': flags |= FLAGS_SPACE;   format++; n = 1U; break;
+ 839              		.loc 1 607 19 view .LVU242
+ 607:lib/printf/printf.c ****         case ' ': flags |= FLAGS_SPACE;   format++; n = 1U; break;
+ 840              		.loc 1 607 25 is_stmt 0 view .LVU243
+ 841 0088 42F00402 		orr	r2, r2, #4
+ 842              	.LVL92:
+ 607:lib/printf/printf.c ****         case ' ': flags |= FLAGS_SPACE;   format++; n = 1U; break;
+ 843              		.loc 1 607 43 is_stmt 1 view .LVU244
+ 607:lib/printf/printf.c ****         case ' ': flags |= FLAGS_SPACE;   format++; n = 1U; break;
+ 844              		.loc 1 607 53 view .LVU245
+ 607:lib/printf/printf.c ****         case ' ': flags |= FLAGS_SPACE;   format++; n = 1U; break;
+ 845              		.loc 1 607 61 view .LVU246
+ 612:lib/printf/printf.c **** 
+ 846              		.loc 1 612 13 view .LVU247
+ 847 008c E8E7     		b	.L95
+ 848              	.LVL93:
+ 849              	.L88:
+ 608:lib/printf/printf.c ****         case '#': flags |= FLAGS_HASH;    format++; n = 1U; break;
+ 850              		.loc 1 608 19 view .LVU248
+ 608:lib/printf/printf.c ****         case '#': flags |= FLAGS_HASH;    format++; n = 1U; break;
+ 851              		.loc 1 608 25 is_stmt 0 view .LVU249
+ 852 008e 42F00802 		orr	r2, r2, #8
+ 853              	.LVL94:
+ 608:lib/printf/printf.c ****         case '#': flags |= FLAGS_HASH;    format++; n = 1U; break;
+ 854              		.loc 1 608 43 is_stmt 1 view .LVU250
+ 608:lib/printf/printf.c ****         case '#': flags |= FLAGS_HASH;    format++; n = 1U; break;
+ 855              		.loc 1 608 53 view .LVU251
+ 608:lib/printf/printf.c ****         case '#': flags |= FLAGS_HASH;    format++; n = 1U; break;
+ 856              		.loc 1 608 61 view .LVU252
+ 612:lib/printf/printf.c **** 
+ 857              		.loc 1 612 13 view .LVU253
+ 858 0092 E5E7     		b	.L95
+ 859              	.LVL95:
+ 860              	.L89:
+ 609:lib/printf/printf.c ****         default :                                   n = 0U; break;
+ 861              		.loc 1 609 19 view .LVU254
+ 609:lib/printf/printf.c ****         default :                                   n = 0U; break;
+ 862              		.loc 1 609 25 is_stmt 0 view .LVU255
+ 863 0094 42F01002 		orr	r2, r2, #16
+ 864              	.LVL96:
+ 609:lib/printf/printf.c ****         default :                                   n = 0U; break;
+ 865              		.loc 1 609 43 is_stmt 1 view .LVU256
+ 609:lib/printf/printf.c ****         default :                                   n = 0U; break;
+ 866              		.loc 1 609 53 view .LVU257
+ 609:lib/printf/printf.c ****         default :                                   n = 0U; break;
+ 867              		.loc 1 609 61 view .LVU258
+ 612:lib/printf/printf.c **** 
+ 868              		.loc 1 612 13 view .LVU259
+ 869 0098 E2E7     		b	.L95
+ 870              	.LVL97:
+ 871              	.L96:
+ 872              	.LBB72:
+ 873              	.LBB71:
+ 192:lib/printf/printf.c ****   }
+ 874              		.loc 1 192 5 view .LVU260
+ 192:lib/printf/printf.c ****   }
+ 875              		.loc 1 192 5 is_stmt 0 view .LVU261
+ 876 009a 0A24     		movs	r4, #10
+ 877 009c 04FB0737 		mla	r7, r4, r7, r3
+ 878              	.LVL98:
+ 192:lib/printf/printf.c ****   }
+ 879              		.loc 1 192 7 view .LVU262
+ 880 00a0 303F     		subs	r7, r7, #48
+ 881              	.LVL99:
+ 192:lib/printf/printf.c ****   }
+ 882              		.loc 1 192 42 view .LVU263
+ 883 00a2 0690     		str	r0, [sp, #24]
+ 884              	.LVL100:
+ 885              	.L93:
+ 191:lib/printf/printf.c ****     i = i * 10U + (unsigned int)(*((*str)++) - '0');
+ 886              		.loc 1 191 9 is_stmt 1 view .LVU264
+ 191:lib/printf/printf.c ****     i = i * 10U + (unsigned int)(*((*str)++) - '0');
+ 887              		.loc 1 191 10 is_stmt 0 view .LVU265
+ 888 00a4 0698     		ldr	r0, [sp, #24]
+ 889 00a6 10F8013B 		ldrb	r3, [r0], #1	@ zero_extendqisi2
+ 890              	.LVL101:
+ 891              	.LBB69:
+ 892              	.LBI69:
+ 181:lib/printf/printf.c **** {
+ 893              		.loc 1 181 20 is_stmt 1 view .LVU266
+ 894              	.LBB70:
+ 183:lib/printf/printf.c **** }
+ 895              		.loc 1 183 3 view .LVU267
+ 183:lib/printf/printf.c **** }
+ 896              		.loc 1 183 3 is_stmt 0 view .LVU268
+ 897              	.LBE70:
+ 898              	.LBE69:
+ 191:lib/printf/printf.c ****     i = i * 10U + (unsigned int)(*((*str)++) - '0');
+ 899              		.loc 1 191 9 view .LVU269
+ 900 00aa A3F13004 		sub	r4, r3, #48
+ 901 00ae 092C     		cmp	r4, #9
+ 902 00b0 F3D9     		bls	.L96
+ 903              	.LVL102:
+ 904              	.L97:
+ 191:lib/printf/printf.c ****     i = i * 10U + (unsigned int)(*((*str)++) - '0');
+ 905              		.loc 1 191 9 view .LVU270
+ 906              	.LBE71:
+ 907              	.LBE72:
+ 632:lib/printf/printf.c ****     if (*format == '.') {
+ 908              		.loc 1 632 5 is_stmt 1 view .LVU271
+ 633:lib/printf/printf.c ****       flags |= FLAGS_PRECISION;
+ 909              		.loc 1 633 5 view .LVU272
+ 633:lib/printf/printf.c ****       flags |= FLAGS_PRECISION;
+ 910              		.loc 1 633 8 is_stmt 0 view .LVU273
+ 911 00b2 069B     		ldr	r3, [sp, #24]
+ 912 00b4 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 913 00b6 2E2B     		cmp	r3, #46
+ 914 00b8 4BD1     		bne	.L163
+ 635:lib/printf/printf.c ****       if (_is_digit(*format)) {
+ 915              		.loc 1 635 13 view .LVU274
+ 916 00ba 069B     		ldr	r3, [sp, #24]
+ 917 00bc 581C     		adds	r0, r3, #1
+ 634:lib/printf/printf.c ****       format++;
+ 918              		.loc 1 634 7 is_stmt 1 view .LVU275
+ 636:lib/printf/printf.c ****         precision = _atoi(&format);
+ 919              		.loc 1 636 11 is_stmt 0 view .LVU276
+ 920 00be 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 636:lib/printf/printf.c ****         precision = _atoi(&format);
+ 921              		.loc 1 636 10 view .LVU277
+ 922 00c0 A3F13004 		sub	r4, r3, #48
+ 923 00c4 092C     		cmp	r4, #9
+ 634:lib/printf/printf.c ****       format++;
+ 924              		.loc 1 634 13 view .LVU278
+ 925 00c6 42F48062 		orr	r2, r2, #1024
+ 926              	.LVL103:
+ 635:lib/printf/printf.c ****       if (_is_digit(*format)) {
+ 927              		.loc 1 635 7 is_stmt 1 view .LVU279
+ 636:lib/printf/printf.c ****         precision = _atoi(&format);
+ 928              		.loc 1 636 7 view .LVU280
+ 929              	.LBB73:
+ 930              	.LBI73:
+ 181:lib/printf/printf.c **** {
+ 931              		.loc 1 181 20 view .LVU281
+ 932              	.LBB74:
+ 183:lib/printf/printf.c **** }
+ 933              		.loc 1 183 3 view .LVU282
+ 183:lib/printf/printf.c **** }
+ 934              		.loc 1 183 3 is_stmt 0 view .LVU283
+ 935              	.LBE74:
+ 936              	.LBE73:
+ 636:lib/printf/printf.c ****         precision = _atoi(&format);
+ 937              		.loc 1 636 10 view .LVU284
+ 938 00ca 39D8     		bhi	.L199
+ 939              	.LBB75:
+ 940              	.LBB76:
+ 190:lib/printf/printf.c ****   while (_is_digit(**str)) {
+ 941              		.loc 1 190 16 view .LVU285
+ 942 00cc 0024     		movs	r4, #0
+ 943 00ce 11E0     		b	.L101
+ 944              	.LVL104:
+ 945              	.L198:
+ 190:lib/printf/printf.c ****   while (_is_digit(**str)) {
+ 946              		.loc 1 190 16 view .LVU286
+ 947              	.LBE76:
+ 948              	.LBE75:
+ 619:lib/printf/printf.c ****       const int w = va_arg(va, int);
+ 949              		.loc 1 619 10 is_stmt 1 view .LVU287
+ 619:lib/printf/printf.c ****       const int w = va_arg(va, int);
+ 950              		.loc 1 619 13 is_stmt 0 view .LVU288
+ 951 00d0 2A2B     		cmp	r3, #42
+ 952 00d2 08D1     		bne	.L162
+ 953              	.LBB80:
+ 620:lib/printf/printf.c ****       if (w < 0) {
+ 954              		.loc 1 620 7 is_stmt 1 view .LVU289
+ 955              	.LVL105:
+ 620:lib/printf/printf.c ****       if (w < 0) {
+ 956              		.loc 1 620 17 is_stmt 0 view .LVU290
+ 957 00d4 56F8047B 		ldr	r7, [r6], #4
+ 958              	.LVL106:
+ 621:lib/printf/printf.c ****         flags |= FLAGS_LEFT;    // reverse padding
+ 959              		.loc 1 621 7 is_stmt 1 view .LVU291
+ 620:lib/printf/printf.c ****       if (w < 0) {
+ 960              		.loc 1 620 17 is_stmt 0 view .LVU292
+ 961 00d8 0690     		str	r0, [sp, #24]
+ 962              	.LVL107:
+ 621:lib/printf/printf.c ****         flags |= FLAGS_LEFT;    // reverse padding
+ 963              		.loc 1 621 10 view .LVU293
+ 964 00da 002F     		cmp	r7, #0
+ 622:lib/printf/printf.c ****         width = (unsigned int)-w;
+ 965              		.loc 1 622 9 is_stmt 1 view .LVU294
+ 622:lib/printf/printf.c ****         width = (unsigned int)-w;
+ 966              		.loc 1 622 15 is_stmt 0 view .LVU295
+ 967 00dc BCBF     		itt	lt
+ 968 00de 42F00202 		orrlt	r2, r2, #2
+ 969              	.LVL108:
+ 623:lib/printf/printf.c ****       }
+ 970              		.loc 1 623 9 is_stmt 1 view .LVU296
+ 623:lib/printf/printf.c ****       }
+ 971              		.loc 1 623 31 is_stmt 0 view .LVU297
+ 972 00e2 7F42     		rsblt	r7, r7, #0
+ 973              	.LVL109:
+ 628:lib/printf/printf.c ****     }
+ 974              		.loc 1 628 7 is_stmt 1 view .LVU298
+ 628:lib/printf/printf.c ****     }
+ 975              		.loc 1 628 7 is_stmt 0 view .LVU299
+ 976 00e4 E5E7     		b	.L97
+ 977              	.LVL110:
+ 978              	.L162:
+ 628:lib/printf/printf.c ****     }
+ 979              		.loc 1 628 7 view .LVU300
+ 980              	.LBE80:
+ 615:lib/printf/printf.c ****     if (_is_digit(*format)) {
+ 981              		.loc 1 615 11 view .LVU301
+ 982 00e6 0027     		movs	r7, #0
+ 983 00e8 E3E7     		b	.L97
+ 984              	.LVL111:
+ 985              	.L103:
+ 986              	.LBB81:
+ 987              	.LBB79:
+ 192:lib/printf/printf.c ****   }
+ 988              		.loc 1 192 5 is_stmt 1 view .LVU302
+ 192:lib/printf/printf.c ****   }
+ 989              		.loc 1 192 5 is_stmt 0 view .LVU303
+ 990 00ea 0A20     		movs	r0, #10
+ 991              	.LVL112:
+ 192:lib/printf/printf.c ****   }
+ 992              		.loc 1 192 5 view .LVU304
+ 993 00ec 00FB0434 		mla	r4, r0, r4, r3
+ 994              	.LVL113:
+ 192:lib/printf/printf.c ****   }
+ 995              		.loc 1 192 7 view .LVU305
+ 996 00f0 303C     		subs	r4, r4, #48
+ 997              	.LVL114:
+ 192:lib/printf/printf.c ****   }
+ 998              		.loc 1 192 42 view .LVU306
+ 999 00f2 6046     		mov	r0, ip
+ 1000              	.LVL115:
+ 1001              	.L101:
+ 191:lib/printf/printf.c ****     i = i * 10U + (unsigned int)(*((*str)++) - '0');
+ 1002              		.loc 1 191 9 is_stmt 1 view .LVU307
+ 191:lib/printf/printf.c ****     i = i * 10U + (unsigned int)(*((*str)++) - '0');
+ 1003              		.loc 1 191 10 is_stmt 0 view .LVU308
+ 1004 00f4 8446     		mov	ip, r0
+ 1005 00f6 1CF8013B 		ldrb	r3, [ip], #1	@ zero_extendqisi2
+ 1006              	.LVL116:
+ 1007              	.LBB77:
+ 1008              	.LBI77:
+ 181:lib/printf/printf.c **** {
+ 1009              		.loc 1 181 20 is_stmt 1 view .LVU309
+ 1010              	.LBB78:
+ 183:lib/printf/printf.c **** }
+ 1011              		.loc 1 183 3 view .LVU310
+ 183:lib/printf/printf.c **** }
+ 1012              		.loc 1 183 3 is_stmt 0 view .LVU311
+ 1013              	.LBE78:
+ 1014              	.LBE77:
+ 191:lib/printf/printf.c ****     i = i * 10U + (unsigned int)(*((*str)++) - '0');
+ 1015              		.loc 1 191 9 view .LVU312
+ 1016 00fa A3F1300E 		sub	lr, r3, #48
+ 1017 00fe BEF1090F 		cmp	lr, #9
+ 1018 0102 F2D9     		bls	.L103
+ 1019              	.LVL117:
+ 1020              	.L100:
+ 191:lib/printf/printf.c ****     i = i * 10U + (unsigned int)(*((*str)++) - '0');
+ 1021              		.loc 1 191 9 view .LVU313
+ 1022              	.LBE79:
+ 1023              	.LBE81:
+ 647:lib/printf/printf.c ****       case 'l' :
+ 1024              		.loc 1 647 5 is_stmt 1 view .LVU314
+ 647:lib/printf/printf.c ****       case 'l' :
+ 1025              		.loc 1 647 13 is_stmt 0 view .LVU315
+ 1026 0104 0346     		mov	r3, r0
+ 1027 0106 13F801CB 		ldrb	ip, [r3], #1	@ zero_extendqisi2
+ 647:lib/printf/printf.c ****       case 'l' :
+ 1028              		.loc 1 647 5 view .LVU316
+ 1029 010a BCF16C0F 		cmp	ip, #108
+ 1030 010e 29D0     		beq	.L104
+ 647:lib/printf/printf.c ****       case 'l' :
+ 1031              		.loc 1 647 5 view .LVU317
+ 1032 0110 22D8     		bhi	.L105
+ 1033 0112 BCF1680F 		cmp	ip, #104
+ 1034 0116 2ED0     		beq	.L106
+ 1035 0118 BCF16A0F 		cmp	ip, #106
+ 1036 011c 36D0     		beq	.L107
+ 1037              	.L201:
+ 647:lib/printf/printf.c ****       case 'l' :
+ 1038              		.loc 1 647 5 view .LVU318
+ 1039 011e 0346     		mov	r3, r0
+ 1040              	.LVL118:
+ 1041              	.L108:
+ 683:lib/printf/printf.c ****       case 'd' :
+ 1042              		.loc 1 683 5 is_stmt 1 view .LVU319
+ 683:lib/printf/printf.c ****       case 'd' :
+ 1043              		.loc 1 683 13 is_stmt 0 view .LVU320
+ 1044 0120 13F8010B 		ldrb	r0, [r3], #1	@ zero_extendqisi2
+ 1045              	.LVL119:
+ 683:lib/printf/printf.c ****       case 'd' :
+ 1046              		.loc 1 683 13 view .LVU321
+ 1047 0124 0693     		str	r3, [sp, #24]
+ 683:lib/printf/printf.c ****       case 'd' :
+ 1048              		.loc 1 683 5 view .LVU322
+ 1049 0126 7828     		cmp	r0, #120
+ 1050 0128 8BD8     		bhi	.L112
+ 683:lib/printf/printf.c ****       case 'd' :
+ 1051              		.loc 1 683 5 view .LVU323
+ 1052 012a 6128     		cmp	r0, #97
+ 1053 012c 31D8     		bhi	.L113
+ 1054 012e 2528     		cmp	r0, #37
+ 1055 0130 87D0     		beq	.L112
+ 1056 0132 5828     		cmp	r0, #88
+ 1057 0134 85D1     		bne	.L112
+ 1058              	.LVL120:
+ 1059              	.LBB82:
+ 707:lib/printf/printf.c ****           flags |= FLAGS_UPPERCASE;
+ 1060              		.loc 1 707 9 is_stmt 1 view .LVU324
+ 708:lib/printf/printf.c ****         }
+ 1061              		.loc 1 708 11 view .LVU325
+ 708:lib/printf/printf.c ****         }
+ 1062              		.loc 1 708 17 is_stmt 0 view .LVU326
+ 1063 0136 42F02002 		orr	r2, r2, #32
+ 1064              	.LVL121:
+ 712:lib/printf/printf.c ****           flags &= ~(FLAGS_PLUS | FLAGS_SPACE);
+ 1065              		.loc 1 712 9 is_stmt 1 view .LVU327
+ 1066              	.L166:
+ 694:lib/printf/printf.c ****         }
+ 1067              		.loc 1 694 16 is_stmt 0 view .LVU328
+ 1068 013a 4FF0100C 		mov	ip, #16
+ 1069 013e 6FE0     		b	.L121
+ 1070              	.LVL122:
+ 1071              	.L199:
+ 694:lib/printf/printf.c ****         }
+ 1072              		.loc 1 694 16 view .LVU329
+ 1073              	.LBE82:
+ 639:lib/printf/printf.c ****         const int prec = (int)va_arg(va, int);
+ 1074              		.loc 1 639 12 is_stmt 1 view .LVU330
+ 639:lib/printf/printf.c ****         const int prec = (int)va_arg(va, int);
+ 1075              		.loc 1 639 15 is_stmt 0 view .LVU331
+ 1076 0140 2A2B     		cmp	r3, #42
+ 1077 0142 07D1     		bne	.L165
+ 1078              	.LBB88:
+ 640:lib/printf/printf.c ****         precision = prec > 0 ? (unsigned int)prec : 0U;
+ 1079              		.loc 1 640 9 is_stmt 1 view .LVU332
+ 1080              	.LVL123:
+ 641:lib/printf/printf.c ****         format++;
+ 1081              		.loc 1 641 9 view .LVU333
+ 641:lib/printf/printf.c ****         format++;
+ 1082              		.loc 1 641 51 is_stmt 0 view .LVU334
+ 1083 0144 56F8044B 		ldr	r4, [r6], #4
+ 1084              	.LVL124:
+ 642:lib/printf/printf.c ****       }
+ 1085              		.loc 1 642 15 view .LVU335
+ 1086 0148 0698     		ldr	r0, [sp, #24]
+ 641:lib/printf/printf.c ****         format++;
+ 1087              		.loc 1 641 51 view .LVU336
+ 1088 014a 24EAE474 		bic	r4, r4, r4, asr #31
+ 1089              	.LVL125:
+ 642:lib/printf/printf.c ****       }
+ 1090              		.loc 1 642 9 is_stmt 1 view .LVU337
+ 642:lib/printf/printf.c ****       }
+ 1091              		.loc 1 642 15 is_stmt 0 view .LVU338
+ 1092 014e 0230     		adds	r0, r0, #2
+ 1093              	.LVL126:
+ 642:lib/printf/printf.c ****       }
+ 1094              		.loc 1 642 15 view .LVU339
+ 1095 0150 D8E7     		b	.L100
+ 1096              	.LVL127:
+ 1097              	.L163:
+ 642:lib/printf/printf.c ****       }
+ 1098              		.loc 1 642 15 view .LVU340
+ 1099              	.LBE88:
+ 1100 0152 0698     		ldr	r0, [sp, #24]
+ 1101              	.LVL128:
+ 1102              	.L165:
+ 632:lib/printf/printf.c ****     if (*format == '.') {
+ 1103              		.loc 1 632 15 view .LVU341
+ 1104 0154 0024     		movs	r4, #0
+ 1105 0156 D5E7     		b	.L100
+ 1106              	.LVL129:
+ 1107              	.L105:
+ 647:lib/printf/printf.c ****       case 'l' :
+ 1108              		.loc 1 647 5 view .LVU342
+ 1109 0158 BCF17A0F 		cmp	ip, #122
+ 1110 015c DFD1     		bne	.L201
+ 1111              	.LVL130:
+ 1112              	.L109:
+ 675:lib/printf/printf.c ****         format++;
+ 1113              		.loc 1 675 9 is_stmt 1 view .LVU343
+ 675:lib/printf/printf.c ****         format++;
+ 1114              		.loc 1 675 15 is_stmt 0 view .LVU344
+ 1115 015e 42F48072 		orr	r2, r2, #256
+ 1116              	.LVL131:
+ 676:lib/printf/printf.c ****         break;
+ 1117              		.loc 1 676 9 is_stmt 1 view .LVU345
+ 677:lib/printf/printf.c ****       default :
+ 1118              		.loc 1 677 9 view .LVU346
+ 1119 0162 DDE7     		b	.L108
+ 1120              	.LVL132:
+ 1121              	.L104:
+ 649:lib/printf/printf.c ****         format++;
+ 1122              		.loc 1 649 9 view .LVU347
+ 650:lib/printf/printf.c ****         if (*format == 'l') {
+ 1123              		.loc 1 650 9 view .LVU348
+ 651:lib/printf/printf.c ****           flags |= FLAGS_LONG_LONG;
+ 1124              		.loc 1 651 9 view .LVU349
+ 651:lib/printf/printf.c ****           flags |= FLAGS_LONG_LONG;
+ 1125              		.loc 1 651 12 is_stmt 0 view .LVU350
+ 1126 0164 90F801C0 		ldrb	ip, [r0, #1]	@ zero_extendqisi2
+ 1127 0168 BCF16C0F 		cmp	ip, #108
+ 1128 016c F7D1     		bne	.L109
+ 652:lib/printf/printf.c ****           format++;
+ 1129              		.loc 1 652 11 is_stmt 1 view .LVU351
+ 652:lib/printf/printf.c ****           format++;
+ 1130              		.loc 1 652 17 is_stmt 0 view .LVU352
+ 1131 016e 42F44072 		orr	r2, r2, #768
+ 1132              	.LVL133:
+ 653:lib/printf/printf.c ****         }
+ 1133              		.loc 1 653 11 is_stmt 1 view .LVU353
+ 1134              	.L202:
+ 661:lib/printf/printf.c ****         }
+ 1135              		.loc 1 661 11 view .LVU354
+ 661:lib/printf/printf.c ****         }
+ 1136              		.loc 1 661 17 is_stmt 0 view .LVU355
+ 1137 0172 831C     		adds	r3, r0, #2
+ 1138              	.LVL134:
+ 661:lib/printf/printf.c ****         }
+ 1139              		.loc 1 661 17 view .LVU356
+ 1140 0174 D4E7     		b	.L108
+ 1141              	.LVL135:
+ 1142              	.L106:
+ 657:lib/printf/printf.c ****         format++;
+ 1143              		.loc 1 657 9 is_stmt 1 view .LVU357
+ 658:lib/printf/printf.c ****         if (*format == 'h') {
+ 1144              		.loc 1 658 9 view .LVU358
+ 659:lib/printf/printf.c ****           flags |= FLAGS_CHAR;
+ 1145              		.loc 1 659 9 view .LVU359
+ 659:lib/printf/printf.c ****           flags |= FLAGS_CHAR;
+ 1146              		.loc 1 659 12 is_stmt 0 view .LVU360
+ 1147 0176 90F801C0 		ldrb	ip, [r0, #1]	@ zero_extendqisi2
+ 1148 017a BCF1680F 		cmp	ip, #104
+ 1149 017e 02D0     		beq	.L111
+ 657:lib/printf/printf.c ****         format++;
+ 1150              		.loc 1 657 15 view .LVU361
+ 1151 0180 42F08002 		orr	r2, r2, #128
+ 1152              	.LVL136:
+ 657:lib/printf/printf.c ****         format++;
+ 1153              		.loc 1 657 15 view .LVU362
+ 1154 0184 CCE7     		b	.L108
+ 1155              	.LVL137:
+ 1156              	.L111:
+ 660:lib/printf/printf.c ****           format++;
+ 1157              		.loc 1 660 11 is_stmt 1 view .LVU363
+ 660:lib/printf/printf.c ****           format++;
+ 1158              		.loc 1 660 17 is_stmt 0 view .LVU364
+ 1159 0186 42F0C002 		orr	r2, r2, #192
+ 1160              	.LVL138:
+ 660:lib/printf/printf.c ****           format++;
+ 1161              		.loc 1 660 17 view .LVU365
+ 1162 018a F2E7     		b	.L202
+ 1163              	.LVL139:
+ 1164              	.L107:
+ 671:lib/printf/printf.c ****         format++;
+ 1165              		.loc 1 671 9 is_stmt 1 view .LVU366
+ 671:lib/printf/printf.c ****         format++;
+ 1166              		.loc 1 671 15 is_stmt 0 view .LVU367
+ 1167 018c 42F40072 		orr	r2, r2, #512
+ 1168              	.LVL140:
+ 672:lib/printf/printf.c ****         break;
+ 1169              		.loc 1 672 9 is_stmt 1 view .LVU368
+ 673:lib/printf/printf.c ****       case 'z' :
+ 1170              		.loc 1 673 9 view .LVU369
+ 1171 0190 C6E7     		b	.L108
+ 1172              	.LVL141:
+ 1173              	.L113:
+ 673:lib/printf/printf.c ****       case 'z' :
+ 1174              		.loc 1 673 9 is_stmt 0 view .LVU370
+ 1175 0192 A0F16203 		sub	r3, r0, #98
+ 1176              	.LVL142:
+ 673:lib/printf/printf.c ****       case 'z' :
+ 1177              		.loc 1 673 9 view .LVU371
+ 1178 0196 162B     		cmp	r3, #22
+ 1179 0198 3FF653AF 		bhi	.L112
+ 1180 019c 0FF2040C 		adr	ip, .L117
+ 1181 01a0 5CF823F0 		ldr	pc, [ip, r3, lsl #2]
+ 1182              		.p2align 2
+ 1183              	.L117:
+ 1184 01a4 01020000 		.word	.L116+1
+ 1185 01a8 C9020000 		.word	.L120+1
+ 1186 01ac 01020000 		.word	.L116+1
+ 1187 01b0 43000000 		.word	.L112+1
+ 1188 01b4 43000000 		.word	.L112+1
+ 1189 01b8 43000000 		.word	.L112+1
+ 1190 01bc 43000000 		.word	.L112+1
+ 1191 01c0 01020000 		.word	.L116+1
+ 1192 01c4 43000000 		.word	.L112+1
+ 1193 01c8 43000000 		.word	.L112+1
+ 1194 01cc 43000000 		.word	.L112+1
+ 1195 01d0 43000000 		.word	.L112+1
+ 1196 01d4 43000000 		.word	.L112+1
+ 1197 01d8 01020000 		.word	.L116+1
+ 1198 01dc 11040000 		.word	.L119+1
+ 1199 01e0 43000000 		.word	.L112+1
+ 1200 01e4 43000000 		.word	.L112+1
+ 1201 01e8 45030000 		.word	.L118+1
+ 1202 01ec 43000000 		.word	.L112+1
+ 1203 01f0 01020000 		.word	.L116+1
+ 1204 01f4 43000000 		.word	.L112+1
+ 1205 01f8 43000000 		.word	.L112+1
+ 1206 01fc 01020000 		.word	.L116+1
+ 1207              		.p2align 1
+ 1208              	.L116:
+ 1209              	.LBB89:
+ 692:lib/printf/printf.c ****         if (*format == 'x' || *format == 'X') {
+ 1210              		.loc 1 692 9 is_stmt 1 view .LVU372
+ 693:lib/printf/printf.c ****           base = 16U;
+ 1211              		.loc 1 693 9 view .LVU373
+ 693:lib/printf/printf.c ****           base = 16U;
+ 1212              		.loc 1 693 12 is_stmt 0 view .LVU374
+ 1213 0200 7828     		cmp	r0, #120
+ 1214 0202 9AD0     		beq	.L166
+ 696:lib/printf/printf.c ****           base =  8U;
+ 1215              		.loc 1 696 14 is_stmt 1 view .LVU375
+ 696:lib/printf/printf.c ****           base =  8U;
+ 1216              		.loc 1 696 17 is_stmt 0 view .LVU376
+ 1217 0204 6F28     		cmp	r0, #111
+ 1218 0206 00F01881 		beq	.L167
+ 699:lib/printf/printf.c ****           base =  2U;
+ 1219              		.loc 1 699 14 is_stmt 1 view .LVU377
+ 699:lib/printf/printf.c ****           base =  2U;
+ 1220              		.loc 1 699 17 is_stmt 0 view .LVU378
+ 1221 020a 6228     		cmp	r0, #98
+ 1222 020c 00F01881 		beq	.L168
+ 703:lib/printf/printf.c ****           flags &= ~FLAGS_HASH;   // no hash for dec format
+ 1223              		.loc 1 703 11 is_stmt 1 view .LVU379
+ 1224              	.LVL143:
+ 704:lib/printf/printf.c ****         }
+ 1225              		.loc 1 704 11 view .LVU380
+ 712:lib/printf/printf.c ****           flags &= ~(FLAGS_PLUS | FLAGS_SPACE);
+ 1226              		.loc 1 712 12 is_stmt 0 view .LVU381
+ 1227 0210 6928     		cmp	r0, #105
+ 704:lib/printf/printf.c ****         }
+ 1228              		.loc 1 704 17 view .LVU382
+ 1229 0212 22F01002 		bic	r2, r2, #16
+ 1230              	.LVL144:
+ 707:lib/printf/printf.c ****           flags |= FLAGS_UPPERCASE;
+ 1231              		.loc 1 707 9 is_stmt 1 view .LVU383
+ 712:lib/printf/printf.c ****           flags &= ~(FLAGS_PLUS | FLAGS_SPACE);
+ 1232              		.loc 1 712 9 view .LVU384
+ 703:lib/printf/printf.c ****           flags &= ~FLAGS_HASH;   // no hash for dec format
+ 1233              		.loc 1 703 16 is_stmt 0 view .LVU385
+ 1234 0216 4FF00A0C 		mov	ip, #10
+ 712:lib/printf/printf.c ****           flags &= ~(FLAGS_PLUS | FLAGS_SPACE);
+ 1235              		.loc 1 712 12 view .LVU386
+ 1236 021a 03D0     		beq	.L123
+ 1237              	.LVL145:
+ 712:lib/printf/printf.c ****           flags &= ~(FLAGS_PLUS | FLAGS_SPACE);
+ 1238              		.loc 1 712 30 view .LVU387
+ 1239 021c 6428     		cmp	r0, #100
+ 1240 021e 01D0     		beq	.L123
+ 1241              	.L121:
+ 713:lib/printf/printf.c ****         }
+ 1242              		.loc 1 713 11 is_stmt 1 view .LVU388
+ 713:lib/printf/printf.c ****         }
+ 1243              		.loc 1 713 17 is_stmt 0 view .LVU389
+ 1244 0220 22F00C02 		bic	r2, r2, #12
+ 1245              	.LVL146:
+ 1246              	.L123:
+ 717:lib/printf/printf.c ****           flags &= ~FLAGS_ZEROPAD;
+ 1247              		.loc 1 717 9 is_stmt 1 view .LVU390
+ 717:lib/printf/printf.c ****           flags &= ~FLAGS_ZEROPAD;
+ 1248              		.loc 1 717 12 is_stmt 0 view .LVU391
+ 1249 0224 5305     		lsls	r3, r2, #21
+ 718:lib/printf/printf.c ****         }
+ 1250              		.loc 1 718 11 is_stmt 1 view .LVU392
+ 718:lib/printf/printf.c ****         }
+ 1251              		.loc 1 718 17 is_stmt 0 view .LVU393
+ 1252 0226 48BF     		it	mi
+ 1253 0228 22F00102 		bicmi	r2, r2, #1
+ 1254              	.LVL147:
+ 722:lib/printf/printf.c ****           // signed
+ 1255              		.loc 1 722 9 is_stmt 1 view .LVU394
+ 722:lib/printf/printf.c ****           // signed
+ 1256              		.loc 1 722 12 is_stmt 0 view .LVU395
+ 1257 022c 6928     		cmp	r0, #105
+ 741:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 1258              		.loc 1 741 21 view .LVU396
+ 1259 022e 02F40073 		and	r3, r2, #512
+ 722:lib/printf/printf.c ****           // signed
+ 1260              		.loc 1 722 12 view .LVU397
+ 1261 0232 01D0     		beq	.L125
+ 722:lib/printf/printf.c ****           // signed
+ 1262              		.loc 1 722 30 discriminator 1 view .LVU398
+ 1263 0234 6428     		cmp	r0, #100
+ 1264 0236 26D1     		bne	.L126
+ 1265              	.L125:
+ 724:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 1266              		.loc 1 724 11 is_stmt 1 view .LVU399
+ 724:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 1267              		.loc 1 724 14 is_stmt 0 view .LVU400
+ 1268 0238 002B     		cmp	r3, #0
+ 1269 023a 7FF4EDAE 		bne	.L156
+ 730:lib/printf/printf.c ****             const long value = va_arg(va, long);
+ 1270              		.loc 1 730 16 is_stmt 1 view .LVU401
+ 730:lib/printf/printf.c ****             const long value = va_arg(va, long);
+ 1271              		.loc 1 730 19 is_stmt 0 view .LVU402
+ 1272 023e D305     		lsls	r3, r2, #23
+ 747:lib/printf/printf.c ****           }
+ 1273              		.loc 1 747 19 view .LVU403
+ 1274 0240 06F1040A 		add	r10, r6, #4
+ 730:lib/printf/printf.c ****             const long value = va_arg(va, long);
+ 1275              		.loc 1 730 19 view .LVU404
+ 1276 0244 15D5     		bpl	.L128
+ 1277              	.LBB83:
+ 731:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned long)(value > 0 ? value : 0 - valu
+ 1278              		.loc 1 731 13 is_stmt 1 view .LVU405
+ 1279              	.LVL148:
+ 731:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned long)(value > 0 ? value : 0 - valu
+ 1280              		.loc 1 731 24 is_stmt 0 view .LVU406
+ 1281 0246 3368     		ldr	r3, [r6]
+ 732:lib/printf/printf.c ****           }
+ 1282              		.loc 1 732 13 is_stmt 1 view .LVU407
+ 1283              	.LVL149:
+ 1284              	.L130:
+ 732:lib/printf/printf.c ****           }
+ 1285              		.loc 1 732 13 is_stmt 0 view .LVU408
+ 1286              	.LBE83:
+ 1287              	.LBB84:
+ 736:lib/printf/printf.c ****           }
+ 1288              		.loc 1 736 13 is_stmt 1 discriminator 8 view .LVU409
+ 736:lib/printf/printf.c ****           }
+ 1289              		.loc 1 736 19 is_stmt 0 discriminator 8 view .LVU410
+ 1290 0248 CDE902C4 		strd	ip, r4, [sp, #8]
+ 1291 024c CDE90472 		strd	r7, r2, [sp, #16]
+ 736:lib/printf/printf.c ****           }
+ 1292              		.loc 1 736 56 discriminator 8 view .LVU411
+ 1293 0250 002B     		cmp	r3, #0
+ 736:lib/printf/printf.c ****           }
+ 1294              		.loc 1 736 19 discriminator 8 view .LVU412
+ 1295 0252 4FEAD372 		lsr	r2, r3, #31
+ 1296              	.LVL150:
+ 736:lib/printf/printf.c ****           }
+ 1297              		.loc 1 736 19 discriminator 8 view .LVU413
+ 1298 0256 0192     		str	r2, [sp, #4]
+ 736:lib/printf/printf.c ****           }
+ 1299              		.loc 1 736 56 discriminator 8 view .LVU414
+ 1300 0258 B8BF     		it	lt
+ 1301 025a 5B42     		rsblt	r3, r3, #0
+ 1302              	.LVL151:
+ 1303              	.L204:
+ 736:lib/printf/printf.c ****           }
+ 1304              		.loc 1 736 56 discriminator 8 view .LVU415
+ 1305              	.LBE84:
+ 1306              	.LBB85:
+ 751:lib/printf/printf.c ****           }
+ 1307              		.loc 1 751 19 discriminator 8 view .LVU416
+ 1308 025c 0093     		str	r3, [sp]
+ 1309 025e 2A46     		mov	r2, r5
+ 1310 0260 4346     		mov	r3, r8
+ 1311 0262 4846     		mov	r0, r9
+ 1312 0264 0791     		str	r1, [sp, #28]
+ 1313 0266 FFF7FEFF 		bl	_ntoa_long
+ 1314              	.LVL152:
+ 751:lib/printf/printf.c ****           }
+ 1315              		.loc 1 751 19 discriminator 8 view .LVU417
+ 1316 026a 5646     		mov	r6, r10
+ 1317 026c 0546     		mov	r5, r0
+ 1318              	.LVL153:
+ 751:lib/printf/printf.c ****           }
+ 1319              		.loc 1 751 19 discriminator 8 view .LVU418
+ 1320              	.LBE85:
+ 754:lib/printf/printf.c ****         break;
+ 1321              		.loc 1 754 9 is_stmt 1 discriminator 8 view .LVU419
+ 755:lib/printf/printf.c ****       }
+ 1322              		.loc 1 755 9 discriminator 8 view .LVU420
+ 1323              	.L203:
+ 755:lib/printf/printf.c ****       }
+ 1324              		.loc 1 755 9 is_stmt 0 discriminator 8 view .LVU421
+ 1325              	.LBE89:
+ 846:lib/printf/printf.c ****         format++;
+ 1326              		.loc 1 846 9 view .LVU422
+ 1327 026e 0799     		ldr	r1, [sp, #28]
+ 1328              	.LVL154:
+ 848:lib/printf/printf.c ****     }
+ 1329              		.loc 1 848 9 view .LVU423
+ 1330 0270 D2E6     		b	.L156
+ 1331              	.LVL155:
+ 1332              	.L128:
+ 1333              	.LBB90:
+ 1334              	.LBB86:
+ 735:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned int)(value > 0 ? value : 0 - value
+ 1335              		.loc 1 735 13 is_stmt 1 view .LVU424
+ 735:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned int)(value > 0 ? value : 0 - value
+ 1336              		.loc 1 735 76 is_stmt 0 view .LVU425
+ 1337 0272 12F0400F 		tst	r2, #64
+ 1338 0276 3368     		ldr	r3, [r6]
+ 1339 0278 01D0     		beq	.L129
+ 1340              	.LVL156:
+ 735:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned int)(value > 0 ? value : 0 - value
+ 1341              		.loc 1 735 76 view .LVU426
+ 1342 027a DBB2     		uxtb	r3, r3
+ 1343 027c E4E7     		b	.L130
+ 1344              	.LVL157:
+ 1345              	.L129:
+ 735:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned int)(value > 0 ? value : 0 - value
+ 1346              		.loc 1 735 129 discriminator 2 view .LVU427
+ 1347 027e 1606     		lsls	r6, r2, #24
+ 1348              	.LVL158:
+ 735:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned int)(value > 0 ? value : 0 - value
+ 1349              		.loc 1 735 129 discriminator 2 view .LVU428
+ 1350 0280 48BF     		it	mi
+ 1351 0282 1BB2     		sxthmi	r3, r3
+ 1352 0284 E0E7     		b	.L130
+ 1353              	.LVL159:
+ 1354              	.L126:
+ 735:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned int)(value > 0 ? value : 0 - value
+ 1355              		.loc 1 735 129 discriminator 2 view .LVU429
+ 1356              	.LBE86:
+ 741:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 1357              		.loc 1 741 11 is_stmt 1 view .LVU430
+ 741:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 1358              		.loc 1 741 14 is_stmt 0 view .LVU431
+ 1359 0286 002B     		cmp	r3, #0
+ 1360 0288 7FF4C6AE 		bne	.L156
+ 746:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, va_arg(va, unsigned long), false, base, prec
+ 1361              		.loc 1 746 16 is_stmt 1 view .LVU432
+ 746:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, va_arg(va, unsigned long), false, base, prec
+ 1362              		.loc 1 746 19 is_stmt 0 view .LVU433
+ 1363 028c D005     		lsls	r0, r2, #23
+ 747:lib/printf/printf.c ****           }
+ 1364              		.loc 1 747 19 view .LVU434
+ 1365 028e 06F1040A 		add	r10, r6, #4
+ 746:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, va_arg(va, unsigned long), false, base, prec
+ 1366              		.loc 1 746 19 view .LVU435
+ 1367 0292 06D5     		bpl	.L132
+ 747:lib/printf/printf.c ****           }
+ 1368              		.loc 1 747 13 is_stmt 1 view .LVU436
+ 1369              	.LVL160:
+ 747:lib/printf/printf.c ****           }
+ 1370              		.loc 1 747 19 is_stmt 0 view .LVU437
+ 1371 0294 CDE90472 		strd	r7, r2, [sp, #16]
+ 1372 0298 CDE902C4 		strd	ip, r4, [sp, #8]
+ 1373 029c 0193     		str	r3, [sp, #4]
+ 1374 029e 3368     		ldr	r3, [r6]
+ 1375 02a0 DCE7     		b	.L204
+ 1376              	.LVL161:
+ 1377              	.L132:
+ 1378              	.LBB87:
+ 750:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, value, false, base, precision, width, flags)
+ 1379              		.loc 1 750 13 is_stmt 1 view .LVU438
+ 750:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, value, false, base, precision, width, flags)
+ 1380              		.loc 1 750 103 is_stmt 0 view .LVU439
+ 1381 02a2 12F0400F 		tst	r2, #64
+ 1382 02a6 3368     		ldr	r3, [r6]
+ 1383 02a8 07D0     		beq	.L133
+ 1384              	.LVL162:
+ 750:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, value, false, base, precision, width, flags)
+ 1385              		.loc 1 750 103 view .LVU440
+ 1386 02aa DBB2     		uxtb	r3, r3
+ 1387              	.LVL163:
+ 1388              	.L134:
+ 751:lib/printf/printf.c ****           }
+ 1389              		.loc 1 751 13 is_stmt 1 discriminator 8 view .LVU441
+ 751:lib/printf/printf.c ****           }
+ 1390              		.loc 1 751 19 is_stmt 0 discriminator 8 view .LVU442
+ 1391 02ac CDE90472 		strd	r7, r2, [sp, #16]
+ 1392 02b0 0022     		movs	r2, #0
+ 1393              	.LVL164:
+ 751:lib/printf/printf.c ****           }
+ 1394              		.loc 1 751 19 discriminator 8 view .LVU443
+ 1395 02b2 CDE902C4 		strd	ip, r4, [sp, #8]
+ 1396 02b6 0192     		str	r2, [sp, #4]
+ 1397 02b8 D0E7     		b	.L204
+ 1398              	.LVL165:
+ 1399              	.L133:
+ 750:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, value, false, base, precision, width, flags)
+ 1400              		.loc 1 750 174 discriminator 2 view .LVU444
+ 1401 02ba 1006     		lsls	r0, r2, #24
+ 1402              	.LVL166:
+ 750:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, value, false, base, precision, width, flags)
+ 1403              		.loc 1 750 174 discriminator 2 view .LVU445
+ 1404 02bc 48BF     		it	mi
+ 1405 02be 9BB2     		uxthmi	r3, r3
+ 1406 02c0 F4E7     		b	.L134
+ 1407              	.L206:
+ 1408 02c2 00BF     		.align	2
+ 1409              	.L205:
+ 1410 02c4 00000000 		.word	_out_null
+ 1411              	.LVL167:
+ 1412              	.L120:
+ 750:lib/printf/printf.c ****             idx = _ntoa_long(out, buffer, idx, maxlen, value, false, base, precision, width, flags)
+ 1413              		.loc 1 750 174 discriminator 2 view .LVU446
+ 1414              	.LBE87:
+ 1415              	.LBE90:
+ 1416              	.LBB91:
+ 777:lib/printf/printf.c ****         // pre padding
+ 1417              		.loc 1 777 9 is_stmt 1 view .LVU447
+ 779:lib/printf/printf.c ****           while (l++ < width) {
+ 1418              		.loc 1 779 9 view .LVU448
+ 779:lib/printf/printf.c ****           while (l++ < width) {
+ 1419              		.loc 1 779 12 is_stmt 0 view .LVU449
+ 1420 02c8 12F00204 		ands	r4, r2, #2
+ 1421              	.LVL168:
+ 779:lib/printf/printf.c ****           while (l++ < width) {
+ 1422              		.loc 1 779 12 view .LVU450
+ 1423 02cc 26D0     		beq	.L170
+ 777:lib/printf/printf.c ****         // pre padding
+ 1424              		.loc 1 777 22 view .LVU451
+ 1425 02ce 4FF0010A 		mov	r10, #1
+ 1426              	.LVL169:
+ 1427              	.L137:
+ 785:lib/printf/printf.c ****         // post padding
+ 1428              		.loc 1 785 9 is_stmt 1 view .LVU452
+ 785:lib/printf/printf.c ****         // post padding
+ 1429              		.loc 1 785 9 is_stmt 0 view .LVU453
+ 1430 02d2 56F8040B 		ldr	r0, [r6], #4
+ 1431              	.LVL170:
+ 785:lib/printf/printf.c ****         // post padding
+ 1432              		.loc 1 785 9 view .LVU454
+ 1433 02d6 0791     		str	r1, [sp, #28]
+ 1434 02d8 4346     		mov	r3, r8
+ 1435 02da 2A46     		mov	r2, r5
+ 1436 02dc C0B2     		uxtb	r0, r0
+ 1437 02de C847     		blx	r9
+ 1438              	.LVL171:
+ 1439 02e0 05F1010B 		add	fp, r5, #1
+ 1440              	.LVL172:
+ 787:lib/printf/printf.c ****           while (l++ < width) {
+ 1441              		.loc 1 787 9 is_stmt 1 view .LVU455
+ 787:lib/printf/printf.c ****           while (l++ < width) {
+ 1442              		.loc 1 787 12 is_stmt 0 view .LVU456
+ 1443 02e4 0799     		ldr	r1, [sp, #28]
+ 1444 02e6 5CB3     		cbz	r4, .L140
+ 1445 02e8 5446     		mov	r4, r10
+ 785:lib/printf/printf.c ****         // post padding
+ 1446              		.loc 1 785 9 view .LVU457
+ 1447 02ea 5A46     		mov	r2, fp
+ 1448 02ec 20E0     		b	.L139
+ 1449              	.LVL173:
+ 1450              	.L138:
+ 781:lib/printf/printf.c ****           }
+ 1451              		.loc 1 781 13 is_stmt 1 view .LVU458
+ 781:lib/printf/printf.c ****           }
+ 1452              		.loc 1 781 13 is_stmt 0 view .LVU459
+ 1453 02ee 0791     		str	r1, [sp, #28]
+ 1454 02f0 4346     		mov	r3, r8
+ 1455 02f2 2020     		movs	r0, #32
+ 1456 02f4 C847     		blx	r9
+ 1457              	.LVL174:
+ 781:lib/printf/printf.c ****           }
+ 1458              		.loc 1 781 13 view .LVU460
+ 1459 02f6 0799     		ldr	r1, [sp, #28]
+ 1460              	.LVL175:
+ 1461              	.L136:
+ 781:lib/printf/printf.c ****           }
+ 1462              		.loc 1 781 13 view .LVU461
+ 1463 02f8 0AEB0502 		add	r2, r10, r5
+ 1464              	.LVL176:
+ 780:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1465              		.loc 1 780 17 is_stmt 1 view .LVU462
+ 780:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1466              		.loc 1 780 17 is_stmt 0 view .LVU463
+ 1467 02fc 0AF1010A 		add	r10, r10, #1
+ 1468              	.LVL177:
+ 780:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1469              		.loc 1 780 17 view .LVU464
+ 1470 0300 5745     		cmp	r7, r10
+ 1471 0302 F4D8     		bhi	.L138
+ 1472 0304 002F     		cmp	r7, #0
+ 1473 0306 07F1FF33 		add	r3, r7, #-1
+ 1474 030a 08BF     		it	eq
+ 1475 030c 0023     		moveq	r3, #0
+ 780:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1476              		.loc 1 780 19 view .LVU465
+ 1477 030e 07F1010A 		add	r10, r7, #1
+ 1478              	.LVL178:
+ 780:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1479              		.loc 1 780 19 view .LVU466
+ 1480 0312 1D44     		add	r5, r5, r3
+ 1481 0314 08BF     		it	eq
+ 1482 0316 4FF0020A 		moveq	r10, #2
+ 1483 031a DAE7     		b	.L137
+ 1484              	.LVL179:
+ 1485              	.L170:
+ 780:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1486              		.loc 1 780 19 view .LVU467
+ 1487 031c A246     		mov	r10, r4
+ 1488 031e EBE7     		b	.L136
+ 1489              	.LVL180:
+ 1490              	.L141:
+ 789:lib/printf/printf.c ****           }
+ 1491              		.loc 1 789 13 is_stmt 1 view .LVU468
+ 1492 0320 0791     		str	r1, [sp, #28]
+ 1493 0322 4346     		mov	r3, r8
+ 1494 0324 2020     		movs	r0, #32
+ 1495 0326 551C     		adds	r5, r2, #1
+ 1496              	.LVL181:
+ 789:lib/printf/printf.c ****           }
+ 1497              		.loc 1 789 13 is_stmt 0 view .LVU469
+ 1498 0328 C847     		blx	r9
+ 1499              	.LVL182:
+ 1500 032a 0799     		ldr	r1, [sp, #28]
+ 1501 032c 0134     		adds	r4, r4, #1
+ 1502              	.LVL183:
+ 789:lib/printf/printf.c ****           }
+ 1503              		.loc 1 789 13 view .LVU470
+ 1504 032e 2A46     		mov	r2, r5
+ 1505              	.LVL184:
+ 1506              	.L139:
+ 788:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1507              		.loc 1 788 17 is_stmt 1 view .LVU471
+ 788:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1508              		.loc 1 788 17 is_stmt 0 view .LVU472
+ 1509 0330 BC42     		cmp	r4, r7
+ 1510 0332 F5D3     		bcc	.L141
+ 788:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1511              		.loc 1 788 17 view .LVU473
+ 1512 0334 A7EB0A03 		sub	r3, r7, r10
+ 1513 0338 5745     		cmp	r7, r10
+ 1514 033a 38BF     		it	cc
+ 1515 033c 0023     		movcc	r3, #0
+ 1516 033e 9B44     		add	fp, fp, r3
+ 1517              	.LVL185:
+ 1518              	.L140:
+ 792:lib/printf/printf.c ****         break;
+ 1519              		.loc 1 792 9 is_stmt 1 view .LVU474
+ 793:lib/printf/printf.c ****       }
+ 1520              		.loc 1 793 9 view .LVU475
+ 1521 0340 5D46     		mov	r5, fp
+ 1522 0342 69E6     		b	.L156
+ 1523              	.LVL186:
+ 1524              	.L118:
+ 793:lib/printf/printf.c ****       }
+ 1525              		.loc 1 793 9 is_stmt 0 view .LVU476
+ 1526              	.LBE91:
+ 1527              	.LBB92:
+ 797:lib/printf/printf.c ****         unsigned int l = _strnlen_s(p, precision ? precision : (size_t)-1);
+ 1528              		.loc 1 797 9 is_stmt 1 view .LVU477
+ 797:lib/printf/printf.c ****         unsigned int l = _strnlen_s(p, precision ? precision : (size_t)-1);
+ 1529              		.loc 1 797 21 is_stmt 0 view .LVU478
+ 1530 0344 3346     		mov	r3, r6
+ 798:lib/printf/printf.c ****         // pre padding
+ 1531              		.loc 1 798 26 view .LVU479
+ 1532 0346 002C     		cmp	r4, #0
+ 797:lib/printf/printf.c ****         unsigned int l = _strnlen_s(p, precision ? precision : (size_t)-1);
+ 1533              		.loc 1 797 21 view .LVU480
+ 1534 0348 53F804AB 		ldr	r10, [r3], #4
+ 1535 034c 0793     		str	r3, [sp, #28]
+ 1536              	.LVL187:
+ 798:lib/printf/printf.c ****         // pre padding
+ 1537              		.loc 1 798 9 is_stmt 1 view .LVU481
+ 798:lib/printf/printf.c ****         // pre padding
+ 1538              		.loc 1 798 26 is_stmt 0 view .LVU482
+ 1539 034e 14BF     		ite	ne
+ 1540 0350 2346     		movne	r3, r4
+ 1541 0352 4FF0FF33 		moveq	r3, #-1
+ 1542 0356 5344     		add	r3, r3, r10
+ 1543 0358 D346     		mov	fp, r10
+ 1544              	.L143:
+ 1545              	.LVL188:
+ 1546              	.LBB93:
+ 1547              	.LBB94:
+ 174:lib/printf/printf.c ****   return (unsigned int)(s - str);
+ 1548              		.loc 1 174 17 is_stmt 1 view .LVU483
+ 174:lib/printf/printf.c ****   return (unsigned int)(s - str);
+ 1549              		.loc 1 174 3 is_stmt 0 view .LVU484
+ 1550 035a 9BF80000 		ldrb	r0, [fp]	@ zero_extendqisi2
+ 1551 035e 08B1     		cbz	r0, .L144
+ 174:lib/printf/printf.c ****   return (unsigned int)(s - str);
+ 1552              		.loc 1 174 20 view .LVU485
+ 1553 0360 5B45     		cmp	r3, fp
+ 1554 0362 11D1     		bne	.L145
+ 1555              	.L144:
+ 175:lib/printf/printf.c **** }
+ 1556              		.loc 1 175 3 is_stmt 1 view .LVU486
+ 1557              	.LBE94:
+ 1558              	.LBE93:
+ 800:lib/printf/printf.c ****           l = (l < precision ? l : precision);
+ 1559              		.loc 1 800 12 is_stmt 0 view .LVU487
+ 1560 0364 12F48063 		ands	r3, r2, #1024
+ 1561              	.LBB97:
+ 1562              	.LBB95:
+ 175:lib/printf/printf.c **** }
+ 1563              		.loc 1 175 27 view .LVU488
+ 1564 0368 ABEB0A0B 		sub	fp, fp, r10
+ 1565              	.LVL189:
+ 175:lib/printf/printf.c **** }
+ 1566              		.loc 1 175 27 view .LVU489
+ 1567              	.LBE95:
+ 1568              	.LBE97:
+ 800:lib/printf/printf.c ****           l = (l < precision ? l : precision);
+ 1569              		.loc 1 800 9 is_stmt 1 view .LVU490
+ 800:lib/printf/printf.c ****           l = (l < precision ? l : precision);
+ 1570              		.loc 1 800 12 is_stmt 0 view .LVU491
+ 1571 036c 0893     		str	r3, [sp, #32]
+ 1572 036e 02D0     		beq	.L146
+ 801:lib/printf/printf.c ****         }
+ 1573              		.loc 1 801 11 is_stmt 1 view .LVU492
+ 801:lib/printf/printf.c ****         }
+ 1574              		.loc 1 801 13 is_stmt 0 view .LVU493
+ 1575 0370 A345     		cmp	fp, r4
+ 1576 0372 28BF     		it	cs
+ 1577 0374 A346     		movcs	fp, r4
+ 1578              	.LVL190:
+ 1579              	.L146:
+ 803:lib/printf/printf.c ****           while (l++ < width) {
+ 1580              		.loc 1 803 9 is_stmt 1 view .LVU494
+ 803:lib/printf/printf.c ****           while (l++ < width) {
+ 1581              		.loc 1 803 12 is_stmt 0 view .LVU495
+ 1582 0376 12F00203 		ands	r3, r2, #2
+ 1583 037a 0993     		str	r3, [sp, #36]
+ 1584 037c 1BD1     		bne	.L148
+ 803:lib/printf/printf.c ****           while (l++ < width) {
+ 1585              		.loc 1 803 12 view .LVU496
+ 1586 037e ABEB0503 		sub	r3, fp, r5
+ 1587 0382 2A46     		mov	r2, r5
+ 1588              	.LVL191:
+ 803:lib/printf/printf.c ****           while (l++ < width) {
+ 1589              		.loc 1 803 12 view .LVU497
+ 1590 0384 0A93     		str	r3, [sp, #40]
+ 1591 0386 09E0     		b	.L147
+ 1592              	.LVL192:
+ 1593              	.L145:
+ 1594              	.LBB98:
+ 1595              	.LBB96:
+ 174:lib/printf/printf.c ****   return (unsigned int)(s - str);
+ 1596              		.loc 1 174 38 is_stmt 1 view .LVU498
+ 174:lib/printf/printf.c ****   return (unsigned int)(s - str);
+ 1597              		.loc 1 174 34 view .LVU499
+ 1598 0388 0BF1010B 		add	fp, fp, #1
+ 1599              	.LVL193:
+ 174:lib/printf/printf.c ****   return (unsigned int)(s - str);
+ 1600              		.loc 1 174 34 is_stmt 0 view .LVU500
+ 1601 038c E5E7     		b	.L143
+ 1602              	.LVL194:
+ 1603              	.L149:
+ 174:lib/printf/printf.c ****   return (unsigned int)(s - str);
+ 1604              		.loc 1 174 34 view .LVU501
+ 1605              	.LBE96:
+ 1606              	.LBE98:
+ 805:lib/printf/printf.c ****           }
+ 1607              		.loc 1 805 13 is_stmt 1 view .LVU502
+ 1608 038e 0B91     		str	r1, [sp, #44]
+ 1609 0390 4346     		mov	r3, r8
+ 1610 0392 2020     		movs	r0, #32
+ 1611 0394 561C     		adds	r6, r2, #1
+ 1612              	.LVL195:
+ 805:lib/printf/printf.c ****           }
+ 1613              		.loc 1 805 13 is_stmt 0 view .LVU503
+ 1614 0396 C847     		blx	r9
+ 1615              	.LVL196:
+ 1616 0398 0B99     		ldr	r1, [sp, #44]
+ 1617 039a 3246     		mov	r2, r6
+ 1618              	.LVL197:
+ 1619              	.L147:
+ 804:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1620              		.loc 1 804 17 is_stmt 1 view .LVU504
+ 1621 039c 0A9B     		ldr	r3, [sp, #40]
+ 1622 039e 1344     		add	r3, r3, r2
+ 1623 03a0 BB42     		cmp	r3, r7
+ 1624 03a2 F4D3     		bcc	.L149
+ 804:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1625              		.loc 1 804 17 is_stmt 0 view .LVU505
+ 1626 03a4 A7EB0B03 		sub	r3, r7, fp
+ 1627 03a8 5F45     		cmp	r7, fp
+ 1628 03aa 38BF     		it	cc
+ 1629 03ac 0023     		movcc	r3, #0
+ 1630 03ae 0BF1010B 		add	fp, fp, #1
+ 1631 03b2 1D44     		add	r5, r5, r3
+ 804:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1632              		.loc 1 804 19 view .LVU506
+ 1633 03b4 9B44     		add	fp, fp, r3
+ 1634              	.LVL198:
+ 1635              	.L148:
+ 804:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1636              		.loc 1 804 19 view .LVU507
+ 1637 03b6 5646     		mov	r6, r10
+ 1638 03b8 A5EB0A0A 		sub	r10, r5, r10
+ 1639 03bc 05E0     		b	.L150
+ 1640              	.LVL199:
+ 1641              	.L174:
+ 804:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1642              		.loc 1 804 19 view .LVU508
+ 1643 03be 1C46     		mov	r4, r3
+ 1644              	.LVL200:
+ 1645              	.L152:
+ 810:lib/printf/printf.c ****         }
+ 1646              		.loc 1 810 11 is_stmt 1 view .LVU509
+ 810:lib/printf/printf.c ****         }
+ 1647              		.loc 1 810 11 is_stmt 0 view .LVU510
+ 1648 03c0 0A91     		str	r1, [sp, #40]
+ 1649 03c2 4346     		mov	r3, r8
+ 1650 03c4 2A46     		mov	r2, r5
+ 1651 03c6 C847     		blx	r9
+ 1652              	.LVL201:
+ 1653 03c8 0A99     		ldr	r1, [sp, #40]
+ 1654              	.LVL202:
+ 1655              	.L150:
+ 810:lib/printf/printf.c ****         }
+ 1656              		.loc 1 810 11 view .LVU511
+ 1657 03ca 0AEB0605 		add	r5, r10, r6
+ 1658              	.LVL203:
+ 809:lib/printf/printf.c ****           out(*(p++), buffer, idx++, maxlen);
+ 1659              		.loc 1 809 15 is_stmt 1 view .LVU512
+ 809:lib/printf/printf.c ****           out(*(p++), buffer, idx++, maxlen);
+ 1660              		.loc 1 809 17 is_stmt 0 view .LVU513
+ 1661 03ce 16F8010B 		ldrb	r0, [r6], #1	@ zero_extendqisi2
+ 1662              	.LVL204:
+ 809:lib/printf/printf.c ****           out(*(p++), buffer, idx++, maxlen);
+ 1663              		.loc 1 809 15 view .LVU514
+ 1664 03d2 28B1     		cbz	r0, .L151
+ 809:lib/printf/printf.c ****           out(*(p++), buffer, idx++, maxlen);
+ 1665              		.loc 1 809 26 discriminator 1 view .LVU515
+ 1666 03d4 089B     		ldr	r3, [sp, #32]
+ 1667 03d6 002B     		cmp	r3, #0
+ 1668 03d8 F2D0     		beq	.L152
+ 809:lib/printf/printf.c ****           out(*(p++), buffer, idx++, maxlen);
+ 1669              		.loc 1 809 69 discriminator 2 view .LVU516
+ 1670 03da 631E     		subs	r3, r4, #1
+ 1671              	.LVL205:
+ 809:lib/printf/printf.c ****           out(*(p++), buffer, idx++, maxlen);
+ 1672              		.loc 1 809 57 discriminator 2 view .LVU517
+ 1673 03dc 002C     		cmp	r4, #0
+ 1674 03de EED1     		bne	.L174
+ 1675              	.LVL206:
+ 1676              	.L151:
+ 813:lib/printf/printf.c ****           while (l++ < width) {
+ 1677              		.loc 1 813 9 is_stmt 1 view .LVU518
+ 813:lib/printf/printf.c ****           while (l++ < width) {
+ 1678              		.loc 1 813 12 is_stmt 0 view .LVU519
+ 1679 03e0 099B     		ldr	r3, [sp, #36]
+ 1680 03e2 9BB1     		cbz	r3, .L154
+ 1681 03e4 2A46     		mov	r2, r5
+ 1682 03e6 ABEB0504 		sub	r4, fp, r5
+ 1683 03ea 06E0     		b	.L153
+ 1684              	.LVL207:
+ 1685              	.L155:
+ 815:lib/printf/printf.c ****           }
+ 1686              		.loc 1 815 13 is_stmt 1 view .LVU520
+ 1687 03ec 0891     		str	r1, [sp, #32]
+ 1688 03ee 4346     		mov	r3, r8
+ 1689 03f0 2020     		movs	r0, #32
+ 1690 03f2 561C     		adds	r6, r2, #1
+ 1691              	.LVL208:
+ 815:lib/printf/printf.c ****           }
+ 1692              		.loc 1 815 13 is_stmt 0 view .LVU521
+ 1693 03f4 C847     		blx	r9
+ 1694              	.LVL209:
+ 1695 03f6 0899     		ldr	r1, [sp, #32]
+ 1696 03f8 3246     		mov	r2, r6
+ 1697              	.LVL210:
+ 1698              	.L153:
+ 814:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1699              		.loc 1 814 17 is_stmt 1 view .LVU522
+ 1700 03fa A318     		adds	r3, r4, r2
+ 1701 03fc BB42     		cmp	r3, r7
+ 1702 03fe F5D3     		bcc	.L155
+ 814:lib/printf/printf.c ****             out(' ', buffer, idx++, maxlen);
+ 1703              		.loc 1 814 17 is_stmt 0 view .LVU523
+ 1704 0400 A7EB0B03 		sub	r3, r7, fp
+ 1705 0404 5F45     		cmp	r7, fp
+ 1706 0406 38BF     		it	cc
+ 1707 0408 0023     		movcc	r3, #0
+ 1708 040a 1D44     		add	r5, r5, r3
+ 1709              	.LVL211:
+ 1710              	.L154:
+ 818:lib/printf/printf.c ****         break;
+ 1711              		.loc 1 818 9 is_stmt 1 view .LVU524
+ 819:lib/printf/printf.c ****       }
+ 1712              		.loc 1 819 9 view .LVU525
+ 797:lib/printf/printf.c ****         unsigned int l = _strnlen_s(p, precision ? precision : (size_t)-1);
+ 1713              		.loc 1 797 21 is_stmt 0 view .LVU526
+ 1714 040c 079E     		ldr	r6, [sp, #28]
+ 819:lib/printf/printf.c ****       }
+ 1715              		.loc 1 819 9 view .LVU527
+ 1716 040e 03E6     		b	.L156
+ 1717              	.LVL212:
+ 1718              	.L119:
+ 819:lib/printf/printf.c ****       }
+ 1719              		.loc 1 819 9 view .LVU528
+ 1720              	.LBE92:
+ 823:lib/printf/printf.c ****         flags |= FLAGS_ZEROPAD | FLAGS_UPPERCASE;
+ 1721              		.loc 1 823 9 is_stmt 1 view .LVU529
+ 824:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 1722              		.loc 1 824 9 view .LVU530
+ 832:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 1723              		.loc 1 832 11 view .LVU531
+ 824:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 1724              		.loc 1 824 15 is_stmt 0 view .LVU532
+ 1725 0410 42F02102 		orr	r2, r2, #33
+ 1726              	.LVL213:
+ 832:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 1727              		.loc 1 832 17 view .LVU533
+ 1728 0414 0823     		movs	r3, #8
+ 1729 0416 CDE90343 		strd	r4, r3, [sp, #12]
+ 1730 041a 0592     		str	r2, [sp, #20]
+ 1731 041c 0023     		movs	r3, #0
+ 1732 041e 1022     		movs	r2, #16
+ 1733              	.LVL214:
+ 832:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 1734              		.loc 1 832 17 view .LVU534
+ 1735 0420 CDE90132 		strd	r3, r2, [sp, #4]
+ 1736 0424 56F8043B 		ldr	r3, [r6], #4
+ 1737              	.LVL215:
+ 832:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 1738              		.loc 1 832 17 view .LVU535
+ 1739 0428 0093     		str	r3, [sp]
+ 1740 042a 2A46     		mov	r2, r5
+ 1741 042c 4346     		mov	r3, r8
+ 1742 042e 4846     		mov	r0, r9
+ 1743 0430 0791     		str	r1, [sp, #28]
+ 1744 0432 FFF7FEFF 		bl	_ntoa_long
+ 1745              	.LVL216:
+ 832:lib/printf/printf.c **** #if defined(PRINTF_SUPPORT_LONG_LONG)
+ 1746              		.loc 1 832 17 view .LVU536
+ 1747 0436 0546     		mov	r5, r0
+ 1748              	.LVL217:
+ 836:lib/printf/printf.c ****         break;
+ 1749              		.loc 1 836 9 is_stmt 1 view .LVU537
+ 837:lib/printf/printf.c ****       }
+ 1750              		.loc 1 837 9 view .LVU538
+ 1751 0438 19E7     		b	.L203
+ 1752              	.LVL218:
+ 1753              	.L167:
+ 1754              	.LBB99:
+ 697:lib/printf/printf.c ****         }
+ 1755              		.loc 1 697 16 is_stmt 0 view .LVU539
+ 1756 043a 4FF0080C 		mov	ip, #8
+ 1757 043e EFE6     		b	.L121
+ 1758              	.L168:
+ 700:lib/printf/printf.c ****         }
+ 1759              		.loc 1 700 16 view .LVU540
+ 1760 0440 4FF0020C 		mov	ip, #2
+ 1761              	.LVL219:
+ 707:lib/printf/printf.c ****           flags |= FLAGS_UPPERCASE;
+ 1762              		.loc 1 707 9 is_stmt 1 view .LVU541
+ 712:lib/printf/printf.c ****           flags &= ~(FLAGS_PLUS | FLAGS_SPACE);
+ 1763              		.loc 1 712 9 view .LVU542
+ 1764 0444 ECE6     		b	.L121
+ 1765              	.LBE99:
+ 1766              		.cfi_endproc
+ 1767              	.LFE10:
+ 1769 0446 00BF     		.section	.text.printf_,"ax",%progbits
+ 1770              		.align	1
+ 1771              		.global	printf_
+ 1772              		.syntax unified
+ 1773              		.thumb
+ 1774              		.thumb_func
+ 1775              		.fpu fpv4-sp-d16
+ 1777              	printf_:
+ 1778              	.LVL220:
+ 1779              	.LFB11:
+ 858:lib/printf/printf.c **** 
+ 859:lib/printf/printf.c **** 
+ 860:lib/printf/printf.c **** ///////////////////////////////////////////////////////////////////////////////
+ 861:lib/printf/printf.c **** 
+ 862:lib/printf/printf.c **** int printf_(const char* format, ...)
+ 863:lib/printf/printf.c **** {
+ 1780              		.loc 1 863 1 view -0
+ 1781              		.cfi_startproc
+ 1782              		@ args = 4, pretend = 16, frame = 8
+ 1783              		@ frame_needed = 0, uses_anonymous_args = 1
+ 864:lib/printf/printf.c ****   va_list va;
+ 1784              		.loc 1 864 3 view .LVU544
+ 865:lib/printf/printf.c ****   va_start(va, format);
+ 1785              		.loc 1 865 3 view .LVU545
+ 863:lib/printf/printf.c ****   va_list va;
+ 1786              		.loc 1 863 1 is_stmt 0 view .LVU546
+ 1787 0000 0FB4     		push	{r0, r1, r2, r3}
+ 1788              		.cfi_def_cfa_offset 16
+ 1789              		.cfi_offset 0, -16
+ 1790              		.cfi_offset 1, -12
+ 1791              		.cfi_offset 2, -8
+ 1792              		.cfi_offset 3, -4
+ 1793 0002 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 1794              		.cfi_def_cfa_offset 40
+ 1795              		.cfi_offset 14, -20
+ 863:lib/printf/printf.c ****   va_list va;
+ 1796              		.loc 1 863 1 view .LVU547
+ 1797 0004 06AA     		add	r2, sp, #24
+ 866:lib/printf/printf.c ****   char buffer[1];
+ 867:lib/printf/printf.c ****   const int ret = _vsnprintf(_out_char, buffer, (size_t)-1, format, va);
+ 1798              		.loc 1 867 19 view .LVU548
+ 1799 0006 02A9     		add	r1, sp, #8
+ 863:lib/printf/printf.c ****   va_list va;
+ 1800              		.loc 1 863 1 view .LVU549
+ 1801 0008 52F8043B 		ldr	r3, [r2], #4
+ 865:lib/printf/printf.c ****   char buffer[1];
+ 1802              		.loc 1 865 3 view .LVU550
+ 1803 000c 0392     		str	r2, [sp, #12]
+ 866:lib/printf/printf.c ****   char buffer[1];
+ 1804              		.loc 1 866 3 is_stmt 1 view .LVU551
+ 1805              		.loc 1 867 3 view .LVU552
+ 1806              		.loc 1 867 19 is_stmt 0 view .LVU553
+ 1807 000e 0092     		str	r2, [sp]
+ 1808 0010 0448     		ldr	r0, .L208
+ 1809 0012 4FF0FF32 		mov	r2, #-1
+ 1810 0016 FFF7FEFF 		bl	_vsnprintf
+ 1811              	.LVL221:
+ 868:lib/printf/printf.c ****   va_end(va);
+ 1812              		.loc 1 868 3 is_stmt 1 view .LVU554
+ 869:lib/printf/printf.c ****   return ret;
+ 1813              		.loc 1 869 3 view .LVU555
+ 870:lib/printf/printf.c **** }
+ 1814              		.loc 1 870 1 is_stmt 0 view .LVU556
+ 1815 001a 05B0     		add	sp, sp, #20
+ 1816              		.cfi_def_cfa_offset 20
+ 1817              		@ sp needed
+ 1818 001c 5DF804EB 		ldr	lr, [sp], #4
+ 1819              		.cfi_restore 14
+ 1820              		.cfi_def_cfa_offset 16
+ 1821 0020 04B0     		add	sp, sp, #16
+ 1822              		.cfi_restore 3
+ 1823              		.cfi_restore 2
+ 1824              		.cfi_restore 1
+ 1825              		.cfi_restore 0
+ 1826              		.cfi_def_cfa_offset 0
+ 1827 0022 7047     		bx	lr
+ 1828              	.L209:
+ 1829              		.align	2
+ 1830              	.L208:
+ 1831 0024 00000000 		.word	_out_char
+ 1832              		.cfi_endproc
+ 1833              	.LFE11:
+ 1835              		.section	.text.sprintf_,"ax",%progbits
+ 1836              		.align	1
+ 1837              		.global	sprintf_
+ 1838              		.syntax unified
+ 1839              		.thumb
+ 1840              		.thumb_func
+ 1841              		.fpu fpv4-sp-d16
+ 1843              	sprintf_:
+ 1844              	.LVL222:
+ 1845              	.LFB12:
+ 871:lib/printf/printf.c **** 
+ 872:lib/printf/printf.c **** 
+ 873:lib/printf/printf.c **** int sprintf_(char* buffer, const char* format, ...)
+ 874:lib/printf/printf.c **** {
+ 1846              		.loc 1 874 1 is_stmt 1 view -0
+ 1847              		.cfi_startproc
+ 1848              		@ args = 4, pretend = 12, frame = 8
+ 1849              		@ frame_needed = 0, uses_anonymous_args = 1
+ 875:lib/printf/printf.c ****   va_list va;
+ 1850              		.loc 1 875 3 view .LVU558
+ 876:lib/printf/printf.c ****   va_start(va, format);
+ 1851              		.loc 1 876 3 view .LVU559
+ 874:lib/printf/printf.c ****   va_list va;
+ 1852              		.loc 1 874 1 is_stmt 0 view .LVU560
+ 1853 0000 0EB4     		push	{r1, r2, r3}
+ 1854              		.cfi_def_cfa_offset 12
+ 1855              		.cfi_offset 1, -12
+ 1856              		.cfi_offset 2, -8
+ 1857              		.cfi_offset 3, -4
+ 1858 0002 0FB5     		push	{r0, r1, r2, r3, lr}
+ 1859              		.cfi_def_cfa_offset 32
+ 1860              		.cfi_offset 14, -16
+ 874:lib/printf/printf.c ****   va_list va;
+ 1861              		.loc 1 874 1 view .LVU561
+ 1862 0004 05AA     		add	r2, sp, #20
+ 1863 0006 0146     		mov	r1, r0
+ 1864 0008 52F8043B 		ldr	r3, [r2], #4
+ 1865              		.loc 1 876 3 view .LVU562
+ 1866 000c 0392     		str	r2, [sp, #12]
+ 877:lib/printf/printf.c ****   const int ret = _vsnprintf(_out_buffer, buffer, (size_t)-1, format, va);
+ 1867              		.loc 1 877 3 is_stmt 1 view .LVU563
+ 1868              		.loc 1 877 19 is_stmt 0 view .LVU564
+ 1869 000e 0092     		str	r2, [sp]
+ 1870 0010 0448     		ldr	r0, .L211
+ 1871              	.LVL223:
+ 1872              		.loc 1 877 19 view .LVU565
+ 1873 0012 4FF0FF32 		mov	r2, #-1
+ 1874 0016 FFF7FEFF 		bl	_vsnprintf
+ 1875              	.LVL224:
+ 878:lib/printf/printf.c ****   va_end(va);
+ 1876              		.loc 1 878 3 is_stmt 1 view .LVU566
+ 879:lib/printf/printf.c ****   return ret;
+ 1877              		.loc 1 879 3 view .LVU567
+ 880:lib/printf/printf.c **** }
+ 1878              		.loc 1 880 1 is_stmt 0 view .LVU568
+ 1879 001a 04B0     		add	sp, sp, #16
+ 1880              		.cfi_def_cfa_offset 16
+ 1881              		@ sp needed
+ 1882 001c 5DF804EB 		ldr	lr, [sp], #4
+ 1883              		.cfi_restore 14
+ 1884              		.cfi_def_cfa_offset 12
+ 1885 0020 03B0     		add	sp, sp, #12
+ 1886              		.cfi_restore 3
+ 1887              		.cfi_restore 2
+ 1888              		.cfi_restore 1
+ 1889              		.cfi_def_cfa_offset 0
+ 1890 0022 7047     		bx	lr
+ 1891              	.L212:
+ 1892              		.align	2
+ 1893              	.L211:
+ 1894 0024 00000000 		.word	_out_buffer
+ 1895              		.cfi_endproc
+ 1896              	.LFE12:
+ 1898              		.section	.text.snprintf_,"ax",%progbits
+ 1899              		.align	1
+ 1900              		.global	snprintf_
+ 1901              		.syntax unified
+ 1902              		.thumb
+ 1903              		.thumb_func
+ 1904              		.fpu fpv4-sp-d16
+ 1906              	snprintf_:
+ 1907              	.LVL225:
+ 1908              	.LFB13:
+ 881:lib/printf/printf.c **** 
+ 882:lib/printf/printf.c **** 
+ 883:lib/printf/printf.c **** int snprintf_(char* buffer, size_t count, const char* format, ...)
+ 884:lib/printf/printf.c **** {
+ 1909              		.loc 1 884 1 is_stmt 1 view -0
+ 1910              		.cfi_startproc
+ 1911              		@ args = 4, pretend = 8, frame = 8
+ 1912              		@ frame_needed = 0, uses_anonymous_args = 1
+ 885:lib/printf/printf.c ****   va_list va;
+ 1913              		.loc 1 885 3 view .LVU570
+ 886:lib/printf/printf.c ****   va_start(va, format);
+ 1914              		.loc 1 886 3 view .LVU571
+ 884:lib/printf/printf.c ****   va_list va;
+ 1915              		.loc 1 884 1 is_stmt 0 view .LVU572
+ 1916 0000 0CB4     		push	{r2, r3}
+ 1917              		.cfi_def_cfa_offset 8
+ 1918              		.cfi_offset 2, -8
+ 1919              		.cfi_offset 3, -4
+ 1920 0002 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 1921              		.cfi_def_cfa_offset 32
+ 1922              		.cfi_offset 4, -16
+ 1923              		.cfi_offset 14, -12
+ 884:lib/printf/printf.c ****   va_list va;
+ 1924              		.loc 1 884 1 view .LVU573
+ 1925 0004 06AC     		add	r4, sp, #24
+ 1926 0006 0A46     		mov	r2, r1
+ 1927 0008 54F8043B 		ldr	r3, [r4], #4
+ 887:lib/printf/printf.c ****   const int ret = _vsnprintf(_out_buffer, buffer, count, format, va);
+ 1928              		.loc 1 887 19 view .LVU574
+ 1929 000c 0094     		str	r4, [sp]
+ 1930 000e 0146     		mov	r1, r0
+ 1931              	.LVL226:
+ 1932              		.loc 1 887 19 view .LVU575
+ 1933 0010 0448     		ldr	r0, .L214
+ 1934              	.LVL227:
+ 886:lib/printf/printf.c ****   va_start(va, format);
+ 1935              		.loc 1 886 3 view .LVU576
+ 1936 0012 0394     		str	r4, [sp, #12]
+ 1937              		.loc 1 887 3 is_stmt 1 view .LVU577
+ 1938              		.loc 1 887 19 is_stmt 0 view .LVU578
+ 1939 0014 FFF7FEFF 		bl	_vsnprintf
+ 1940              	.LVL228:
+ 888:lib/printf/printf.c ****   va_end(va);
+ 1941              		.loc 1 888 3 is_stmt 1 view .LVU579
+ 889:lib/printf/printf.c ****   return ret;
+ 1942              		.loc 1 889 3 view .LVU580
+ 890:lib/printf/printf.c **** }
+ 1943              		.loc 1 890 1 is_stmt 0 view .LVU581
+ 1944 0018 04B0     		add	sp, sp, #16
+ 1945              		.cfi_def_cfa_offset 16
+ 1946              		@ sp needed
+ 1947 001a BDE81040 		pop	{r4, lr}
+ 1948              		.cfi_restore 14
+ 1949              		.cfi_restore 4
+ 1950              		.cfi_def_cfa_offset 8
+ 1951 001e 02B0     		add	sp, sp, #8
+ 1952              		.cfi_restore 3
+ 1953              		.cfi_restore 2
+ 1954              		.cfi_def_cfa_offset 0
+ 1955 0020 7047     		bx	lr
+ 1956              	.L215:
+ 1957 0022 00BF     		.align	2
+ 1958              	.L214:
+ 1959 0024 00000000 		.word	_out_buffer
+ 1960              		.cfi_endproc
+ 1961              	.LFE13:
+ 1963              		.section	.text.vprintf_,"ax",%progbits
+ 1964              		.align	1
+ 1965              		.global	vprintf_
+ 1966              		.syntax unified
+ 1967              		.thumb
+ 1968              		.thumb_func
+ 1969              		.fpu fpv4-sp-d16
+ 1971              	vprintf_:
+ 1972              	.LVL229:
+ 1973              	.LFB14:
+ 891:lib/printf/printf.c **** 
+ 892:lib/printf/printf.c **** 
+ 893:lib/printf/printf.c **** int vprintf_(const char* format, va_list va)
+ 894:lib/printf/printf.c **** {
+ 1974              		.loc 1 894 1 is_stmt 1 view -0
+ 1975              		.cfi_startproc
+ 1976              		@ args = 0, pretend = 0, frame = 8
+ 1977              		@ frame_needed = 0, uses_anonymous_args = 0
+ 895:lib/printf/printf.c ****   char buffer[1];
+ 1978              		.loc 1 895 3 view .LVU583
+ 896:lib/printf/printf.c ****   return _vsnprintf(_out_char, buffer, (size_t)-1, format, va);
+ 1979              		.loc 1 896 3 view .LVU584
+ 894:lib/printf/printf.c ****   char buffer[1];
+ 1980              		.loc 1 894 1 is_stmt 0 view .LVU585
+ 1981 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 1982              		.cfi_def_cfa_offset 24
+ 1983              		.cfi_offset 14, -4
+ 1984              	.LVL230:
+ 894:lib/printf/printf.c ****   char buffer[1];
+ 1985              		.loc 1 894 1 view .LVU586
+ 1986 0002 0346     		mov	r3, r0
+ 1987              		.loc 1 896 10 view .LVU587
+ 1988 0004 0091     		str	r1, [sp]
+ 1989 0006 4FF0FF32 		mov	r2, #-1
+ 1990 000a 03A9     		add	r1, sp, #12
+ 1991 000c 0248     		ldr	r0, .L217
+ 1992              	.LVL231:
+ 1993              		.loc 1 896 10 view .LVU588
+ 1994 000e FFF7FEFF 		bl	_vsnprintf
+ 1995              	.LVL232:
+ 897:lib/printf/printf.c **** }
+ 1996              		.loc 1 897 1 view .LVU589
+ 1997 0012 05B0     		add	sp, sp, #20
+ 1998              		.cfi_def_cfa_offset 4
+ 1999              		@ sp needed
+ 2000 0014 5DF804FB 		ldr	pc, [sp], #4
+ 2001              	.L218:
+ 2002              		.align	2
+ 2003              	.L217:
+ 2004 0018 00000000 		.word	_out_char
+ 2005              		.cfi_endproc
+ 2006              	.LFE14:
+ 2008              		.section	.text.vsnprintf_,"ax",%progbits
+ 2009              		.align	1
+ 2010              		.global	vsnprintf_
+ 2011              		.syntax unified
+ 2012              		.thumb
+ 2013              		.thumb_func
+ 2014              		.fpu fpv4-sp-d16
+ 2016              	vsnprintf_:
+ 2017              	.LVL233:
+ 2018              	.LFB15:
+ 898:lib/printf/printf.c **** 
+ 899:lib/printf/printf.c **** 
+ 900:lib/printf/printf.c **** int vsnprintf_(char* buffer, size_t count, const char* format, va_list va)
+ 901:lib/printf/printf.c **** {
+ 2019              		.loc 1 901 1 is_stmt 1 view -0
+ 2020              		.cfi_startproc
+ 2021              		@ args = 0, pretend = 0, frame = 0
+ 2022              		@ frame_needed = 0, uses_anonymous_args = 0
+ 902:lib/printf/printf.c ****   return _vsnprintf(_out_buffer, buffer, count, format, va);
+ 2023              		.loc 1 902 3 view .LVU591
+ 901:lib/printf/printf.c ****   return _vsnprintf(_out_buffer, buffer, count, format, va);
+ 2024              		.loc 1 901 1 is_stmt 0 view .LVU592
+ 2025 0000 07B5     		push	{r0, r1, r2, lr}
+ 2026              		.cfi_def_cfa_offset 16
+ 2027              		.cfi_offset 14, -4
+ 2028              		.loc 1 902 10 view .LVU593
+ 2029 0002 0093     		str	r3, [sp]
+ 2030 0004 1346     		mov	r3, r2
+ 2031              	.LVL234:
+ 2032              		.loc 1 902 10 view .LVU594
+ 2033 0006 0A46     		mov	r2, r1
+ 2034              	.LVL235:
+ 2035              		.loc 1 902 10 view .LVU595
+ 2036 0008 0146     		mov	r1, r0
+ 2037              	.LVL236:
+ 2038              		.loc 1 902 10 view .LVU596
+ 2039 000a 0348     		ldr	r0, .L220
+ 2040              	.LVL237:
+ 2041              		.loc 1 902 10 view .LVU597
+ 2042 000c FFF7FEFF 		bl	_vsnprintf
+ 2043              	.LVL238:
+ 903:lib/printf/printf.c **** }
+ 2044              		.loc 1 903 1 view .LVU598
+ 2045 0010 03B0     		add	sp, sp, #12
+ 2046              		.cfi_def_cfa_offset 4
+ 2047              		@ sp needed
+ 2048 0012 5DF804FB 		ldr	pc, [sp], #4
+ 2049              	.L221:
+ 2050 0016 00BF     		.align	2
+ 2051              	.L220:
+ 2052 0018 00000000 		.word	_out_buffer
+ 2053              		.cfi_endproc
+ 2054              	.LFE15:
+ 2056              		.section	.text.fctprintf,"ax",%progbits
+ 2057              		.align	1
+ 2058              		.global	fctprintf
+ 2059              		.syntax unified
+ 2060              		.thumb
+ 2061              		.thumb_func
+ 2062              		.fpu fpv4-sp-d16
+ 2064              	fctprintf:
+ 2065              	.LVL239:
+ 2066              	.LFB16:
+ 904:lib/printf/printf.c **** 
+ 905:lib/printf/printf.c **** 
+ 906:lib/printf/printf.c **** int fctprintf(void (*out)(char character, void* arg), void* arg, const char* format, ...)
+ 907:lib/printf/printf.c **** {
+ 2067              		.loc 1 907 1 is_stmt 1 view -0
+ 2068              		.cfi_startproc
+ 2069              		@ args = 4, pretend = 8, frame = 16
+ 2070              		@ frame_needed = 0, uses_anonymous_args = 1
+ 908:lib/printf/printf.c ****   va_list va;
+ 2071              		.loc 1 908 3 view .LVU600
+ 909:lib/printf/printf.c ****   va_start(va, format);
+ 2072              		.loc 1 909 3 view .LVU601
+ 907:lib/printf/printf.c ****   va_list va;
+ 2073              		.loc 1 907 1 is_stmt 0 view .LVU602
+ 2074 0000 0CB4     		push	{r2, r3}
+ 2075              		.cfi_def_cfa_offset 8
+ 2076              		.cfi_offset 2, -8
+ 2077              		.cfi_offset 3, -4
+ 2078 0002 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+ 2079              		.cfi_def_cfa_offset 40
+ 2080              		.cfi_offset 14, -12
+ 907:lib/printf/printf.c ****   va_list va;
+ 2081              		.loc 1 907 1 view .LVU603
+ 2082 0004 08AA     		add	r2, sp, #32
+ 910:lib/printf/printf.c ****   const out_fct_wrap_type out_fct_wrap = { out, arg };
+ 2083              		.loc 1 910 27 view .LVU604
+ 2084 0006 0591     		str	r1, [sp, #20]
+ 911:lib/printf/printf.c ****   const int ret = _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
+ 2085              		.loc 1 911 3 is_stmt 1 view .LVU605
+ 907:lib/printf/printf.c ****   va_list va;
+ 2086              		.loc 1 907 1 is_stmt 0 view .LVU606
+ 2087 0008 52F8043B 		ldr	r3, [r2], #4
+ 2088              		.loc 1 911 19 view .LVU607
+ 2089 000c 0092     		str	r2, [sp]
+ 910:lib/printf/printf.c ****   const out_fct_wrap_type out_fct_wrap = { out, arg };
+ 2090              		.loc 1 910 27 view .LVU608
+ 2091 000e CDE90320 		strd	r2, r0, [sp, #12]
+ 2092              		.loc 1 911 19 view .LVU609
+ 2093 0012 04A9     		add	r1, sp, #16
+ 2094 0014 4FF0FF32 		mov	r2, #-1
+ 2095 0018 0348     		ldr	r0, .L223
+ 2096              	.LVL240:
+ 2097              		.loc 1 911 19 view .LVU610
+ 2098 001a FFF7FEFF 		bl	_vsnprintf
+ 2099              	.LVL241:
+ 912:lib/printf/printf.c ****   va_end(va);
+ 2100              		.loc 1 912 3 is_stmt 1 view .LVU611
+ 913:lib/printf/printf.c ****   return ret;
+ 2101              		.loc 1 913 3 view .LVU612
+ 914:lib/printf/printf.c **** }
+ 2102              		.loc 1 914 1 is_stmt 0 view .LVU613
+ 2103 001e 07B0     		add	sp, sp, #28
+ 2104              		.cfi_def_cfa_offset 12
+ 2105              		@ sp needed
+ 2106 0020 5DF804EB 		ldr	lr, [sp], #4
+ 2107              		.cfi_restore 14
+ 2108              		.cfi_def_cfa_offset 8
+ 2109 0024 02B0     		add	sp, sp, #8
+ 2110              		.cfi_restore 3
+ 2111              		.cfi_restore 2
+ 2112              		.cfi_def_cfa_offset 0
+ 2113 0026 7047     		bx	lr
+ 2114              	.L224:
+ 2115              		.align	2
+ 2116              	.L223:
+ 2117 0028 00000000 		.word	_out_fct
+ 2118              		.cfi_endproc
+ 2119              	.LFE16:
+ 2121              		.text
+ 2122              	.Letext0:
+ 2123              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 2124              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 2125              		.file 4 "c:\\qmk_msys\\mingw64\\lib\\gcc\\arm-none-eabi\\10.1.0\\include\\stdarg.h"
+ 2126              		.file 5 "c:\\qmk_msys\\mingw64\\lib\\gcc\\arm-none-eabi\\10.1.0\\include\\stddef.h"
+ 2127              		.file 6 "<built-in>"
+ 2128              		.file 7 "lib/printf/printf.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 printf.c
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:18     .text._out_buffer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:25     .text._out_buffer:0000000000000000 _out_buffer
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:47     .text._out_null:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:53     .text._out_null:0000000000000000 _out_null
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:71     .text._ntoa_long:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:77     .text._ntoa_long:0000000000000000 _ntoa_long
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:584    .text._out_char:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:590    .text._out_char:0000000000000000 _out_char
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:614    .text._out_fct:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:620    .text._out_fct:0000000000000000 _out_fct
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:655    .text._vsnprintf:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:661    .text._vsnprintf:0000000000000000 _vsnprintf
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1184   .text._vsnprintf:00000000000001a4 $d
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1207   .text._vsnprintf:0000000000000200 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1410   .text._vsnprintf:00000000000002c4 $d
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1420   .text._vsnprintf:00000000000002c8 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1770   .text.printf_:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1777   .text.printf_:0000000000000000 printf_
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1831   .text.printf_:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1836   .text.sprintf_:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1843   .text.sprintf_:0000000000000000 sprintf_
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1894   .text.sprintf_:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1899   .text.snprintf_:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1906   .text.snprintf_:0000000000000000 snprintf_
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1959   .text.snprintf_:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1964   .text.vprintf_:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:1971   .text.vprintf_:0000000000000000 vprintf_
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:2004   .text.vprintf_:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:2009   .text.vsnprintf_:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:2016   .text.vsnprintf_:0000000000000000 vsnprintf_
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:2052   .text.vsnprintf_:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:2057   .text.fctprintf:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:2064   .text.fctprintf:0000000000000000 fctprintf
+C:\Users\lhanj\AppData\Local\Temp\ccscBf62.s:2117   .text.fctprintf:0000000000000028 $d
+
+UNDEFINED SYMBOLS
+_putchar

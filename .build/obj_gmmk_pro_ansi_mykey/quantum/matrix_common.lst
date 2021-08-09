@@ -1,0 +1,967 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"matrix_common.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.matrix_init_user,"ax",%progbits
+  18              		.align	1
+  19              		.weak	matrix_init_user
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	matrix_init_user:
+  27              	.LFB293:
+  28              		.file 1 "quantum/matrix_common.c"
+   1:quantum/matrix_common.c **** #include "quantum.h"
+   2:quantum/matrix_common.c **** #include "matrix.h"
+   3:quantum/matrix_common.c **** #include "debounce.h"
+   4:quantum/matrix_common.c **** #include "wait.h"
+   5:quantum/matrix_common.c **** #include "print.h"
+   6:quantum/matrix_common.c **** #include "debug.h"
+   7:quantum/matrix_common.c **** 
+   8:quantum/matrix_common.c **** #ifndef MATRIX_IO_DELAY
+   9:quantum/matrix_common.c **** #    define MATRIX_IO_DELAY 30
+  10:quantum/matrix_common.c **** #endif
+  11:quantum/matrix_common.c **** 
+  12:quantum/matrix_common.c **** /* matrix state(1:on, 0:off) */
+  13:quantum/matrix_common.c **** matrix_row_t raw_matrix[MATRIX_ROWS];
+  14:quantum/matrix_common.c **** matrix_row_t matrix[MATRIX_ROWS];
+  15:quantum/matrix_common.c **** 
+  16:quantum/matrix_common.c **** #ifdef MATRIX_MASKED
+  17:quantum/matrix_common.c **** extern const matrix_row_t matrix_mask[];
+  18:quantum/matrix_common.c **** #endif
+  19:quantum/matrix_common.c **** 
+  20:quantum/matrix_common.c **** // user-defined overridable functions
+  21:quantum/matrix_common.c **** 
+  22:quantum/matrix_common.c **** __attribute__((weak)) void matrix_init_kb(void) { matrix_init_user(); }
+  23:quantum/matrix_common.c **** 
+  24:quantum/matrix_common.c **** __attribute__((weak)) void matrix_scan_kb(void) { matrix_scan_user(); }
+  25:quantum/matrix_common.c **** 
+  26:quantum/matrix_common.c **** __attribute__((weak)) void matrix_init_user(void) {}
+  29              		.loc 1 26 51 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              		.loc 1 26 52 view .LVU1
+  35 0000 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE293:
+  39              		.section	.text.matrix_init_kb,"ax",%progbits
+  40              		.align	1
+  41              		.weak	matrix_init_kb
+  42              		.syntax unified
+  43              		.thumb
+  44              		.thumb_func
+  45              		.fpu fpv4-sp-d16
+  47              	matrix_init_kb:
+  48              	.LFB291:
+  22:quantum/matrix_common.c **** 
+  49              		.loc 1 22 49 view -0
+  50              		.cfi_startproc
+  51              		@ args = 0, pretend = 0, frame = 0
+  52              		@ frame_needed = 0, uses_anonymous_args = 0
+  22:quantum/matrix_common.c **** 
+  53              		.loc 1 22 51 view .LVU3
+  22:quantum/matrix_common.c **** 
+  54              		.loc 1 22 49 is_stmt 0 view .LVU4
+  55 0000 08B5     		push	{r3, lr}
+  56              		.cfi_def_cfa_offset 8
+  57              		.cfi_offset 3, -8
+  58              		.cfi_offset 14, -4
+  22:quantum/matrix_common.c **** 
+  59              		.loc 1 22 51 view .LVU5
+  60 0002 FFF7FEFF 		bl	matrix_init_user
+  61              	.LVL0:
+  22:quantum/matrix_common.c **** 
+  62              		.loc 1 22 71 view .LVU6
+  63 0006 08BD     		pop	{r3, pc}
+  64              		.cfi_endproc
+  65              	.LFE291:
+  67              		.section	.text.matrix_scan_user,"ax",%progbits
+  68              		.align	1
+  69              		.weak	matrix_scan_user
+  70              		.syntax unified
+  71              		.thumb
+  72              		.thumb_func
+  73              		.fpu fpv4-sp-d16
+  75              	matrix_scan_user:
+  76              	.LFB311:
+  77              		.cfi_startproc
+  78              		@ args = 0, pretend = 0, frame = 0
+  79              		@ frame_needed = 0, uses_anonymous_args = 0
+  80              		@ link register save eliminated.
+  81 0000 7047     		bx	lr
+  82              		.cfi_endproc
+  83              	.LFE311:
+  85              		.section	.text.matrix_scan_kb,"ax",%progbits
+  86              		.align	1
+  87              		.weak	matrix_scan_kb
+  88              		.syntax unified
+  89              		.thumb
+  90              		.thumb_func
+  91              		.fpu fpv4-sp-d16
+  93              	matrix_scan_kb:
+  94              	.LFB292:
+  24:quantum/matrix_common.c **** 
+  95              		.loc 1 24 49 is_stmt 1 view -0
+  96              		.cfi_startproc
+  97              		@ args = 0, pretend = 0, frame = 0
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+  24:quantum/matrix_common.c **** 
+  99              		.loc 1 24 51 view .LVU8
+  24:quantum/matrix_common.c **** 
+ 100              		.loc 1 24 49 is_stmt 0 view .LVU9
+ 101 0000 08B5     		push	{r3, lr}
+ 102              		.cfi_def_cfa_offset 8
+ 103              		.cfi_offset 3, -8
+ 104              		.cfi_offset 14, -4
+  24:quantum/matrix_common.c **** 
+ 105              		.loc 1 24 51 view .LVU10
+ 106 0002 FFF7FEFF 		bl	matrix_scan_user
+ 107              	.LVL1:
+  24:quantum/matrix_common.c **** 
+ 108              		.loc 1 24 71 view .LVU11
+ 109 0006 08BD     		pop	{r3, pc}
+ 110              		.cfi_endproc
+ 111              	.LFE292:
+ 113              		.section	.text.matrix_rows,"ax",%progbits
+ 114              		.align	1
+ 115              		.global	matrix_rows
+ 116              		.syntax unified
+ 117              		.thumb
+ 118              		.thumb_func
+ 119              		.fpu fpv4-sp-d16
+ 121              	matrix_rows:
+ 122              	.LFB295:
+  27:quantum/matrix_common.c **** 
+  28:quantum/matrix_common.c **** __attribute__((weak)) void matrix_scan_user(void) {}
+  29:quantum/matrix_common.c **** 
+  30:quantum/matrix_common.c **** // helper functions
+  31:quantum/matrix_common.c **** 
+  32:quantum/matrix_common.c **** inline uint8_t matrix_rows(void) { return MATRIX_ROWS; }
+ 123              		.loc 1 32 34 is_stmt 1 view -0
+ 124              		.cfi_startproc
+ 125              		@ args = 0, pretend = 0, frame = 0
+ 126              		@ frame_needed = 0, uses_anonymous_args = 0
+ 127              		@ link register save eliminated.
+ 128              		.loc 1 32 36 view .LVU13
+ 129              		.loc 1 32 56 is_stmt 0 view .LVU14
+ 130 0000 0B20     		movs	r0, #11
+ 131 0002 7047     		bx	lr
+ 132              		.cfi_endproc
+ 133              	.LFE295:
+ 135              		.section	.text.matrix_cols,"ax",%progbits
+ 136              		.align	1
+ 137              		.global	matrix_cols
+ 138              		.syntax unified
+ 139              		.thumb
+ 140              		.thumb_func
+ 141              		.fpu fpv4-sp-d16
+ 143              	matrix_cols:
+ 144              	.LFB296:
+  33:quantum/matrix_common.c **** 
+  34:quantum/matrix_common.c **** inline uint8_t matrix_cols(void) { return MATRIX_COLS; }
+ 145              		.loc 1 34 34 is_stmt 1 view -0
+ 146              		.cfi_startproc
+ 147              		@ args = 0, pretend = 0, frame = 0
+ 148              		@ frame_needed = 0, uses_anonymous_args = 0
+ 149              		@ link register save eliminated.
+ 150              		.loc 1 34 36 view .LVU16
+ 151              		.loc 1 34 56 is_stmt 0 view .LVU17
+ 152 0000 0820     		movs	r0, #8
+ 153 0002 7047     		bx	lr
+ 154              		.cfi_endproc
+ 155              	.LFE296:
+ 157              		.section	.text.matrix_is_on,"ax",%progbits
+ 158              		.align	1
+ 159              		.global	matrix_is_on
+ 160              		.syntax unified
+ 161              		.thumb
+ 162              		.thumb_func
+ 163              		.fpu fpv4-sp-d16
+ 165              	matrix_is_on:
+ 166              	.LVL2:
+ 167              	.LFB297:
+  35:quantum/matrix_common.c **** 
+  36:quantum/matrix_common.c **** inline bool matrix_is_on(uint8_t row, uint8_t col) { return (matrix[row] & ((matrix_row_t)1 << col)
+ 168              		.loc 1 36 52 is_stmt 1 view -0
+ 169              		.cfi_startproc
+ 170              		@ args = 0, pretend = 0, frame = 0
+ 171              		@ frame_needed = 0, uses_anonymous_args = 0
+ 172              		@ link register save eliminated.
+ 173              		.loc 1 36 54 view .LVU19
+ 174              		.loc 1 36 68 is_stmt 0 view .LVU20
+ 175 0000 044B     		ldr	r3, .L8
+ 176 0002 1A5C     		ldrb	r2, [r3, r0]	@ zero_extendqisi2
+ 177              		.loc 1 36 93 view .LVU21
+ 178 0004 0123     		movs	r3, #1
+ 179 0006 03FA01F1 		lsl	r1, r3, r1
+ 180              	.LVL3:
+ 181              		.loc 1 36 74 view .LVU22
+ 182 000a 0A42     		tst	r2, r1
+ 183              		.loc 1 36 103 view .LVU23
+ 184 000c 14BF     		ite	ne
+ 185 000e 1846     		movne	r0, r3
+ 186              	.LVL4:
+ 187              		.loc 1 36 103 view .LVU24
+ 188 0010 0020     		moveq	r0, #0
+ 189 0012 7047     		bx	lr
+ 190              	.L9:
+ 191              		.align	2
+ 192              	.L8:
+ 193 0014 00000000 		.word	matrix
+ 194              		.cfi_endproc
+ 195              	.LFE297:
+ 197              		.section	.text.matrix_get_row,"ax",%progbits
+ 198              		.align	1
+ 199              		.global	matrix_get_row
+ 200              		.syntax unified
+ 201              		.thumb
+ 202              		.thumb_func
+ 203              		.fpu fpv4-sp-d16
+ 205              	matrix_get_row:
+ 206              	.LVL5:
+ 207              	.LFB298:
+  37:quantum/matrix_common.c **** 
+  38:quantum/matrix_common.c **** inline matrix_row_t matrix_get_row(uint8_t row) {
+ 208              		.loc 1 38 49 is_stmt 1 view -0
+ 209              		.cfi_startproc
+ 210              		@ args = 0, pretend = 0, frame = 0
+ 211              		@ frame_needed = 0, uses_anonymous_args = 0
+ 212              		@ link register save eliminated.
+  39:quantum/matrix_common.c ****     // Matrix mask lets you disable switches in the returned matrix data. For example, if you have 
+  40:quantum/matrix_common.c ****     // switch blocker installed and the switch is always pressed.
+  41:quantum/matrix_common.c **** #ifdef MATRIX_MASKED
+  42:quantum/matrix_common.c ****     return matrix[row] & matrix_mask[row];
+  43:quantum/matrix_common.c **** #else
+  44:quantum/matrix_common.c ****     return matrix[row];
+ 213              		.loc 1 44 5 view .LVU26
+  45:quantum/matrix_common.c **** #endif
+  46:quantum/matrix_common.c **** }
+ 214              		.loc 1 46 1 is_stmt 0 view .LVU27
+ 215 0000 014B     		ldr	r3, .L11
+ 216 0002 185C     		ldrb	r0, [r3, r0]	@ zero_extendqisi2
+ 217              	.LVL6:
+ 218              		.loc 1 46 1 view .LVU28
+ 219 0004 7047     		bx	lr
+ 220              	.L12:
+ 221 0006 00BF     		.align	2
+ 222              	.L11:
+ 223 0008 00000000 		.word	matrix
+ 224              		.cfi_endproc
+ 225              	.LFE298:
+ 227              		.section	.text.matrix_is_modified,"ax",%progbits
+ 228              		.align	1
+ 229              		.global	matrix_is_modified
+ 230              		.syntax unified
+ 231              		.thumb
+ 232              		.thumb_func
+ 233              		.fpu fpv4-sp-d16
+ 235              	matrix_is_modified:
+ 236              	.LFB299:
+  47:quantum/matrix_common.c **** 
+  48:quantum/matrix_common.c **** // Deprecated.
+  49:quantum/matrix_common.c **** bool matrix_is_modified(void) {
+ 237              		.loc 1 49 31 is_stmt 1 view -0
+ 238              		.cfi_startproc
+ 239              		@ args = 0, pretend = 0, frame = 0
+ 240              		@ frame_needed = 0, uses_anonymous_args = 0
+  50:quantum/matrix_common.c ****     if (debounce_active()) return false;
+ 241              		.loc 1 50 5 view .LVU30
+  49:quantum/matrix_common.c ****     if (debounce_active()) return false;
+ 242              		.loc 1 49 31 is_stmt 0 view .LVU31
+ 243 0000 08B5     		push	{r3, lr}
+ 244              		.cfi_def_cfa_offset 8
+ 245              		.cfi_offset 3, -8
+ 246              		.cfi_offset 14, -4
+ 247              		.loc 1 50 9 view .LVU32
+ 248 0002 FFF7FEFF 		bl	debounce_active
+ 249              	.LVL7:
+ 250              		.loc 1 50 8 view .LVU33
+ 251 0006 80F00100 		eor	r0, r0, #1
+  51:quantum/matrix_common.c ****     return true;
+  52:quantum/matrix_common.c **** }
+ 252              		.loc 1 52 1 view .LVU34
+ 253 000a C0B2     		uxtb	r0, r0
+ 254 000c 08BD     		pop	{r3, pc}
+ 255              		.cfi_endproc
+ 256              	.LFE299:
+ 258              		.section	.text.matrix_print,"ax",%progbits
+ 259              		.align	1
+ 260              		.global	matrix_print
+ 261              		.syntax unified
+ 262              		.thumb
+ 263              		.thumb_func
+ 264              		.fpu fpv4-sp-d16
+ 266              	matrix_print:
+ 267              	.LFB300:
+  53:quantum/matrix_common.c **** 
+  54:quantum/matrix_common.c **** #if (MATRIX_COLS <= 8)
+  55:quantum/matrix_common.c **** #    define print_matrix_header() print("\nr/c 01234567\n")
+  56:quantum/matrix_common.c **** #    define print_matrix_row(row) print_bin_reverse8(matrix_get_row(row))
+  57:quantum/matrix_common.c **** #    define matrix_bitpop(row) bitpop(matrix_get_row(row))
+  58:quantum/matrix_common.c **** #elif (MATRIX_COLS <= 16)
+  59:quantum/matrix_common.c **** #    define print_matrix_header() print("\nr/c 0123456789ABCDEF\n")
+  60:quantum/matrix_common.c **** #    define print_matrix_row(row) print_bin_reverse16(matrix_get_row(row))
+  61:quantum/matrix_common.c **** #    define matrix_bitpop(row) bitpop16(matrix_get_row(row))
+  62:quantum/matrix_common.c **** #elif (MATRIX_COLS <= 32)
+  63:quantum/matrix_common.c **** #    define print_matrix_header() print("\nr/c 0123456789ABCDEF0123456789ABCDEF\n")
+  64:quantum/matrix_common.c **** #    define print_matrix_row(row) print_bin_reverse32(matrix_get_row(row))
+  65:quantum/matrix_common.c **** #    define matrix_bitpop(row) bitpop32(matrix_get_row(row))
+  66:quantum/matrix_common.c **** #endif
+  67:quantum/matrix_common.c **** 
+  68:quantum/matrix_common.c **** void matrix_print(void) {
+ 268              		.loc 1 68 25 is_stmt 1 view -0
+ 269              		.cfi_startproc
+ 270              		@ args = 0, pretend = 0, frame = 0
+ 271              		@ frame_needed = 0, uses_anonymous_args = 0
+ 272              		@ link register save eliminated.
+  69:quantum/matrix_common.c ****     print_matrix_header();
+ 273              		.loc 1 69 26 view .LVU36
+  70:quantum/matrix_common.c **** 
+  71:quantum/matrix_common.c ****     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+ 274              		.loc 1 71 5 view .LVU37
+ 275              		.loc 1 71 10 view .LVU38
+ 276              		.loc 1 71 27 view .LVU39
+  72:quantum/matrix_common.c ****         print_hex8(row);
+  73:quantum/matrix_common.c ****         print(": ");
+  74:quantum/matrix_common.c ****         print_matrix_row(row);
+  75:quantum/matrix_common.c ****         print("\n");
+  76:quantum/matrix_common.c ****     }
+  77:quantum/matrix_common.c **** }
+ 277              		.loc 1 77 1 is_stmt 0 view .LVU40
+ 278 0000 7047     		bx	lr
+ 279              		.cfi_endproc
+ 280              	.LFE300:
+ 282              		.section	.text.matrix_key_count,"ax",%progbits
+ 283              		.align	1
+ 284              		.global	matrix_key_count
+ 285              		.syntax unified
+ 286              		.thumb
+ 287              		.thumb_func
+ 288              		.fpu fpv4-sp-d16
+ 290              	matrix_key_count:
+ 291              	.LFB301:
+  78:quantum/matrix_common.c **** 
+  79:quantum/matrix_common.c **** uint8_t matrix_key_count(void) {
+ 292              		.loc 1 79 32 is_stmt 1 view -0
+ 293              		.cfi_startproc
+ 294              		@ args = 0, pretend = 0, frame = 0
+ 295              		@ frame_needed = 0, uses_anonymous_args = 0
+  80:quantum/matrix_common.c ****     uint8_t count = 0;
+ 296              		.loc 1 80 5 view .LVU42
+ 297              	.LVL8:
+  81:quantum/matrix_common.c ****     for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
+ 298              		.loc 1 81 5 view .LVU43
+ 299              	.LBB8:
+ 300              		.loc 1 81 10 view .LVU44
+ 301              		.loc 1 81 25 view .LVU45
+ 302              	.LBE8:
+  79:quantum/matrix_common.c ****     uint8_t count = 0;
+ 303              		.loc 1 79 32 is_stmt 0 view .LVU46
+ 304 0000 70B5     		push	{r4, r5, r6, lr}
+ 305              		.cfi_def_cfa_offset 16
+ 306              		.cfi_offset 4, -16
+ 307              		.cfi_offset 5, -12
+ 308              		.cfi_offset 6, -8
+ 309              		.cfi_offset 14, -4
+ 310 0002 074E     		ldr	r6, .L18
+  79:quantum/matrix_common.c ****     uint8_t count = 0;
+ 311              		.loc 1 79 32 view .LVU47
+ 312 0004 0B25     		movs	r5, #11
+  80:quantum/matrix_common.c ****     uint8_t count = 0;
+ 313              		.loc 1 80 13 view .LVU48
+ 314 0006 0024     		movs	r4, #0
+ 315              	.LVL9:
+ 316              	.L16:
+ 317              	.LBB11:
+  82:quantum/matrix_common.c ****         count += matrix_bitpop(i);
+ 318              		.loc 1 82 9 is_stmt 1 view .LVU49
+ 319              	.LBB9:
+ 320              	.LBI9:
+  38:quantum/matrix_common.c ****     // Matrix mask lets you disable switches in the returned matrix data. For example, if you have 
+ 321              		.loc 1 38 21 view .LVU50
+ 322              	.LBB10:
+  44:quantum/matrix_common.c **** #endif
+ 323              		.loc 1 44 5 view .LVU51
+  44:quantum/matrix_common.c **** #endif
+ 324              		.loc 1 44 5 is_stmt 0 view .LVU52
+ 325              	.LBE10:
+ 326              	.LBE9:
+ 327              		.loc 1 82 18 view .LVU53
+ 328 0008 16F8010B 		ldrb	r0, [r6], #1	@ zero_extendqisi2
+ 329              	.LVL10:
+ 330              		.loc 1 82 18 view .LVU54
+ 331 000c FFF7FEFF 		bl	bitpop
+ 332              	.LVL11:
+  81:quantum/matrix_common.c ****         count += matrix_bitpop(i);
+ 333              		.loc 1 81 5 view .LVU55
+ 334 0010 013D     		subs	r5, r5, #1
+ 335              		.loc 1 82 15 view .LVU56
+ 336 0012 2044     		add	r0, r0, r4
+  81:quantum/matrix_common.c ****         count += matrix_bitpop(i);
+ 337              		.loc 1 81 5 view .LVU57
+ 338 0014 15F0FF05 		ands	r5, r5, #255
+ 339              		.loc 1 82 15 view .LVU58
+ 340 0018 C4B2     		uxtb	r4, r0
+ 341              	.LVL12:
+  81:quantum/matrix_common.c ****         count += matrix_bitpop(i);
+ 342              		.loc 1 81 42 is_stmt 1 view .LVU59
+  81:quantum/matrix_common.c ****         count += matrix_bitpop(i);
+ 343              		.loc 1 81 25 view .LVU60
+  81:quantum/matrix_common.c ****         count += matrix_bitpop(i);
+ 344              		.loc 1 81 5 is_stmt 0 view .LVU61
+ 345 001a F5D1     		bne	.L16
+ 346              	.LBE11:
+  83:quantum/matrix_common.c ****     }
+  84:quantum/matrix_common.c ****     return count;
+ 347              		.loc 1 84 5 is_stmt 1 view .LVU62
+  85:quantum/matrix_common.c **** }
+ 348              		.loc 1 85 1 is_stmt 0 view .LVU63
+ 349 001c 2046     		mov	r0, r4
+ 350 001e 70BD     		pop	{r4, r5, r6, pc}
+ 351              	.LVL13:
+ 352              	.L19:
+ 353              		.loc 1 85 1 view .LVU64
+ 354              		.align	2
+ 355              	.L18:
+ 356 0020 00000000 		.word	matrix
+ 357              		.cfi_endproc
+ 358              	.LFE301:
+ 360              		.section	.text.matrix_io_delay,"ax",%progbits
+ 361              		.align	1
+ 362              		.weak	matrix_io_delay
+ 363              		.syntax unified
+ 364              		.thumb
+ 365              		.thumb_func
+ 366              		.fpu fpv4-sp-d16
+ 368              	matrix_io_delay:
+ 369              	.LFB302:
+  86:quantum/matrix_common.c **** 
+  87:quantum/matrix_common.c **** /*　`matrix_io_delay ()` exists for backwards compatibility. From now on, use matrix_output_unsele
+  88:quantum/matrix_common.c **** __attribute__((weak)) void matrix_io_delay(void) { wait_us(MATRIX_IO_DELAY); }
+ 370              		.loc 1 88 50 is_stmt 1 view -0
+ 371              		.cfi_startproc
+ 372              		@ args = 0, pretend = 0, frame = 0
+ 373              		@ frame_needed = 0, uses_anonymous_args = 0
+ 374              		@ link register save eliminated.
+ 375              		.loc 1 88 52 view .LVU66
+ 376              		.loc 1 88 52 view .LVU67
+ 377              		.loc 1 88 52 view .LVU68
+ 378 0000 0320     		movs	r0, #3
+ 379 0002 FFF7FEBF 		b	chThdSleep
+ 380              	.LVL14:
+ 381              		.cfi_endproc
+ 382              	.LFE302:
+ 384              		.section	.text.matrix_output_select_delay,"ax",%progbits
+ 385              		.align	1
+ 386              		.weak	matrix_output_select_delay
+ 387              		.syntax unified
+ 388              		.thumb
+ 389              		.thumb_func
+ 390              		.fpu fpv4-sp-d16
+ 392              	matrix_output_select_delay:
+ 393              	.LFB303:
+  89:quantum/matrix_common.c **** 
+  90:quantum/matrix_common.c **** __attribute__((weak)) void matrix_output_select_delay(void) { waitInputPinDelay(); }
+ 394              		.loc 1 90 61 view -0
+ 395              		.cfi_startproc
+ 396              		@ args = 0, pretend = 0, frame = 0
+ 397              		@ frame_needed = 0, uses_anonymous_args = 0
+ 398              		@ link register save eliminated.
+ 399              		.loc 1 90 63 view .LVU70
+ 400              	.LVL15:
+ 401              	.LBB12:
+ 402              	.LBI12:
+ 403              		.file 2 "tmk_core/common/chibios/wait.c"
+   1:tmk_core/common/chibios/wait.c **** /* Copyright 2021 QMK
+   2:tmk_core/common/chibios/wait.c ****  *
+   3:tmk_core/common/chibios/wait.c ****  * This program is free software: you can redistribute it and/or modify
+   4:tmk_core/common/chibios/wait.c ****  * it under the terms of the GNU General Public License as published by
+   5:tmk_core/common/chibios/wait.c ****  * the Free Software Foundation, either version 3 of the License, or
+   6:tmk_core/common/chibios/wait.c ****  * (at your option) any later version.
+   7:tmk_core/common/chibios/wait.c ****  *
+   8:tmk_core/common/chibios/wait.c ****  * This program is distributed in the hope that it will be useful,
+   9:tmk_core/common/chibios/wait.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  10:tmk_core/common/chibios/wait.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  11:tmk_core/common/chibios/wait.c ****  * GNU General Public License for more details.
+  12:tmk_core/common/chibios/wait.c ****  *
+  13:tmk_core/common/chibios/wait.c ****  * You should have received a copy of the GNU General Public License
+  14:tmk_core/common/chibios/wait.c ****  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  15:tmk_core/common/chibios/wait.c ****  */
+  16:tmk_core/common/chibios/wait.c **** 
+  17:tmk_core/common/chibios/wait.c **** #ifndef __OPTIMIZE__
+  18:tmk_core/common/chibios/wait.c **** #    pragma message "Compiler optimizations disabled; wait_cpuclock() won't work as designed"
+  19:tmk_core/common/chibios/wait.c **** #endif
+  20:tmk_core/common/chibios/wait.c **** 
+  21:tmk_core/common/chibios/wait.c **** #define CLOCK_DELAY_NOP8 "nop\n\t nop\n\t nop\n\t nop\n\t   nop\n\t nop\n\t nop\n\t nop\n\t"
+  22:tmk_core/common/chibios/wait.c **** 
+  23:tmk_core/common/chibios/wait.c **** __attribute__((always_inline)) static inline void wait_cpuclock(unsigned int n) { /* n: 1..135 */
+ 404              		.loc 2 23 51 view .LVU71
+ 405              	.LBB13:
+  24:tmk_core/common/chibios/wait.c ****     /* The argument n must be a constant expression.
+  25:tmk_core/common/chibios/wait.c ****      * That way, compiler optimization will remove unnecessary code. */
+  26:tmk_core/common/chibios/wait.c ****     if (n < 1) {
+ 406              		.loc 2 26 5 view .LVU72
+  27:tmk_core/common/chibios/wait.c ****         return;
+  28:tmk_core/common/chibios/wait.c ****     }
+  29:tmk_core/common/chibios/wait.c ****     if (n > 8) {
+ 407              		.loc 2 29 5 view .LVU73
+ 408              	.LBB14:
+  30:tmk_core/common/chibios/wait.c ****         unsigned int n8 = n / 8;
+ 409              		.loc 2 30 9 view .LVU74
+  31:tmk_core/common/chibios/wait.c ****         n               = n - n8 * 8;
+ 410              		.loc 2 31 9 view .LVU75
+  32:tmk_core/common/chibios/wait.c ****         switch (n8) {
+ 411              		.loc 2 32 9 view .LVU76
+  33:tmk_core/common/chibios/wait.c ****             case 16:
+  34:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  35:tmk_core/common/chibios/wait.c ****             case 15:
+  36:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  37:tmk_core/common/chibios/wait.c ****             case 14:
+  38:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  39:tmk_core/common/chibios/wait.c ****             case 13:
+  40:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  41:tmk_core/common/chibios/wait.c ****             case 12:
+  42:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  43:tmk_core/common/chibios/wait.c ****             case 11:
+  44:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  45:tmk_core/common/chibios/wait.c ****             case 10:
+  46:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  47:tmk_core/common/chibios/wait.c ****             case 9:
+  48:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  49:tmk_core/common/chibios/wait.c ****             case 8:
+  50:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  51:tmk_core/common/chibios/wait.c ****             case 7:
+  52:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  53:tmk_core/common/chibios/wait.c ****             case 6:
+  54:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  55:tmk_core/common/chibios/wait.c ****             case 5:
+  56:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  57:tmk_core/common/chibios/wait.c ****             case 4:
+  58:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  59:tmk_core/common/chibios/wait.c ****             case 3:
+  60:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+  61:tmk_core/common/chibios/wait.c ****             case 2:
+  62:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+ 412              		.loc 2 62 17 view .LVU77
+ 413              		.syntax unified
+ 414              	@ 62 "tmk_core/common/chibios/wait.c" 1
+ 415 0000 00BF     		nop
+ 416 0002 00BF     		 nop
+ 417 0004 00BF     		 nop
+ 418 0006 00BF     		 nop
+ 419 0008 00BF     		   nop
+ 420 000a 00BF     		 nop
+ 421 000c 00BF     		 nop
+ 422 000e 00BF     		 nop
+ 423              		
+ 424              	@ 0 "" 2
+  63:tmk_core/common/chibios/wait.c ****             case 1:
+  64:tmk_core/common/chibios/wait.c ****                 asm volatile(CLOCK_DELAY_NOP8::: "memory");
+ 425              		.loc 2 64 17 view .LVU78
+ 426              	@ 64 "tmk_core/common/chibios/wait.c" 1
+ 427 0010 00BF     		nop
+ 428 0012 00BF     		 nop
+ 429 0014 00BF     		 nop
+ 430 0016 00BF     		 nop
+ 431 0018 00BF     		   nop
+ 432 001a 00BF     		 nop
+ 433 001c 00BF     		 nop
+ 434 001e 00BF     		 nop
+ 435              		
+ 436              	@ 0 "" 2
+ 437              		.loc 2 64 17 is_stmt 0 view .LVU79
+ 438              		.thumb
+ 439              		.syntax unified
+ 440              	.LBE14:
+  65:tmk_core/common/chibios/wait.c ****             case 0:
+  66:tmk_core/common/chibios/wait.c ****                 break;
+  67:tmk_core/common/chibios/wait.c ****         }
+  68:tmk_core/common/chibios/wait.c ****     }
+  69:tmk_core/common/chibios/wait.c ****     switch (n) {
+ 441              		.loc 2 69 5 is_stmt 1 view .LVU80
+  70:tmk_core/common/chibios/wait.c ****         case 8:
+  71:tmk_core/common/chibios/wait.c ****             asm volatile("nop" ::: "memory");
+  72:tmk_core/common/chibios/wait.c ****         case 7:
+  73:tmk_core/common/chibios/wait.c ****             asm volatile("nop" ::: "memory");
+  74:tmk_core/common/chibios/wait.c ****         case 6:
+  75:tmk_core/common/chibios/wait.c ****             asm volatile("nop" ::: "memory");
+  76:tmk_core/common/chibios/wait.c ****         case 5:
+  77:tmk_core/common/chibios/wait.c ****             asm volatile("nop" ::: "memory");
+  78:tmk_core/common/chibios/wait.c ****         case 4:
+  79:tmk_core/common/chibios/wait.c ****             asm volatile("nop" ::: "memory");
+  80:tmk_core/common/chibios/wait.c ****         case 3:
+  81:tmk_core/common/chibios/wait.c ****             asm volatile("nop" ::: "memory");
+  82:tmk_core/common/chibios/wait.c ****         case 2:
+  83:tmk_core/common/chibios/wait.c ****             asm volatile("nop" ::: "memory");
+ 442              		.loc 2 83 13 view .LVU81
+ 443              		.syntax unified
+ 444              	@ 83 "tmk_core/common/chibios/wait.c" 1
+ 445 0020 00BF     		nop
+ 446              	@ 0 "" 2
+  84:tmk_core/common/chibios/wait.c ****         case 1:
+  85:tmk_core/common/chibios/wait.c ****             asm volatile("nop" ::: "memory");
+ 447              		.loc 2 85 13 view .LVU82
+ 448              	@ 85 "tmk_core/common/chibios/wait.c" 1
+ 449 0022 00BF     		nop
+ 450              	@ 0 "" 2
+ 451              	.LVL16:
+ 452              		.loc 2 85 13 is_stmt 0 view .LVU83
+ 453              		.thumb
+ 454              		.syntax unified
+ 455              	.LBE13:
+ 456              	.LBE12:
+ 457              		.loc 1 90 84 view .LVU84
+ 458 0024 7047     		bx	lr
+ 459              		.cfi_endproc
+ 460              	.LFE303:
+ 462              		.section	.text.matrix_output_unselect_delay,"ax",%progbits
+ 463              		.align	1
+ 464              		.weak	matrix_output_unselect_delay
+ 465              		.syntax unified
+ 466              		.thumb
+ 467              		.thumb_func
+ 468              		.fpu fpv4-sp-d16
+ 470              	matrix_output_unselect_delay:
+ 471              	.LVL17:
+ 472              	.LFB304:
+  91:quantum/matrix_common.c **** __attribute__((weak)) void matrix_output_unselect_delay(uint8_t line, bool key_pressed) { matrix_io
+ 473              		.loc 1 91 89 is_stmt 1 view -0
+ 474              		.cfi_startproc
+ 475              		@ args = 0, pretend = 0, frame = 0
+ 476              		@ frame_needed = 0, uses_anonymous_args = 0
+ 477              		.loc 1 91 91 view .LVU86
+ 478              		.loc 1 91 89 is_stmt 0 view .LVU87
+ 479 0000 08B5     		push	{r3, lr}
+ 480              		.cfi_def_cfa_offset 8
+ 481              		.cfi_offset 3, -8
+ 482              		.cfi_offset 14, -4
+ 483              		.loc 1 91 91 view .LVU88
+ 484 0002 FFF7FEFF 		bl	matrix_io_delay
+ 485              	.LVL18:
+ 486              		.loc 1 91 110 view .LVU89
+ 487 0006 08BD     		pop	{r3, pc}
+ 488              		.cfi_endproc
+ 489              	.LFE304:
+ 491              		.section	.text.matrix_init_custom,"ax",%progbits
+ 492              		.align	1
+ 493              		.weak	matrix_init_custom
+ 494              		.syntax unified
+ 495              		.thumb
+ 496              		.thumb_func
+ 497              		.fpu fpv4-sp-d16
+ 499              	matrix_init_custom:
+ 500              	.LFB313:
+ 501              		.cfi_startproc
+ 502              		@ args = 0, pretend = 0, frame = 0
+ 503              		@ frame_needed = 0, uses_anonymous_args = 0
+ 504              		@ link register save eliminated.
+ 505 0000 7047     		bx	lr
+ 506              		.cfi_endproc
+ 507              	.LFE313:
+ 509              		.section	.text.matrix_scan_custom,"ax",%progbits
+ 510              		.align	1
+ 511              		.weak	matrix_scan_custom
+ 512              		.syntax unified
+ 513              		.thumb
+ 514              		.thumb_func
+ 515              		.fpu fpv4-sp-d16
+ 517              	matrix_scan_custom:
+ 518              	.LVL19:
+ 519              	.LFB306:
+  92:quantum/matrix_common.c **** 
+  93:quantum/matrix_common.c **** // CUSTOM MATRIX 'LITE'
+  94:quantum/matrix_common.c **** __attribute__((weak)) void matrix_init_custom(void) {}
+  95:quantum/matrix_common.c **** 
+  96:quantum/matrix_common.c **** __attribute__((weak)) bool matrix_scan_custom(matrix_row_t current_matrix[]) { return true; }
+ 520              		.loc 1 96 78 is_stmt 1 view -0
+ 521              		.cfi_startproc
+ 522              		@ args = 0, pretend = 0, frame = 0
+ 523              		@ frame_needed = 0, uses_anonymous_args = 0
+ 524              		@ link register save eliminated.
+ 525              		.loc 1 96 80 view .LVU91
+ 526              		.loc 1 96 93 is_stmt 0 view .LVU92
+ 527 0000 0120     		movs	r0, #1
+ 528              	.LVL20:
+ 529              		.loc 1 96 93 view .LVU93
+ 530 0002 7047     		bx	lr
+ 531              		.cfi_endproc
+ 532              	.LFE306:
+ 534              		.section	.text.matrix_init,"ax",%progbits
+ 535              		.align	1
+ 536              		.weak	matrix_init
+ 537              		.syntax unified
+ 538              		.thumb
+ 539              		.thumb_func
+ 540              		.fpu fpv4-sp-d16
+ 542              	matrix_init:
+ 543              	.LFB307:
+  97:quantum/matrix_common.c **** 
+  98:quantum/matrix_common.c **** __attribute__((weak)) void matrix_init(void) {
+ 544              		.loc 1 98 46 is_stmt 1 view -0
+ 545              		.cfi_startproc
+ 546              		@ args = 0, pretend = 0, frame = 0
+ 547              		@ frame_needed = 0, uses_anonymous_args = 0
+  99:quantum/matrix_common.c ****     matrix_init_custom();
+ 548              		.loc 1 99 5 view .LVU95
+  98:quantum/matrix_common.c ****     matrix_init_custom();
+ 549              		.loc 1 98 46 is_stmt 0 view .LVU96
+ 550 0000 08B5     		push	{r3, lr}
+ 551              		.cfi_def_cfa_offset 8
+ 552              		.cfi_offset 3, -8
+ 553              		.cfi_offset 14, -4
+ 554              		.loc 1 99 5 view .LVU97
+ 555 0002 FFF7FEFF 		bl	matrix_init_custom
+ 556              	.LVL21:
+ 100:quantum/matrix_common.c **** 
+ 101:quantum/matrix_common.c ****     // initialize matrix state: all keys off
+ 102:quantum/matrix_common.c ****     for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
+ 557              		.loc 1 102 5 is_stmt 1 view .LVU98
+ 558              	.LBB15:
+ 559              		.loc 1 102 10 view .LVU99
+ 560              		.loc 1 102 25 view .LVU100
+ 103:quantum/matrix_common.c ****         raw_matrix[i] = 0;
+ 561              		.loc 1 103 23 is_stmt 0 view .LVU101
+ 562 0006 094A     		ldr	r2, .L26
+ 563 0008 0023     		movs	r3, #0
+ 564 000a 5360     		str	r3, [r2, #4]	@ unaligned
+ 565 000c 1360     		str	r3, [r2]	@ unaligned
+ 566 000e C2F80730 		str	r3, [r2, #7]	@ unaligned
+ 104:quantum/matrix_common.c ****         matrix[i]     = 0;
+ 567              		.loc 1 104 23 view .LVU102
+ 568 0012 074A     		ldr	r2, .L26+4
+ 569              	.LBE15:
+ 105:quantum/matrix_common.c ****     }
+ 106:quantum/matrix_common.c **** 
+ 107:quantum/matrix_common.c ****     debounce_init(MATRIX_ROWS);
+ 570              		.loc 1 107 5 view .LVU103
+ 571 0014 0B20     		movs	r0, #11
+ 572              	.LBB16:
+ 104:quantum/matrix_common.c ****         matrix[i]     = 0;
+ 573              		.loc 1 104 23 view .LVU104
+ 574 0016 5360     		str	r3, [r2, #4]	@ unaligned
+ 575 0018 1360     		str	r3, [r2]	@ unaligned
+ 576 001a C2F80730 		str	r3, [r2, #7]	@ unaligned
+ 577              	.LVL22:
+ 104:quantum/matrix_common.c ****         matrix[i]     = 0;
+ 578              		.loc 1 104 23 view .LVU105
+ 579              	.LBE16:
+ 580              		.loc 1 107 5 is_stmt 1 view .LVU106
+ 581 001e FFF7FEFF 		bl	debounce_init
+ 582              	.LVL23:
+ 108:quantum/matrix_common.c **** 
+ 109:quantum/matrix_common.c ****     matrix_init_quantum();
+ 583              		.loc 1 109 5 view .LVU107
+ 110:quantum/matrix_common.c **** }
+ 584              		.loc 1 110 1 is_stmt 0 view .LVU108
+ 585 0022 BDE80840 		pop	{r3, lr}
+ 586              		.cfi_restore 14
+ 587              		.cfi_restore 3
+ 588              		.cfi_def_cfa_offset 0
+ 109:quantum/matrix_common.c **** }
+ 589              		.loc 1 109 5 view .LVU109
+ 590 0026 FFF7FEBF 		b	matrix_init_quantum
+ 591              	.LVL24:
+ 592              	.L27:
+ 593 002a 00BF     		.align	2
+ 594              	.L26:
+ 595 002c 00000000 		.word	raw_matrix
+ 596 0030 00000000 		.word	matrix
+ 597              		.cfi_endproc
+ 598              	.LFE307:
+ 600              		.section	.text.matrix_scan,"ax",%progbits
+ 601              		.align	1
+ 602              		.weak	matrix_scan
+ 603              		.syntax unified
+ 604              		.thumb
+ 605              		.thumb_func
+ 606              		.fpu fpv4-sp-d16
+ 608              	matrix_scan:
+ 609              	.LFB308:
+ 111:quantum/matrix_common.c **** 
+ 112:quantum/matrix_common.c **** __attribute__((weak)) uint8_t matrix_scan(void) {
+ 610              		.loc 1 112 49 is_stmt 1 view -0
+ 611              		.cfi_startproc
+ 612              		@ args = 0, pretend = 0, frame = 0
+ 613              		@ frame_needed = 0, uses_anonymous_args = 0
+ 113:quantum/matrix_common.c ****     bool changed = matrix_scan_custom(raw_matrix);
+ 614              		.loc 1 113 5 view .LVU111
+ 112:quantum/matrix_common.c ****     bool changed = matrix_scan_custom(raw_matrix);
+ 615              		.loc 1 112 49 is_stmt 0 view .LVU112
+ 616 0000 38B5     		push	{r3, r4, r5, lr}
+ 617              		.cfi_def_cfa_offset 16
+ 618              		.cfi_offset 3, -16
+ 619              		.cfi_offset 4, -12
+ 620              		.cfi_offset 5, -8
+ 621              		.cfi_offset 14, -4
+ 622              		.loc 1 113 20 view .LVU113
+ 623 0002 074D     		ldr	r5, .L29
+ 624 0004 2846     		mov	r0, r5
+ 625 0006 FFF7FEFF 		bl	matrix_scan_custom
+ 626              	.LVL25:
+ 114:quantum/matrix_common.c **** 
+ 115:quantum/matrix_common.c ****     debounce(raw_matrix, matrix, MATRIX_ROWS, changed);
+ 627              		.loc 1 115 5 view .LVU114
+ 628 000a 0649     		ldr	r1, .L29+4
+ 629 000c 0346     		mov	r3, r0
+ 113:quantum/matrix_common.c **** 
+ 630              		.loc 1 113 20 view .LVU115
+ 631 000e 0446     		mov	r4, r0
+ 632              	.LVL26:
+ 633              		.loc 1 115 5 is_stmt 1 view .LVU116
+ 634 0010 0B22     		movs	r2, #11
+ 635 0012 2846     		mov	r0, r5
+ 636              	.LVL27:
+ 637              		.loc 1 115 5 is_stmt 0 view .LVU117
+ 638 0014 FFF7FEFF 		bl	debounce
+ 639              	.LVL28:
+ 116:quantum/matrix_common.c **** 
+ 117:quantum/matrix_common.c ****     matrix_scan_quantum();
+ 640              		.loc 1 117 5 is_stmt 1 view .LVU118
+ 641 0018 FFF7FEFF 		bl	matrix_scan_quantum
+ 642              	.LVL29:
+ 118:quantum/matrix_common.c ****     return changed;
+ 643              		.loc 1 118 5 view .LVU119
+ 119:quantum/matrix_common.c **** }
+ 644              		.loc 1 119 1 is_stmt 0 view .LVU120
+ 645 001c 2046     		mov	r0, r4
+ 646 001e 38BD     		pop	{r3, r4, r5, pc}
+ 647              	.L30:
+ 648              		.align	2
+ 649              	.L29:
+ 650 0020 00000000 		.word	raw_matrix
+ 651 0024 00000000 		.word	matrix
+ 652              		.cfi_endproc
+ 653              	.LFE308:
+ 655              		.section	.text.peek_matrix,"ax",%progbits
+ 656              		.align	1
+ 657              		.weak	peek_matrix
+ 658              		.syntax unified
+ 659              		.thumb
+ 660              		.thumb_func
+ 661              		.fpu fpv4-sp-d16
+ 663              	peek_matrix:
+ 664              	.LVL30:
+ 665              	.LFB309:
+ 120:quantum/matrix_common.c **** 
+ 121:quantum/matrix_common.c **** __attribute__((weak)) bool peek_matrix(uint8_t row_index, uint8_t col_index, bool raw) { return 0 !
+ 666              		.loc 1 121 88 is_stmt 1 view -0
+ 667              		.cfi_startproc
+ 668              		@ args = 0, pretend = 0, frame = 0
+ 669              		@ frame_needed = 0, uses_anonymous_args = 0
+ 670              		@ link register save eliminated.
+ 671              		.loc 1 121 90 view .LVU122
+ 672              		.loc 1 121 88 is_stmt 0 view .LVU123
+ 673 0000 0346     		mov	r3, r0
+ 674              		.loc 1 121 132 view .LVU124
+ 675 0002 2AB1     		cbz	r2, .L32
+ 676              		.loc 1 121 120 discriminator 1 view .LVU125
+ 677 0004 034A     		ldr	r2, .L35
+ 678              	.LVL31:
+ 679              	.L34:
+ 680              		.loc 1 121 132 discriminator 2 view .LVU126
+ 681 0006 D05C     		ldrb	r0, [r2, r3]	@ zero_extendqisi2
+ 682              	.LVL32:
+ 683              		.loc 1 121 99 discriminator 2 view .LVU127
+ 684 0008 0841     		asrs	r0, r0, r1
+ 685              		.loc 1 121 191 discriminator 2 view .LVU128
+ 686 000a 00F00100 		and	r0, r0, #1
+ 687 000e 7047     		bx	lr
+ 688              	.LVL33:
+ 689              	.L32:
+ 690              		.loc 1 121 140 discriminator 2 view .LVU129
+ 691 0010 014A     		ldr	r2, .L35+4
+ 692              	.LVL34:
+ 693              		.loc 1 121 140 discriminator 2 view .LVU130
+ 694 0012 F8E7     		b	.L34
+ 695              	.L36:
+ 696              		.align	2
+ 697              	.L35:
+ 698 0014 00000000 		.word	raw_matrix
+ 699 0018 00000000 		.word	matrix
+ 700              		.cfi_endproc
+ 701              	.LFE309:
+ 703              		.comm	matrix,11,1
+ 704              		.comm	raw_matrix,11,1
+ 705              		.text
+ 706              	.Letext0:
+ 707              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 708              		.file 4 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 709              		.file 5 "./lib/chibios/os/rt/include/chtime.h"
+ 710              		.file 6 "quantum/matrix.h"
+ 711              		.file 7 "quantum/debounce.h"
+ 712              		.file 8 "./lib/chibios/os/rt/include/chthreads.h"
+ 713              		.file 9 "quantum/bitwise.h"
+ 714              		.file 10 "quantum/sequencer/sequencer.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 matrix_common.c
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:18     .text.matrix_init_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:26     .text.matrix_init_user:0000000000000000 matrix_init_user
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:40     .text.matrix_init_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:47     .text.matrix_init_kb:0000000000000000 matrix_init_kb
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:68     .text.matrix_scan_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:75     .text.matrix_scan_user:0000000000000000 matrix_scan_user
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:86     .text.matrix_scan_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:93     .text.matrix_scan_kb:0000000000000000 matrix_scan_kb
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:114    .text.matrix_rows:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:121    .text.matrix_rows:0000000000000000 matrix_rows
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:136    .text.matrix_cols:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:143    .text.matrix_cols:0000000000000000 matrix_cols
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:158    .text.matrix_is_on:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:165    .text.matrix_is_on:0000000000000000 matrix_is_on
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:193    .text.matrix_is_on:0000000000000014 $d
+                            *COM*:000000000000000b matrix
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:198    .text.matrix_get_row:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:205    .text.matrix_get_row:0000000000000000 matrix_get_row
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:223    .text.matrix_get_row:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:228    .text.matrix_is_modified:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:235    .text.matrix_is_modified:0000000000000000 matrix_is_modified
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:259    .text.matrix_print:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:266    .text.matrix_print:0000000000000000 matrix_print
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:283    .text.matrix_key_count:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:290    .text.matrix_key_count:0000000000000000 matrix_key_count
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:356    .text.matrix_key_count:0000000000000020 $d
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:361    .text.matrix_io_delay:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:368    .text.matrix_io_delay:0000000000000000 matrix_io_delay
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:385    .text.matrix_output_select_delay:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:392    .text.matrix_output_select_delay:0000000000000000 matrix_output_select_delay
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:463    .text.matrix_output_unselect_delay:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:470    .text.matrix_output_unselect_delay:0000000000000000 matrix_output_unselect_delay
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:492    .text.matrix_init_custom:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:499    .text.matrix_init_custom:0000000000000000 matrix_init_custom
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:510    .text.matrix_scan_custom:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:517    .text.matrix_scan_custom:0000000000000000 matrix_scan_custom
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:535    .text.matrix_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:542    .text.matrix_init:0000000000000000 matrix_init
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:595    .text.matrix_init:000000000000002c $d
+                            *COM*:000000000000000b raw_matrix
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:601    .text.matrix_scan:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:608    .text.matrix_scan:0000000000000000 matrix_scan
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:650    .text.matrix_scan:0000000000000020 $d
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:656    .text.peek_matrix:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:663    .text.peek_matrix:0000000000000000 peek_matrix
+C:\Users\lhanj\AppData\Local\Temp\ccZRiiWC.s:698    .text.peek_matrix:0000000000000014 $d
+
+UNDEFINED SYMBOLS
+debounce_active
+bitpop
+chThdSleep
+debounce_init
+matrix_init_quantum
+debounce
+matrix_scan_quantum

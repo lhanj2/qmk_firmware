@@ -1,0 +1,533 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"stm32_isr.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.irqInit,"ax",%progbits
+  18              		.align	1
+  19              		.global	irqInit
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	irqInit:
+  27              	.LFB278:
+  28              		.file 1 "lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c"
+   1:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /*
+   2:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****     ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+   3:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+   4:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****     Licensed under the Apache License, Version 2.0 (the "License");
+   5:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****     you may not use this file except in compliance with the License.
+   6:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****     You may obtain a copy of the License at
+   7:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+   8:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****         http://www.apache.org/licenses/LICENSE-2.0
+   9:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  10:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****     Unless required by applicable law or agreed to in writing, software
+  11:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****     distributed under the License is distributed on an "AS IS" BASIS,
+  12:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****     See the License for the specific language governing permissions and
+  14:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****     limitations under the License.
+  15:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** */
+  16:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  17:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+  18:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @file    STM32F3xx/stm32_isr.c
+  19:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   STM32F3xx ISR handler code.
+  20:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+  21:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @addtogroup STM32F3xx_ISR
+  22:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @{
+  23:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+  24:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  25:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #include "hal.h"
+  26:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  27:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /*===========================================================================*/
+  28:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /* Driver local definitions.                                                 */
+  29:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /*===========================================================================*/
+  30:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  31:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /*===========================================================================*/
+  32:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /* Driver exported variables.                                                */
+  33:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /*===========================================================================*/
+  34:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  35:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /*===========================================================================*/
+  36:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /* Driver local variables.                                                   */
+  37:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /*===========================================================================*/
+  38:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  39:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /*===========================================================================*/
+  40:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /* Driver local functions.                                                   */
+  41:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /*===========================================================================*/
+  42:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  43:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #define exti_serve_irq(pr, channel) {                                       \
+  44:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****                                                                             \
+  45:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   if ((pr) & (1U << (channel))) {                                           \
+  46:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****     _pal_isr_code(channel);                                                 \
+  47:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   }                                                                         \
+  48:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+  49:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  50:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /*===========================================================================*/
+  51:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /* Driver interrupt handlers.                                                */
+  52:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /*===========================================================================*/
+  53:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  54:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if (HAL_USE_PAL && (PAL_USE_WAIT || PAL_USE_CALLBACKS)) || defined(__DOXYGEN__)
+  55:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if !defined(STM32_DISABLE_EXTI0_HANDLER)
+  56:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+  57:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   EXTI[0] interrupt handler.
+  58:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+  59:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @isr
+  60:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+  61:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** OSAL_IRQ_HANDLER(Vector58) {
+  62:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   uint32_t pr;
+  63:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  64:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_PROLOGUE();
+  65:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  66:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr = EXTI->PR;
+  67:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr &= EXTI->IMR & (1U << 0);
+  68:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   EXTI->PR = pr;
+  69:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  70:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 0);
+  71:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  72:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_EPILOGUE();
+  73:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+  74:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+  75:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  76:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if !defined(STM32_DISABLE_EXTI1_HANDLER)
+  77:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+  78:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   EXTI[1] interrupt handler.
+  79:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+  80:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @isr
+  81:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+  82:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** OSAL_IRQ_HANDLER(Vector5C) {
+  83:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   uint32_t pr;
+  84:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  85:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_PROLOGUE();
+  86:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  87:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr = EXTI->PR;
+  88:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr &= EXTI->IMR & (1U << 1);
+  89:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   EXTI->PR = pr;
+  90:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  91:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 1);
+  92:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  93:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_EPILOGUE();
+  94:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+  95:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+  96:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  97:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if !defined(STM32_DISABLE_EXTI2_HANDLER)
+  98:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+  99:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   EXTI[2] interrupt handler.
+ 100:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+ 101:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @isr
+ 102:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+ 103:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** OSAL_IRQ_HANDLER(Vector60) {
+ 104:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   uint32_t pr;
+ 105:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 106:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_PROLOGUE();
+ 107:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 108:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr = EXTI->PR;
+ 109:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr &= EXTI->IMR & (1U << 2);
+ 110:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   EXTI->PR = pr;
+ 111:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 112:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 2);
+ 113:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 114:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_EPILOGUE();
+ 115:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+ 116:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 117:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 118:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if !defined(STM32_DISABLE_EXTI3_HANDLER)
+ 119:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+ 120:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   EXTI[3] interrupt handler.
+ 121:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+ 122:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @isr
+ 123:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+ 124:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** OSAL_IRQ_HANDLER(Vector64) {
+ 125:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   uint32_t pr;
+ 126:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 127:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_PROLOGUE();
+ 128:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 129:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr = EXTI->PR;
+ 130:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr &= EXTI->IMR & (1U << 3);
+ 131:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   EXTI->PR = pr;
+ 132:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 133:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 3);
+ 134:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 135:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_EPILOGUE();
+ 136:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+ 137:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 138:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 139:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if !defined(STM32_DISABLE_EXTI4_HANDLER)
+ 140:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+ 141:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   EXTI[4] interrupt handler.
+ 142:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+ 143:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @isr
+ 144:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+ 145:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** OSAL_IRQ_HANDLER(Vector68) {
+ 146:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   uint32_t pr;
+ 147:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 148:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_PROLOGUE();
+ 149:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 150:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr = EXTI->PR;
+ 151:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr &= EXTI->IMR & (1U << 4);
+ 152:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   EXTI->PR = pr;
+ 153:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 154:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 4);
+ 155:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 156:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_EPILOGUE();
+ 157:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+ 158:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 159:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 160:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if !defined(STM32_DISABLE_EXTI5_9_HANDLER)
+ 161:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+ 162:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   EXTI[5]...EXTI[9] interrupt handler.
+ 163:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+ 164:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @isr
+ 165:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+ 166:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** OSAL_IRQ_HANDLER(Vector9C) {
+ 167:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   uint32_t pr;
+ 168:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 169:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_PROLOGUE();
+ 170:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 171:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr = EXTI->PR;
+ 172:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr &= EXTI->IMR & ((1U << 5) | (1U << 6) | (1U << 7) | (1U << 8) |
+ 173:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****                      (1U << 9));
+ 174:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   EXTI->PR = pr;
+ 175:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 176:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 5);
+ 177:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 6);
+ 178:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 7);
+ 179:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 8);
+ 180:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 9);
+ 181:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 182:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_EPILOGUE();
+ 183:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+ 184:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 185:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 186:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if !defined(STM32_DISABLE_EXTI10_15_HANDLER)
+ 187:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+ 188:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   EXTI[10]...EXTI[15] interrupt handler.
+ 189:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+ 190:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @isr
+ 191:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+ 192:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** OSAL_IRQ_HANDLER(VectorE0) {
+ 193:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   uint32_t pr;
+ 194:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 195:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_PROLOGUE();
+ 196:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 197:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr = EXTI->PR;
+ 198:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pr &= EXTI->IMR & ((1U << 10) | (1U << 11) | (1U << 12) | (1U << 13) |
+ 199:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****                      (1U << 14) | (1U << 15));
+ 200:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   EXTI->PR = pr;
+ 201:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 202:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 10);
+ 203:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 11);
+ 204:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 12);
+ 205:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 13);
+ 206:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 14);
+ 207:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   exti_serve_irq(pr, 15);
+ 208:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 209:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_EPILOGUE();
+ 210:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+ 211:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 212:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif /* HAL_USE_PAL && (PAL_USE_WAIT || PAL_USE_CALLBACKS) */
+ 213:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 214:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_GPT || HAL_USE_ICU || HAL_USE_PWM || defined(__DOXYGEN__)
+ 215:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+ 216:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   TIM1-BRK, TIM15 interrupt handler.
+ 217:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+ 218:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @isr
+ 219:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+ 220:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** OSAL_IRQ_HANDLER(VectorA0) {
+ 221:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 222:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_PROLOGUE();
+ 223:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 224:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_GPT
+ 225:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if STM32_GPT_USE_TIM15
+ 226:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   gpt_lld_serve_interrupt(&GPTD15);
+ 227:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 228:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 229:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_ICU
+ 230:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if STM32_ICU_USE_TIM15
+ 231:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   icu_lld_serve_interrupt(&ICUD15);
+ 232:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 233:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 234:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_PWM
+ 235:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if STM32_PWM_USE_TIM15
+ 236:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pwm_lld_serve_interrupt(&PWMD15);
+ 237:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 238:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 239:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 240:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_EPILOGUE();
+ 241:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+ 242:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 243:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+ 244:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   TIM1-UP, TIM16 interrupt handler.
+ 245:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+ 246:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @isr
+ 247:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+ 248:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** OSAL_IRQ_HANDLER(VectorA4) {
+ 249:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 250:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_PROLOGUE();
+ 251:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 252:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_GPT
+ 253:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if STM32_GPT_USE_TIM1
+ 254:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   gpt_lld_serve_interrupt(&GPTD1);
+ 255:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 256:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if STM32_GPT_USE_TIM16
+ 257:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   gpt_lld_serve_interrupt(&GPTD16);
+ 258:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 259:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 260:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_ICU
+ 261:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if STM32_ICU_USE_TIM1
+ 262:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   icu_lld_serve_interrupt(&ICUD1);
+ 263:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 264:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 265:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_PWM
+ 266:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if STM32_PWM_USE_TIM1
+ 267:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pwm_lld_serve_interrupt(&PWMD1);
+ 268:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 269:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if STM32_PWM_USE_TIM16
+ 270:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pwm_lld_serve_interrupt(&PWMD16);
+ 271:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 272:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 273:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 274:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_EPILOGUE();
+ 275:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+ 276:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 277:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+ 278:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   TIM1-TRG-COM, TIM17 interrupt handler.
+ 279:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+ 280:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @isr
+ 281:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+ 282:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** OSAL_IRQ_HANDLER(VectorA8) {
+ 283:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 284:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_PROLOGUE();
+ 285:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 286:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_GPT
+ 287:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if STM32_GPT_USE_TIM17
+ 288:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   gpt_lld_serve_interrupt(&GPTD17);
+ 289:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 290:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 291:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_ICU
+ 292:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   /* Not used by ICU.*/
+ 293:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 294:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_PWM
+ 295:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if STM32_PWM_USE_TIM17
+ 296:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pwm_lld_serve_interrupt(&PWMD17);
+ 297:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 298:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 299:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 300:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_EPILOGUE();
+ 301:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+ 302:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 303:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+ 304:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   TIM1-CC interrupt handler.
+ 305:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+ 306:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @isr
+ 307:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+ 308:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** OSAL_IRQ_HANDLER(VectorAC) {
+ 309:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 310:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_PROLOGUE();
+ 311:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 312:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_GPT
+ 313:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   /* Not used by GPT.*/
+ 314:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 315:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_ICU
+ 316:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if STM32_ICU_USE_TIM1
+ 317:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   icu_lld_serve_interrupt(&ICUD1);
+ 318:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 319:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 320:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_PWM
+ 321:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if STM32_PWM_USE_TIM1
+ 322:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   pwm_lld_serve_interrupt(&PWMD1);
+ 323:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 324:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 325:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 326:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   OSAL_IRQ_EPILOGUE();
+ 327:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+ 328:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif /* HAL_USE_GPT || HAL_USE_ICU || HAL_USE_PWM */
+ 329:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 330:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /*===========================================================================*/
+ 331:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /* Driver exported functions.                                                */
+ 332:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /*===========================================================================*/
+ 333:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 334:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+ 335:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   Enables IRQ sources.
+ 336:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+ 337:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @notapi
+ 338:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+ 339:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** void irqInit(void) {
+  29              		.loc 1 339 20 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+ 340:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 341:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_PAL
+ 342:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicEnableVector(EXTI0_IRQn,              STM32_IRQ_EXTI0_PRIORITY);
+  33              		.loc 1 342 3 view .LVU1
+  34 0000 0621     		movs	r1, #6
+ 339:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  35              		.loc 1 339 20 is_stmt 0 view .LVU2
+  36 0002 08B5     		push	{r3, lr}
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 3, -8
+  39              		.cfi_offset 14, -4
+  40              		.loc 1 342 3 view .LVU3
+  41 0004 0846     		mov	r0, r1
+  42 0006 FFF7FEFF 		bl	nvicEnableVector
+  43              	.LVL0:
+ 343:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicEnableVector(EXTI1_IRQn,              STM32_IRQ_EXTI1_PRIORITY);
+  44              		.loc 1 343 3 is_stmt 1 view .LVU4
+  45 000a 0621     		movs	r1, #6
+  46 000c 0720     		movs	r0, #7
+  47 000e FFF7FEFF 		bl	nvicEnableVector
+  48              	.LVL1:
+ 344:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicEnableVector(EXTI2_TSC_IRQn,          STM32_IRQ_EXTI2_PRIORITY);
+  49              		.loc 1 344 3 view .LVU5
+  50 0012 0621     		movs	r1, #6
+  51 0014 0820     		movs	r0, #8
+  52 0016 FFF7FEFF 		bl	nvicEnableVector
+  53              	.LVL2:
+ 345:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicEnableVector(EXTI3_IRQn,              STM32_IRQ_EXTI3_PRIORITY);
+  54              		.loc 1 345 3 view .LVU6
+  55 001a 0621     		movs	r1, #6
+  56 001c 0920     		movs	r0, #9
+  57 001e FFF7FEFF 		bl	nvicEnableVector
+  58              	.LVL3:
+ 346:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicEnableVector(EXTI4_IRQn,              STM32_IRQ_EXTI4_PRIORITY);
+  59              		.loc 1 346 3 view .LVU7
+  60 0022 0621     		movs	r1, #6
+  61 0024 0A20     		movs	r0, #10
+  62 0026 FFF7FEFF 		bl	nvicEnableVector
+  63              	.LVL4:
+ 347:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicEnableVector(EXTI9_5_IRQn,            STM32_IRQ_EXTI5_9_PRIORITY);
+  64              		.loc 1 347 3 view .LVU8
+  65 002a 0621     		movs	r1, #6
+  66 002c 1720     		movs	r0, #23
+  67 002e FFF7FEFF 		bl	nvicEnableVector
+  68              	.LVL5:
+ 348:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicEnableVector(EXTI15_10_IRQn,          STM32_IRQ_EXTI10_15_PRIORITY);
+  69              		.loc 1 348 3 view .LVU9
+ 349:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 350:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_GPT || HAL_USE_ICU || HAL_USE_PWM || defined(__DOXYGEN__)
+ 351:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicEnableVector(TIM1_BRK_TIM15_IRQn,     STM32_IRQ_TIM1_BRK_TIM15_PRIORITY);
+ 352:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicEnableVector(TIM1_UP_TIM16_IRQn,      STM32_IRQ_TIM1_UP_TIM16_PRIORITY);
+ 353:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicEnableVector(TIM1_TRG_COM_TIM17_IRQn, STM32_IRQ_TIM1_TRGCO_TIM17_PRIORITY);
+ 354:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicEnableVector(TIM1_CC_IRQn,            STM32_IRQ_TIM1_CC_PRIORITY);
+ 355:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 356:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+  70              		.loc 1 356 1 is_stmt 0 view .LVU10
+  71 0032 BDE80840 		pop	{r3, lr}
+  72              		.cfi_restore 14
+  73              		.cfi_restore 3
+  74              		.cfi_def_cfa_offset 0
+ 348:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicEnableVector(EXTI15_10_IRQn,          STM32_IRQ_EXTI10_15_PRIORITY);
+  75              		.loc 1 348 3 view .LVU11
+  76 0036 0621     		movs	r1, #6
+  77 0038 2820     		movs	r0, #40
+  78 003a FFF7FEBF 		b	nvicEnableVector
+  79              	.LVL6:
+  80              		.cfi_endproc
+  81              	.LFE278:
+  83              		.section	.text.irqDeinit,"ax",%progbits
+  84              		.align	1
+  85              		.global	irqDeinit
+  86              		.syntax unified
+  87              		.thumb
+  88              		.thumb_func
+  89              		.fpu fpv4-sp-d16
+  91              	irqDeinit:
+  92              	.LFB279:
+ 357:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 358:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** /**
+ 359:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @brief   Disables IRQ sources.
+ 360:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  *
+ 361:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  * @notapi
+ 362:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****  */
+ 363:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** void irqDeinit(void) {
+  93              		.loc 1 363 22 is_stmt 1 view -0
+  94              		.cfi_startproc
+  95              		@ args = 0, pretend = 0, frame = 0
+  96              		@ frame_needed = 0, uses_anonymous_args = 0
+ 364:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+ 365:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_PAL
+ 366:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicDisableVector(EXTI0_IRQn);
+  97              		.loc 1 366 3 view .LVU13
+ 363:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** 
+  98              		.loc 1 363 22 is_stmt 0 view .LVU14
+  99 0000 08B5     		push	{r3, lr}
+ 100              		.cfi_def_cfa_offset 8
+ 101              		.cfi_offset 3, -8
+ 102              		.cfi_offset 14, -4
+ 103              		.loc 1 366 3 view .LVU15
+ 104 0002 0620     		movs	r0, #6
+ 105 0004 FFF7FEFF 		bl	nvicDisableVector
+ 106              	.LVL7:
+ 367:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicDisableVector(EXTI1_IRQn);
+ 107              		.loc 1 367 3 is_stmt 1 view .LVU16
+ 108 0008 0720     		movs	r0, #7
+ 109 000a FFF7FEFF 		bl	nvicDisableVector
+ 110              	.LVL8:
+ 368:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicDisableVector(EXTI2_TSC_IRQn);
+ 111              		.loc 1 368 3 view .LVU17
+ 112 000e 0820     		movs	r0, #8
+ 113 0010 FFF7FEFF 		bl	nvicDisableVector
+ 114              	.LVL9:
+ 369:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicDisableVector(EXTI3_IRQn);
+ 115              		.loc 1 369 3 view .LVU18
+ 116 0014 0920     		movs	r0, #9
+ 117 0016 FFF7FEFF 		bl	nvicDisableVector
+ 118              	.LVL10:
+ 370:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicDisableVector(EXTI4_IRQn);
+ 119              		.loc 1 370 3 view .LVU19
+ 120 001a 0A20     		movs	r0, #10
+ 121 001c FFF7FEFF 		bl	nvicDisableVector
+ 122              	.LVL11:
+ 371:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicDisableVector(EXTI9_5_IRQn);
+ 123              		.loc 1 371 3 view .LVU20
+ 124 0020 1720     		movs	r0, #23
+ 125 0022 FFF7FEFF 		bl	nvicDisableVector
+ 126              	.LVL12:
+ 372:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicDisableVector(EXTI15_10_IRQn);
+ 127              		.loc 1 372 3 view .LVU21
+ 373:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 374:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #if HAL_USE_GPT || HAL_USE_ICU || HAL_USE_PWM || defined(__DOXYGEN__)
+ 375:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicDisableVector(TIM1_BRK_TIM15_IRQn);
+ 376:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicDisableVector(TIM1_UP_TIM16_IRQn);
+ 377:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicDisableVector(TIM1_TRG_COM_TIM17_IRQn);
+ 378:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicDisableVector(TIM1_CC_IRQn);
+ 379:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** #endif
+ 380:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c **** }
+ 128              		.loc 1 380 1 is_stmt 0 view .LVU22
+ 129 0026 BDE80840 		pop	{r3, lr}
+ 130              		.cfi_restore 14
+ 131              		.cfi_restore 3
+ 132              		.cfi_def_cfa_offset 0
+ 372:lib/chibios/os/hal/ports/STM32/STM32F3xx/stm32_isr.c ****   nvicDisableVector(EXTI15_10_IRQn);
+ 133              		.loc 1 372 3 view .LVU23
+ 134 002a 2820     		movs	r0, #40
+ 135 002c FFF7FEBF 		b	nvicDisableVector
+ 136              	.LVL13:
+ 137              		.cfi_endproc
+ 138              	.LFE279:
+ 140              		.text
+ 141              	.Letext0:
+ 142              		.file 2 "./lib/chibios/os/hal/ports/common/ARMCMx/nvic.h"
+ 143              		.file 3 "./lib/chibios/os/common/ext/ST/STM32F3xx/stm32f303xc.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 stm32_isr.c
+C:\Users\lhanj\AppData\Local\Temp\ccP8lQ7P.s:18     .text.irqInit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccP8lQ7P.s:26     .text.irqInit:0000000000000000 irqInit
+C:\Users\lhanj\AppData\Local\Temp\ccP8lQ7P.s:84     .text.irqDeinit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccP8lQ7P.s:91     .text.irqDeinit:0000000000000000 irqDeinit
+
+UNDEFINED SYMBOLS
+nvicEnableVector
+nvicDisableVector

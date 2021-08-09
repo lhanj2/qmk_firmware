@@ -1,0 +1,508 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"crt1.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.__core_init,"ax",%progbits
+  18              		.align	1
+  19              		.weak	__core_init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	__core_init:
+  27              	.LFB130:
+  28              		.file 1 "lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c"
+   1:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*
+   2:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+   3:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+   4:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     Licensed under the Apache License, Version 2.0 (the "License");
+   5:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     you may not use this file except in compliance with the License.
+   6:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     You may obtain a copy of the License at
+   7:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+   8:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****         http://www.apache.org/licenses/LICENSE-2.0
+   9:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+  10:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     Unless required by applicable law or agreed to in writing, software
+  11:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     distributed under the License is distributed on an "AS IS" BASIS,
+  12:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  13:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     See the License for the specific language governing permissions and
+  14:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     limitations under the License.
+  15:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** */
+  16:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+  17:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /**
+  18:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @file    ARMCMx/compilers/GCC/crt1.c
+  19:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @brief   Startup stub functions.
+  20:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  *
+  21:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @addtogroup ARMCMx_GCC_STARTUP
+  22:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @{
+  23:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  */
+  24:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+  25:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #include <stdint.h>
+  26:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #include <stdbool.h>
+  27:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+  28:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #include "cmparams.h"
+  29:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+  30:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*===========================================================================*/
+  31:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /* Module local definitions.                                                 */
+  32:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*===========================================================================*/
+  33:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+  34:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if !defined(CRT1_AREAS_NUMBER) || defined(__DOXYGEN__)
+  35:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #define CRT1_AREAS_NUMBER                   8
+  36:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+  37:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+  38:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER < 0) || (CRT1_AREAS_NUMBER > 8)
+  39:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #error "CRT1_AREAS_NUMBER must be within 0 and 8"
+  40:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+  41:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+  42:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*===========================================================================*/
+  43:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /* Module exported variables.                                                */
+  44:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*===========================================================================*/
+  45:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+  46:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*===========================================================================*/
+  47:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /* Module local types.                                                       */
+  48:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*===========================================================================*/
+  49:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+  50:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /**
+  51:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @brief   Type of an area to be initialized.
+  52:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  */
+  53:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** typedef struct {
+  54:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   uint32_t              *init_text_area;
+  55:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   uint32_t              *init_area;
+  56:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   uint32_t              *clear_area;
+  57:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   uint32_t              *no_init_area;
+  58:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** } ram_init_area_t;
+  59:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+  60:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*===========================================================================*/
+  61:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /* Module local variables.                                                   */
+  62:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*===========================================================================*/
+  63:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+  64:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 0) || defined(__DOXYGEN__)
+  65:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** extern uint32_t __ram0_init_text__, __ram0_init__, __ram0_clear__, __ram0_noinit__;
+  66:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+  67:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 1) || defined(__DOXYGEN__)
+  68:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** extern uint32_t __ram1_init_text__, __ram1_init__, __ram1_clear__, __ram1_noinit__;
+  69:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+  70:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 2) || defined(__DOXYGEN__)
+  71:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** extern uint32_t __ram2_init_text__, __ram2_init__, __ram2_clear__, __ram2_noinit__;
+  72:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+  73:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 3) || defined(__DOXYGEN__)
+  74:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** extern uint32_t __ram3_init_text__, __ram3_init__, __ram3_clear__, __ram3_noinit__;
+  75:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+  76:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 4) || defined(__DOXYGEN__)
+  77:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** extern uint32_t __ram4_init_text__, __ram4_init__, __ram4_clear__, __ram4_noinit__;
+  78:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+  79:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 5) || defined(__DOXYGEN__)
+  80:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** extern uint32_t __ram5_init_text__, __ram5_init__, __ram5_clear__, __ram5_noinit__;
+  81:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+  82:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 6) || defined(__DOXYGEN__)
+  83:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** extern uint32_t __ram6_init_text__, __ram6_init__, __ram6_clear__, __ram6_noinit__;
+  84:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+  85:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 7) || defined(__DOXYGEN__)
+  86:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** extern uint32_t __ram7_init_text__, __ram7_init__, __ram7_clear__, __ram7_noinit__;
+  87:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+  88:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+  89:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /**
+  90:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @brief   Static table of areas to be initialized.
+  91:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  */
+  92:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 0) || defined(__DOXYGEN__)
+  93:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** static const ram_init_area_t ram_areas[CRT1_AREAS_NUMBER] = {
+  94:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   {&__ram0_init_text__, &__ram0_init__, &__ram0_clear__, &__ram0_noinit__},
+  95:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 1) || defined(__DOXYGEN__)
+  96:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   {&__ram1_init_text__, &__ram1_init__, &__ram1_clear__, &__ram1_noinit__},
+  97:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+  98:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 2) || defined(__DOXYGEN__)
+  99:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   {&__ram2_init_text__, &__ram2_init__, &__ram2_clear__, &__ram2_noinit__},
+ 100:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+ 101:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 3) || defined(__DOXYGEN__)
+ 102:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   {&__ram3_init_text__, &__ram3_init__, &__ram3_clear__, &__ram3_noinit__},
+ 103:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+ 104:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 4) || defined(__DOXYGEN__)
+ 105:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   {&__ram4_init_text__, &__ram4_init__, &__ram4_clear__, &__ram4_noinit__},
+ 106:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+ 107:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 5) || defined(__DOXYGEN__)
+ 108:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   {&__ram5_init_text__, &__ram5_init__, &__ram5_clear__, &__ram5_noinit__},
+ 109:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+ 110:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 6) || defined(__DOXYGEN__)
+ 111:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   {&__ram6_init_text__, &__ram6_init__, &__ram6_clear__, &__ram6_noinit__},
+ 112:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+ 113:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if (CRT1_AREAS_NUMBER > 7) || defined(__DOXYGEN__)
+ 114:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   {&__ram7_init_text__, &__ram7_init__, &__ram7_clear__, &__ram7_noinit__},
+ 115:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+ 116:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** };
+ 117:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+ 118:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+ 119:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*===========================================================================*/
+ 120:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /* Module local functions.                                                   */
+ 121:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*===========================================================================*/
+ 122:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+ 123:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*===========================================================================*/
+ 124:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /* Module exported functions.                                                */
+ 125:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*===========================================================================*/
+ 126:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+ 127:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /**
+ 128:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @brief   Architecture-dependent core initialization.
+ 129:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @details This hook is invoked immediately after the stack initialization
+ 130:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  *          and before the DATA and BSS segments initialization.
+ 131:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @note    This function is a weak symbol.
+ 132:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  */
+ 133:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if !defined(__DOXYGEN__)
+ 134:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** __attribute__((weak))
+ 135:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+ 136:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*lint -save -e9075 [8.4] All symbols are invoked from asm context.*/
+ 137:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** void __core_init(void) {
+  29              		.loc 1 137 24 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+ 138:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+ 139:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if CORTEX_MODEL == 7
+ 140:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   SCB_EnableICache();
+ 141:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   SCB_EnableDCache();
+ 142:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+ 143:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** }
+  34              		.loc 1 143 1 view .LVU1
+  35 0000 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE130:
+  39              		.section	.text.__early_init,"ax",%progbits
+  40              		.align	1
+  41              		.weak	__early_init
+  42              		.syntax unified
+  43              		.thumb
+  44              		.thumb_func
+  45              		.fpu fpv4-sp-d16
+  47              	__early_init:
+  48              	.LFB136:
+  49              		.cfi_startproc
+  50              		@ args = 0, pretend = 0, frame = 0
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52              		@ link register save eliminated.
+  53 0000 7047     		bx	lr
+  54              		.cfi_endproc
+  55              	.LFE136:
+  57              		.section	.text.__late_init,"ax",%progbits
+  58              		.align	1
+  59              		.weak	__late_init
+  60              		.syntax unified
+  61              		.thumb
+  62              		.thumb_func
+  63              		.fpu fpv4-sp-d16
+  65              	__late_init:
+  66              	.LFB138:
+  67              		.cfi_startproc
+  68              		@ args = 0, pretend = 0, frame = 0
+  69              		@ frame_needed = 0, uses_anonymous_args = 0
+  70              		@ link register save eliminated.
+  71 0000 7047     		bx	lr
+  72              		.cfi_endproc
+  73              	.LFE138:
+  75              		.section	.text.__default_exit,"ax",%progbits
+  76              		.align	1
+  77              		.weak	__default_exit
+  78              		.syntax unified
+  79              		.thumb
+  80              		.thumb_func
+  81              		.fpu fpv4-sp-d16
+  83              	__default_exit:
+  84              	.LFB133:
+ 144:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+ 145:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /**
+ 146:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @brief   Early initialization.
+ 147:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @details This hook is invoked immediately after the stack and core
+ 148:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  *          initialization and before the DATA and BSS segments
+ 149:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  *          initialization.
+ 150:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @note    This function is a weak symbol.
+ 151:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  */
+ 152:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if !defined(__DOXYGEN__)
+ 153:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** __attribute__((weak))
+ 154:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+ 155:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*lint -save -e9075 [8.4] All symbols are invoked from asm context.*/
+ 156:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** void __early_init(void) {}
+ 157:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*lint -restore*/
+ 158:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+ 159:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /**
+ 160:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @brief   Late initialization.
+ 161:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @details This hook is invoked after the DATA and BSS segments
+ 162:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  *          initialization and before any static constructor. The
+ 163:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  *          default behavior is to do nothing.
+ 164:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @note    This function is a weak symbol.
+ 165:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  */
+ 166:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if !defined(__DOXYGEN__)
+ 167:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** __attribute__((weak))
+ 168:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+ 169:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*lint -save -e9075 [8.4] All symbols are invoked from asm context.*/
+ 170:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** void __late_init(void) {}
+ 171:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*lint -restore*/
+ 172:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+ 173:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /**
+ 174:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @brief   Default @p main() function exit handler.
+ 175:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @details This handler is invoked or the @p main() function exit. The
+ 176:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  *          default behavior is to enter an infinite loop.
+ 177:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @note    This function is a weak symbol.
+ 178:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  */
+ 179:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if !defined(__DOXYGEN__)
+ 180:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** __attribute__((noreturn, weak))
+ 181:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+ 182:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*lint -save -e9075 [8.4] All symbols are invoked from asm context.*/
+ 183:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** void __default_exit(void) {
+  85              		.loc 1 183 27 view -0
+  86              		.cfi_startproc
+  87              		@ Volatile: function does not return.
+  88              		@ args = 0, pretend = 0, frame = 0
+  89              		@ frame_needed = 0, uses_anonymous_args = 0
+  90              		@ link register save eliminated.
+  91              	.L5:
+ 184:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /*lint -restore*/
+ 185:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+ 186:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   while (true) {
+  92              		.loc 1 186 3 discriminator 1 view .LVU3
+ 187:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   }
+  93              		.loc 1 187 3 discriminator 1 view .LVU4
+ 186:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   }
+  94              		.loc 1 186 9 discriminator 1 view .LVU5
+  95 0000 FEE7     		b	.L5
+  96              		.cfi_endproc
+  97              	.LFE133:
+  99              		.section	.text.__init_ram_areas,"ax",%progbits
+ 100              		.align	1
+ 101              		.global	__init_ram_areas
+ 102              		.syntax unified
+ 103              		.thumb
+ 104              		.thumb_func
+ 105              		.fpu fpv4-sp-d16
+ 107              	__init_ram_areas:
+ 108              	.LFB134:
+ 188:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** }
+ 189:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+ 190:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** /**
+ 191:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  * @brief   Performs the initialization of the various RAM areas.
+ 192:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****  */
+ 193:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** void __init_ram_areas(void) {
+ 109              		.loc 1 193 29 view -0
+ 110              		.cfi_startproc
+ 111              		@ args = 0, pretend = 0, frame = 0
+ 112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 194:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if CRT1_AREAS_NUMBER > 0
+ 195:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   const ram_init_area_t *rap = ram_areas;
+ 113              		.loc 1 195 3 view .LVU7
+ 114              	.LVL0:
+ 193:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if CRT1_AREAS_NUMBER > 0
+ 115              		.loc 1 193 29 is_stmt 0 view .LVU8
+ 116 0000 70B5     		push	{r4, r5, r6, lr}
+ 117              		.cfi_def_cfa_offset 16
+ 118              		.cfi_offset 4, -16
+ 119              		.cfi_offset 5, -12
+ 120              		.cfi_offset 6, -8
+ 121              		.cfi_offset 14, -4
+ 122              		.loc 1 195 26 view .LVU9
+ 123 0002 144C     		ldr	r4, .L11
+ 193:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #if CRT1_AREAS_NUMBER > 0
+ 124              		.loc 1 193 29 view .LVU10
+ 125 0004 0825     		movs	r5, #8
+ 126              	.LVL1:
+ 127              	.L9:
+ 196:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+ 197:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   do {
+ 128              		.loc 1 197 3 is_stmt 1 view .LVU11
+ 129              	.LBB2:
+ 198:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     uint32_t *tp = rap->init_text_area;
+ 130              		.loc 1 198 5 view .LVU12
+ 199:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     uint32_t *p = rap->init_area;
+ 131              		.loc 1 199 5 view .LVU13
+ 200:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+ 201:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     /* Copying initialization data.*/
+ 202:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     while (p < rap->clear_area) {
+ 132              		.loc 1 202 19 is_stmt 0 view .LVU14
+ 133 0006 D4E90102 		ldrd	r0, r2, [r4, #4]
+ 134 000a 2368     		ldr	r3, [r4]
+ 199:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     uint32_t *p = rap->init_area;
+ 135              		.loc 1 199 15 view .LVU15
+ 136 000c 0146     		mov	r1, r0
+ 137 000e 043B     		subs	r3, r3, #4
+ 138              	.LVL2:
+ 139              	.L7:
+ 140              		.loc 1 202 11 is_stmt 1 view .LVU16
+ 141 0010 8A42     		cmp	r2, r1
+ 142 0012 19D8     		bhi	.L8
+ 143 0014 D31C     		adds	r3, r2, #3
+ 144 0016 1B1A     		subs	r3, r3, r0
+ 145 0018 C11E     		subs	r1, r0, #3
+ 146              	.LVL3:
+ 147              		.loc 1 202 11 is_stmt 0 view .LVU17
+ 148 001a 23F00303 		bic	r3, r3, #3
+ 149 001e 8A42     		cmp	r2, r1
+ 150 0020 38BF     		it	cc
+ 151 0022 0023     		movcc	r3, #0
+ 152 0024 1844     		add	r0, r0, r3
+ 203:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****       *p = *tp;
+ 204:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****       p++;
+ 205:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****       tp++;
+ 206:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     }
+ 207:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** 
+ 208:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     /* Zeroing clear area.*/
+ 209:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     while (p < rap->no_init_area) {
+ 210:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****       *p = 0;
+ 153              		.loc 1 210 10 view .LVU18
+ 154 0026 E368     		ldr	r3, [r4, #12]
+ 155 0028 DA1C     		adds	r2, r3, #3
+ 156 002a 121A     		subs	r2, r2, r0
+ 157 002c C11E     		subs	r1, r0, #3
+ 158 002e 22F00302 		bic	r2, r2, #3
+ 159 0032 9942     		cmp	r1, r3
+ 160 0034 88BF     		it	hi
+ 161 0036 0022     		movhi	r2, #0
+ 162 0038 0021     		movs	r1, #0
+ 163 003a FFF7FEFF 		bl	memset
+ 164              	.LVL4:
+ 211:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****       p++;
+ 212:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     }
+ 213:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     rap++;
+ 165              		.loc 1 213 5 is_stmt 1 view .LVU19
+ 166              	.LBE2:
+ 214:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   }
+ 215:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   while (rap < &ram_areas[CRT1_AREAS_NUMBER]);
+ 167              		.loc 1 215 3 is_stmt 0 view .LVU20
+ 168 003e 013D     		subs	r5, r5, #1
+ 169              	.LBB3:
+ 213:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   }
+ 170              		.loc 1 213 8 view .LVU21
+ 171 0040 04F11004 		add	r4, r4, #16
+ 172              	.LVL5:
+ 213:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****   }
+ 173              		.loc 1 213 8 view .LVU22
+ 174              	.LBE3:
+ 175              		.loc 1 215 9 is_stmt 1 view .LVU23
+ 176              		.loc 1 215 3 is_stmt 0 view .LVU24
+ 177 0044 DFD1     		bne	.L9
+ 216:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** #endif
+ 217:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c **** }
+ 178              		.loc 1 217 1 view .LVU25
+ 179 0046 70BD     		pop	{r4, r5, r6, pc}
+ 180              	.LVL6:
+ 181              	.L8:
+ 182              	.LBB4:
+ 203:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****       p++;
+ 183              		.loc 1 203 7 is_stmt 1 view .LVU26
+ 203:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****       p++;
+ 184              		.loc 1 203 12 is_stmt 0 view .LVU27
+ 185 0048 53F8046F 		ldr	r6, [r3, #4]!
+ 203:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****       p++;
+ 186              		.loc 1 203 10 view .LVU28
+ 187 004c 41F8046B 		str	r6, [r1], #4
+ 188              	.LVL7:
+ 204:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****       tp++;
+ 189              		.loc 1 204 7 is_stmt 1 view .LVU29
+ 205:lib/chibios/os/common/startup/ARMCMx/compilers/GCC/crt1.c ****     }
+ 190              		.loc 1 205 7 view .LVU30
+ 191 0050 DEE7     		b	.L7
+ 192              	.L12:
+ 193 0052 00BF     		.align	2
+ 194              	.L11:
+ 195 0054 00000000 		.word	.LANCHOR0
+ 196              	.LBE4:
+ 197              		.cfi_endproc
+ 198              	.LFE134:
+ 200              		.section	.rodata.ram_areas,"a"
+ 201              		.align	2
+ 202              		.set	.LANCHOR0,. + 0
+ 205              	ram_areas:
+ 206 0000 00000000 		.word	__ram0_init_text__
+ 207 0004 00000000 		.word	__ram0_init__
+ 208 0008 00000000 		.word	__ram0_clear__
+ 209 000c 00000000 		.word	__ram0_noinit__
+ 210 0010 00000000 		.word	__ram1_init_text__
+ 211 0014 00000000 		.word	__ram1_init__
+ 212 0018 00000000 		.word	__ram1_clear__
+ 213 001c 00000000 		.word	__ram1_noinit__
+ 214 0020 00000000 		.word	__ram2_init_text__
+ 215 0024 00000000 		.word	__ram2_init__
+ 216 0028 00000000 		.word	__ram2_clear__
+ 217 002c 00000000 		.word	__ram2_noinit__
+ 218 0030 00000000 		.word	__ram3_init_text__
+ 219 0034 00000000 		.word	__ram3_init__
+ 220 0038 00000000 		.word	__ram3_clear__
+ 221 003c 00000000 		.word	__ram3_noinit__
+ 222 0040 00000000 		.word	__ram4_init_text__
+ 223 0044 00000000 		.word	__ram4_init__
+ 224 0048 00000000 		.word	__ram4_clear__
+ 225 004c 00000000 		.word	__ram4_noinit__
+ 226 0050 00000000 		.word	__ram5_init_text__
+ 227 0054 00000000 		.word	__ram5_init__
+ 228 0058 00000000 		.word	__ram5_clear__
+ 229 005c 00000000 		.word	__ram5_noinit__
+ 230 0060 00000000 		.word	__ram6_init_text__
+ 231 0064 00000000 		.word	__ram6_init__
+ 232 0068 00000000 		.word	__ram6_clear__
+ 233 006c 00000000 		.word	__ram6_noinit__
+ 234 0070 00000000 		.word	__ram7_init_text__
+ 235 0074 00000000 		.word	__ram7_init__
+ 236 0078 00000000 		.word	__ram7_clear__
+ 237 007c 00000000 		.word	__ram7_noinit__
+ 238              		.text
+ 239              	.Letext0:
+ 240              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 241              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 242              		.file 4 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 crt1.c
+C:\Users\lhanj\AppData\Local\Temp\ccxpx01l.s:18     .text.__core_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccxpx01l.s:26     .text.__core_init:0000000000000000 __core_init
+C:\Users\lhanj\AppData\Local\Temp\ccxpx01l.s:40     .text.__early_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccxpx01l.s:47     .text.__early_init:0000000000000000 __early_init
+C:\Users\lhanj\AppData\Local\Temp\ccxpx01l.s:58     .text.__late_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccxpx01l.s:65     .text.__late_init:0000000000000000 __late_init
+C:\Users\lhanj\AppData\Local\Temp\ccxpx01l.s:76     .text.__default_exit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccxpx01l.s:83     .text.__default_exit:0000000000000000 __default_exit
+C:\Users\lhanj\AppData\Local\Temp\ccxpx01l.s:100    .text.__init_ram_areas:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccxpx01l.s:107    .text.__init_ram_areas:0000000000000000 __init_ram_areas
+C:\Users\lhanj\AppData\Local\Temp\ccxpx01l.s:195    .text.__init_ram_areas:0000000000000054 $d
+C:\Users\lhanj\AppData\Local\Temp\ccxpx01l.s:201    .rodata.ram_areas:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccxpx01l.s:205    .rodata.ram_areas:0000000000000000 ram_areas
+
+UNDEFINED SYMBOLS
+memset
+__ram0_init_text__
+__ram0_init__
+__ram0_clear__
+__ram0_noinit__
+__ram1_init_text__
+__ram1_init__
+__ram1_clear__
+__ram1_noinit__
+__ram2_init_text__
+__ram2_init__
+__ram2_clear__
+__ram2_noinit__
+__ram3_init_text__
+__ram3_init__
+__ram3_clear__
+__ram3_noinit__
+__ram4_init_text__
+__ram4_init__
+__ram4_clear__
+__ram4_noinit__
+__ram5_init_text__
+__ram5_init__
+__ram5_clear__
+__ram5_noinit__
+__ram6_init_text__
+__ram6_init__
+__ram6_clear__
+__ram6_noinit__
+__ram7_init_text__
+__ram7_init__
+__ram7_clear__
+__ram7_noinit__

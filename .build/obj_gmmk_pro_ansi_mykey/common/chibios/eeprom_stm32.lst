@@ -1,0 +1,1461 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"eeprom_stm32.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.EEPROM_Init,"ax",%progbits
+  18              		.align	1
+  19              		.global	EEPROM_Init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	EEPROM_Init:
+  27              	.LFB281:
+  28              		.file 1 "tmk_core/common/chibios/eeprom_stm32.c"
+   1:tmk_core/common/chibios/eeprom_stm32.c **** /*
+   2:tmk_core/common/chibios/eeprom_stm32.c ****  * This software is experimental and a work in progress.
+   3:tmk_core/common/chibios/eeprom_stm32.c ****  * Under no circumstances should these files be used in relation to any critical system(s).
+   4:tmk_core/common/chibios/eeprom_stm32.c ****  * Use of these files is at your own risk.
+   5:tmk_core/common/chibios/eeprom_stm32.c ****  *
+   6:tmk_core/common/chibios/eeprom_stm32.c ****  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+   7:tmk_core/common/chibios/eeprom_stm32.c ****  * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+   8:tmk_core/common/chibios/eeprom_stm32.c ****  * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+   9:tmk_core/common/chibios/eeprom_stm32.c ****  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+  10:tmk_core/common/chibios/eeprom_stm32.c ****  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+  11:tmk_core/common/chibios/eeprom_stm32.c ****  * DEALINGS IN THE SOFTWARE.
+  12:tmk_core/common/chibios/eeprom_stm32.c ****  *
+  13:tmk_core/common/chibios/eeprom_stm32.c ****  * This files are free to use from http://engsta.com/stm32-flash-memory-eeprom-emulator/ by
+  14:tmk_core/common/chibios/eeprom_stm32.c ****  * Artur F.
+  15:tmk_core/common/chibios/eeprom_stm32.c ****  *
+  16:tmk_core/common/chibios/eeprom_stm32.c ****  * Modifications for QMK and STM32F303 by Yiancar
+  17:tmk_core/common/chibios/eeprom_stm32.c ****  */
+  18:tmk_core/common/chibios/eeprom_stm32.c **** 
+  19:tmk_core/common/chibios/eeprom_stm32.c **** #include <stdio.h>
+  20:tmk_core/common/chibios/eeprom_stm32.c **** #include <string.h>
+  21:tmk_core/common/chibios/eeprom_stm32.c **** #include "eeprom_stm32.h"
+  22:tmk_core/common/chibios/eeprom_stm32.c **** /*****************************************************************************
+  23:tmk_core/common/chibios/eeprom_stm32.c ****  * Allows to use the internal flash to store non volatile data. To initialize
+  24:tmk_core/common/chibios/eeprom_stm32.c ****  * the functionality use the EEPROM_Init() function. Be sure that by reprogramming
+  25:tmk_core/common/chibios/eeprom_stm32.c ****  * of the controller just affected pages will be deleted. In other case the non
+  26:tmk_core/common/chibios/eeprom_stm32.c ****  * volatile data will be lost.
+  27:tmk_core/common/chibios/eeprom_stm32.c ****  ******************************************************************************/
+  28:tmk_core/common/chibios/eeprom_stm32.c **** 
+  29:tmk_core/common/chibios/eeprom_stm32.c **** /* Private macro -------------------------------------------------------------*/
+  30:tmk_core/common/chibios/eeprom_stm32.c **** /* Private variables ---------------------------------------------------------*/
+  31:tmk_core/common/chibios/eeprom_stm32.c **** /* Functions -----------------------------------------------------------------*/
+  32:tmk_core/common/chibios/eeprom_stm32.c **** 
+  33:tmk_core/common/chibios/eeprom_stm32.c **** uint8_t DataBuf[FEE_PAGE_SIZE];
+  34:tmk_core/common/chibios/eeprom_stm32.c **** /*****************************************************************************
+  35:tmk_core/common/chibios/eeprom_stm32.c ****  *  Delete Flash Space used for user Data, deletes the whole space between
+  36:tmk_core/common/chibios/eeprom_stm32.c ****  *  RW_PAGE_BASE_ADDRESS and the last uC Flash Page
+  37:tmk_core/common/chibios/eeprom_stm32.c ****  ******************************************************************************/
+  38:tmk_core/common/chibios/eeprom_stm32.c **** uint16_t EEPROM_Init(void) {
+  29              		.loc 1 38 28 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  39:tmk_core/common/chibios/eeprom_stm32.c ****     // unlock flash
+  40:tmk_core/common/chibios/eeprom_stm32.c ****     FLASH_Unlock();
+  33              		.loc 1 40 5 view .LVU1
+  38:tmk_core/common/chibios/eeprom_stm32.c ****     // unlock flash
+  34              		.loc 1 38 28 is_stmt 0 view .LVU2
+  35 0000 08B5     		push	{r3, lr}
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 3, -8
+  38              		.cfi_offset 14, -4
+  39              		.loc 1 40 5 view .LVU3
+  40 0002 FFF7FEFF 		bl	FLASH_Unlock
+  41              	.LVL0:
+  41:tmk_core/common/chibios/eeprom_stm32.c **** 
+  42:tmk_core/common/chibios/eeprom_stm32.c ****     // Clear Flags
+  43:tmk_core/common/chibios/eeprom_stm32.c ****     // FLASH_ClearFlag(FLASH_SR_EOP|FLASH_SR_PGERR|FLASH_SR_WRPERR);
+  44:tmk_core/common/chibios/eeprom_stm32.c **** 
+  45:tmk_core/common/chibios/eeprom_stm32.c ****     return FEE_DENSITY_BYTES;
+  42              		.loc 1 45 5 is_stmt 1 view .LVU4
+  46:tmk_core/common/chibios/eeprom_stm32.c **** }
+  43              		.loc 1 46 1 is_stmt 0 view .LVU5
+  44 0006 40F6FF70 		movw	r0, #4095
+  45 000a 08BD     		pop	{r3, pc}
+  46              		.cfi_endproc
+  47              	.LFE281:
+  49              		.section	.text.EEPROM_Erase,"ax",%progbits
+  50              		.align	1
+  51              		.global	EEPROM_Erase
+  52              		.syntax unified
+  53              		.thumb
+  54              		.thumb_func
+  55              		.fpu fpv4-sp-d16
+  57              	EEPROM_Erase:
+  58              	.LFB282:
+  47:tmk_core/common/chibios/eeprom_stm32.c **** /*****************************************************************************
+  48:tmk_core/common/chibios/eeprom_stm32.c ****  *  Erase the whole reserved Flash Space used for user Data
+  49:tmk_core/common/chibios/eeprom_stm32.c ****  ******************************************************************************/
+  50:tmk_core/common/chibios/eeprom_stm32.c **** void EEPROM_Erase(void) {
+  59              		.loc 1 50 25 is_stmt 1 view -0
+  60              		.cfi_startproc
+  61              		@ args = 0, pretend = 0, frame = 0
+  62              		@ frame_needed = 0, uses_anonymous_args = 0
+  51:tmk_core/common/chibios/eeprom_stm32.c ****     int page_num = 0;
+  63              		.loc 1 51 5 view .LVU7
+  64              	.LVL1:
+  52:tmk_core/common/chibios/eeprom_stm32.c **** 
+  53:tmk_core/common/chibios/eeprom_stm32.c ****     // delete all pages from specified start page to the last page
+  54:tmk_core/common/chibios/eeprom_stm32.c ****     do {
+  65              		.loc 1 54 5 view .LVU8
+  55:tmk_core/common/chibios/eeprom_stm32.c ****         FLASH_ErasePage(FEE_PAGE_BASE_ADDRESS + (page_num * FEE_PAGE_SIZE));
+  66              		.loc 1 55 9 view .LVU9
+  50:tmk_core/common/chibios/eeprom_stm32.c ****     int page_num = 0;
+  67              		.loc 1 50 25 is_stmt 0 view .LVU10
+  68 0000 08B5     		push	{r3, lr}
+  69              		.cfi_def_cfa_offset 8
+  70              		.cfi_offset 3, -8
+  71              		.cfi_offset 14, -4
+  72              		.loc 1 55 9 view .LVU11
+  73 0002 0748     		ldr	r0, .L3
+  74 0004 FFF7FEFF 		bl	FLASH_ErasePage
+  75              	.LVL2:
+  56:tmk_core/common/chibios/eeprom_stm32.c ****         page_num++;
+  76              		.loc 1 56 9 is_stmt 1 view .LVU12
+  57:tmk_core/common/chibios/eeprom_stm32.c ****     } while (page_num < FEE_DENSITY_PAGES);
+  77              		.loc 1 57 13 view .LVU13
+  54:tmk_core/common/chibios/eeprom_stm32.c ****         FLASH_ErasePage(FEE_PAGE_BASE_ADDRESS + (page_num * FEE_PAGE_SIZE));
+  78              		.loc 1 54 5 view .LVU14
+  55:tmk_core/common/chibios/eeprom_stm32.c ****         page_num++;
+  79              		.loc 1 55 9 view .LVU15
+  80 0008 0648     		ldr	r0, .L3+4
+  81 000a FFF7FEFF 		bl	FLASH_ErasePage
+  82              	.LVL3:
+  56:tmk_core/common/chibios/eeprom_stm32.c ****     } while (page_num < FEE_DENSITY_PAGES);
+  83              		.loc 1 56 9 view .LVU16
+  84              		.loc 1 57 13 view .LVU17
+  54:tmk_core/common/chibios/eeprom_stm32.c ****         FLASH_ErasePage(FEE_PAGE_BASE_ADDRESS + (page_num * FEE_PAGE_SIZE));
+  85              		.loc 1 54 5 view .LVU18
+  55:tmk_core/common/chibios/eeprom_stm32.c ****         page_num++;
+  86              		.loc 1 55 9 view .LVU19
+  87 000e 0648     		ldr	r0, .L3+8
+  88 0010 FFF7FEFF 		bl	FLASH_ErasePage
+  89              	.LVL4:
+  56:tmk_core/common/chibios/eeprom_stm32.c ****     } while (page_num < FEE_DENSITY_PAGES);
+  90              		.loc 1 56 9 view .LVU20
+  91              		.loc 1 57 13 view .LVU21
+  54:tmk_core/common/chibios/eeprom_stm32.c ****         FLASH_ErasePage(FEE_PAGE_BASE_ADDRESS + (page_num * FEE_PAGE_SIZE));
+  92              		.loc 1 54 5 view .LVU22
+  55:tmk_core/common/chibios/eeprom_stm32.c ****         page_num++;
+  93              		.loc 1 55 9 view .LVU23
+  58:tmk_core/common/chibios/eeprom_stm32.c **** }
+  94              		.loc 1 58 1 is_stmt 0 view .LVU24
+  95 0014 BDE80840 		pop	{r3, lr}
+  96              		.cfi_restore 14
+  97              		.cfi_restore 3
+  98              		.cfi_def_cfa_offset 0
+  55:tmk_core/common/chibios/eeprom_stm32.c ****         page_num++;
+  99              		.loc 1 55 9 view .LVU25
+ 100 0018 0448     		ldr	r0, .L3+12
+ 101 001a FFF7FEBF 		b	FLASH_ErasePage
+ 102              	.LVL5:
+ 103              	.L4:
+ 104 001e 00BF     		.align	2
+ 105              	.L3:
+ 106 0020 00E00308 		.word	134471680
+ 107 0024 00E80308 		.word	134473728
+ 108 0028 00F00308 		.word	134475776
+ 109 002c 00F80308 		.word	134477824
+ 110              		.cfi_endproc
+ 111              	.LFE282:
+ 113              		.section	.text.EEPROM_WriteDataByte,"ax",%progbits
+ 114              		.align	1
+ 115              		.global	EEPROM_WriteDataByte
+ 116              		.syntax unified
+ 117              		.thumb
+ 118              		.thumb_func
+ 119              		.fpu fpv4-sp-d16
+ 121              	EEPROM_WriteDataByte:
+ 122              	.LVL6:
+ 123              	.LFB283:
+  59:tmk_core/common/chibios/eeprom_stm32.c **** /*****************************************************************************
+  60:tmk_core/common/chibios/eeprom_stm32.c ****  *  Writes once data byte to flash on specified address. If a byte is already
+  61:tmk_core/common/chibios/eeprom_stm32.c ****  *  written, the whole page must be copied to a buffer, the byte changed and
+  62:tmk_core/common/chibios/eeprom_stm32.c ****  *  the manipulated buffer written after PageErase.
+  63:tmk_core/common/chibios/eeprom_stm32.c ****  *******************************************************************************/
+  64:tmk_core/common/chibios/eeprom_stm32.c **** uint16_t EEPROM_WriteDataByte(uint16_t Address, uint8_t DataByte) {
+ 124              		.loc 1 64 67 is_stmt 1 view -0
+ 125              		.cfi_startproc
+ 126              		@ args = 0, pretend = 0, frame = 0
+ 127              		@ frame_needed = 0, uses_anonymous_args = 0
+  65:tmk_core/common/chibios/eeprom_stm32.c ****     FLASH_Status FlashStatus = FLASH_COMPLETE;
+ 128              		.loc 1 65 5 view .LVU27
+  66:tmk_core/common/chibios/eeprom_stm32.c **** 
+  67:tmk_core/common/chibios/eeprom_stm32.c ****     uint32_t page;
+ 129              		.loc 1 67 5 view .LVU28
+  68:tmk_core/common/chibios/eeprom_stm32.c ****     int      i;
+ 130              		.loc 1 68 5 view .LVU29
+  69:tmk_core/common/chibios/eeprom_stm32.c **** 
+  70:tmk_core/common/chibios/eeprom_stm32.c ****     // exit if desired address is above the limit (e.G. under 2048 Bytes for 4 pages)
+  71:tmk_core/common/chibios/eeprom_stm32.c ****     if (Address > FEE_DENSITY_BYTES) {
+ 131              		.loc 1 71 5 view .LVU30
+ 132              		.loc 1 71 8 is_stmt 0 view .LVU31
+ 133 0000 B0F5805F 		cmp	r0, #4096
+  64:tmk_core/common/chibios/eeprom_stm32.c ****     FLASH_Status FlashStatus = FLASH_COMPLETE;
+ 134              		.loc 1 64 67 view .LVU32
+ 135 0004 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 136              		.cfi_def_cfa_offset 24
+ 137              		.cfi_offset 4, -24
+ 138              		.cfi_offset 5, -20
+ 139              		.cfi_offset 6, -16
+ 140              		.cfi_offset 7, -12
+ 141              		.cfi_offset 8, -8
+ 142              		.cfi_offset 14, -4
+  64:tmk_core/common/chibios/eeprom_stm32.c ****     FLASH_Status FlashStatus = FLASH_COMPLETE;
+ 143              		.loc 1 64 67 view .LVU33
+ 144 0008 8846     		mov	r8, r1
+ 145              		.loc 1 71 8 view .LVU34
+ 146 000a 02D3     		bcc	.L6
+ 147              	.LVL7:
+ 148              	.L10:
+  72:tmk_core/common/chibios/eeprom_stm32.c ****         return 0;
+ 149              		.loc 1 72 16 view .LVU35
+ 150 000c 0020     		movs	r0, #0
+ 151              	.L7:
+  73:tmk_core/common/chibios/eeprom_stm32.c ****     }
+  74:tmk_core/common/chibios/eeprom_stm32.c **** 
+  75:tmk_core/common/chibios/eeprom_stm32.c ****     // calculate which page is affected (Pagenum1/Pagenum2...PagenumN)
+  76:tmk_core/common/chibios/eeprom_stm32.c ****     page = FEE_ADDR_OFFSET(Address) / FEE_PAGE_SIZE;
+  77:tmk_core/common/chibios/eeprom_stm32.c **** 
+  78:tmk_core/common/chibios/eeprom_stm32.c ****     // if current data is 0xFF, the byte is empty, just overwrite with the new one
+  79:tmk_core/common/chibios/eeprom_stm32.c ****     if ((*(__IO uint16_t *)(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address))) == FEE_EMPTY_WORD) {
+  80:tmk_core/common/chibios/eeprom_stm32.c ****         FlashStatus = FLASH_ProgramHalfWord(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address), (uint
+  81:tmk_core/common/chibios/eeprom_stm32.c ****     } else {
+  82:tmk_core/common/chibios/eeprom_stm32.c ****         // Copy Page to a buffer
+  83:tmk_core/common/chibios/eeprom_stm32.c ****         memcpy(DataBuf, (uint8_t *)FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE), FEE_PAGE_SIZE); 
+  84:tmk_core/common/chibios/eeprom_stm32.c **** 
+  85:tmk_core/common/chibios/eeprom_stm32.c ****         // check if new data is differ to current data, return if not, proceed if yes
+  86:tmk_core/common/chibios/eeprom_stm32.c ****         if (DataByte == *(__IO uint8_t *)(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address))) {
+  87:tmk_core/common/chibios/eeprom_stm32.c ****             return 0;
+  88:tmk_core/common/chibios/eeprom_stm32.c ****         }
+  89:tmk_core/common/chibios/eeprom_stm32.c **** 
+  90:tmk_core/common/chibios/eeprom_stm32.c ****         // manipulate desired data byte in temp data array if new byte is differ to the current
+  91:tmk_core/common/chibios/eeprom_stm32.c ****         DataBuf[FEE_ADDR_OFFSET(Address) % FEE_PAGE_SIZE] = DataByte;
+  92:tmk_core/common/chibios/eeprom_stm32.c **** 
+  93:tmk_core/common/chibios/eeprom_stm32.c ****         // Erase Page
+  94:tmk_core/common/chibios/eeprom_stm32.c ****         FlashStatus = FLASH_ErasePage(FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE));
+  95:tmk_core/common/chibios/eeprom_stm32.c **** 
+  96:tmk_core/common/chibios/eeprom_stm32.c ****         // Write new data (whole page) to flash if data has been changed
+  97:tmk_core/common/chibios/eeprom_stm32.c ****         for (i = 0; i < (FEE_PAGE_SIZE / 2); i++) {
+  98:tmk_core/common/chibios/eeprom_stm32.c ****             if ((__IO uint16_t)(0xFF00 | DataBuf[FEE_ADDR_OFFSET(i)]) != 0xFFFF) {
+  99:tmk_core/common/chibios/eeprom_stm32.c ****                 FlashStatus = FLASH_ProgramHalfWord((FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE)
+ 100:tmk_core/common/chibios/eeprom_stm32.c ****             }
+ 101:tmk_core/common/chibios/eeprom_stm32.c ****         }
+ 102:tmk_core/common/chibios/eeprom_stm32.c ****     }
+ 103:tmk_core/common/chibios/eeprom_stm32.c ****     return FlashStatus;
+ 104:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 152              		.loc 1 104 1 view .LVU36
+ 153 000e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 154              	.LVL8:
+ 155              	.L6:
+ 156              	.LBB30:
+ 157              	.LBI30:
+  64:tmk_core/common/chibios/eeprom_stm32.c ****     FLASH_Status FlashStatus = FLASH_COMPLETE;
+ 158              		.loc 1 64 10 is_stmt 1 view .LVU37
+ 159              	.LBB31:
+  76:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 160              		.loc 1 76 5 view .LVU38
+  79:tmk_core/common/chibios/eeprom_stm32.c ****         FlashStatus = FLASH_ProgramHalfWord(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address), (uint
+ 161              		.loc 1 79 53 is_stmt 0 view .LVU39
+ 162 0012 4700     		lsls	r7, r0, #1
+  79:tmk_core/common/chibios/eeprom_stm32.c ****         FlashStatus = FLASH_ProgramHalfWord(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address), (uint
+ 163              		.loc 1 79 51 view .LVU40
+ 164 0014 07F10066 		add	r6, r7, #134217728
+ 165 0018 06F57836 		add	r6, r6, #253952
+  79:tmk_core/common/chibios/eeprom_stm32.c ****         FlashStatus = FLASH_ProgramHalfWord(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address), (uint
+ 166              		.loc 1 79 8 view .LVU41
+ 167 001c 4FF6FF72 		movw	r2, #65535
+  79:tmk_core/common/chibios/eeprom_stm32.c ****         FlashStatus = FLASH_ProgramHalfWord(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address), (uint
+ 168              		.loc 1 79 10 view .LVU42
+ 169 0020 3388     		ldrh	r3, [r6]
+ 170 0022 9BB2     		uxth	r3, r3
+  79:tmk_core/common/chibios/eeprom_stm32.c ****         FlashStatus = FLASH_ProgramHalfWord(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address), (uint
+ 171              		.loc 1 79 8 view .LVU43
+ 172 0024 9342     		cmp	r3, r2
+  76:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 173              		.loc 1 76 37 view .LVU44
+ 174 0026 4FEAA024 		asr	r4, r0, #10
+ 175              	.LVL9:
+  79:tmk_core/common/chibios/eeprom_stm32.c ****         FlashStatus = FLASH_ProgramHalfWord(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address), (uint
+ 176              		.loc 1 79 5 is_stmt 1 view .LVU45
+  79:tmk_core/common/chibios/eeprom_stm32.c ****         FlashStatus = FLASH_ProgramHalfWord(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address), (uint
+ 177              		.loc 1 79 8 is_stmt 0 view .LVU46
+ 178 002a 04D1     		bne	.L8
+  80:tmk_core/common/chibios/eeprom_stm32.c ****     } else {
+ 179              		.loc 1 80 9 is_stmt 1 view .LVU47
+  80:tmk_core/common/chibios/eeprom_stm32.c ****     } else {
+ 180              		.loc 1 80 23 is_stmt 0 view .LVU48
+ 181 002c 3046     		mov	r0, r6
+ 182              	.LVL10:
+  80:tmk_core/common/chibios/eeprom_stm32.c ****     } else {
+ 183              		.loc 1 80 23 view .LVU49
+ 184 002e FFF7FEFF 		bl	FLASH_ProgramHalfWord
+ 185              	.LVL11:
+ 186              	.L9:
+ 103:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 187              		.loc 1 103 5 is_stmt 1 view .LVU50
+ 103:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 188              		.loc 1 103 12 is_stmt 0 view .LVU51
+ 189 0032 80B2     		uxth	r0, r0
+ 190              	.LVL12:
+ 103:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 191              		.loc 1 103 12 view .LVU52
+ 192 0034 EBE7     		b	.L7
+ 193              	.LVL13:
+ 194              	.L8:
+  83:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 195              		.loc 1 83 9 is_stmt 1 view .LVU53
+  83:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 196              		.loc 1 83 66 is_stmt 0 view .LVU54
+ 197 0036 E402     		lsls	r4, r4, #11
+ 198              	.LVL14:
+  83:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 199              		.loc 1 83 9 view .LVU55
+ 200 0038 134D     		ldr	r5, .L17
+ 201 003a 04F10064 		add	r4, r4, #134217728
+ 202 003e 04F57834 		add	r4, r4, #253952
+ 203 0042 4FF40062 		mov	r2, #2048
+ 204 0046 2146     		mov	r1, r4
+ 205              	.LVL15:
+  83:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 206              		.loc 1 83 9 view .LVU56
+ 207 0048 2846     		mov	r0, r5
+ 208              	.LVL16:
+  83:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 209              		.loc 1 83 9 view .LVU57
+ 210 004a FFF7FEFF 		bl	memcpy
+ 211              	.LVL17:
+  86:tmk_core/common/chibios/eeprom_stm32.c ****             return 0;
+ 212              		.loc 1 86 9 is_stmt 1 view .LVU58
+  86:tmk_core/common/chibios/eeprom_stm32.c ****             return 0;
+ 213              		.loc 1 86 25 is_stmt 0 view .LVU59
+ 214 004e 3378     		ldrb	r3, [r6]	@ zero_extendqisi2
+  86:tmk_core/common/chibios/eeprom_stm32.c ****             return 0;
+ 215              		.loc 1 86 12 view .LVU60
+ 216 0050 9845     		cmp	r8, r3
+ 217 0052 DBD0     		beq	.L10
+  91:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 218              		.loc 1 91 9 is_stmt 1 view .LVU61
+  91:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 219              		.loc 1 91 42 is_stmt 0 view .LVU62
+ 220 0054 40F2FE70 		movw	r0, #2046
+ 221 0058 3840     		ands	r0, r0, r7
+ 222 005a 05F50066 		add	r6, r5, #2048
+  91:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 223              		.loc 1 91 59 view .LVU63
+ 224 005e 05F80080 		strb	r8, [r5, r0]
+  94:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 225              		.loc 1 94 9 is_stmt 1 view .LVU64
+  94:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 226              		.loc 1 94 23 is_stmt 0 view .LVU65
+ 227 0062 2046     		mov	r0, r4
+ 228 0064 FFF7FEFF 		bl	FLASH_ErasePage
+ 229              	.LVL18:
+  97:tmk_core/common/chibios/eeprom_stm32.c ****             if ((__IO uint16_t)(0xFF00 | DataBuf[FEE_ADDR_OFFSET(i)]) != 0xFFFF) {
+ 230              		.loc 1 97 9 is_stmt 1 view .LVU66
+  97:tmk_core/common/chibios/eeprom_stm32.c ****             if ((__IO uint16_t)(0xFF00 | DataBuf[FEE_ADDR_OFFSET(i)]) != 0xFFFF) {
+ 231              		.loc 1 97 21 view .LVU67
+ 232              	.L12:
+  98:tmk_core/common/chibios/eeprom_stm32.c ****                 FlashStatus = FLASH_ProgramHalfWord((FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE)
+ 233              		.loc 1 98 13 view .LVU68
+  98:tmk_core/common/chibios/eeprom_stm32.c ****                 FlashStatus = FLASH_ProgramHalfWord((FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE)
+ 234              		.loc 1 98 49 is_stmt 0 view .LVU69
+ 235 0068 2978     		ldrb	r1, [r5]	@ zero_extendqisi2
+  98:tmk_core/common/chibios/eeprom_stm32.c ****                 FlashStatus = FLASH_ProgramHalfWord((FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE)
+ 236              		.loc 1 98 40 view .LVU70
+ 237 006a 61F0FF01 		orn	r1, r1, #255
+  98:tmk_core/common/chibios/eeprom_stm32.c ****                 FlashStatus = FLASH_ProgramHalfWord((FEE_PAGE_BASE_ADDRESS + (page * FEE_PAGE_SIZE)
+ 238              		.loc 1 98 16 view .LVU71
+ 239 006e 4B1C     		adds	r3, r1, #1
+ 240 0070 03D0     		beq	.L11
+  99:tmk_core/common/chibios/eeprom_stm32.c ****             }
+ 241              		.loc 1 99 17 is_stmt 1 view .LVU72
+  99:tmk_core/common/chibios/eeprom_stm32.c ****             }
+ 242              		.loc 1 99 31 is_stmt 0 view .LVU73
+ 243 0072 89B2     		uxth	r1, r1
+ 244 0074 2046     		mov	r0, r4
+ 245 0076 FFF7FEFF 		bl	FLASH_ProgramHalfWord
+ 246              	.LVL19:
+ 247              	.L11:
+  97:tmk_core/common/chibios/eeprom_stm32.c ****             if ((__IO uint16_t)(0xFF00 | DataBuf[FEE_ADDR_OFFSET(i)]) != 0xFFFF) {
+ 248              		.loc 1 97 46 is_stmt 1 view .LVU74
+  97:tmk_core/common/chibios/eeprom_stm32.c ****             if ((__IO uint16_t)(0xFF00 | DataBuf[FEE_ADDR_OFFSET(i)]) != 0xFFFF) {
+ 249              		.loc 1 97 21 view .LVU75
+  97:tmk_core/common/chibios/eeprom_stm32.c ****             if ((__IO uint16_t)(0xFF00 | DataBuf[FEE_ADDR_OFFSET(i)]) != 0xFFFF) {
+ 250              		.loc 1 97 9 is_stmt 0 view .LVU76
+ 251 007a 0235     		adds	r5, r5, #2
+ 252 007c B542     		cmp	r5, r6
+ 253 007e 04F10204 		add	r4, r4, #2
+ 254 0082 F1D1     		bne	.L12
+ 255 0084 D5E7     		b	.L9
+ 256              	.L18:
+ 257 0086 00BF     		.align	2
+ 258              	.L17:
+ 259 0088 00000000 		.word	DataBuf
+ 260              	.LBE31:
+ 261              	.LBE30:
+ 262              		.cfi_endproc
+ 263              	.LFE283:
+ 265              		.section	.text.EEPROM_ReadDataByte,"ax",%progbits
+ 266              		.align	1
+ 267              		.global	EEPROM_ReadDataByte
+ 268              		.syntax unified
+ 269              		.thumb
+ 270              		.thumb_func
+ 271              		.fpu fpv4-sp-d16
+ 273              	EEPROM_ReadDataByte:
+ 274              	.LVL20:
+ 275              	.LFB284:
+ 105:tmk_core/common/chibios/eeprom_stm32.c **** /*****************************************************************************
+ 106:tmk_core/common/chibios/eeprom_stm32.c ****  *  Read once data byte from a specified address.
+ 107:tmk_core/common/chibios/eeprom_stm32.c ****  *******************************************************************************/
+ 108:tmk_core/common/chibios/eeprom_stm32.c **** uint8_t EEPROM_ReadDataByte(uint16_t Address) {
+ 276              		.loc 1 108 47 is_stmt 1 view -0
+ 277              		.cfi_startproc
+ 278              		@ args = 0, pretend = 0, frame = 0
+ 279              		@ frame_needed = 0, uses_anonymous_args = 0
+ 280              		@ link register save eliminated.
+ 109:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t DataByte = 0xFF;
+ 281              		.loc 1 109 5 view .LVU78
+ 110:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 111:tmk_core/common/chibios/eeprom_stm32.c ****     // Get Byte from specified address
+ 112:tmk_core/common/chibios/eeprom_stm32.c ****     DataByte = (*(__IO uint8_t *)(FEE_PAGE_BASE_ADDRESS + FEE_ADDR_OFFSET(Address)));
+ 282              		.loc 1 112 5 view .LVU79
+ 283              		.loc 1 112 59 is_stmt 0 view .LVU80
+ 284 0000 4000     		lsls	r0, r0, #1
+ 285              	.LVL21:
+ 286              		.loc 1 112 57 view .LVU81
+ 287 0002 00F10060 		add	r0, r0, #134217728
+ 288 0006 00F57830 		add	r0, r0, #253952
+ 289              		.loc 1 112 14 view .LVU82
+ 290 000a 0078     		ldrb	r0, [r0]	@ zero_extendqisi2
+ 291              	.LVL22:
+ 113:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 114:tmk_core/common/chibios/eeprom_stm32.c ****     return DataByte;
+ 292              		.loc 1 114 5 is_stmt 1 view .LVU83
+ 115:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 293              		.loc 1 115 1 is_stmt 0 view .LVU84
+ 294 000c 7047     		bx	lr
+ 295              		.cfi_endproc
+ 296              	.LFE284:
+ 298              		.section	.text.eeprom_read_byte,"ax",%progbits
+ 299              		.align	1
+ 300              		.global	eeprom_read_byte
+ 301              		.syntax unified
+ 302              		.thumb
+ 303              		.thumb_func
+ 304              		.fpu fpv4-sp-d16
+ 306              	eeprom_read_byte:
+ 307              	.LVL23:
+ 308              	.LFB285:
+ 116:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 117:tmk_core/common/chibios/eeprom_stm32.c **** /*****************************************************************************
+ 118:tmk_core/common/chibios/eeprom_stm32.c ****  *  Wrap library in AVR style functions.
+ 119:tmk_core/common/chibios/eeprom_stm32.c ****  *******************************************************************************/
+ 120:tmk_core/common/chibios/eeprom_stm32.c **** uint8_t eeprom_read_byte(const uint8_t *Address) {
+ 309              		.loc 1 120 50 is_stmt 1 view -0
+ 310              		.cfi_startproc
+ 311              		@ args = 0, pretend = 0, frame = 0
+ 312              		@ frame_needed = 0, uses_anonymous_args = 0
+ 313              		@ link register save eliminated.
+ 121:tmk_core/common/chibios/eeprom_stm32.c ****     const uint16_t p = (const uint32_t)Address;
+ 314              		.loc 1 121 5 view .LVU86
+ 122:tmk_core/common/chibios/eeprom_stm32.c ****     return EEPROM_ReadDataByte(p);
+ 315              		.loc 1 122 5 view .LVU87
+ 316              	.LBB32:
+ 317              	.LBI32:
+ 108:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t DataByte = 0xFF;
+ 318              		.loc 1 108 9 view .LVU88
+ 319              	.LBB33:
+ 109:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 320              		.loc 1 109 5 view .LVU89
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 321              		.loc 1 112 5 view .LVU90
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 322              		.loc 1 112 59 is_stmt 0 view .LVU91
+ 323 0000 80B2     		uxth	r0, r0
+ 324              	.LVL24:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 325              		.loc 1 112 59 view .LVU92
+ 326 0002 4000     		lsls	r0, r0, #1
+ 327              	.LVL25:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 328              		.loc 1 112 57 view .LVU93
+ 329 0004 00F10060 		add	r0, r0, #134217728
+ 330 0008 00F57830 		add	r0, r0, #253952
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 331              		.loc 1 112 14 view .LVU94
+ 332 000c 0078     		ldrb	r0, [r0]	@ zero_extendqisi2
+ 333              	.LVL26:
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 334              		.loc 1 114 5 is_stmt 1 view .LVU95
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 335              		.loc 1 114 5 is_stmt 0 view .LVU96
+ 336              	.LBE33:
+ 337              	.LBE32:
+ 123:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 338              		.loc 1 123 1 view .LVU97
+ 339 000e 7047     		bx	lr
+ 340              		.cfi_endproc
+ 341              	.LFE285:
+ 343              		.section	.text.eeprom_write_byte,"ax",%progbits
+ 344              		.align	1
+ 345              		.global	eeprom_write_byte
+ 346              		.syntax unified
+ 347              		.thumb
+ 348              		.thumb_func
+ 349              		.fpu fpv4-sp-d16
+ 351              	eeprom_write_byte:
+ 352              	.LVL27:
+ 353              	.LFB286:
+ 124:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 125:tmk_core/common/chibios/eeprom_stm32.c **** void eeprom_write_byte(uint8_t *Address, uint8_t Value) {
+ 354              		.loc 1 125 57 is_stmt 1 view -0
+ 355              		.cfi_startproc
+ 356              		@ args = 0, pretend = 0, frame = 0
+ 357              		@ frame_needed = 0, uses_anonymous_args = 0
+ 358              		@ link register save eliminated.
+ 126:tmk_core/common/chibios/eeprom_stm32.c ****     uint16_t p = (uint32_t)Address;
+ 359              		.loc 1 126 5 view .LVU99
+ 127:tmk_core/common/chibios/eeprom_stm32.c ****     EEPROM_WriteDataByte(p, Value);
+ 360              		.loc 1 127 5 view .LVU100
+ 361 0000 80B2     		uxth	r0, r0
+ 362              	.LVL28:
+ 363              		.loc 1 127 5 is_stmt 0 view .LVU101
+ 364 0002 FFF7FEBF 		b	EEPROM_WriteDataByte
+ 365              	.LVL29:
+ 366              		.loc 1 127 5 view .LVU102
+ 367              		.cfi_endproc
+ 368              	.LFE286:
+ 370              		.section	.text.eeprom_update_byte,"ax",%progbits
+ 371              		.align	1
+ 372              		.global	eeprom_update_byte
+ 373              		.syntax unified
+ 374              		.thumb
+ 375              		.thumb_func
+ 376              		.fpu fpv4-sp-d16
+ 378              	eeprom_update_byte:
+ 379              	.LFB299:
+ 380              		.cfi_startproc
+ 381              		@ args = 0, pretend = 0, frame = 0
+ 382              		@ frame_needed = 0, uses_anonymous_args = 0
+ 383              		@ link register save eliminated.
+ 384 0000 80B2     		uxth	r0, r0
+ 385 0002 FFF7FEBF 		b	EEPROM_WriteDataByte
+ 386              		.cfi_endproc
+ 387              	.LFE299:
+ 389              		.section	.text.eeprom_read_word,"ax",%progbits
+ 390              		.align	1
+ 391              		.global	eeprom_read_word
+ 392              		.syntax unified
+ 393              		.thumb
+ 394              		.thumb_func
+ 395              		.fpu fpv4-sp-d16
+ 397              	eeprom_read_word:
+ 398              	.LVL30:
+ 399              	.LFB288:
+ 128:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 129:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 130:tmk_core/common/chibios/eeprom_stm32.c **** void eeprom_update_byte(uint8_t *Address, uint8_t Value) {
+ 131:tmk_core/common/chibios/eeprom_stm32.c ****     uint16_t p = (uint32_t)Address;
+ 132:tmk_core/common/chibios/eeprom_stm32.c ****     EEPROM_WriteDataByte(p, Value);
+ 133:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 134:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 135:tmk_core/common/chibios/eeprom_stm32.c **** uint16_t eeprom_read_word(const uint16_t *Address) {
+ 400              		.loc 1 135 52 is_stmt 1 view -0
+ 401              		.cfi_startproc
+ 402              		@ args = 0, pretend = 0, frame = 0
+ 403              		@ frame_needed = 0, uses_anonymous_args = 0
+ 404              		@ link register save eliminated.
+ 136:tmk_core/common/chibios/eeprom_stm32.c ****     const uint16_t p = (const uint32_t)Address;
+ 405              		.loc 1 136 5 view .LVU104
+ 137:tmk_core/common/chibios/eeprom_stm32.c ****     return EEPROM_ReadDataByte(p) | (EEPROM_ReadDataByte(p + 1) << 8);
+ 406              		.loc 1 137 5 view .LVU105
+ 407              	.LBB34:
+ 408              	.LBI34:
+ 108:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t DataByte = 0xFF;
+ 409              		.loc 1 108 9 view .LVU106
+ 410              	.LBB35:
+ 109:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 411              		.loc 1 109 5 view .LVU107
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 412              		.loc 1 112 5 view .LVU108
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 413              		.loc 1 112 59 is_stmt 0 view .LVU109
+ 414 0000 83B2     		uxth	r3, r0
+ 415 0002 5B00     		lsls	r3, r3, #1
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 416              		.loc 1 112 57 view .LVU110
+ 417 0004 03F10063 		add	r3, r3, #134217728
+ 418 0008 03F57833 		add	r3, r3, #253952
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 419              		.loc 1 112 14 view .LVU111
+ 420 000c 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 421              	.LVL31:
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 422              		.loc 1 114 5 is_stmt 1 view .LVU112
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 423              		.loc 1 114 5 is_stmt 0 view .LVU113
+ 424              	.LBE35:
+ 425              	.LBE34:
+ 426              	.LBB36:
+ 427              	.LBI36:
+ 108:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t DataByte = 0xFF;
+ 428              		.loc 1 108 9 is_stmt 1 view .LVU114
+ 429              	.LBB37:
+ 109:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 430              		.loc 1 109 5 view .LVU115
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 431              		.loc 1 112 5 view .LVU116
+ 432              	.LBE37:
+ 433              	.LBE36:
+ 434              		.loc 1 137 38 is_stmt 0 view .LVU117
+ 435 000e 431C     		adds	r3, r0, #1
+ 436              	.LBB39:
+ 437              	.LBB38:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 438              		.loc 1 112 59 view .LVU118
+ 439 0010 9BB2     		uxth	r3, r3
+ 440 0012 5B00     		lsls	r3, r3, #1
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 441              		.loc 1 112 57 view .LVU119
+ 442 0014 03F10063 		add	r3, r3, #134217728
+ 443 0018 03F57833 		add	r3, r3, #253952
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 444              		.loc 1 112 14 view .LVU120
+ 445 001c 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 446              	.LVL32:
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 447              		.loc 1 114 5 is_stmt 1 view .LVU121
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 448              		.loc 1 114 5 is_stmt 0 view .LVU122
+ 449              	.LBE38:
+ 450              	.LBE39:
+ 138:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 451              		.loc 1 138 1 view .LVU123
+ 452 001e 42EA0020 		orr	r0, r2, r0, lsl #8
+ 453 0022 7047     		bx	lr
+ 454              		.cfi_endproc
+ 455              	.LFE288:
+ 457              		.section	.text.eeprom_write_word,"ax",%progbits
+ 458              		.align	1
+ 459              		.global	eeprom_write_word
+ 460              		.syntax unified
+ 461              		.thumb
+ 462              		.thumb_func
+ 463              		.fpu fpv4-sp-d16
+ 465              	eeprom_write_word:
+ 466              	.LVL33:
+ 467              	.LFB289:
+ 139:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 140:tmk_core/common/chibios/eeprom_stm32.c **** void eeprom_write_word(uint16_t *Address, uint16_t Value) {
+ 468              		.loc 1 140 59 is_stmt 1 view -0
+ 469              		.cfi_startproc
+ 470              		@ args = 0, pretend = 0, frame = 0
+ 471              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141:tmk_core/common/chibios/eeprom_stm32.c ****     uint16_t p = (uint32_t)Address;
+ 472              		.loc 1 141 5 view .LVU125
+ 140:tmk_core/common/chibios/eeprom_stm32.c ****     uint16_t p = (uint32_t)Address;
+ 473              		.loc 1 140 59 is_stmt 0 view .LVU126
+ 474 0000 38B5     		push	{r3, r4, r5, lr}
+ 475              		.cfi_def_cfa_offset 16
+ 476              		.cfi_offset 3, -16
+ 477              		.cfi_offset 4, -12
+ 478              		.cfi_offset 5, -8
+ 479              		.cfi_offset 14, -4
+ 480              		.loc 1 141 14 view .LVU127
+ 481 0002 84B2     		uxth	r4, r0
+ 482              	.LVL34:
+ 142:tmk_core/common/chibios/eeprom_stm32.c ****     EEPROM_WriteDataByte(p, (uint8_t)Value);
+ 483              		.loc 1 142 5 is_stmt 1 view .LVU128
+ 140:tmk_core/common/chibios/eeprom_stm32.c ****     uint16_t p = (uint32_t)Address;
+ 484              		.loc 1 140 59 is_stmt 0 view .LVU129
+ 485 0004 0D46     		mov	r5, r1
+ 486              		.loc 1 142 5 view .LVU130
+ 487 0006 2046     		mov	r0, r4
+ 488              	.LVL35:
+ 489              		.loc 1 142 5 view .LVU131
+ 490 0008 C9B2     		uxtb	r1, r1
+ 491              	.LVL36:
+ 492              		.loc 1 142 5 view .LVU132
+ 493 000a FFF7FEFF 		bl	EEPROM_WriteDataByte
+ 494              	.LVL37:
+ 143:tmk_core/common/chibios/eeprom_stm32.c ****     EEPROM_WriteDataByte(p + 1, (uint8_t)(Value >> 8));
+ 495              		.loc 1 143 5 is_stmt 1 view .LVU133
+ 496 000e 601C     		adds	r0, r4, #1
+ 497 0010 290A     		lsrs	r1, r5, #8
+ 498 0012 80B2     		uxth	r0, r0
+ 144:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 499              		.loc 1 144 1 is_stmt 0 view .LVU134
+ 500 0014 BDE83840 		pop	{r3, r4, r5, lr}
+ 501              		.cfi_restore 14
+ 502              		.cfi_restore 5
+ 503              		.cfi_restore 4
+ 504              		.cfi_restore 3
+ 505              		.cfi_def_cfa_offset 0
+ 506              	.LVL38:
+ 143:tmk_core/common/chibios/eeprom_stm32.c ****     EEPROM_WriteDataByte(p + 1, (uint8_t)(Value >> 8));
+ 507              		.loc 1 143 5 view .LVU135
+ 508 0018 FFF7FEBF 		b	EEPROM_WriteDataByte
+ 509              	.LVL39:
+ 510              		.cfi_endproc
+ 511              	.LFE289:
+ 513              		.section	.text.eeprom_update_word,"ax",%progbits
+ 514              		.align	1
+ 515              		.global	eeprom_update_word
+ 516              		.syntax unified
+ 517              		.thumb
+ 518              		.thumb_func
+ 519              		.fpu fpv4-sp-d16
+ 521              	eeprom_update_word:
+ 522              	.LFB301:
+ 523              		.cfi_startproc
+ 524              		@ args = 0, pretend = 0, frame = 0
+ 525              		@ frame_needed = 0, uses_anonymous_args = 0
+ 526              		@ link register save eliminated.
+ 527 0000 FFF7FEBF 		b	eeprom_write_word
+ 528              		.cfi_endproc
+ 529              	.LFE301:
+ 531              		.section	.text.eeprom_read_dword,"ax",%progbits
+ 532              		.align	1
+ 533              		.global	eeprom_read_dword
+ 534              		.syntax unified
+ 535              		.thumb
+ 536              		.thumb_func
+ 537              		.fpu fpv4-sp-d16
+ 539              	eeprom_read_dword:
+ 540              	.LVL40:
+ 541              	.LFB291:
+ 145:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 146:tmk_core/common/chibios/eeprom_stm32.c **** void eeprom_update_word(uint16_t *Address, uint16_t Value) {
+ 147:tmk_core/common/chibios/eeprom_stm32.c ****     uint16_t p = (uint32_t)Address;
+ 148:tmk_core/common/chibios/eeprom_stm32.c ****     EEPROM_WriteDataByte(p, (uint8_t)Value);
+ 149:tmk_core/common/chibios/eeprom_stm32.c ****     EEPROM_WriteDataByte(p + 1, (uint8_t)(Value >> 8));
+ 150:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 151:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 152:tmk_core/common/chibios/eeprom_stm32.c **** uint32_t eeprom_read_dword(const uint32_t *Address) {
+ 542              		.loc 1 152 53 is_stmt 1 view -0
+ 543              		.cfi_startproc
+ 544              		@ args = 0, pretend = 0, frame = 0
+ 545              		@ frame_needed = 0, uses_anonymous_args = 0
+ 153:tmk_core/common/chibios/eeprom_stm32.c ****     const uint16_t p = (const uint32_t)Address;
+ 546              		.loc 1 153 5 view .LVU137
+ 152:tmk_core/common/chibios/eeprom_stm32.c ****     const uint16_t p = (const uint32_t)Address;
+ 547              		.loc 1 152 53 is_stmt 0 view .LVU138
+ 548 0000 10B5     		push	{r4, lr}
+ 549              		.cfi_def_cfa_offset 8
+ 550              		.cfi_offset 4, -8
+ 551              		.cfi_offset 14, -4
+ 552              		.loc 1 153 20 view .LVU139
+ 553 0002 83B2     		uxth	r3, r0
+ 554              	.LVL41:
+ 154:tmk_core/common/chibios/eeprom_stm32.c ****     return EEPROM_ReadDataByte(p) | (EEPROM_ReadDataByte(p + 1) << 8) | (EEPROM_ReadDataByte(p + 2)
+ 555              		.loc 1 154 5 is_stmt 1 view .LVU140
+ 556              	.LBB40:
+ 557              	.LBI40:
+ 108:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t DataByte = 0xFF;
+ 558              		.loc 1 108 9 view .LVU141
+ 559              	.LBB41:
+ 109:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 560              		.loc 1 109 5 view .LVU142
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 561              		.loc 1 112 5 view .LVU143
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 562              		.loc 1 112 59 is_stmt 0 view .LVU144
+ 563 0004 5A00     		lsls	r2, r3, #1
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 564              		.loc 1 112 57 view .LVU145
+ 565 0006 02F10062 		add	r2, r2, #134217728
+ 566 000a 02F57832 		add	r2, r2, #253952
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 567              		.loc 1 112 14 view .LVU146
+ 568 000e 1178     		ldrb	r1, [r2]	@ zero_extendqisi2
+ 569              	.LVL42:
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 570              		.loc 1 114 5 is_stmt 1 view .LVU147
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 571              		.loc 1 114 5 is_stmt 0 view .LVU148
+ 572              	.LBE41:
+ 573              	.LBE40:
+ 574              	.LBB42:
+ 575              	.LBI42:
+ 108:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t DataByte = 0xFF;
+ 576              		.loc 1 108 9 is_stmt 1 view .LVU149
+ 577              	.LBB43:
+ 109:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 578              		.loc 1 109 5 view .LVU150
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 579              		.loc 1 112 5 view .LVU151
+ 580              	.LBE43:
+ 581              	.LBE42:
+ 582              		.loc 1 154 38 is_stmt 0 view .LVU152
+ 583 0010 5A1C     		adds	r2, r3, #1
+ 584              	.LBB45:
+ 585              	.LBB44:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 586              		.loc 1 112 59 view .LVU153
+ 587 0012 92B2     		uxth	r2, r2
+ 588 0014 5200     		lsls	r2, r2, #1
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 589              		.loc 1 112 57 view .LVU154
+ 590 0016 02F10062 		add	r2, r2, #134217728
+ 591 001a 02F57832 		add	r2, r2, #253952
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 592              		.loc 1 112 14 view .LVU155
+ 593 001e 1478     		ldrb	r4, [r2]	@ zero_extendqisi2
+ 594              	.LVL43:
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 595              		.loc 1 114 5 is_stmt 1 view .LVU156
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 596              		.loc 1 114 5 is_stmt 0 view .LVU157
+ 597              	.LBE44:
+ 598              	.LBE45:
+ 599              	.LBB46:
+ 600              	.LBI46:
+ 108:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t DataByte = 0xFF;
+ 601              		.loc 1 108 9 is_stmt 1 view .LVU158
+ 602              	.LBB47:
+ 109:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 603              		.loc 1 109 5 view .LVU159
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 604              		.loc 1 112 5 view .LVU160
+ 605              	.LBE47:
+ 606              	.LBE46:
+ 607              		.loc 1 154 74 is_stmt 0 view .LVU161
+ 608 0020 9A1C     		adds	r2, r3, #2
+ 609              	.LBB52:
+ 610              	.LBB48:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 611              		.loc 1 112 59 view .LVU162
+ 612 0022 92B2     		uxth	r2, r2
+ 613 0024 5200     		lsls	r2, r2, #1
+ 614              	.LBE48:
+ 615              	.LBE52:
+ 616              		.loc 1 154 111 view .LVU163
+ 617 0026 0333     		adds	r3, r3, #3
+ 618              	.LVL44:
+ 619              	.LBB53:
+ 620              	.LBB49:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 621              		.loc 1 112 57 view .LVU164
+ 622 0028 02F10062 		add	r2, r2, #134217728
+ 623              	.LBE49:
+ 624              	.LBE53:
+ 625              	.LBB54:
+ 626              	.LBB55:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 627              		.loc 1 112 59 view .LVU165
+ 628 002c 9BB2     		uxth	r3, r3
+ 629              	.LVL45:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 630              		.loc 1 112 59 view .LVU166
+ 631              	.LBE55:
+ 632              	.LBE54:
+ 633              	.LBB58:
+ 634              	.LBB50:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 635              		.loc 1 112 57 view .LVU167
+ 636 002e 02F57832 		add	r2, r2, #253952
+ 637              	.LBE50:
+ 638              	.LBE58:
+ 639              	.LBB59:
+ 640              	.LBB56:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 641              		.loc 1 112 59 view .LVU168
+ 642 0032 5B00     		lsls	r3, r3, #1
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 643              		.loc 1 112 57 view .LVU169
+ 644 0034 03F10063 		add	r3, r3, #134217728
+ 645              	.LBE56:
+ 646              	.LBE59:
+ 647              	.LBB60:
+ 648              	.LBB51:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 649              		.loc 1 112 14 view .LVU170
+ 650 0038 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 651              	.LVL46:
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 652              		.loc 1 114 5 is_stmt 1 view .LVU171
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 653              		.loc 1 114 5 is_stmt 0 view .LVU172
+ 654              	.LBE51:
+ 655              	.LBE60:
+ 656              	.LBB61:
+ 657              	.LBI54:
+ 108:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t DataByte = 0xFF;
+ 658              		.loc 1 108 9 is_stmt 1 view .LVU173
+ 659              	.LBB57:
+ 109:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 660              		.loc 1 109 5 view .LVU174
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 661              		.loc 1 112 5 view .LVU175
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 662              		.loc 1 112 57 is_stmt 0 view .LVU176
+ 663 003a 03F57833 		add	r3, r3, #253952
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 664              		.loc 1 112 14 view .LVU177
+ 665 003e 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 666              	.LVL47:
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 667              		.loc 1 114 5 is_stmt 1 view .LVU178
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 668              		.loc 1 114 5 is_stmt 0 view .LVU179
+ 669              	.LBE57:
+ 670              	.LBE61:
+ 671              		.loc 1 154 101 view .LVU180
+ 672 0040 1304     		lsls	r3, r2, #16
+ 673              		.loc 1 154 71 view .LVU181
+ 674 0042 43EA0423 		orr	r3, r3, r4, lsl #8
+ 675 0046 0B43     		orrs	r3, r3, r1
+ 155:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 676              		.loc 1 155 1 view .LVU182
+ 677 0048 43EA0060 		orr	r0, r3, r0, lsl #24
+ 678 004c 10BD     		pop	{r4, pc}
+ 679              		.cfi_endproc
+ 680              	.LFE291:
+ 682              		.section	.text.eeprom_write_dword,"ax",%progbits
+ 683              		.align	1
+ 684              		.global	eeprom_write_dword
+ 685              		.syntax unified
+ 686              		.thumb
+ 687              		.thumb_func
+ 688              		.fpu fpv4-sp-d16
+ 690              	eeprom_write_dword:
+ 691              	.LVL48:
+ 692              	.LFB292:
+ 156:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 157:tmk_core/common/chibios/eeprom_stm32.c **** void eeprom_write_dword(uint32_t *Address, uint32_t Value) {
+ 693              		.loc 1 157 60 is_stmt 1 view -0
+ 694              		.cfi_startproc
+ 695              		@ args = 0, pretend = 0, frame = 0
+ 696              		@ frame_needed = 0, uses_anonymous_args = 0
+ 158:tmk_core/common/chibios/eeprom_stm32.c ****     uint16_t p = (const uint32_t)Address;
+ 697              		.loc 1 158 5 view .LVU184
+ 157:tmk_core/common/chibios/eeprom_stm32.c ****     uint16_t p = (const uint32_t)Address;
+ 698              		.loc 1 157 60 is_stmt 0 view .LVU185
+ 699 0000 38B5     		push	{r3, r4, r5, lr}
+ 700              		.cfi_def_cfa_offset 16
+ 701              		.cfi_offset 3, -16
+ 702              		.cfi_offset 4, -12
+ 703              		.cfi_offset 5, -8
+ 704              		.cfi_offset 14, -4
+ 705              		.loc 1 158 14 view .LVU186
+ 706 0002 84B2     		uxth	r4, r0
+ 707              	.LVL49:
+ 159:tmk_core/common/chibios/eeprom_stm32.c ****     EEPROM_WriteDataByte(p, (uint8_t)Value);
+ 708              		.loc 1 159 5 is_stmt 1 view .LVU187
+ 157:tmk_core/common/chibios/eeprom_stm32.c ****     uint16_t p = (const uint32_t)Address;
+ 709              		.loc 1 157 60 is_stmt 0 view .LVU188
+ 710 0004 0D46     		mov	r5, r1
+ 711              		.loc 1 159 5 view .LVU189
+ 712 0006 2046     		mov	r0, r4
+ 713              	.LVL50:
+ 714              		.loc 1 159 5 view .LVU190
+ 715 0008 C9B2     		uxtb	r1, r1
+ 716              	.LVL51:
+ 717              		.loc 1 159 5 view .LVU191
+ 718 000a FFF7FEFF 		bl	EEPROM_WriteDataByte
+ 719              	.LVL52:
+ 160:tmk_core/common/chibios/eeprom_stm32.c ****     EEPROM_WriteDataByte(p + 1, (uint8_t)(Value >> 8));
+ 720              		.loc 1 160 5 is_stmt 1 view .LVU192
+ 721 000e 601C     		adds	r0, r4, #1
+ 722 0010 C5F30721 		ubfx	r1, r5, #8, #8
+ 723 0014 80B2     		uxth	r0, r0
+ 724 0016 FFF7FEFF 		bl	EEPROM_WriteDataByte
+ 725              	.LVL53:
+ 161:tmk_core/common/chibios/eeprom_stm32.c ****     EEPROM_WriteDataByte(p + 2, (uint8_t)(Value >> 16));
+ 726              		.loc 1 161 5 view .LVU193
+ 727 001a A01C     		adds	r0, r4, #2
+ 728 001c C5F30741 		ubfx	r1, r5, #16, #8
+ 729 0020 80B2     		uxth	r0, r0
+ 730 0022 FFF7FEFF 		bl	EEPROM_WriteDataByte
+ 731              	.LVL54:
+ 162:tmk_core/common/chibios/eeprom_stm32.c ****     EEPROM_WriteDataByte(p + 3, (uint8_t)(Value >> 24));
+ 732              		.loc 1 162 5 view .LVU194
+ 733 0026 E01C     		adds	r0, r4, #3
+ 734 0028 290E     		lsrs	r1, r5, #24
+ 735 002a 80B2     		uxth	r0, r0
+ 163:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 736              		.loc 1 163 1 is_stmt 0 view .LVU195
+ 737 002c BDE83840 		pop	{r3, r4, r5, lr}
+ 738              		.cfi_restore 14
+ 739              		.cfi_restore 5
+ 740              		.cfi_restore 4
+ 741              		.cfi_restore 3
+ 742              		.cfi_def_cfa_offset 0
+ 743              	.LVL55:
+ 162:tmk_core/common/chibios/eeprom_stm32.c ****     EEPROM_WriteDataByte(p + 3, (uint8_t)(Value >> 24));
+ 744              		.loc 1 162 5 view .LVU196
+ 745 0030 FFF7FEBF 		b	EEPROM_WriteDataByte
+ 746              	.LVL56:
+ 747              		.cfi_endproc
+ 748              	.LFE292:
+ 750              		.section	.text.eeprom_update_dword,"ax",%progbits
+ 751              		.align	1
+ 752              		.global	eeprom_update_dword
+ 753              		.syntax unified
+ 754              		.thumb
+ 755              		.thumb_func
+ 756              		.fpu fpv4-sp-d16
+ 758              	eeprom_update_dword:
+ 759              	.LVL57:
+ 760              	.LFB293:
+ 164:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 165:tmk_core/common/chibios/eeprom_stm32.c **** void eeprom_update_dword(uint32_t *Address, uint32_t Value) {
+ 761              		.loc 1 165 61 is_stmt 1 view -0
+ 762              		.cfi_startproc
+ 763              		@ args = 0, pretend = 0, frame = 0
+ 764              		@ frame_needed = 0, uses_anonymous_args = 0
+ 166:tmk_core/common/chibios/eeprom_stm32.c ****     uint16_t p             = (const uint32_t)Address;
+ 765              		.loc 1 166 5 view .LVU198
+ 766              		.loc 1 166 14 is_stmt 0 view .LVU199
+ 767 0000 82B2     		uxth	r2, r0
+ 768              	.LVL58:
+ 167:tmk_core/common/chibios/eeprom_stm32.c ****     uint32_t existingValue = EEPROM_ReadDataByte(p) | (EEPROM_ReadDataByte(p + 1) << 8) | (EEPROM_R
+ 769              		.loc 1 167 5 is_stmt 1 view .LVU200
+ 770              	.LBB62:
+ 771              	.LBI62:
+ 108:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t DataByte = 0xFF;
+ 772              		.loc 1 108 9 view .LVU201
+ 773              	.LBB63:
+ 109:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 774              		.loc 1 109 5 view .LVU202
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 775              		.loc 1 112 5 view .LVU203
+ 776              	.LBE63:
+ 777              	.LBE62:
+ 165:tmk_core/common/chibios/eeprom_stm32.c ****     uint16_t p             = (const uint32_t)Address;
+ 778              		.loc 1 165 61 is_stmt 0 view .LVU204
+ 779 0002 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 780              		.cfi_def_cfa_offset 24
+ 781              		.cfi_offset 3, -24
+ 782              		.cfi_offset 4, -20
+ 783              		.cfi_offset 5, -16
+ 784              		.cfi_offset 6, -12
+ 785              		.cfi_offset 7, -8
+ 786              		.cfi_offset 14, -4
+ 787              		.loc 1 167 56 view .LVU205
+ 788 0004 571C     		adds	r7, r2, #1
+ 789 0006 BFB2     		uxth	r7, r7
+ 165:tmk_core/common/chibios/eeprom_stm32.c ****     uint16_t p             = (const uint32_t)Address;
+ 790              		.loc 1 165 61 view .LVU206
+ 791 0008 0C46     		mov	r4, r1
+ 792              	.LBB68:
+ 793              	.LBB64:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 794              		.loc 1 112 59 view .LVU207
+ 795 000a 5300     		lsls	r3, r2, #1
+ 796              	.LBE64:
+ 797              	.LBE68:
+ 798              	.LBB69:
+ 799              	.LBB70:
+ 800 000c 7900     		lsls	r1, r7, #1
+ 801              	.LVL59:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 802              		.loc 1 112 59 view .LVU208
+ 803              	.LBE70:
+ 804              	.LBE69:
+ 805              	.LBB74:
+ 806              	.LBB65:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 807              		.loc 1 112 57 view .LVU209
+ 808 000e 03F10063 		add	r3, r3, #134217728
+ 809              	.LBE65:
+ 810              	.LBE74:
+ 811              	.LBB75:
+ 812              	.LBB71:
+ 813 0012 01F10061 		add	r1, r1, #134217728
+ 814              	.LBE71:
+ 815              	.LBE75:
+ 816              	.LBB76:
+ 817              	.LBB66:
+ 818 0016 03F57833 		add	r3, r3, #253952
+ 819              	.LBE66:
+ 820              	.LBE76:
+ 821              	.LBB77:
+ 822              	.LBB72:
+ 823 001a 01F57831 		add	r1, r1, #253952
+ 824              	.LBE72:
+ 825              	.LBE77:
+ 826              		.loc 1 167 92 view .LVU210
+ 827 001e 961C     		adds	r6, r2, #2
+ 828 0020 B6B2     		uxth	r6, r6
+ 829              	.LBB78:
+ 830              	.LBB67:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 831              		.loc 1 112 14 view .LVU211
+ 832 0022 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 833              	.LVL60:
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 834              		.loc 1 114 5 is_stmt 1 view .LVU212
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 835              		.loc 1 114 5 is_stmt 0 view .LVU213
+ 836              	.LBE67:
+ 837              	.LBE78:
+ 838              	.LBB79:
+ 839              	.LBI69:
+ 108:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t DataByte = 0xFF;
+ 840              		.loc 1 108 9 is_stmt 1 view .LVU214
+ 841              	.LBB73:
+ 109:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 842              		.loc 1 109 5 view .LVU215
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 843              		.loc 1 112 5 view .LVU216
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 844              		.loc 1 112 14 is_stmt 0 view .LVU217
+ 845 0024 91F800C0 		ldrb	ip, [r1]	@ zero_extendqisi2
+ 846              	.LVL61:
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 847              		.loc 1 114 5 is_stmt 1 view .LVU218
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 848              		.loc 1 114 5 is_stmt 0 view .LVU219
+ 849              	.LBE73:
+ 850              	.LBE79:
+ 851              	.LBB80:
+ 852              	.LBI80:
+ 108:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t DataByte = 0xFF;
+ 853              		.loc 1 108 9 is_stmt 1 view .LVU220
+ 854              	.LBB81:
+ 109:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 855              		.loc 1 109 5 view .LVU221
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 856              		.loc 1 112 5 view .LVU222
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 857              		.loc 1 112 59 is_stmt 0 view .LVU223
+ 858 0028 7100     		lsls	r1, r6, #1
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 859              		.loc 1 112 57 view .LVU224
+ 860 002a 01F10061 		add	r1, r1, #134217728
+ 861 002e 01F57831 		add	r1, r1, #253952
+ 862              	.LBE81:
+ 863              	.LBE80:
+ 864              		.loc 1 167 129 view .LVU225
+ 865 0032 D51C     		adds	r5, r2, #3
+ 866 0034 ADB2     		uxth	r5, r5
+ 867              	.LBB83:
+ 868              	.LBB82:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 869              		.loc 1 112 14 view .LVU226
+ 870 0036 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 871              	.LVL62:
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 872              		.loc 1 114 5 is_stmt 1 view .LVU227
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 873              		.loc 1 114 5 is_stmt 0 view .LVU228
+ 874              	.LBE82:
+ 875              	.LBE83:
+ 876              	.LBB84:
+ 877              	.LBI84:
+ 108:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t DataByte = 0xFF;
+ 878              		.loc 1 108 9 is_stmt 1 view .LVU229
+ 879              	.LBB85:
+ 109:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 880              		.loc 1 109 5 view .LVU230
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 881              		.loc 1 112 5 view .LVU231
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 882              		.loc 1 112 59 is_stmt 0 view .LVU232
+ 883 0038 6900     		lsls	r1, r5, #1
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 884              		.loc 1 112 57 view .LVU233
+ 885 003a 01F10061 		add	r1, r1, #134217728
+ 886 003e 01F57831 		add	r1, r1, #253952
+ 887              	.LBE85:
+ 888              	.LBE84:
+ 889              		.loc 1 167 119 view .LVU234
+ 890 0042 1B04     		lsls	r3, r3, #16
+ 891              	.LBB87:
+ 892              	.LBB86:
+ 112:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 893              		.loc 1 112 14 view .LVU235
+ 894 0044 0978     		ldrb	r1, [r1]	@ zero_extendqisi2
+ 895              	.LVL63:
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 896              		.loc 1 114 5 is_stmt 1 view .LVU236
+ 114:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 897              		.loc 1 114 5 is_stmt 0 view .LVU237
+ 898              	.LBE86:
+ 899              	.LBE87:
+ 168:tmk_core/common/chibios/eeprom_stm32.c ****     if (Value != existingValue) {
+ 900              		.loc 1 168 5 is_stmt 1 view .LVU238
+ 167:tmk_core/common/chibios/eeprom_stm32.c ****     if (Value != existingValue) {
+ 901              		.loc 1 167 89 is_stmt 0 view .LVU239
+ 902 0046 43EA0C23 		orr	r3, r3, ip, lsl #8
+ 903 004a 0343     		orrs	r3, r3, r0
+ 167:tmk_core/common/chibios/eeprom_stm32.c ****     if (Value != existingValue) {
+ 904              		.loc 1 167 126 view .LVU240
+ 905 004c 43EA0163 		orr	r3, r3, r1, lsl #24
+ 906              		.loc 1 168 8 view .LVU241
+ 907 0050 A342     		cmp	r3, r4
+ 908 0052 13D0     		beq	.L28
+ 169:tmk_core/common/chibios/eeprom_stm32.c ****         EEPROM_WriteDataByte(p, (uint8_t)Value);
+ 909              		.loc 1 169 9 is_stmt 1 view .LVU242
+ 910 0054 E1B2     		uxtb	r1, r4
+ 911 0056 1046     		mov	r0, r2
+ 912 0058 FFF7FEFF 		bl	EEPROM_WriteDataByte
+ 913              	.LVL64:
+ 170:tmk_core/common/chibios/eeprom_stm32.c ****         EEPROM_WriteDataByte(p + 1, (uint8_t)(Value >> 8));
+ 914              		.loc 1 170 9 view .LVU243
+ 915 005c C4F30721 		ubfx	r1, r4, #8, #8
+ 916 0060 3846     		mov	r0, r7
+ 917 0062 FFF7FEFF 		bl	EEPROM_WriteDataByte
+ 918              	.LVL65:
+ 171:tmk_core/common/chibios/eeprom_stm32.c ****         EEPROM_WriteDataByte(p + 2, (uint8_t)(Value >> 16));
+ 919              		.loc 1 171 9 view .LVU244
+ 920 0066 C4F30741 		ubfx	r1, r4, #16, #8
+ 921 006a 3046     		mov	r0, r6
+ 922 006c FFF7FEFF 		bl	EEPROM_WriteDataByte
+ 923              	.LVL66:
+ 172:tmk_core/common/chibios/eeprom_stm32.c ****         EEPROM_WriteDataByte(p + 3, (uint8_t)(Value >> 24));
+ 924              		.loc 1 172 9 view .LVU245
+ 925 0070 210E     		lsrs	r1, r4, #24
+ 926 0072 2846     		mov	r0, r5
+ 173:tmk_core/common/chibios/eeprom_stm32.c ****     }
+ 174:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 927              		.loc 1 174 1 is_stmt 0 view .LVU246
+ 928 0074 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
+ 929              		.cfi_remember_state
+ 930              		.cfi_restore 14
+ 931              		.cfi_restore 7
+ 932              		.cfi_restore 6
+ 933              		.cfi_restore 5
+ 934              		.cfi_restore 4
+ 935              		.cfi_restore 3
+ 936              		.cfi_def_cfa_offset 0
+ 937              	.LVL67:
+ 172:tmk_core/common/chibios/eeprom_stm32.c ****         EEPROM_WriteDataByte(p + 3, (uint8_t)(Value >> 24));
+ 938              		.loc 1 172 9 view .LVU247
+ 939 0078 FFF7FEBF 		b	EEPROM_WriteDataByte
+ 940              	.LVL68:
+ 941              	.L28:
+ 942              		.cfi_restore_state
+ 943              		.loc 1 174 1 view .LVU248
+ 944 007c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 945              		.loc 1 174 1 view .LVU249
+ 946              		.cfi_endproc
+ 947              	.LFE293:
+ 949              		.section	.text.eeprom_read_block,"ax",%progbits
+ 950              		.align	1
+ 951              		.global	eeprom_read_block
+ 952              		.syntax unified
+ 953              		.thumb
+ 954              		.thumb_func
+ 955              		.fpu fpv4-sp-d16
+ 957              	eeprom_read_block:
+ 958              	.LVL69:
+ 959              	.LFB294:
+ 175:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 176:tmk_core/common/chibios/eeprom_stm32.c **** void eeprom_read_block(void *buf, const void *addr, size_t len) {
+ 960              		.loc 1 176 65 is_stmt 1 view -0
+ 961              		.cfi_startproc
+ 962              		@ args = 0, pretend = 0, frame = 0
+ 963              		@ frame_needed = 0, uses_anonymous_args = 0
+ 964              		.loc 1 176 65 is_stmt 0 view .LVU251
+ 965 0000 10B5     		push	{r4, lr}
+ 966              		.cfi_def_cfa_offset 8
+ 967              		.cfi_offset 4, -8
+ 968              		.cfi_offset 14, -4
+ 969              		.loc 1 176 65 view .LVU252
+ 970 0002 0346     		mov	r3, r0
+ 971 0004 0A44     		add	r2, r2, r1
+ 972              	.LVL70:
+ 973              		.loc 1 176 65 view .LVU253
+ 974 0006 0846     		mov	r0, r1
+ 975              	.LVL71:
+ 177:tmk_core/common/chibios/eeprom_stm32.c ****     const uint8_t *p    = (const uint8_t *)addr;
+ 976              		.loc 1 177 5 is_stmt 1 view .LVU254
+ 178:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t *      dest = (uint8_t *)buf;
+ 977              		.loc 1 178 5 view .LVU255
+ 179:tmk_core/common/chibios/eeprom_stm32.c ****     while (len--) {
+ 978              		.loc 1 179 5 view .LVU256
+ 979              	.L31:
+ 980              		.loc 1 179 11 view .LVU257
+ 981              		.loc 1 179 11 is_stmt 0 view .LVU258
+ 982 0008 9042     		cmp	r0, r2
+ 983 000a 00D1     		bne	.L32
+ 180:tmk_core/common/chibios/eeprom_stm32.c ****         *dest++ = eeprom_read_byte(p++);
+ 181:tmk_core/common/chibios/eeprom_stm32.c ****     }
+ 182:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 984              		.loc 1 182 1 view .LVU259
+ 985 000c 10BD     		pop	{r4, pc}
+ 986              	.L32:
+ 180:tmk_core/common/chibios/eeprom_stm32.c ****         *dest++ = eeprom_read_byte(p++);
+ 987              		.loc 1 180 9 is_stmt 1 view .LVU260
+ 180:tmk_core/common/chibios/eeprom_stm32.c ****         *dest++ = eeprom_read_byte(p++);
+ 988              		.loc 1 180 19 is_stmt 0 view .LVU261
+ 989 000e 441C     		adds	r4, r0, #1
+ 990              	.LVL72:
+ 180:tmk_core/common/chibios/eeprom_stm32.c ****         *dest++ = eeprom_read_byte(p++);
+ 991              		.loc 1 180 19 view .LVU262
+ 992 0010 FFF7FEFF 		bl	eeprom_read_byte
+ 993              	.LVL73:
+ 180:tmk_core/common/chibios/eeprom_stm32.c ****         *dest++ = eeprom_read_byte(p++);
+ 994              		.loc 1 180 17 view .LVU263
+ 995 0014 03F8010B 		strb	r0, [r3], #1
+ 996              	.LVL74:
+ 180:tmk_core/common/chibios/eeprom_stm32.c ****         *dest++ = eeprom_read_byte(p++);
+ 997              		.loc 1 180 19 view .LVU264
+ 998 0018 2046     		mov	r0, r4
+ 999 001a F5E7     		b	.L31
+ 1000              		.cfi_endproc
+ 1001              	.LFE294:
+ 1003              		.section	.text.eeprom_write_block,"ax",%progbits
+ 1004              		.align	1
+ 1005              		.global	eeprom_write_block
+ 1006              		.syntax unified
+ 1007              		.thumb
+ 1008              		.thumb_func
+ 1009              		.fpu fpv4-sp-d16
+ 1011              	eeprom_write_block:
+ 1012              	.LVL75:
+ 1013              	.LFB295:
+ 183:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 184:tmk_core/common/chibios/eeprom_stm32.c **** void eeprom_write_block(const void *buf, void *addr, size_t len) {
+ 1014              		.loc 1 184 66 is_stmt 1 view -0
+ 1015              		.cfi_startproc
+ 1016              		@ args = 0, pretend = 0, frame = 0
+ 1017              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1018              		.loc 1 184 66 is_stmt 0 view .LVU266
+ 1019 0000 70B5     		push	{r4, r5, r6, lr}
+ 1020              		.cfi_def_cfa_offset 16
+ 1021              		.cfi_offset 4, -16
+ 1022              		.cfi_offset 5, -12
+ 1023              		.cfi_offset 6, -8
+ 1024              		.cfi_offset 14, -4
+ 1025              		.loc 1 184 66 view .LVU267
+ 1026 0002 0446     		mov	r4, r0
+ 185:tmk_core/common/chibios/eeprom_stm32.c ****     uint8_t *      p   = (uint8_t *)addr;
+ 1027              		.loc 1 185 5 is_stmt 1 view .LVU268
+ 1028              	.LVL76:
+ 186:tmk_core/common/chibios/eeprom_stm32.c ****     const uint8_t *src = (const uint8_t *)buf;
+ 1029              		.loc 1 186 5 view .LVU269
+ 187:tmk_core/common/chibios/eeprom_stm32.c ****     while (len--) {
+ 1030              		.loc 1 187 5 view .LVU270
+ 1031 0004 0D46     		mov	r5, r1
+ 1032 0006 8618     		adds	r6, r0, r2
+ 1033              	.LVL77:
+ 1034              	.L34:
+ 1035              		.loc 1 187 11 view .LVU271
+ 1036              		.loc 1 187 11 is_stmt 0 view .LVU272
+ 1037 0008 B442     		cmp	r4, r6
+ 1038 000a 00D1     		bne	.L35
+ 188:tmk_core/common/chibios/eeprom_stm32.c ****         eeprom_write_byte(p++, *src++);
+ 189:tmk_core/common/chibios/eeprom_stm32.c ****     }
+ 190:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 1039              		.loc 1 190 1 view .LVU273
+ 1040 000c 70BD     		pop	{r4, r5, r6, pc}
+ 1041              	.LVL78:
+ 1042              	.L35:
+ 188:tmk_core/common/chibios/eeprom_stm32.c ****         eeprom_write_byte(p++, *src++);
+ 1043              		.loc 1 188 9 is_stmt 1 view .LVU274
+ 1044              	.LBB88:
+ 1045              	.LBI88:
+ 125:tmk_core/common/chibios/eeprom_stm32.c ****     uint16_t p = (uint32_t)Address;
+ 1046              		.loc 1 125 6 view .LVU275
+ 1047              	.LBB89:
+ 126:tmk_core/common/chibios/eeprom_stm32.c ****     EEPROM_WriteDataByte(p, Value);
+ 1048              		.loc 1 126 5 view .LVU276
+ 127:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 1049              		.loc 1 127 5 view .LVU277
+ 1050 000e A8B2     		uxth	r0, r5
+ 1051 0010 14F8011B 		ldrb	r1, [r4], #1	@ zero_extendqisi2
+ 1052              	.LVL79:
+ 127:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 1053              		.loc 1 127 5 is_stmt 0 view .LVU278
+ 1054 0014 FFF7FEFF 		bl	EEPROM_WriteDataByte
+ 1055              	.LVL80:
+ 127:tmk_core/common/chibios/eeprom_stm32.c **** }
+ 1056              		.loc 1 127 5 view .LVU279
+ 1057 0018 0135     		adds	r5, r5, #1
+ 1058              	.LVL81:
+ 128:tmk_core/common/chibios/eeprom_stm32.c **** 
+ 1059              		.loc 1 128 1 view .LVU280
+ 1060 001a F5E7     		b	.L34
+ 1061              	.LBE89:
+ 1062              	.LBE88:
+ 1063              		.cfi_endproc
+ 1064              	.LFE295:
+ 1066              		.section	.text.eeprom_update_block,"ax",%progbits
+ 1067              		.align	1
+ 1068              		.global	eeprom_update_block
+ 1069              		.syntax unified
+ 1070              		.thumb
+ 1071              		.thumb_func
+ 1072              		.fpu fpv4-sp-d16
+ 1074              	eeprom_update_block:
+ 1075              	.LFB303:
+ 1076              		.cfi_startproc
+ 1077              		@ args = 0, pretend = 0, frame = 0
+ 1078              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1079              		@ link register save eliminated.
+ 1080 0000 FFF7FEBF 		b	eeprom_write_block
+ 1081              		.cfi_endproc
+ 1082              	.LFE303:
+ 1084              		.comm	DataBuf,2048,1
+ 1085              		.text
+ 1086              	.Letext0:
+ 1087              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1088              		.file 3 "c:\\qmk_msys\\mingw64\\lib\\gcc\\arm-none-eabi\\10.1.0\\include\\stddef.h"
+ 1089              		.file 4 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1090              		.file 5 "tmk_core/common/chibios/flash_stm32.h"
+ 1091              		.file 6 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 eeprom_stm32.c
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:18     .text.EEPROM_Init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:26     .text.EEPROM_Init:0000000000000000 EEPROM_Init
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:50     .text.EEPROM_Erase:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:57     .text.EEPROM_Erase:0000000000000000 EEPROM_Erase
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:106    .text.EEPROM_Erase:0000000000000020 $d
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:114    .text.EEPROM_WriteDataByte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:121    .text.EEPROM_WriteDataByte:0000000000000000 EEPROM_WriteDataByte
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:259    .text.EEPROM_WriteDataByte:0000000000000088 $d
+                            *COM*:0000000000000800 DataBuf
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:266    .text.EEPROM_ReadDataByte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:273    .text.EEPROM_ReadDataByte:0000000000000000 EEPROM_ReadDataByte
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:299    .text.eeprom_read_byte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:306    .text.eeprom_read_byte:0000000000000000 eeprom_read_byte
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:344    .text.eeprom_write_byte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:351    .text.eeprom_write_byte:0000000000000000 eeprom_write_byte
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:371    .text.eeprom_update_byte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:378    .text.eeprom_update_byte:0000000000000000 eeprom_update_byte
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:390    .text.eeprom_read_word:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:397    .text.eeprom_read_word:0000000000000000 eeprom_read_word
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:458    .text.eeprom_write_word:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:465    .text.eeprom_write_word:0000000000000000 eeprom_write_word
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:514    .text.eeprom_update_word:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:521    .text.eeprom_update_word:0000000000000000 eeprom_update_word
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:532    .text.eeprom_read_dword:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:539    .text.eeprom_read_dword:0000000000000000 eeprom_read_dword
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:683    .text.eeprom_write_dword:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:690    .text.eeprom_write_dword:0000000000000000 eeprom_write_dword
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:751    .text.eeprom_update_dword:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:758    .text.eeprom_update_dword:0000000000000000 eeprom_update_dword
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:950    .text.eeprom_read_block:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:957    .text.eeprom_read_block:0000000000000000 eeprom_read_block
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:1004   .text.eeprom_write_block:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:1011   .text.eeprom_write_block:0000000000000000 eeprom_write_block
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:1067   .text.eeprom_update_block:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccx6JmbY.s:1074   .text.eeprom_update_block:0000000000000000 eeprom_update_block
+
+UNDEFINED SYMBOLS
+FLASH_Unlock
+FLASH_ErasePage
+FLASH_ProgramHalfWord
+memcpy

@@ -1,0 +1,739 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"aw20216.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.AW20216_write,"ax",%progbits
+  18              		.align	1
+  19              		.global	AW20216_write
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	AW20216_write:
+  27              	.LVL0:
+  28              	.LFB278:
+  29              		.file 1 "drivers/led/aw20216.c"
+   1:drivers/led/aw20216.c **** /* Copyright 2021 Jasper Chan
+   2:drivers/led/aw20216.c ****  *
+   3:drivers/led/aw20216.c ****  * This program is free software: you can redistribute it and/or modify
+   4:drivers/led/aw20216.c ****  * it under the terms of the GNU General Public License as published by
+   5:drivers/led/aw20216.c ****  * the Free Software Foundation, either version 2 of the License, or
+   6:drivers/led/aw20216.c ****  * (at your option) any later version.
+   7:drivers/led/aw20216.c ****  *
+   8:drivers/led/aw20216.c ****  * This program is distributed in the hope that it will be useful,
+   9:drivers/led/aw20216.c ****  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  10:drivers/led/aw20216.c ****  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  11:drivers/led/aw20216.c ****  * GNU General Public License for more details.
+  12:drivers/led/aw20216.c ****  *
+  13:drivers/led/aw20216.c ****  * You should have received a copy of the GNU General Public License
+  14:drivers/led/aw20216.c ****  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  15:drivers/led/aw20216.c ****  */
+  16:drivers/led/aw20216.c **** 
+  17:drivers/led/aw20216.c **** #include "aw20216.h"
+  18:drivers/led/aw20216.c **** #include "spi_master.h"
+  19:drivers/led/aw20216.c **** 
+  20:drivers/led/aw20216.c **** /* The AW20216 appears to be somewhat similar to the IS31FL743, although quite
+  21:drivers/led/aw20216.c ****  * a few things are different, such as the command byte format and page ordering.
+  22:drivers/led/aw20216.c ****  * The LED addresses start from 0x00 instead of 0x01.
+  23:drivers/led/aw20216.c ****  */
+  24:drivers/led/aw20216.c **** #define AWINIC_ID 0b1010 << 4
+  25:drivers/led/aw20216.c **** 
+  26:drivers/led/aw20216.c **** #define AW_PAGE_FUNCTION 0x00 << 1    // PG0, Function registers
+  27:drivers/led/aw20216.c **** #define AW_PAGE_PWM 0x01 << 1         // PG1, LED PWM control
+  28:drivers/led/aw20216.c **** #define AW_PAGE_SCALING 0x02 << 1     // PG2, LED current scaling control
+  29:drivers/led/aw20216.c **** #define AW_PAGE_PATCHOICE 0x03 << 1   // PG3, Pattern choice?
+  30:drivers/led/aw20216.c **** #define AW_PAGE_PWMSCALING 0x04 << 1  // PG4, LED PWM + Scaling control?
+  31:drivers/led/aw20216.c **** 
+  32:drivers/led/aw20216.c **** #define AW_WRITE 0
+  33:drivers/led/aw20216.c **** #define AW_READ 1
+  34:drivers/led/aw20216.c **** 
+  35:drivers/led/aw20216.c **** #define AW_REG_CONFIGURATION 0x00  // PG0
+  36:drivers/led/aw20216.c **** #define AW_REG_GLOBALCURRENT 0x01  // PG0
+  37:drivers/led/aw20216.c **** 
+  38:drivers/led/aw20216.c **** // Default value of AW_REG_CONFIGURATION
+  39:drivers/led/aw20216.c **** // D7:D4 = 1011, SWSEL (SW1~SW12 active)
+  40:drivers/led/aw20216.c **** // D3 = 0?, reserved (apparently this should be 1 but it doesn't seem to matter)
+  41:drivers/led/aw20216.c **** // D2:D1 = 00, OSDE (open/short detection enable)
+  42:drivers/led/aw20216.c **** // D0 = 0, CHIPEN (write 1 to enable LEDs when hardware enable pulled high)
+  43:drivers/led/aw20216.c **** #define AW_CONFIG_DEFAULT 0b10110000
+  44:drivers/led/aw20216.c **** #define AW_CHIPEN 1
+  45:drivers/led/aw20216.c **** 
+  46:drivers/led/aw20216.c **** #define AW_PWM_REGISTER_COUNT 216
+  47:drivers/led/aw20216.c **** 
+  48:drivers/led/aw20216.c **** #ifndef AW_SCALING_MAX
+  49:drivers/led/aw20216.c **** #    define AW_SCALING_MAX 150
+  50:drivers/led/aw20216.c **** #endif
+  51:drivers/led/aw20216.c **** 
+  52:drivers/led/aw20216.c **** #ifndef AW_GLOBAL_CURRENT_MAX
+  53:drivers/led/aw20216.c **** #    define AW_GLOBAL_CURRENT_MAX 150
+  54:drivers/led/aw20216.c **** #endif
+  55:drivers/led/aw20216.c **** 
+  56:drivers/led/aw20216.c **** #ifndef AW_SPI_DIVISOR
+  57:drivers/led/aw20216.c **** #    define AW_SPI_DIVISOR 4
+  58:drivers/led/aw20216.c **** #endif
+  59:drivers/led/aw20216.c **** 
+  60:drivers/led/aw20216.c **** uint8_t g_pwm_buffer[DRIVER_COUNT][AW_PWM_REGISTER_COUNT];
+  61:drivers/led/aw20216.c **** bool    g_pwm_buffer_update_required[DRIVER_COUNT] = {false};
+  62:drivers/led/aw20216.c **** 
+  63:drivers/led/aw20216.c **** bool AW20216_write(pin_t cs_pin, uint8_t page, uint8_t reg, uint8_t* data, uint8_t len) {
+  30              		.loc 1 63 89 view -0
+  31              		.cfi_startproc
+  32              		@ args = 4, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 63 89 is_stmt 0 view .LVU1
+  35 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  36              		.cfi_def_cfa_offset 24
+  37              		.cfi_offset 3, -24
+  38              		.cfi_offset 4, -20
+  39              		.cfi_offset 5, -16
+  40              		.cfi_offset 6, -12
+  41              		.cfi_offset 7, -8
+  42              		.cfi_offset 14, -4
+  43              		.loc 1 63 89 view .LVU2
+  44 0002 1746     		mov	r7, r2
+  64:drivers/led/aw20216.c ****     static uint8_t s_spi_transfer_buffer[2] = {0};
+  65:drivers/led/aw20216.c **** 
+  66:drivers/led/aw20216.c ****     if (!spi_start(cs_pin, false, 0, AW_SPI_DIVISOR)) {
+  45              		.loc 1 66 10 view .LVU3
+  46 0004 0022     		movs	r2, #0
+  47              	.LVL1:
+  63:drivers/led/aw20216.c ****     static uint8_t s_spi_transfer_buffer[2] = {0};
+  48              		.loc 1 63 89 view .LVU4
+  49 0006 0D46     		mov	r5, r1
+  64:drivers/led/aw20216.c ****     static uint8_t s_spi_transfer_buffer[2] = {0};
+  50              		.loc 1 64 5 is_stmt 1 view .LVU5
+  51              		.loc 1 66 5 view .LVU6
+  63:drivers/led/aw20216.c ****     static uint8_t s_spi_transfer_buffer[2] = {0};
+  52              		.loc 1 63 89 is_stmt 0 view .LVU7
+  53 0008 1E46     		mov	r6, r3
+  54              		.loc 1 66 10 view .LVU8
+  55 000a 1146     		mov	r1, r2
+  56              	.LVL2:
+  57              		.loc 1 66 10 view .LVU9
+  58 000c 0423     		movs	r3, #4
+  59              	.LVL3:
+  60              		.loc 1 66 10 view .LVU10
+  61 000e FFF7FEFF 		bl	spi_start
+  62              	.LVL4:
+  63              		.loc 1 66 8 view .LVU11
+  64 0012 0446     		mov	r4, r0
+  65 0014 20B9     		cbnz	r0, .L2
+  66              	.L4:
+  67:drivers/led/aw20216.c ****         spi_stop();
+  67              		.loc 1 67 9 is_stmt 1 view .LVU12
+  68 0016 FFF7FEFF 		bl	spi_stop
+  69              	.LVL5:
+  68:drivers/led/aw20216.c ****         return false;
+  70              		.loc 1 68 9 view .LVU13
+  71              		.loc 1 68 16 is_stmt 0 view .LVU14
+  72 001a 0024     		movs	r4, #0
+  73              	.L3:
+  69:drivers/led/aw20216.c ****     }
+  70:drivers/led/aw20216.c **** 
+  71:drivers/led/aw20216.c ****     s_spi_transfer_buffer[0] = (AWINIC_ID | page | AW_WRITE);
+  72:drivers/led/aw20216.c ****     s_spi_transfer_buffer[1] = reg;
+  73:drivers/led/aw20216.c **** 
+  74:drivers/led/aw20216.c ****     if (spi_transmit(s_spi_transfer_buffer, 2) != SPI_STATUS_SUCCESS) {
+  75:drivers/led/aw20216.c ****         spi_stop();
+  76:drivers/led/aw20216.c ****         return false;
+  77:drivers/led/aw20216.c ****     }
+  78:drivers/led/aw20216.c **** 
+  79:drivers/led/aw20216.c ****     if (spi_transmit(data, len) != SPI_STATUS_SUCCESS) {
+  80:drivers/led/aw20216.c ****         spi_stop();
+  81:drivers/led/aw20216.c ****         return false;
+  82:drivers/led/aw20216.c ****     }
+  83:drivers/led/aw20216.c **** 
+  84:drivers/led/aw20216.c ****     spi_stop();
+  85:drivers/led/aw20216.c ****     return true;
+  86:drivers/led/aw20216.c **** }
+  74              		.loc 1 86 1 view .LVU15
+  75 001c 2046     		mov	r0, r4
+  76 001e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+  77              	.LVL6:
+  78              	.L2:
+  71:drivers/led/aw20216.c ****     s_spi_transfer_buffer[1] = reg;
+  79              		.loc 1 71 5 is_stmt 1 view .LVU16
+  71:drivers/led/aw20216.c ****     s_spi_transfer_buffer[1] = reg;
+  80              		.loc 1 71 30 is_stmt 0 view .LVU17
+  81 0020 0948     		ldr	r0, .L5
+  82 0022 65F05F05 		orn	r5, r5, #95
+  74:drivers/led/aw20216.c ****         spi_stop();
+  83              		.loc 1 74 9 view .LVU18
+  84 0026 0221     		movs	r1, #2
+  71:drivers/led/aw20216.c ****     s_spi_transfer_buffer[1] = reg;
+  85              		.loc 1 71 30 view .LVU19
+  86 0028 0570     		strb	r5, [r0]
+  72:drivers/led/aw20216.c **** 
+  87              		.loc 1 72 5 is_stmt 1 view .LVU20
+  72:drivers/led/aw20216.c **** 
+  88              		.loc 1 72 30 is_stmt 0 view .LVU21
+  89 002a 4770     		strb	r7, [r0, #1]
+  74:drivers/led/aw20216.c ****         spi_stop();
+  90              		.loc 1 74 5 is_stmt 1 view .LVU22
+  74:drivers/led/aw20216.c ****         spi_stop();
+  91              		.loc 1 74 9 is_stmt 0 view .LVU23
+  92 002c FFF7FEFF 		bl	spi_transmit
+  93              	.LVL7:
+  74:drivers/led/aw20216.c ****         spi_stop();
+  94              		.loc 1 74 8 view .LVU24
+  95 0030 0028     		cmp	r0, #0
+  96 0032 F0D1     		bne	.L4
+  97              	.LVL8:
+  98              	.LBB4:
+  99              	.LBI4:
+  63:drivers/led/aw20216.c ****     static uint8_t s_spi_transfer_buffer[2] = {0};
+ 100              		.loc 1 63 6 is_stmt 1 view .LVU25
+ 101              	.LBB5:
+  79:drivers/led/aw20216.c ****         spi_stop();
+ 102              		.loc 1 79 5 view .LVU26
+  79:drivers/led/aw20216.c ****         spi_stop();
+ 103              		.loc 1 79 9 is_stmt 0 view .LVU27
+ 104 0034 9DF81810 		ldrb	r1, [sp, #24]	@ zero_extendqisi2
+ 105 0038 3046     		mov	r0, r6
+ 106 003a FFF7FEFF 		bl	spi_transmit
+ 107              	.LVL9:
+  79:drivers/led/aw20216.c ****         spi_stop();
+ 108              		.loc 1 79 8 view .LVU28
+ 109 003e 0028     		cmp	r0, #0
+ 110 0040 E9D1     		bne	.L4
+  84:drivers/led/aw20216.c ****     return true;
+ 111              		.loc 1 84 5 is_stmt 1 view .LVU29
+ 112 0042 FFF7FEFF 		bl	spi_stop
+ 113              	.LVL10:
+  85:drivers/led/aw20216.c **** }
+ 114              		.loc 1 85 5 view .LVU30
+  85:drivers/led/aw20216.c **** }
+ 115              		.loc 1 85 12 is_stmt 0 view .LVU31
+ 116 0046 E9E7     		b	.L3
+ 117              	.L6:
+ 118              		.align	2
+ 119              	.L5:
+ 120 0048 00000000 		.word	.LANCHOR0
+ 121              	.LBE5:
+ 122              	.LBE4:
+ 123              		.cfi_endproc
+ 124              	.LFE278:
+ 126              		.section	.text.AW20216_init,"ax",%progbits
+ 127              		.align	1
+ 128              		.global	AW20216_init
+ 129              		.syntax unified
+ 130              		.thumb
+ 131              		.thumb_func
+ 132              		.fpu fpv4-sp-d16
+ 134              	AW20216_init:
+ 135              	.LVL11:
+ 136              	.LFB283:
+  87:drivers/led/aw20216.c **** 
+  88:drivers/led/aw20216.c **** static inline bool AW20216_write_register(pin_t cs_pin, uint8_t page, uint8_t reg, uint8_t value) {
+  89:drivers/led/aw20216.c ****     // Little wrapper so callers need not care about sending a buffer
+  90:drivers/led/aw20216.c ****     return AW20216_write(cs_pin, page, reg, &value, 1);
+  91:drivers/led/aw20216.c **** }
+  92:drivers/led/aw20216.c **** 
+  93:drivers/led/aw20216.c **** static void AW20216_init_scaling(pin_t cs_pin) {
+  94:drivers/led/aw20216.c ****     // Set constant current to the max, control brightness with PWM
+  95:drivers/led/aw20216.c ****     for (uint8_t i = 0; i < AW_PWM_REGISTER_COUNT; i++) {
+  96:drivers/led/aw20216.c ****         AW20216_write_register(cs_pin, AW_PAGE_SCALING, i, AW_SCALING_MAX);
+  97:drivers/led/aw20216.c ****     }
+  98:drivers/led/aw20216.c **** }
+  99:drivers/led/aw20216.c **** 
+ 100:drivers/led/aw20216.c **** static inline void AW20216_init_current_limit(pin_t cs_pin) {
+ 101:drivers/led/aw20216.c ****     // Push config
+ 102:drivers/led/aw20216.c ****     AW20216_write_register(cs_pin, AW_PAGE_FUNCTION, AW_REG_GLOBALCURRENT, AW_GLOBAL_CURRENT_MAX);
+ 103:drivers/led/aw20216.c **** }
+ 104:drivers/led/aw20216.c **** 
+ 105:drivers/led/aw20216.c **** static inline void AW20216_soft_enable(pin_t cs_pin) {
+ 106:drivers/led/aw20216.c ****     // Push config
+ 107:drivers/led/aw20216.c ****     AW20216_write_register(cs_pin, AW_PAGE_FUNCTION, AW_REG_CONFIGURATION, AW_CONFIG_DEFAULT | AW_C
+ 108:drivers/led/aw20216.c **** }
+ 109:drivers/led/aw20216.c **** 
+ 110:drivers/led/aw20216.c **** void AW20216_init(pin_t cs_pin, pin_t en_pin) {
+ 137              		.loc 1 110 47 is_stmt 1 view -0
+ 138              		.cfi_startproc
+ 139              		@ args = 0, pretend = 0, frame = 8
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 111:drivers/led/aw20216.c ****     setPinOutput(en_pin);
+ 141              		.loc 1 111 5 view .LVU33
+ 110:drivers/led/aw20216.c ****     setPinOutput(en_pin);
+ 142              		.loc 1 110 47 is_stmt 0 view .LVU34
+ 143 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 144              		.cfi_def_cfa_offset 20
+ 145              		.cfi_offset 4, -20
+ 146              		.cfi_offset 5, -16
+ 147              		.cfi_offset 6, -12
+ 148              		.cfi_offset 7, -8
+ 149              		.cfi_offset 14, -4
+ 150              		.loc 1 111 5 view .LVU35
+ 151 0002 21F00F07 		bic	r7, r1, #15
+ 152 0006 0125     		movs	r5, #1
+ 153 0008 01F00F01 		and	r1, r1, #15
+ 154              	.LVL12:
+ 110:drivers/led/aw20216.c ****     setPinOutput(en_pin);
+ 155              		.loc 1 110 47 view .LVU36
+ 156 000c 85B0     		sub	sp, sp, #20
+ 157              		.cfi_def_cfa_offset 40
+ 158              		.loc 1 111 5 view .LVU37
+ 159 000e 05FA01F4 		lsl	r4, r5, r1
+ 160 0012 2146     		mov	r1, r4
+ 110:drivers/led/aw20216.c ****     setPinOutput(en_pin);
+ 161              		.loc 1 110 47 view .LVU38
+ 162 0014 0646     		mov	r6, r0
+ 163              		.loc 1 111 5 view .LVU39
+ 164 0016 2A46     		mov	r2, r5
+ 165 0018 3846     		mov	r0, r7
+ 166              	.LVL13:
+ 112:drivers/led/aw20216.c ****     writePinHigh(en_pin);
+ 167              		.loc 1 112 5 view .LVU40
+ 168 001a A4B2     		uxth	r4, r4
+ 111:drivers/led/aw20216.c ****     setPinOutput(en_pin);
+ 169              		.loc 1 111 5 view .LVU41
+ 170 001c FFF7FEFF 		bl	_pal_lld_setgroupmode
+ 171              	.LVL14:
+ 172              		.loc 1 112 5 is_stmt 1 view .LVU42
+ 173 0020 3C83     		strh	r4, [r7, #24]	@ movhi
+ 113:drivers/led/aw20216.c **** 
+ 114:drivers/led/aw20216.c ****     // Drivers should start with all scaling and PWM registers as off
+ 115:drivers/led/aw20216.c ****     AW20216_init_current_limit(cs_pin);
+ 174              		.loc 1 115 5 view .LVU43
+ 175              	.LVL15:
+ 176              	.LBB19:
+ 177              	.LBI19:
+ 100:drivers/led/aw20216.c ****     // Push config
+ 178              		.loc 1 100 20 view .LVU44
+ 179              	.LBB20:
+ 102:drivers/led/aw20216.c **** }
+ 180              		.loc 1 102 5 view .LVU45
+ 181              	.LBB21:
+ 182              	.LBB22:
+  90:drivers/led/aw20216.c **** }
+ 183              		.loc 1 90 12 is_stmt 0 view .LVU46
+ 184 0022 0DF10F03 		add	r3, sp, #15
+ 185 0026 9627     		movs	r7, #150
+ 186 0028 0095     		str	r5, [sp]
+ 187 002a 2A46     		mov	r2, r5
+ 188 002c 0021     		movs	r1, #0
+ 189 002e 3046     		mov	r0, r6
+ 190 0030 8DF80F70 		strb	r7, [sp, #15]
+ 191              	.LVL16:
+  90:drivers/led/aw20216.c **** }
+ 192              		.loc 1 90 12 view .LVU47
+ 193              	.LBE22:
+ 194              	.LBI21:
+  88:drivers/led/aw20216.c ****     // Little wrapper so callers need not care about sending a buffer
+ 195              		.loc 1 88 20 is_stmt 1 view .LVU48
+ 196              	.LBB23:
+  90:drivers/led/aw20216.c **** }
+ 197              		.loc 1 90 5 view .LVU49
+  90:drivers/led/aw20216.c **** }
+ 198              		.loc 1 90 12 is_stmt 0 view .LVU50
+ 199 0034 FFF7FEFF 		bl	AW20216_write
+ 200              	.LVL17:
+  90:drivers/led/aw20216.c **** }
+ 201              		.loc 1 90 12 view .LVU51
+ 202              	.LBE23:
+ 203              	.LBE21:
+ 204              	.LBE20:
+ 205              	.LBE19:
+ 206              	.LBB25:
+ 207              	.LBB26:
+  95:drivers/led/aw20216.c ****         AW20216_write_register(cs_pin, AW_PAGE_SCALING, i, AW_SCALING_MAX);
+ 208              		.loc 1 95 25 is_stmt 1 view .LVU52
+ 209              	.LBE26:
+ 210              	.LBE25:
+ 211              	.LBB32:
+ 212              	.LBB24:
+ 102:drivers/led/aw20216.c **** }
+ 213              		.loc 1 102 5 is_stmt 0 view .LVU53
+ 214 0038 0024     		movs	r4, #0
+ 215              	.LVL18:
+ 216              	.L8:
+ 102:drivers/led/aw20216.c **** }
+ 217              		.loc 1 102 5 view .LVU54
+ 218              	.LBE24:
+ 219              	.LBE32:
+ 220              	.LBB33:
+ 221              	.LBB31:
+  96:drivers/led/aw20216.c ****     }
+ 222              		.loc 1 96 9 is_stmt 1 view .LVU55
+ 223              	.LBB27:
+ 224              	.LBB28:
+  90:drivers/led/aw20216.c **** }
+ 225              		.loc 1 90 12 is_stmt 0 view .LVU56
+ 226 003a E2B2     		uxtb	r2, r4
+ 227 003c 0095     		str	r5, [sp]
+ 228 003e 0DF10F03 		add	r3, sp, #15
+ 229 0042 0421     		movs	r1, #4
+ 230 0044 3046     		mov	r0, r6
+ 231              	.LBE28:
+ 232              	.LBE27:
+  95:drivers/led/aw20216.c ****         AW20216_write_register(cs_pin, AW_PAGE_SCALING, i, AW_SCALING_MAX);
+ 233              		.loc 1 95 5 view .LVU57
+ 234 0046 0134     		adds	r4, r4, #1
+ 235              	.LVL19:
+  95:drivers/led/aw20216.c ****         AW20216_write_register(cs_pin, AW_PAGE_SCALING, i, AW_SCALING_MAX);
+ 236              		.loc 1 95 5 view .LVU58
+ 237 0048 8DF80F70 		strb	r7, [sp, #15]
+ 238              	.LVL20:
+ 239              	.LBB30:
+ 240              	.LBI27:
+  88:drivers/led/aw20216.c ****     // Little wrapper so callers need not care about sending a buffer
+ 241              		.loc 1 88 20 is_stmt 1 view .LVU59
+ 242              	.LBB29:
+  90:drivers/led/aw20216.c **** }
+ 243              		.loc 1 90 5 view .LVU60
+  90:drivers/led/aw20216.c **** }
+ 244              		.loc 1 90 12 is_stmt 0 view .LVU61
+ 245 004c FFF7FEFF 		bl	AW20216_write
+ 246              	.LVL21:
+  90:drivers/led/aw20216.c **** }
+ 247              		.loc 1 90 12 view .LVU62
+ 248              	.LBE29:
+ 249              	.LBE30:
+  95:drivers/led/aw20216.c ****         AW20216_write_register(cs_pin, AW_PAGE_SCALING, i, AW_SCALING_MAX);
+ 250              		.loc 1 95 52 is_stmt 1 view .LVU63
+  95:drivers/led/aw20216.c ****         AW20216_write_register(cs_pin, AW_PAGE_SCALING, i, AW_SCALING_MAX);
+ 251              		.loc 1 95 25 view .LVU64
+  95:drivers/led/aw20216.c ****         AW20216_write_register(cs_pin, AW_PAGE_SCALING, i, AW_SCALING_MAX);
+ 252              		.loc 1 95 5 is_stmt 0 view .LVU65
+ 253 0050 D82C     		cmp	r4, #216
+ 254 0052 F2D1     		bne	.L8
+ 255              	.LBE31:
+ 256              	.LBE33:
+ 116:drivers/led/aw20216.c ****     AW20216_init_scaling(cs_pin);
+ 117:drivers/led/aw20216.c **** 
+ 118:drivers/led/aw20216.c ****     AW20216_soft_enable(cs_pin);
+ 257              		.loc 1 118 5 is_stmt 1 view .LVU66
+ 258              	.LVL22:
+ 259              	.LBB34:
+ 260              	.LBI34:
+ 105:drivers/led/aw20216.c ****     // Push config
+ 261              		.loc 1 105 20 view .LVU67
+ 262              	.LBB35:
+ 107:drivers/led/aw20216.c **** }
+ 263              		.loc 1 107 5 view .LVU68
+ 264              	.LBB36:
+ 265              	.LBB37:
+  90:drivers/led/aw20216.c **** }
+ 266              		.loc 1 90 12 is_stmt 0 view .LVU69
+ 267 0054 0022     		movs	r2, #0
+ 268 0056 B123     		movs	r3, #177
+ 269 0058 8DF80F30 		strb	r3, [sp, #15]
+ 270              	.LVL23:
+  90:drivers/led/aw20216.c **** }
+ 271              		.loc 1 90 12 view .LVU70
+ 272              	.LBE37:
+ 273              	.LBI36:
+  88:drivers/led/aw20216.c ****     // Little wrapper so callers need not care about sending a buffer
+ 274              		.loc 1 88 20 is_stmt 1 view .LVU71
+ 275              	.LBB38:
+  90:drivers/led/aw20216.c **** }
+ 276              		.loc 1 90 5 view .LVU72
+  90:drivers/led/aw20216.c **** }
+ 277              		.loc 1 90 12 is_stmt 0 view .LVU73
+ 278 005c 0095     		str	r5, [sp]
+ 279 005e 0DF10F03 		add	r3, sp, #15
+ 280              	.LVL24:
+  90:drivers/led/aw20216.c **** }
+ 281              		.loc 1 90 12 view .LVU74
+ 282 0062 1146     		mov	r1, r2
+ 283 0064 3046     		mov	r0, r6
+ 284 0066 FFF7FEFF 		bl	AW20216_write
+ 285              	.LVL25:
+  90:drivers/led/aw20216.c **** }
+ 286              		.loc 1 90 12 view .LVU75
+ 287              	.LBE38:
+ 288              	.LBE36:
+ 289              	.LBE35:
+ 290              	.LBE34:
+ 119:drivers/led/aw20216.c **** }
+ 291              		.loc 1 119 1 view .LVU76
+ 292 006a 05B0     		add	sp, sp, #20
+ 293              		.cfi_def_cfa_offset 20
+ 294              		@ sp needed
+ 295 006c F0BD     		pop	{r4, r5, r6, r7, pc}
+ 296              		.loc 1 119 1 view .LVU77
+ 297              		.cfi_endproc
+ 298              	.LFE283:
+ 300              		.section	.text.AW20216_set_color,"ax",%progbits
+ 301              		.align	1
+ 302              		.global	AW20216_set_color
+ 303              		.syntax unified
+ 304              		.thumb
+ 305              		.thumb_func
+ 306              		.fpu fpv4-sp-d16
+ 308              	AW20216_set_color:
+ 309              	.LVL26:
+ 310              	.LFB284:
+ 120:drivers/led/aw20216.c **** 
+ 121:drivers/led/aw20216.c **** void AW20216_set_color(int index, uint8_t red, uint8_t green, uint8_t blue) {
+ 311              		.loc 1 121 77 is_stmt 1 view -0
+ 312              		.cfi_startproc
+ 313              		@ args = 0, pretend = 0, frame = 0
+ 314              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122:drivers/led/aw20216.c ****     aw_led led = g_aw_leds[index];
+ 315              		.loc 1 122 5 view .LVU79
+ 121:drivers/led/aw20216.c ****     aw_led led = g_aw_leds[index];
+ 316              		.loc 1 121 77 is_stmt 0 view .LVU80
+ 317 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 318              		.cfi_def_cfa_offset 20
+ 319              		.cfi_offset 4, -20
+ 320              		.cfi_offset 5, -16
+ 321              		.cfi_offset 6, -12
+ 322              		.cfi_offset 7, -8
+ 323              		.cfi_offset 14, -4
+ 324              		.loc 1 122 12 view .LVU81
+ 325 0002 0B4C     		ldr	r4, .L11
+ 326 0004 04EB8005 		add	r5, r4, r0, lsl #2
+ 327              	.LVL27:
+ 328              		.loc 1 122 12 view .LVU82
+ 329 0008 14F82040 		ldrb	r4, [r4, r0, lsl #2]	@ zero_extendqisi2
+ 123:drivers/led/aw20216.c **** 
+ 124:drivers/led/aw20216.c ****     g_pwm_buffer[led.driver][led.r]          = red;
+ 330              		.loc 1 124 46 view .LVU83
+ 331 000c 0948     		ldr	r0, .L11+4
+ 332              	.LVL28:
+ 122:drivers/led/aw20216.c **** 
+ 333              		.loc 1 122 12 view .LVU84
+ 334 000e AF78     		ldrb	r7, [r5, #2]	@ zero_extendqisi2
+ 335              	.LVL29:
+ 122:drivers/led/aw20216.c **** 
+ 336              		.loc 1 122 12 view .LVU85
+ 337 0010 EE78     		ldrb	r6, [r5, #3]	@ zero_extendqisi2
+ 338              	.LVL30:
+ 339              		.loc 1 124 5 is_stmt 1 view .LVU86
+ 340              		.loc 1 124 33 is_stmt 0 view .LVU87
+ 341 0012 6D78     		ldrb	r5, [r5, #1]	@ zero_extendqisi2
+ 342              	.LVL31:
+ 343              		.loc 1 124 21 view .LVU88
+ 344 0014 04F00304 		and	r4, r4, #3
+ 345              		.loc 1 124 46 view .LVU89
+ 346 0018 4FF0D80C 		mov	ip, #216
+ 347 001c 0CFB0400 		mla	r0, ip, r4, r0
+ 348 0020 4155     		strb	r1, [r0, r5]
+ 125:drivers/led/aw20216.c ****     g_pwm_buffer[led.driver][led.g]          = green;
+ 349              		.loc 1 125 5 is_stmt 1 view .LVU90
+ 350              		.loc 1 125 46 is_stmt 0 view .LVU91
+ 351 0022 C255     		strb	r2, [r0, r7]
+ 126:drivers/led/aw20216.c ****     g_pwm_buffer[led.driver][led.b]          = blue;
+ 352              		.loc 1 126 5 is_stmt 1 view .LVU92
+ 353              		.loc 1 126 46 is_stmt 0 view .LVU93
+ 354 0024 8355     		strb	r3, [r0, r6]
+ 127:drivers/led/aw20216.c ****     g_pwm_buffer_update_required[led.driver] = true;
+ 355              		.loc 1 127 5 is_stmt 1 view .LVU94
+ 356              		.loc 1 127 46 is_stmt 0 view .LVU95
+ 357 0026 044B     		ldr	r3, .L11+8
+ 358              	.LVL32:
+ 359              		.loc 1 127 46 view .LVU96
+ 360 0028 0122     		movs	r2, #1
+ 361              	.LVL33:
+ 362              		.loc 1 127 46 view .LVU97
+ 363 002a 1A55     		strb	r2, [r3, r4]
+ 364              	.LVL34:
+ 128:drivers/led/aw20216.c **** }
+ 365              		.loc 1 128 1 view .LVU98
+ 366 002c F0BD     		pop	{r4, r5, r6, r7, pc}
+ 367              	.LVL35:
+ 368              	.L12:
+ 369              		.loc 1 128 1 view .LVU99
+ 370 002e 00BF     		.align	2
+ 371              	.L11:
+ 372 0030 00000000 		.word	g_aw_leds
+ 373 0034 00000000 		.word	g_pwm_buffer
+ 374 0038 00000000 		.word	.LANCHOR1
+ 375              		.cfi_endproc
+ 376              	.LFE284:
+ 378              		.section	.text.AW20216_set_color_all,"ax",%progbits
+ 379              		.align	1
+ 380              		.global	AW20216_set_color_all
+ 381              		.syntax unified
+ 382              		.thumb
+ 383              		.thumb_func
+ 384              		.fpu fpv4-sp-d16
+ 386              	AW20216_set_color_all:
+ 387              	.LVL36:
+ 388              	.LFB285:
+ 129:drivers/led/aw20216.c **** 
+ 130:drivers/led/aw20216.c **** void AW20216_set_color_all(uint8_t red, uint8_t green, uint8_t blue) {
+ 389              		.loc 1 130 70 is_stmt 1 view -0
+ 390              		.cfi_startproc
+ 391              		@ args = 0, pretend = 0, frame = 0
+ 392              		@ frame_needed = 0, uses_anonymous_args = 0
+ 131:drivers/led/aw20216.c ****     for (uint8_t i = 0; i < DRIVER_LED_TOTAL; i++) {
+ 393              		.loc 1 131 5 view .LVU101
+ 394              	.LBB39:
+ 395              		.loc 1 131 10 view .LVU102
+ 396              		.loc 1 131 25 view .LVU103
+ 397              	.LBE39:
+ 130:drivers/led/aw20216.c ****     for (uint8_t i = 0; i < DRIVER_LED_TOTAL; i++) {
+ 398              		.loc 1 130 70 is_stmt 0 view .LVU104
+ 399 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 400              		.cfi_def_cfa_offset 24
+ 401              		.cfi_offset 3, -24
+ 402              		.cfi_offset 4, -20
+ 403              		.cfi_offset 5, -16
+ 404              		.cfi_offset 6, -12
+ 405              		.cfi_offset 7, -8
+ 406              		.cfi_offset 14, -4
+ 130:drivers/led/aw20216.c ****     for (uint8_t i = 0; i < DRIVER_LED_TOTAL; i++) {
+ 407              		.loc 1 130 70 view .LVU105
+ 408 0002 0546     		mov	r5, r0
+ 409 0004 0E46     		mov	r6, r1
+ 410 0006 1746     		mov	r7, r2
+ 411 0008 0024     		movs	r4, #0
+ 412              	.LVL37:
+ 413              	.L14:
+ 414              	.LBB40:
+ 132:drivers/led/aw20216.c ****         AW20216_set_color(i, red, green, blue);
+ 415              		.loc 1 132 9 is_stmt 1 discriminator 3 view .LVU106
+ 416 000a 2046     		mov	r0, r4
+ 417 000c 3B46     		mov	r3, r7
+ 418 000e 3246     		mov	r2, r6
+ 419 0010 2946     		mov	r1, r5
+ 131:drivers/led/aw20216.c ****     for (uint8_t i = 0; i < DRIVER_LED_TOTAL; i++) {
+ 420              		.loc 1 131 5 is_stmt 0 discriminator 3 view .LVU107
+ 421 0012 0134     		adds	r4, r4, #1
+ 422              	.LVL38:
+ 423              		.loc 1 132 9 discriminator 3 view .LVU108
+ 424 0014 FFF7FEFF 		bl	AW20216_set_color
+ 425              	.LVL39:
+ 131:drivers/led/aw20216.c ****     for (uint8_t i = 0; i < DRIVER_LED_TOTAL; i++) {
+ 426              		.loc 1 131 47 is_stmt 1 discriminator 3 view .LVU109
+ 131:drivers/led/aw20216.c ****     for (uint8_t i = 0; i < DRIVER_LED_TOTAL; i++) {
+ 427              		.loc 1 131 25 discriminator 3 view .LVU110
+ 131:drivers/led/aw20216.c ****     for (uint8_t i = 0; i < DRIVER_LED_TOTAL; i++) {
+ 428              		.loc 1 131 5 is_stmt 0 discriminator 3 view .LVU111
+ 429 0018 622C     		cmp	r4, #98
+ 430 001a F6D1     		bne	.L14
+ 431              	.LBE40:
+ 133:drivers/led/aw20216.c ****     }
+ 134:drivers/led/aw20216.c **** }
+ 432              		.loc 1 134 1 view .LVU112
+ 433 001c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 434              		.cfi_endproc
+ 435              	.LFE285:
+ 437              		.section	.text.AW20216_update_pwm_buffers,"ax",%progbits
+ 438              		.align	1
+ 439              		.global	AW20216_update_pwm_buffers
+ 440              		.syntax unified
+ 441              		.thumb
+ 442              		.thumb_func
+ 443              		.fpu fpv4-sp-d16
+ 445              	AW20216_update_pwm_buffers:
+ 446              	.LVL40:
+ 447              	.LFB286:
+ 135:drivers/led/aw20216.c **** 
+ 136:drivers/led/aw20216.c **** void AW20216_update_pwm_buffers(pin_t cs_pin, uint8_t index) {
+ 448              		.loc 1 136 62 is_stmt 1 view -0
+ 449              		.cfi_startproc
+ 450              		@ args = 0, pretend = 0, frame = 0
+ 451              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137:drivers/led/aw20216.c ****     if (g_pwm_buffer_update_required[index]) {
+ 452              		.loc 1 137 5 view .LVU114
+ 136:drivers/led/aw20216.c ****     if (g_pwm_buffer_update_required[index]) {
+ 453              		.loc 1 136 62 is_stmt 0 view .LVU115
+ 454 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 455              		.cfi_def_cfa_offset 24
+ 456              		.cfi_offset 4, -12
+ 457              		.cfi_offset 5, -8
+ 458              		.cfi_offset 14, -4
+ 459              		.loc 1 137 37 view .LVU116
+ 460 0002 084D     		ldr	r5, .L21
+ 461              		.loc 1 137 8 view .LVU117
+ 462 0004 6B5C     		ldrb	r3, [r5, r1]	@ zero_extendqisi2
+ 136:drivers/led/aw20216.c ****     if (g_pwm_buffer_update_required[index]) {
+ 463              		.loc 1 136 62 view .LVU118
+ 464 0006 0C46     		mov	r4, r1
+ 465              		.loc 1 137 8 view .LVU119
+ 466 0008 43B1     		cbz	r3, .L17
+ 138:drivers/led/aw20216.c ****         AW20216_write(cs_pin, AW_PAGE_PWM, 0, g_pwm_buffer[index], AW_PWM_REGISTER_COUNT);
+ 467              		.loc 1 138 9 is_stmt 1 view .LVU120
+ 468 000a 074A     		ldr	r2, .L21+4
+ 469              		.loc 1 138 59 is_stmt 0 view .LVU121
+ 470 000c D823     		movs	r3, #216
+ 471              		.loc 1 138 9 view .LVU122
+ 472 000e 0093     		str	r3, [sp]
+ 473 0010 01FB0323 		mla	r3, r1, r3, r2
+ 474 0014 0022     		movs	r2, #0
+ 475 0016 0221     		movs	r1, #2
+ 476              	.LVL41:
+ 477              		.loc 1 138 9 view .LVU123
+ 478 0018 FFF7FEFF 		bl	AW20216_write
+ 479              	.LVL42:
+ 480              	.L17:
+ 139:drivers/led/aw20216.c ****     }
+ 140:drivers/led/aw20216.c ****     g_pwm_buffer_update_required[index] = false;
+ 481              		.loc 1 140 5 is_stmt 1 view .LVU124
+ 482              		.loc 1 140 41 is_stmt 0 view .LVU125
+ 483 001c 0023     		movs	r3, #0
+ 484 001e 2B55     		strb	r3, [r5, r4]
+ 141:drivers/led/aw20216.c **** }
+ 485              		.loc 1 141 1 view .LVU126
+ 486 0020 03B0     		add	sp, sp, #12
+ 487              		.cfi_def_cfa_offset 12
+ 488              		@ sp needed
+ 489 0022 30BD     		pop	{r4, r5, pc}
+ 490              	.L22:
+ 491              		.align	2
+ 492              	.L21:
+ 493 0024 00000000 		.word	.LANCHOR1
+ 494 0028 00000000 		.word	g_pwm_buffer
+ 495              		.cfi_endproc
+ 496              	.LFE286:
+ 498              		.global	g_pwm_buffer_update_required
+ 499              		.comm	g_pwm_buffer,432,1
+ 500              		.section	.bss.g_pwm_buffer_update_required,"aw",%nobits
+ 501              		.set	.LANCHOR1,. + 0
+ 504              	g_pwm_buffer_update_required:
+ 505 0000 0000     		.space	2
+ 506              		.section	.bss.s_spi_transfer_buffer.0,"aw",%nobits
+ 507              		.set	.LANCHOR0,. + 0
+ 510              	s_spi_transfer_buffer.0:
+ 511 0000 0000     		.space	2
+ 512              		.text
+ 513              	.Letext0:
+ 514              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 515              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 516              		.file 4 "./lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/stm32_gpio.h"
+ 517              		.file 5 "./lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.h"
+ 518              		.file 6 "tmk_core/common/chibios/gpio.h"
+ 519              		.file 7 "drivers/led/aw20216.h"
+ 520              		.file 8 "drivers/chibios/spi_master.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 aw20216.c
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:18     .text.AW20216_write:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:26     .text.AW20216_write:0000000000000000 AW20216_write
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:120    .text.AW20216_write:0000000000000048 $d
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:127    .text.AW20216_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:134    .text.AW20216_init:0000000000000000 AW20216_init
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:301    .text.AW20216_set_color:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:308    .text.AW20216_set_color:0000000000000000 AW20216_set_color
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:372    .text.AW20216_set_color:0000000000000030 $d
+                            *COM*:00000000000001b0 g_pwm_buffer
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:379    .text.AW20216_set_color_all:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:386    .text.AW20216_set_color_all:0000000000000000 AW20216_set_color_all
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:438    .text.AW20216_update_pwm_buffers:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:445    .text.AW20216_update_pwm_buffers:0000000000000000 AW20216_update_pwm_buffers
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:493    .text.AW20216_update_pwm_buffers:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:504    .bss.g_pwm_buffer_update_required:0000000000000000 g_pwm_buffer_update_required
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:505    .bss.g_pwm_buffer_update_required:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:510    .bss.s_spi_transfer_buffer.0:0000000000000000 s_spi_transfer_buffer.0
+C:\Users\lhanj\AppData\Local\Temp\cc6GVwKH.s:511    .bss.s_spi_transfer_buffer.0:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+spi_start
+spi_stop
+spi_transmit
+_pal_lld_setgroupmode
+g_aw_leds

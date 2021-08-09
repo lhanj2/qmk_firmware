@@ -1,0 +1,878 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 2
+  13              		.file	"spi_master.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.spi_init,"ax",%progbits
+  18              		.align	1
+  19              		.weak	spi_init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	spi_init:
+  27              	.LFB280:
+  28              		.file 1 "drivers/chibios/spi_master.c"
+   1:drivers/chibios/spi_master.c **** /* Copyright 2020 Nick Brassel (tzarc)
+   2:drivers/chibios/spi_master.c ****  *
+   3:drivers/chibios/spi_master.c ****  *  This program is free software: you can redistribute it and/or modify
+   4:drivers/chibios/spi_master.c ****  *  it under the terms of the GNU General Public License as published by
+   5:drivers/chibios/spi_master.c ****  *  the Free Software Foundation, either version 3 of the License, or
+   6:drivers/chibios/spi_master.c ****  *  (at your option) any later version.
+   7:drivers/chibios/spi_master.c ****  *
+   8:drivers/chibios/spi_master.c ****  *  This program is distributed in the hope that it will be useful,
+   9:drivers/chibios/spi_master.c ****  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  10:drivers/chibios/spi_master.c ****  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  11:drivers/chibios/spi_master.c ****  *  GNU General Public License for more details.
+  12:drivers/chibios/spi_master.c ****  *
+  13:drivers/chibios/spi_master.c ****  *  You should have received a copy of the GNU General Public License
+  14:drivers/chibios/spi_master.c ****  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  15:drivers/chibios/spi_master.c ****  */
+  16:drivers/chibios/spi_master.c **** 
+  17:drivers/chibios/spi_master.c **** #include "spi_master.h"
+  18:drivers/chibios/spi_master.c **** 
+  19:drivers/chibios/spi_master.c **** #include "timer.h"
+  20:drivers/chibios/spi_master.c **** 
+  21:drivers/chibios/spi_master.c **** static pin_t currentSlavePin = NO_PIN;
+  22:drivers/chibios/spi_master.c **** 
+  23:drivers/chibios/spi_master.c **** #if defined(K20x) || defined(KL2x)
+  24:drivers/chibios/spi_master.c **** static SPIConfig spiConfig = {NULL, 0, 0, 0};
+  25:drivers/chibios/spi_master.c **** #else
+  26:drivers/chibios/spi_master.c **** static SPIConfig spiConfig = {false, NULL, 0, 0, 0, 0};
+  27:drivers/chibios/spi_master.c **** #endif
+  28:drivers/chibios/spi_master.c **** 
+  29:drivers/chibios/spi_master.c **** __attribute__((weak)) void spi_init(void) {
+  29              		.loc 1 29 43 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 8
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  30:drivers/chibios/spi_master.c ****     static bool is_initialised = false;
+  33              		.loc 1 30 5 view .LVU1
+  31:drivers/chibios/spi_master.c ****     if (!is_initialised) {
+  34              		.loc 1 31 5 view .LVU2
+  35              		.loc 1 31 9 is_stmt 0 view .LVU3
+  36 0000 1B4B     		ldr	r3, .L3
+  29:drivers/chibios/spi_master.c ****     static bool is_initialised = false;
+  37              		.loc 1 29 43 view .LVU4
+  38 0002 07B5     		push	{r0, r1, r2, lr}
+  39              		.cfi_def_cfa_offset 16
+  40              		.cfi_offset 14, -4
+  41              		.loc 1 31 8 view .LVU5
+  42 0004 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  43 0006 7ABB     		cbnz	r2, .L1
+  32:drivers/chibios/spi_master.c ****         is_initialised = true;
+  44              		.loc 1 32 9 is_stmt 1 view .LVU6
+  45              		.loc 1 32 24 is_stmt 0 view .LVU7
+  46 0008 0121     		movs	r1, #1
+  47 000a 1970     		strb	r1, [r3]
+  33:drivers/chibios/spi_master.c **** 
+  34:drivers/chibios/spi_master.c ****         // Try releasing special pins for a short time
+  35:drivers/chibios/spi_master.c ****         setPinInput(SPI_SCK_PIN);
+  48              		.loc 1 35 9 is_stmt 1 view .LVU8
+  49 000c 4FF09040 		mov	r0, #1207959552
+  50 0010 2021     		movs	r1, #32
+  51 0012 0192     		str	r2, [sp, #4]
+  52 0014 FFF7FEFF 		bl	_pal_lld_setgroupmode
+  53              	.LVL0:
+  36:drivers/chibios/spi_master.c ****         setPinInput(SPI_MOSI_PIN);
+  54              		.loc 1 36 9 view .LVU9
+  55 0018 019A     		ldr	r2, [sp, #4]
+  56 001a 4021     		movs	r1, #64
+  57 001c 4FF09040 		mov	r0, #1207959552
+  58 0020 FFF7FEFF 		bl	_pal_lld_setgroupmode
+  59              	.LVL1:
+  37:drivers/chibios/spi_master.c ****         setPinInput(SPI_MISO_PIN);
+  60              		.loc 1 37 9 view .LVU10
+  61 0024 019A     		ldr	r2, [sp, #4]
+  62 0026 8021     		movs	r1, #128
+  63 0028 4FF09040 		mov	r0, #1207959552
+  64 002c FFF7FEFF 		bl	_pal_lld_setgroupmode
+  65              	.LVL2:
+  38:drivers/chibios/spi_master.c **** 
+  39:drivers/chibios/spi_master.c ****         chThdSleepMilliseconds(10);
+  66              		.loc 1 39 9 view .LVU11
+  67 0030 4FF47A70 		mov	r0, #1000
+  68 0034 FFF7FEFF 		bl	chThdSleep
+  69              	.LVL3:
+  40:drivers/chibios/spi_master.c **** #if defined(USE_GPIOV1)
+  41:drivers/chibios/spi_master.c ****         palSetPadMode(PAL_PORT(SPI_SCK_PIN), PAL_PAD(SPI_SCK_PIN), SPI_SCK_PAL_MODE);
+  42:drivers/chibios/spi_master.c ****         palSetPadMode(PAL_PORT(SPI_MOSI_PIN), PAL_PAD(SPI_MOSI_PIN), SPI_MOSI_PAL_MODE);
+  43:drivers/chibios/spi_master.c ****         palSetPadMode(PAL_PORT(SPI_MISO_PIN), PAL_PAD(SPI_MISO_PIN), SPI_MISO_PAL_MODE);
+  44:drivers/chibios/spi_master.c **** #else
+  45:drivers/chibios/spi_master.c ****         palSetPadMode(PAL_PORT(SPI_SCK_PIN), PAL_PAD(SPI_SCK_PIN), PAL_MODE_ALTERNATE(SPI_SCK_PAL_M
+  70              		.loc 1 45 9 view .LVU12
+  71 0038 40F29A22 		movw	r2, #666
+  72 003c 2021     		movs	r1, #32
+  73 003e 4FF09040 		mov	r0, #1207959552
+  74 0042 FFF7FEFF 		bl	_pal_lld_setgroupmode
+  75              	.LVL4:
+  46:drivers/chibios/spi_master.c ****         palSetPadMode(PAL_PORT(SPI_MOSI_PIN), PAL_PAD(SPI_MOSI_PIN), PAL_MODE_ALTERNATE(SPI_MOSI_PA
+  76              		.loc 1 46 9 view .LVU13
+  77 0046 40F29A22 		movw	r2, #666
+  78 004a 4021     		movs	r1, #64
+  79 004c 4FF09040 		mov	r0, #1207959552
+  80 0050 FFF7FEFF 		bl	_pal_lld_setgroupmode
+  81              	.LVL5:
+  47:drivers/chibios/spi_master.c ****         palSetPadMode(PAL_PORT(SPI_MISO_PIN), PAL_PAD(SPI_MISO_PIN), PAL_MODE_ALTERNATE(SPI_MISO_PA
+  82              		.loc 1 47 9 view .LVU14
+  83 0054 40F29A22 		movw	r2, #666
+  84 0058 8021     		movs	r1, #128
+  85 005a 4FF09040 		mov	r0, #1207959552
+  48:drivers/chibios/spi_master.c **** #endif
+  49:drivers/chibios/spi_master.c ****     }
+  50:drivers/chibios/spi_master.c **** }
+  86              		.loc 1 50 1 is_stmt 0 view .LVU15
+  87 005e 03B0     		add	sp, sp, #12
+  88              		.cfi_remember_state
+  89              		.cfi_def_cfa_offset 4
+  90              		@ sp needed
+  91 0060 5DF804EB 		ldr	lr, [sp], #4
+  92              		.cfi_restore 14
+  93              		.cfi_def_cfa_offset 0
+  47:drivers/chibios/spi_master.c ****         palSetPadMode(PAL_PORT(SPI_MISO_PIN), PAL_PAD(SPI_MISO_PIN), PAL_MODE_ALTERNATE(SPI_MISO_PA
+  94              		.loc 1 47 9 view .LVU16
+  95 0064 FFF7FEBF 		b	_pal_lld_setgroupmode
+  96              	.LVL6:
+  97              	.L1:
+  98              		.cfi_restore_state
+  99              		.loc 1 50 1 view .LVU17
+ 100 0068 03B0     		add	sp, sp, #12
+ 101              		.cfi_def_cfa_offset 4
+ 102              		@ sp needed
+ 103 006a 5DF804FB 		ldr	pc, [sp], #4
+ 104              	.L4:
+ 105 006e 00BF     		.align	2
+ 106              	.L3:
+ 107 0070 00000000 		.word	.LANCHOR0
+ 108              		.cfi_endproc
+ 109              	.LFE280:
+ 111              		.section	.text.spi_start,"ax",%progbits
+ 112              		.align	1
+ 113              		.global	spi_start
+ 114              		.syntax unified
+ 115              		.thumb
+ 116              		.thumb_func
+ 117              		.fpu fpv4-sp-d16
+ 119              	spi_start:
+ 120              	.LVL7:
+ 121              	.LFB281:
+  51:drivers/chibios/spi_master.c **** 
+  52:drivers/chibios/spi_master.c **** bool spi_start(pin_t slavePin, bool lsbFirst, uint8_t mode, uint16_t divisor) {
+ 122              		.loc 1 52 79 is_stmt 1 view -0
+ 123              		.cfi_startproc
+ 124              		@ args = 0, pretend = 0, frame = 0
+ 125              		@ frame_needed = 0, uses_anonymous_args = 0
+  53:drivers/chibios/spi_master.c ****     if (currentSlavePin != NO_PIN || slavePin == NO_PIN) {
+ 126              		.loc 1 53 5 view .LVU19
+  52:drivers/chibios/spi_master.c ****     if (currentSlavePin != NO_PIN || slavePin == NO_PIN) {
+ 127              		.loc 1 52 79 is_stmt 0 view .LVU20
+ 128 0000 38B5     		push	{r3, r4, r5, lr}
+ 129              		.cfi_def_cfa_offset 16
+ 130              		.cfi_offset 3, -16
+ 131              		.cfi_offset 4, -12
+ 132              		.cfi_offset 5, -8
+ 133              		.cfi_offset 14, -4
+ 134              		.loc 1 53 25 view .LVU21
+ 135 0002 364D     		ldr	r5, .L29
+ 136              		.loc 1 53 8 view .LVU22
+ 137 0004 2C68     		ldr	r4, [r5]
+ 138 0006 0134     		adds	r4, r4, #1
+ 139 0008 65D1     		bne	.L25
+ 140              		.loc 1 53 35 discriminator 1 view .LVU23
+ 141 000a 441C     		adds	r4, r0, #1
+ 142 000c 63D0     		beq	.L25
+  54:drivers/chibios/spi_master.c ****         return false;
+  55:drivers/chibios/spi_master.c ****     }
+  56:drivers/chibios/spi_master.c **** 
+  57:drivers/chibios/spi_master.c ****     uint16_t roundedDivisor = 2;
+ 143              		.loc 1 57 14 view .LVU24
+ 144 000e 0224     		movs	r4, #2
+ 145              	.L7:
+ 146              	.LVL8:
+  58:drivers/chibios/spi_master.c ****     while (roundedDivisor < divisor) {
+ 147              		.loc 1 58 11 is_stmt 1 view .LVU25
+ 148 0010 9C42     		cmp	r4, r3
+ 149 0012 2FD3     		bcc	.L8
+  59:drivers/chibios/spi_master.c ****         roundedDivisor <<= 1;
+  60:drivers/chibios/spi_master.c ****     }
+  61:drivers/chibios/spi_master.c **** 
+  62:drivers/chibios/spi_master.c ****     if (roundedDivisor < 2 || roundedDivisor > 256) {
+ 150              		.loc 1 62 5 view .LVU26
+ 151              		.loc 1 62 8 is_stmt 0 view .LVU27
+ 152 0014 A31E     		subs	r3, r4, #2
+ 153              	.LVL9:
+ 154              		.loc 1 62 8 view .LVU28
+ 155 0016 FE2B     		cmp	r3, #254
+ 156 0018 5DD8     		bhi	.L25
+  63:drivers/chibios/spi_master.c ****         return false;
+  64:drivers/chibios/spi_master.c ****     }
+  65:drivers/chibios/spi_master.c **** 
+  66:drivers/chibios/spi_master.c **** #if defined(K20x) || defined(KL2x)
+  67:drivers/chibios/spi_master.c ****     spiConfig.tar0 = SPIx_CTARn_FMSZ(7) | SPIx_CTARn_ASC(1);
+  68:drivers/chibios/spi_master.c **** 
+  69:drivers/chibios/spi_master.c ****     if (lsbFirst) {
+  70:drivers/chibios/spi_master.c ****         spiConfig.tar0 |= SPIx_CTARn_LSBFE;
+  71:drivers/chibios/spi_master.c ****     }
+  72:drivers/chibios/spi_master.c **** 
+  73:drivers/chibios/spi_master.c ****     switch (mode) {
+  74:drivers/chibios/spi_master.c ****         case 0:
+  75:drivers/chibios/spi_master.c ****             break;
+  76:drivers/chibios/spi_master.c ****         case 1:
+  77:drivers/chibios/spi_master.c ****             spiConfig.tar0 |= SPIx_CTARn_CPHA;
+  78:drivers/chibios/spi_master.c ****             break;
+  79:drivers/chibios/spi_master.c ****         case 2:
+  80:drivers/chibios/spi_master.c ****             spiConfig.tar0 |= SPIx_CTARn_CPOL;
+  81:drivers/chibios/spi_master.c ****             break;
+  82:drivers/chibios/spi_master.c ****         case 3:
+  83:drivers/chibios/spi_master.c ****             spiConfig.tar0 |= SPIx_CTARn_CPHA | SPIx_CTARn_CPOL;
+  84:drivers/chibios/spi_master.c ****             break;
+  85:drivers/chibios/spi_master.c ****     }
+  86:drivers/chibios/spi_master.c **** 
+  87:drivers/chibios/spi_master.c ****     switch (roundedDivisor) {
+  88:drivers/chibios/spi_master.c ****         case 2:
+  89:drivers/chibios/spi_master.c ****             spiConfig.tar0 |= SPIx_CTARn_BR(0);
+  90:drivers/chibios/spi_master.c ****             break;
+  91:drivers/chibios/spi_master.c ****         case 4:
+  92:drivers/chibios/spi_master.c ****             spiConfig.tar0 |= SPIx_CTARn_BR(1);
+  93:drivers/chibios/spi_master.c ****             break;
+  94:drivers/chibios/spi_master.c ****         case 8:
+  95:drivers/chibios/spi_master.c ****             spiConfig.tar0 |= SPIx_CTARn_BR(3);
+  96:drivers/chibios/spi_master.c ****             break;
+  97:drivers/chibios/spi_master.c ****         case 16:
+  98:drivers/chibios/spi_master.c ****             spiConfig.tar0 |= SPIx_CTARn_BR(4);
+  99:drivers/chibios/spi_master.c ****             break;
+ 100:drivers/chibios/spi_master.c ****         case 32:
+ 101:drivers/chibios/spi_master.c ****             spiConfig.tar0 |= SPIx_CTARn_BR(5);
+ 102:drivers/chibios/spi_master.c ****             break;
+ 103:drivers/chibios/spi_master.c ****         case 64:
+ 104:drivers/chibios/spi_master.c ****             spiConfig.tar0 |= SPIx_CTARn_BR(6);
+ 105:drivers/chibios/spi_master.c ****             break;
+ 106:drivers/chibios/spi_master.c ****         case 128:
+ 107:drivers/chibios/spi_master.c ****             spiConfig.tar0 |= SPIx_CTARn_BR(7);
+ 108:drivers/chibios/spi_master.c ****             break;
+ 109:drivers/chibios/spi_master.c ****         case 256:
+ 110:drivers/chibios/spi_master.c ****             spiConfig.tar0 |= SPIx_CTARn_BR(8);
+ 111:drivers/chibios/spi_master.c ****             break;
+ 112:drivers/chibios/spi_master.c ****     }
+ 113:drivers/chibios/spi_master.c **** #else
+ 114:drivers/chibios/spi_master.c ****     spiConfig.cr1 = 0;
+ 157              		.loc 1 114 5 is_stmt 1 view .LVU29
+ 115:drivers/chibios/spi_master.c **** 
+ 116:drivers/chibios/spi_master.c ****     if (lsbFirst) {
+ 158              		.loc 1 116 5 view .LVU30
+ 159 001a 314B     		ldr	r3, .L29+4
+ 160              		.loc 1 116 8 is_stmt 0 view .LVU31
+ 161 001c 69BB     		cbnz	r1, .L9
+ 162              	.LVL10:
+ 163              	.L26:
+ 117:drivers/chibios/spi_master.c ****         spiConfig.cr1 |= SPI_CR1_LSBFIRST;
+ 118:drivers/chibios/spi_master.c ****     }
+ 119:drivers/chibios/spi_master.c **** 
+ 120:drivers/chibios/spi_master.c ****     switch (mode) {
+ 164              		.loc 1 120 5 view .LVU32
+ 165 001e 022A     		cmp	r2, #2
+ 117:drivers/chibios/spi_master.c ****         spiConfig.cr1 |= SPI_CR1_LSBFIRST;
+ 166              		.loc 1 117 23 view .LVU33
+ 167 0020 1982     		strh	r1, [r3, #16]	@ movhi
+ 168              		.loc 1 120 5 is_stmt 1 view .LVU34
+ 169 0022 2CD0     		beq	.L11
+ 170 0024 032A     		cmp	r2, #3
+ 171 0026 2ED0     		beq	.L12
+ 172 0028 012A     		cmp	r2, #1
+ 173 002a 03D1     		bne	.L13
+ 121:drivers/chibios/spi_master.c ****         case 0:
+ 122:drivers/chibios/spi_master.c ****             break;
+ 123:drivers/chibios/spi_master.c ****         case 1:
+ 124:drivers/chibios/spi_master.c ****             spiConfig.cr1 |= SPI_CR1_CPHA;
+ 174              		.loc 1 124 13 view .LVU35
+ 175              		.loc 1 124 27 is_stmt 0 view .LVU36
+ 176 002c 1A8A     		ldrh	r2, [r3, #16]
+ 177              	.LVL11:
+ 178              		.loc 1 124 27 view .LVU37
+ 179 002e 42F00102 		orr	r2, r2, #1
+ 180              	.L27:
+ 125:drivers/chibios/spi_master.c ****             break;
+ 126:drivers/chibios/spi_master.c ****         case 2:
+ 127:drivers/chibios/spi_master.c ****             spiConfig.cr1 |= SPI_CR1_CPOL;
+ 128:drivers/chibios/spi_master.c ****             break;
+ 129:drivers/chibios/spi_master.c ****         case 3:
+ 130:drivers/chibios/spi_master.c ****             spiConfig.cr1 |= SPI_CR1_CPHA | SPI_CR1_CPOL;
+ 181              		.loc 1 130 27 view .LVU38
+ 182 0032 1A82     		strh	r2, [r3, #16]	@ movhi
+ 131:drivers/chibios/spi_master.c ****             break;
+ 183              		.loc 1 131 13 is_stmt 1 view .LVU39
+ 184              	.L13:
+ 132:drivers/chibios/spi_master.c ****     }
+ 133:drivers/chibios/spi_master.c **** 
+ 134:drivers/chibios/spi_master.c ****     switch (roundedDivisor) {
+ 185              		.loc 1 134 5 view .LVU40
+ 186 0034 202C     		cmp	r4, #32
+ 187 0036 42D0     		beq	.L14
+ 188 0038 29D8     		bhi	.L15
+ 189 003a 082C     		cmp	r4, #8
+ 190 003c 37D0     		beq	.L16
+ 191 003e 102C     		cmp	r4, #16
+ 192 0040 39D0     		beq	.L17
+ 193 0042 042C     		cmp	r4, #4
+ 194 0044 2ED0     		beq	.L18
+ 195              	.L19:
+ 135:drivers/chibios/spi_master.c ****         case 2:
+ 136:drivers/chibios/spi_master.c ****             break;
+ 137:drivers/chibios/spi_master.c ****         case 4:
+ 138:drivers/chibios/spi_master.c ****             spiConfig.cr1 |= SPI_CR1_BR_0;
+ 139:drivers/chibios/spi_master.c ****             break;
+ 140:drivers/chibios/spi_master.c ****         case 8:
+ 141:drivers/chibios/spi_master.c ****             spiConfig.cr1 |= SPI_CR1_BR_1;
+ 142:drivers/chibios/spi_master.c ****             break;
+ 143:drivers/chibios/spi_master.c ****         case 16:
+ 144:drivers/chibios/spi_master.c ****             spiConfig.cr1 |= SPI_CR1_BR_1 | SPI_CR1_BR_0;
+ 145:drivers/chibios/spi_master.c ****             break;
+ 146:drivers/chibios/spi_master.c ****         case 32:
+ 147:drivers/chibios/spi_master.c ****             spiConfig.cr1 |= SPI_CR1_BR_2;
+ 148:drivers/chibios/spi_master.c ****             break;
+ 149:drivers/chibios/spi_master.c ****         case 64:
+ 150:drivers/chibios/spi_master.c ****             spiConfig.cr1 |= SPI_CR1_BR_2 | SPI_CR1_BR_0;
+ 151:drivers/chibios/spi_master.c ****             break;
+ 152:drivers/chibios/spi_master.c ****         case 128:
+ 153:drivers/chibios/spi_master.c ****             spiConfig.cr1 |= SPI_CR1_BR_2 | SPI_CR1_BR_1;
+ 154:drivers/chibios/spi_master.c ****             break;
+ 155:drivers/chibios/spi_master.c ****         case 256:
+ 156:drivers/chibios/spi_master.c ****             spiConfig.cr1 |= SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0;
+ 157:drivers/chibios/spi_master.c ****             break;
+ 158:drivers/chibios/spi_master.c ****     }
+ 159:drivers/chibios/spi_master.c **** #endif
+ 160:drivers/chibios/spi_master.c **** 
+ 161:drivers/chibios/spi_master.c ****     currentSlavePin  = slavePin;
+ 196              		.loc 1 161 5 view .LVU41
+ 197              		.loc 1 161 22 is_stmt 0 view .LVU42
+ 198 0046 2860     		str	r0, [r5]
+ 162:drivers/chibios/spi_master.c ****     spiConfig.ssport = PAL_PORT(slavePin);
+ 199              		.loc 1 162 5 is_stmt 1 view .LVU43
+ 163:drivers/chibios/spi_master.c ****     spiConfig.sspad  = PAL_PAD(slavePin);
+ 200              		.loc 1 163 24 is_stmt 0 view .LVU44
+ 201 0048 00F00F01 		and	r1, r0, #15
+ 164:drivers/chibios/spi_master.c **** 
+ 165:drivers/chibios/spi_master.c ****     setPinOutput(slavePin);
+ 202              		.loc 1 165 5 view .LVU45
+ 203 004c 0124     		movs	r4, #1
+ 204              	.LVL12:
+ 162:drivers/chibios/spi_master.c ****     spiConfig.sspad  = PAL_PAD(slavePin);
+ 205              		.loc 1 162 24 view .LVU46
+ 206 004e 20F00F05 		bic	r5, r0, #15
+ 163:drivers/chibios/spi_master.c ****     spiConfig.sspad  = PAL_PAD(slavePin);
+ 207              		.loc 1 163 22 view .LVU47
+ 208 0052 D960     		str	r1, [r3, #12]
+ 209              		.loc 1 165 5 view .LVU48
+ 210 0054 2246     		mov	r2, r4
+ 211 0056 04FA01F1 		lsl	r1, r4, r1
+ 212 005a 2846     		mov	r0, r5
+ 213              	.LVL13:
+ 162:drivers/chibios/spi_master.c ****     spiConfig.sspad  = PAL_PAD(slavePin);
+ 214              		.loc 1 162 22 view .LVU49
+ 215 005c 9D60     		str	r5, [r3, #8]
+ 163:drivers/chibios/spi_master.c ****     spiConfig.sspad  = PAL_PAD(slavePin);
+ 216              		.loc 1 163 5 is_stmt 1 view .LVU50
+ 217              		.loc 1 165 5 view .LVU51
+ 218 005e FFF7FEFF 		bl	_pal_lld_setgroupmode
+ 219              	.LVL14:
+ 166:drivers/chibios/spi_master.c ****     spiStart(&SPI_DRIVER, &spiConfig);
+ 220              		.loc 1 166 5 view .LVU52
+ 221 0062 1F49     		ldr	r1, .L29+4
+ 222 0064 1F48     		ldr	r0, .L29+8
+ 223 0066 FFF7FEFF 		bl	spiStart
+ 224              	.LVL15:
+ 167:drivers/chibios/spi_master.c ****     spiSelect(&SPI_DRIVER);
+ 225              		.loc 1 167 5 view .LVU53
+ 226 006a 1E48     		ldr	r0, .L29+8
+ 227 006c FFF7FEFF 		bl	spiSelect
+ 228              	.LVL16:
+ 168:drivers/chibios/spi_master.c **** 
+ 169:drivers/chibios/spi_master.c ****     return true;
+ 229              		.loc 1 169 5 view .LVU54
+ 230              		.loc 1 169 12 is_stmt 0 view .LVU55
+ 231 0070 2046     		mov	r0, r4
+ 232              	.L6:
+ 170:drivers/chibios/spi_master.c **** }
+ 233              		.loc 1 170 1 view .LVU56
+ 234 0072 38BD     		pop	{r3, r4, r5, pc}
+ 235              	.LVL17:
+ 236              	.L8:
+  59:drivers/chibios/spi_master.c ****     }
+ 237              		.loc 1 59 9 is_stmt 1 view .LVU57
+  59:drivers/chibios/spi_master.c ****     }
+ 238              		.loc 1 59 24 is_stmt 0 view .LVU58
+ 239 0074 6400     		lsls	r4, r4, #1
+ 240              	.LVL18:
+  59:drivers/chibios/spi_master.c ****     }
+ 241              		.loc 1 59 24 view .LVU59
+ 242 0076 A4B2     		uxth	r4, r4
+ 243              	.LVL19:
+  59:drivers/chibios/spi_master.c ****     }
+ 244              		.loc 1 59 24 view .LVU60
+ 245 0078 CAE7     		b	.L7
+ 246              	.LVL20:
+ 247              	.L9:
+ 117:drivers/chibios/spi_master.c ****     }
+ 248              		.loc 1 117 9 is_stmt 1 view .LVU61
+ 117:drivers/chibios/spi_master.c ****     }
+ 249              		.loc 1 117 23 is_stmt 0 view .LVU62
+ 250 007a 8021     		movs	r1, #128
+ 251              	.LVL21:
+ 117:drivers/chibios/spi_master.c ****     }
+ 252              		.loc 1 117 23 view .LVU63
+ 253 007c CFE7     		b	.L26
+ 254              	.L11:
+ 127:drivers/chibios/spi_master.c ****             break;
+ 255              		.loc 1 127 13 is_stmt 1 view .LVU64
+ 127:drivers/chibios/spi_master.c ****             break;
+ 256              		.loc 1 127 27 is_stmt 0 view .LVU65
+ 257 007e 1A8A     		ldrh	r2, [r3, #16]
+ 258              	.LVL22:
+ 127:drivers/chibios/spi_master.c ****             break;
+ 259              		.loc 1 127 27 view .LVU66
+ 260 0080 42F00202 		orr	r2, r2, #2
+ 261 0084 D5E7     		b	.L27
+ 262              	.LVL23:
+ 263              	.L12:
+ 130:drivers/chibios/spi_master.c ****             break;
+ 264              		.loc 1 130 13 is_stmt 1 view .LVU67
+ 130:drivers/chibios/spi_master.c ****             break;
+ 265              		.loc 1 130 27 is_stmt 0 view .LVU68
+ 266 0086 1A8A     		ldrh	r2, [r3, #16]
+ 267              	.LVL24:
+ 130:drivers/chibios/spi_master.c ****             break;
+ 268              		.loc 1 130 27 view .LVU69
+ 269 0088 42F00302 		orr	r2, r2, #3
+ 270 008c D1E7     		b	.L27
+ 271              	.L15:
+ 134:drivers/chibios/spi_master.c ****         case 2:
+ 272              		.loc 1 134 5 view .LVU70
+ 273 008e 802C     		cmp	r4, #128
+ 274 0090 19D0     		beq	.L20
+ 275 0092 B4F5807F 		cmp	r4, #256
+ 276 0096 1AD0     		beq	.L21
+ 277 0098 402C     		cmp	r4, #64
+ 278 009a D4D1     		bne	.L19
+ 150:drivers/chibios/spi_master.c ****             break;
+ 279              		.loc 1 150 13 is_stmt 1 view .LVU71
+ 150:drivers/chibios/spi_master.c ****             break;
+ 280              		.loc 1 150 27 is_stmt 0 view .LVU72
+ 281 009c 1A8A     		ldrh	r2, [r3, #16]
+ 282 009e 42F02802 		orr	r2, r2, #40
+ 283 00a2 02E0     		b	.L28
+ 284              	.L18:
+ 138:drivers/chibios/spi_master.c ****             break;
+ 285              		.loc 1 138 13 is_stmt 1 view .LVU73
+ 138:drivers/chibios/spi_master.c ****             break;
+ 286              		.loc 1 138 27 is_stmt 0 view .LVU74
+ 287 00a4 1A8A     		ldrh	r2, [r3, #16]
+ 288 00a6 42F00802 		orr	r2, r2, #8
+ 289              	.L28:
+ 156:drivers/chibios/spi_master.c ****             break;
+ 290              		.loc 1 156 27 view .LVU75
+ 291 00aa 1A82     		strh	r2, [r3, #16]	@ movhi
+ 157:drivers/chibios/spi_master.c ****     }
+ 292              		.loc 1 157 13 is_stmt 1 view .LVU76
+ 293 00ac CBE7     		b	.L19
+ 294              	.L16:
+ 141:drivers/chibios/spi_master.c ****             break;
+ 295              		.loc 1 141 13 view .LVU77
+ 141:drivers/chibios/spi_master.c ****             break;
+ 296              		.loc 1 141 27 is_stmt 0 view .LVU78
+ 297 00ae 1A8A     		ldrh	r2, [r3, #16]
+ 298 00b0 42F01002 		orr	r2, r2, #16
+ 299 00b4 F9E7     		b	.L28
+ 300              	.L17:
+ 144:drivers/chibios/spi_master.c ****             break;
+ 301              		.loc 1 144 13 is_stmt 1 view .LVU79
+ 144:drivers/chibios/spi_master.c ****             break;
+ 302              		.loc 1 144 27 is_stmt 0 view .LVU80
+ 303 00b6 1A8A     		ldrh	r2, [r3, #16]
+ 304 00b8 42F01802 		orr	r2, r2, #24
+ 305 00bc F5E7     		b	.L28
+ 306              	.L14:
+ 147:drivers/chibios/spi_master.c ****             break;
+ 307              		.loc 1 147 13 is_stmt 1 view .LVU81
+ 147:drivers/chibios/spi_master.c ****             break;
+ 308              		.loc 1 147 27 is_stmt 0 view .LVU82
+ 309 00be 1A8A     		ldrh	r2, [r3, #16]
+ 310 00c0 42F02002 		orr	r2, r2, #32
+ 311 00c4 F1E7     		b	.L28
+ 312              	.L20:
+ 153:drivers/chibios/spi_master.c ****             break;
+ 313              		.loc 1 153 13 is_stmt 1 view .LVU83
+ 153:drivers/chibios/spi_master.c ****             break;
+ 314              		.loc 1 153 27 is_stmt 0 view .LVU84
+ 315 00c6 1A8A     		ldrh	r2, [r3, #16]
+ 316 00c8 42F03002 		orr	r2, r2, #48
+ 317 00cc EDE7     		b	.L28
+ 318              	.L21:
+ 156:drivers/chibios/spi_master.c ****             break;
+ 319              		.loc 1 156 13 is_stmt 1 view .LVU85
+ 156:drivers/chibios/spi_master.c ****             break;
+ 320              		.loc 1 156 27 is_stmt 0 view .LVU86
+ 321 00ce 1A8A     		ldrh	r2, [r3, #16]
+ 322 00d0 42F03802 		orr	r2, r2, #56
+ 323 00d4 E9E7     		b	.L28
+ 324              	.LVL25:
+ 325              	.L25:
+  54:drivers/chibios/spi_master.c ****     }
+ 326              		.loc 1 54 16 view .LVU87
+ 327 00d6 0020     		movs	r0, #0
+ 328              	.LVL26:
+  54:drivers/chibios/spi_master.c ****     }
+ 329              		.loc 1 54 16 view .LVU88
+ 330 00d8 CBE7     		b	.L6
+ 331              	.L30:
+ 332 00da 00BF     		.align	2
+ 333              	.L29:
+ 334 00dc 00000000 		.word	.LANCHOR1
+ 335 00e0 00000000 		.word	.LANCHOR2
+ 336 00e4 00000000 		.word	SPID1
+ 337              		.cfi_endproc
+ 338              	.LFE281:
+ 340              		.section	.text.spi_write,"ax",%progbits
+ 341              		.align	1
+ 342              		.global	spi_write
+ 343              		.syntax unified
+ 344              		.thumb
+ 345              		.thumb_func
+ 346              		.fpu fpv4-sp-d16
+ 348              	spi_write:
+ 349              	.LVL27:
+ 350              	.LFB282:
+ 171:drivers/chibios/spi_master.c **** 
+ 172:drivers/chibios/spi_master.c **** spi_status_t spi_write(uint8_t data) {
+ 351              		.loc 1 172 38 is_stmt 1 view -0
+ 352              		.cfi_startproc
+ 353              		@ args = 0, pretend = 0, frame = 16
+ 354              		@ frame_needed = 0, uses_anonymous_args = 0
+ 173:drivers/chibios/spi_master.c ****     uint8_t rxData;
+ 355              		.loc 1 173 5 view .LVU90
+ 174:drivers/chibios/spi_master.c ****     spiExchange(&SPI_DRIVER, 1, &data, &rxData);
+ 356              		.loc 1 174 5 view .LVU91
+ 172:drivers/chibios/spi_master.c ****     uint8_t rxData;
+ 357              		.loc 1 172 38 is_stmt 0 view .LVU92
+ 358 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 359              		.cfi_def_cfa_offset 24
+ 360              		.cfi_offset 14, -4
+ 361              		.loc 1 174 5 view .LVU93
+ 362 0002 0121     		movs	r1, #1
+ 172:drivers/chibios/spi_master.c ****     uint8_t rxData;
+ 363              		.loc 1 172 38 view .LVU94
+ 364 0004 8DF80700 		strb	r0, [sp, #7]
+ 365              		.loc 1 174 5 view .LVU95
+ 366 0008 0DF10F03 		add	r3, sp, #15
+ 367 000c 0448     		ldr	r0, .L32
+ 368              	.LVL28:
+ 369              		.loc 1 174 5 view .LVU96
+ 370 000e 0DF10702 		add	r2, sp, #7
+ 371              	.LVL29:
+ 372              		.loc 1 174 5 view .LVU97
+ 373 0012 FFF7FEFF 		bl	spiExchange
+ 374              	.LVL30:
+ 175:drivers/chibios/spi_master.c **** 
+ 176:drivers/chibios/spi_master.c ****     return rxData;
+ 375              		.loc 1 176 5 is_stmt 1 view .LVU98
+ 177:drivers/chibios/spi_master.c **** }
+ 376              		.loc 1 177 1 is_stmt 0 view .LVU99
+ 377 0016 9DF80F00 		ldrb	r0, [sp, #15]	@ zero_extendqisi2
+ 378 001a 05B0     		add	sp, sp, #20
+ 379              		.cfi_def_cfa_offset 4
+ 380              		@ sp needed
+ 381 001c 5DF804FB 		ldr	pc, [sp], #4
+ 382              	.L33:
+ 383              		.align	2
+ 384              	.L32:
+ 385 0020 00000000 		.word	SPID1
+ 386              		.cfi_endproc
+ 387              	.LFE282:
+ 389              		.section	.text.spi_read,"ax",%progbits
+ 390              		.align	1
+ 391              		.global	spi_read
+ 392              		.syntax unified
+ 393              		.thumb
+ 394              		.thumb_func
+ 395              		.fpu fpv4-sp-d16
+ 397              	spi_read:
+ 398              	.LFB283:
+ 178:drivers/chibios/spi_master.c **** 
+ 179:drivers/chibios/spi_master.c **** spi_status_t spi_read(void) {
+ 399              		.loc 1 179 29 is_stmt 1 view -0
+ 400              		.cfi_startproc
+ 401              		@ args = 0, pretend = 0, frame = 8
+ 402              		@ frame_needed = 0, uses_anonymous_args = 0
+ 180:drivers/chibios/spi_master.c ****     uint8_t data = 0;
+ 403              		.loc 1 180 5 view .LVU101
+ 179:drivers/chibios/spi_master.c ****     uint8_t data = 0;
+ 404              		.loc 1 179 29 is_stmt 0 view .LVU102
+ 405 0000 07B5     		push	{r0, r1, r2, lr}
+ 406              		.cfi_def_cfa_offset 16
+ 407              		.cfi_offset 14, -4
+ 408              		.loc 1 180 13 view .LVU103
+ 409 0002 0023     		movs	r3, #0
+ 181:drivers/chibios/spi_master.c ****     spiReceive(&SPI_DRIVER, 1, &data);
+ 410              		.loc 1 181 5 view .LVU104
+ 411 0004 0648     		ldr	r0, .L35
+ 180:drivers/chibios/spi_master.c ****     uint8_t data = 0;
+ 412              		.loc 1 180 13 view .LVU105
+ 413 0006 8DF80730 		strb	r3, [sp, #7]
+ 414              		.loc 1 181 5 is_stmt 1 view .LVU106
+ 415 000a 0DF10702 		add	r2, sp, #7
+ 416 000e 0121     		movs	r1, #1
+ 417 0010 FFF7FEFF 		bl	spiReceive
+ 418              	.LVL31:
+ 182:drivers/chibios/spi_master.c **** 
+ 183:drivers/chibios/spi_master.c ****     return data;
+ 419              		.loc 1 183 5 view .LVU107
+ 184:drivers/chibios/spi_master.c **** }
+ 420              		.loc 1 184 1 is_stmt 0 view .LVU108
+ 421 0014 9DF80700 		ldrb	r0, [sp, #7]	@ zero_extendqisi2
+ 422 0018 03B0     		add	sp, sp, #12
+ 423              		.cfi_def_cfa_offset 4
+ 424              		@ sp needed
+ 425 001a 5DF804FB 		ldr	pc, [sp], #4
+ 426              	.L36:
+ 427 001e 00BF     		.align	2
+ 428              	.L35:
+ 429 0020 00000000 		.word	SPID1
+ 430              		.cfi_endproc
+ 431              	.LFE283:
+ 433              		.section	.text.spi_transmit,"ax",%progbits
+ 434              		.align	1
+ 435              		.global	spi_transmit
+ 436              		.syntax unified
+ 437              		.thumb
+ 438              		.thumb_func
+ 439              		.fpu fpv4-sp-d16
+ 441              	spi_transmit:
+ 442              	.LVL32:
+ 443              	.LFB284:
+ 185:drivers/chibios/spi_master.c **** 
+ 186:drivers/chibios/spi_master.c **** spi_status_t spi_transmit(const uint8_t *data, uint16_t length) {
+ 444              		.loc 1 186 65 is_stmt 1 view -0
+ 445              		.cfi_startproc
+ 446              		@ args = 0, pretend = 0, frame = 0
+ 447              		@ frame_needed = 0, uses_anonymous_args = 0
+ 187:drivers/chibios/spi_master.c ****     spiSend(&SPI_DRIVER, length, data);
+ 448              		.loc 1 187 5 view .LVU110
+ 186:drivers/chibios/spi_master.c ****     spiSend(&SPI_DRIVER, length, data);
+ 449              		.loc 1 186 65 is_stmt 0 view .LVU111
+ 450 0000 08B5     		push	{r3, lr}
+ 451              		.cfi_def_cfa_offset 8
+ 452              		.cfi_offset 3, -8
+ 453              		.cfi_offset 14, -4
+ 186:drivers/chibios/spi_master.c ****     spiSend(&SPI_DRIVER, length, data);
+ 454              		.loc 1 186 65 view .LVU112
+ 455 0002 0246     		mov	r2, r0
+ 456              		.loc 1 187 5 view .LVU113
+ 457 0004 0248     		ldr	r0, .L38
+ 458              	.LVL33:
+ 459              		.loc 1 187 5 view .LVU114
+ 460 0006 FFF7FEFF 		bl	spiSend
+ 461              	.LVL34:
+ 188:drivers/chibios/spi_master.c ****     return SPI_STATUS_SUCCESS;
+ 462              		.loc 1 188 5 is_stmt 1 view .LVU115
+ 189:drivers/chibios/spi_master.c **** }
+ 463              		.loc 1 189 1 is_stmt 0 view .LVU116
+ 464 000a 0020     		movs	r0, #0
+ 465 000c 08BD     		pop	{r3, pc}
+ 466              	.L39:
+ 467 000e 00BF     		.align	2
+ 468              	.L38:
+ 469 0010 00000000 		.word	SPID1
+ 470              		.cfi_endproc
+ 471              	.LFE284:
+ 473              		.section	.text.spi_receive,"ax",%progbits
+ 474              		.align	1
+ 475              		.global	spi_receive
+ 476              		.syntax unified
+ 477              		.thumb
+ 478              		.thumb_func
+ 479              		.fpu fpv4-sp-d16
+ 481              	spi_receive:
+ 482              	.LVL35:
+ 483              	.LFB285:
+ 190:drivers/chibios/spi_master.c **** 
+ 191:drivers/chibios/spi_master.c **** spi_status_t spi_receive(uint8_t *data, uint16_t length) {
+ 484              		.loc 1 191 58 is_stmt 1 view -0
+ 485              		.cfi_startproc
+ 486              		@ args = 0, pretend = 0, frame = 0
+ 487              		@ frame_needed = 0, uses_anonymous_args = 0
+ 192:drivers/chibios/spi_master.c ****     spiReceive(&SPI_DRIVER, length, data);
+ 488              		.loc 1 192 5 view .LVU118
+ 191:drivers/chibios/spi_master.c ****     spiReceive(&SPI_DRIVER, length, data);
+ 489              		.loc 1 191 58 is_stmt 0 view .LVU119
+ 490 0000 08B5     		push	{r3, lr}
+ 491              		.cfi_def_cfa_offset 8
+ 492              		.cfi_offset 3, -8
+ 493              		.cfi_offset 14, -4
+ 191:drivers/chibios/spi_master.c ****     spiReceive(&SPI_DRIVER, length, data);
+ 494              		.loc 1 191 58 view .LVU120
+ 495 0002 0246     		mov	r2, r0
+ 496              		.loc 1 192 5 view .LVU121
+ 497 0004 0248     		ldr	r0, .L41
+ 498              	.LVL36:
+ 499              		.loc 1 192 5 view .LVU122
+ 500 0006 FFF7FEFF 		bl	spiReceive
+ 501              	.LVL37:
+ 193:drivers/chibios/spi_master.c ****     return SPI_STATUS_SUCCESS;
+ 502              		.loc 1 193 5 is_stmt 1 view .LVU123
+ 194:drivers/chibios/spi_master.c **** }
+ 503              		.loc 1 194 1 is_stmt 0 view .LVU124
+ 504 000a 0020     		movs	r0, #0
+ 505 000c 08BD     		pop	{r3, pc}
+ 506              	.L42:
+ 507 000e 00BF     		.align	2
+ 508              	.L41:
+ 509 0010 00000000 		.word	SPID1
+ 510              		.cfi_endproc
+ 511              	.LFE285:
+ 513              		.section	.text.spi_stop,"ax",%progbits
+ 514              		.align	1
+ 515              		.global	spi_stop
+ 516              		.syntax unified
+ 517              		.thumb
+ 518              		.thumb_func
+ 519              		.fpu fpv4-sp-d16
+ 521              	spi_stop:
+ 522              	.LFB286:
+ 195:drivers/chibios/spi_master.c **** 
+ 196:drivers/chibios/spi_master.c **** void spi_stop(void) {
+ 523              		.loc 1 196 21 is_stmt 1 view -0
+ 524              		.cfi_startproc
+ 525              		@ args = 0, pretend = 0, frame = 0
+ 526              		@ frame_needed = 0, uses_anonymous_args = 0
+ 197:drivers/chibios/spi_master.c ****     if (currentSlavePin != NO_PIN) {
+ 527              		.loc 1 197 5 view .LVU126
+ 196:drivers/chibios/spi_master.c ****     if (currentSlavePin != NO_PIN) {
+ 528              		.loc 1 196 21 is_stmt 0 view .LVU127
+ 529 0000 10B5     		push	{r4, lr}
+ 530              		.cfi_def_cfa_offset 8
+ 531              		.cfi_offset 4, -8
+ 532              		.cfi_offset 14, -4
+ 533              		.loc 1 197 25 view .LVU128
+ 534 0002 074C     		ldr	r4, .L48
+ 535              		.loc 1 197 8 view .LVU129
+ 536 0004 2368     		ldr	r3, [r4]
+ 537 0006 0133     		adds	r3, r3, #1
+ 538 0008 08D0     		beq	.L43
+ 198:drivers/chibios/spi_master.c ****         spiUnselect(&SPI_DRIVER);
+ 539              		.loc 1 198 9 is_stmt 1 view .LVU130
+ 540 000a 0648     		ldr	r0, .L48+4
+ 541 000c FFF7FEFF 		bl	spiUnselect
+ 542              	.LVL38:
+ 199:drivers/chibios/spi_master.c ****         spiStop(&SPI_DRIVER);
+ 543              		.loc 1 199 9 view .LVU131
+ 544 0010 0448     		ldr	r0, .L48+4
+ 545 0012 FFF7FEFF 		bl	spiStop
+ 546              	.LVL39:
+ 200:drivers/chibios/spi_master.c ****         currentSlavePin = NO_PIN;
+ 547              		.loc 1 200 9 view .LVU132
+ 548              		.loc 1 200 25 is_stmt 0 view .LVU133
+ 549 0016 4FF0FF33 		mov	r3, #-1
+ 550 001a 2360     		str	r3, [r4]
+ 551              	.L43:
+ 201:drivers/chibios/spi_master.c ****     }
+ 202:drivers/chibios/spi_master.c **** }
+ 552              		.loc 1 202 1 view .LVU134
+ 553 001c 10BD     		pop	{r4, pc}
+ 554              	.L49:
+ 555 001e 00BF     		.align	2
+ 556              	.L48:
+ 557 0020 00000000 		.word	.LANCHOR1
+ 558 0024 00000000 		.word	SPID1
+ 559              		.cfi_endproc
+ 560              	.LFE286:
+ 562              		.section	.bss.is_initialised.0,"aw",%nobits
+ 563              		.set	.LANCHOR0,. + 0
+ 566              	is_initialised.0:
+ 567 0000 00       		.space	1
+ 568              		.section	.bss.spiConfig,"aw",%nobits
+ 569              		.align	2
+ 570              		.set	.LANCHOR2,. + 0
+ 573              	spiConfig:
+ 574 0000 00000000 		.space	20
+ 574      00000000 
+ 574      00000000 
+ 574      00000000 
+ 574      00000000 
+ 575              		.section	.data.currentSlavePin,"aw"
+ 576              		.align	2
+ 577              		.set	.LANCHOR1,. + 0
+ 580              	currentSlavePin:
+ 581 0000 FFFFFFFF 		.word	-1
+ 582              		.text
+ 583              	.Letext0:
+ 584              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 585              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 586              		.file 4 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\stdint.h"
+ 587              		.file 5 "./lib/chibios/os/common/ports/ARMCMx/compilers/GCC/chtypes.h"
+ 588              		.file 6 "./lib/chibios/os/rt/include/chsystypes.h"
+ 589              		.file 7 "./lib/chibios/os/rt/include/chschd.h"
+ 590              		.file 8 "./lib/chibios/os/rt/include/chtime.h"
+ 591              		.file 9 "./lib/chibios/os/common/ext/ST/STM32F3xx/stm32f303xc.h"
+ 592              		.file 10 "./lib/chibios/os/common/ports/ARMCMx/chcore_v7m.h"
+ 593              		.file 11 "./lib/chibios/os/rt/include/chsem.h"
+ 594              		.file 12 "./lib/chibios/os/rt/include/chmtx.h"
+ 595              		.file 13 "./lib/chibios/os/hal/ports/STM32/LLD/DMAv1/stm32_dma.h"
+ 596              		.file 14 "./lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/stm32_gpio.h"
+ 597              		.file 15 "./lib/chibios/os/hal/ports/STM32/LLD/GPIOv2/hal_pal_lld.h"
+ 598              		.file 16 "./lib/chibios/os/hal/include/hal_spi.h"
+ 599              		.file 17 "tmk_core/common/chibios/gpio.h"
+ 600              		.file 18 "drivers/chibios/spi_master.h"
+ 601              		.file 19 "./lib/chibios/os/hal/ports/STM32/LLD/SPIv2/hal_spi_lld.h"
+ 602              		.file 20 "./lib/chibios/os/rt/include/chthreads.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 spi_master.c
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:18     .text.spi_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:26     .text.spi_init:0000000000000000 spi_init
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:107    .text.spi_init:0000000000000070 $d
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:112    .text.spi_start:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:119    .text.spi_start:0000000000000000 spi_start
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:334    .text.spi_start:00000000000000dc $d
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:341    .text.spi_write:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:348    .text.spi_write:0000000000000000 spi_write
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:385    .text.spi_write:0000000000000020 $d
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:390    .text.spi_read:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:397    .text.spi_read:0000000000000000 spi_read
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:429    .text.spi_read:0000000000000020 $d
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:434    .text.spi_transmit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:441    .text.spi_transmit:0000000000000000 spi_transmit
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:469    .text.spi_transmit:0000000000000010 $d
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:474    .text.spi_receive:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:481    .text.spi_receive:0000000000000000 spi_receive
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:509    .text.spi_receive:0000000000000010 $d
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:514    .text.spi_stop:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:521    .text.spi_stop:0000000000000000 spi_stop
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:557    .text.spi_stop:0000000000000020 $d
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:566    .bss.is_initialised.0:0000000000000000 is_initialised.0
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:567    .bss.is_initialised.0:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:569    .bss.spiConfig:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:573    .bss.spiConfig:0000000000000000 spiConfig
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:576    .data.currentSlavePin:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccPhxKZO.s:580    .data.currentSlavePin:0000000000000000 currentSlavePin
+
+UNDEFINED SYMBOLS
+_pal_lld_setgroupmode
+chThdSleep
+spiStart
+spiSelect
+SPID1
+spiExchange
+spiReceive
+spiSend
+spiUnselect
+spiStop
