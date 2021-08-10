@@ -234,9 +234,9 @@ void matrix_scan_user(void) {
             break;
         }
     }
-    if  (clockwise && Shift_Pressed) tap_code(KC_VOLU);      //210810 Always Volume control with L,R shift
+    if (clockwise && Shift_Pressed) tap_code(KC_VOLU);      //210810 Always Volume control with L,R shift
     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
-    else if  (clockwise && Caps_Pressed) tap_code(KC_BRIU);  //210810 Always Brightness control with L,R CapsLock
+    else if (clockwise && Caps_Pressed) tap_code(KC_BRIU);  //210810 Always Brightness control with L,R CapsLock
     else if (!clockwise && Caps_Pressed) tap_code(KC_BRID);
     return true;
 }
