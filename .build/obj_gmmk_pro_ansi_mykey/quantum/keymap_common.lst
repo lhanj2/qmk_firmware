@@ -420,9 +420,9 @@
  215 0048 F4D8     		bhi	.L16
  216 004a E728     		cmp	r0, #231
  217 004c F2D9     		bls	.L16
- 218 004e A0F1F003 		sub	r3, r0, #240
+ 218 004e A0F1ED03 		sub	r3, r0, #237
  219 0052 9BB2     		uxth	r3, r3
- 220 0054 0F2B     		cmp	r3, #15
+ 220 0054 122B     		cmp	r3, #18
  221 0056 F1D8     		bhi	.L36
   72:quantum/keymap_common.c ****             break;
  222              		.loc 1 72 13 is_stmt 1 view .LVU36
@@ -1151,24 +1151,24 @@
  606              		.file 13 "quantum/sequencer/sequencer.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keymap_common.c
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:18     .text.action_get_macro:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:26     .text.action_get_macro:0000000000000000 action_get_macro
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:45     .text.action_function:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:52     .text.action_function:0000000000000000 action_function
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:66     .text.keymap_key_to_keycode:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:73     .text.keymap_key_to_keycode:0000000000000000 keymap_key_to_keycode
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:105    .text.keymap_key_to_keycode:000000000000001c $d
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:110    .text.keymap_function_id_to_action:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:117    .text.keymap_function_id_to_action:0000000000000000 keymap_function_id_to_action
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:135    .text.keymap_function_id_to_action:0000000000000008 $d
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:593    .rodata.fn_actions:0000000000000000 fn_actions
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:140    .text.action_for_keycode:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:147    .text.action_for_keycode:0000000000000000 action_for_keycode
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:514    .text.action_for_keycode:0000000000000194 $d
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:519    .text.action_for_key:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:526    .text.action_for_key:0000000000000000 action_for_key
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:561    .rodata.CSWTCH.7:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccvI4JYc.s:565    .rodata.CSWTCH.7:0000000000000000 CSWTCH.7
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:18     .text.action_get_macro:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:26     .text.action_get_macro:0000000000000000 action_get_macro
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:45     .text.action_function:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:52     .text.action_function:0000000000000000 action_function
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:66     .text.keymap_key_to_keycode:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:73     .text.keymap_key_to_keycode:0000000000000000 keymap_key_to_keycode
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:105    .text.keymap_key_to_keycode:000000000000001c $d
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:110    .text.keymap_function_id_to_action:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:117    .text.keymap_function_id_to_action:0000000000000000 keymap_function_id_to_action
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:135    .text.keymap_function_id_to_action:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:593    .rodata.fn_actions:0000000000000000 fn_actions
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:140    .text.action_for_keycode:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:147    .text.action_for_keycode:0000000000000000 action_for_keycode
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:514    .text.action_for_keycode:0000000000000194 $d
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:519    .text.action_for_key:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:526    .text.action_for_key:0000000000000000 action_for_key
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:561    .rodata.CSWTCH.7:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\cczBOo0I.s:565    .rodata.CSWTCH.7:0000000000000000 CSWTCH.7
 
 UNDEFINED SYMBOLS
 keymaps

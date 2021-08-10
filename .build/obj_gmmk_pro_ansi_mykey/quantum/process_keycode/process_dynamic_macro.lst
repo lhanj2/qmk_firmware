@@ -323,7 +323,7 @@
  248              		.loc 1 73 5 discriminator 7 view .LVU42
  249              		.loc 1 73 19 is_stmt 0 discriminator 7 view .LVU43
  250 0020 0E4F     		ldr	r7, .L22+8
- 251 0022 97F80080 		ldrb	r8, [r7]	@ zero_extendqisi2
+ 251 0022 D7F80080 		ldr	r8, [r7]
  252              	.LVL13:
   74:quantum/process_keycode/process_dynamic_macro.c **** 
   75:quantum/process_keycode/process_dynamic_macro.c ****     clear_keyboard();
@@ -361,7 +361,7 @@
  271 003a 2846     		mov	r0, r5
   85:quantum/process_keycode/process_dynamic_macro.c **** 
  272              		.loc 1 85 17 view .LVU52
- 273 003c 87F80080 		strb	r8, [r7]
+ 273 003c C7F80080 		str	r8, [r7]
  274              		.loc 1 87 5 is_stmt 1 view .LVU53
  275 0040 FFF7FEFF 		bl	dynamic_macro_play_user
  276              	.LVL17:
@@ -866,7 +866,7 @@
  613 000c A0F5BA40 		sub	r0, r0, #23808
  614              	.LVL44:
  615              		.loc 1 199 13 is_stmt 0 view .LVU139
- 616 0010 0338     		subs	r0, r0, #3
+ 616 0010 0438     		subs	r0, r0, #4
  617 0012 0428     		cmp	r0, #4
  618 0014 47D8     		bhi	.L68
  619 0016 DFE800F0 		tbb	[pc, r0]
@@ -1016,14 +1016,14 @@
  218:quantum/process_keycode/process_dynamic_macro.c ****             case DYN_REC_START1:
  692              		.loc 1 218 9 is_stmt 1 view .LVU158
  693 0058 A0F5BA43 		sub	r3, r0, #23808
- 694 005c 033B     		subs	r3, r3, #3
+ 694 005c 043B     		subs	r3, r3, #4
  695 005e 022B     		cmp	r3, #2
  696 0060 1DD8     		bhi	.L62
  223:quantum/process_keycode/process_dynamic_macro.c ****                                                                           * just after the recordin
  697              		.loc 1 223 17 view .LVU159
  223:quantum/process_keycode/process_dynamic_macro.c ****                                                                           * just after the recordin
  698              		.loc 1 223 20 is_stmt 0 view .LVU160
- 699 0062 45F60552 		movw	r2, #23813
+ 699 0062 45F60652 		movw	r2, #23814
  700 0066 801A     		subs	r0, r0, r2
  701              	.LVL56:
  223:quantum/process_keycode/process_dynamic_macro.c ****                                                                           * just after the recordin
@@ -1194,44 +1194,44 @@
  853              		.file 9 "quantum/quantum_keycodes.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 process_dynamic_macro.c
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:18     .text.dynamic_macro_led_blink:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:26     .text.dynamic_macro_led_blink:0000000000000000 dynamic_macro_led_blink
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:40     .text.dynamic_macro_record_start_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:47     .text.dynamic_macro_record_start_user:0000000000000000 dynamic_macro_record_start_user
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:62     .text.dynamic_macro_play_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:69     .text.dynamic_macro_play_user:0000000000000000 dynamic_macro_play_user
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:85     .text.dynamic_macro_record_key_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:92     .text.dynamic_macro_record_key_user:0000000000000000 dynamic_macro_record_key_user
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:108    .text.dynamic_macro_record_end_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:115    .text.dynamic_macro_record_end_user:0000000000000000 dynamic_macro_record_end_user
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:129    .text.dynamic_macro_record_start:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:136    .text.dynamic_macro_record_start:0000000000000000 dynamic_macro_record_start
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:188    .text.dynamic_macro_record_start:0000000000000024 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:197    .text.dynamic_macro_play:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:204    .text.dynamic_macro_play:0000000000000000 dynamic_macro_play
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:294    .text.dynamic_macro_play:0000000000000054 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:307    .text.dynamic_macro_record_key:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:314    .text.dynamic_macro_record_key:0000000000000000 dynamic_macro_record_key
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:449    .text.dynamic_macro_record_key:0000000000000088 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:462    .text.dynamic_macro_record_end:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:469    .text.dynamic_macro_record_end:0000000000000000 dynamic_macro_record_end
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:568    .text.dynamic_macro_record_end:0000000000000064 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:575    .text.process_dynamic_macro:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:582    .text.process_dynamic_macro:0000000000000000 process_dynamic_macro
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:621    .text.process_dynamic_macro:000000000000001a $d
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:801    .text.process_dynamic_macro:00000000000000d4 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:811    .bss.macro_buffer.2:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:815    .bss.macro_buffer.2:0000000000000000 macro_buffer.2
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:821    .bss.macro_id.4:0000000000000000 macro_id.4
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:822    .bss.macro_id.4:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:824    .bss.macro_pointer.3:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:828    .bss.macro_pointer.3:0000000000000000 macro_pointer.3
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:831    .data.macro_end.1:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:835    .data.macro_end.1:0000000000000000 macro_end.1
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:838    .data.r_macro_end.0:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:842    .data.r_macro_end.0:0000000000000000 r_macro_end.0
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:626    .text.process_dynamic_macro:000000000000001f $d
-C:\Users\lhanj\AppData\Local\Temp\ccZTTnmS.s:626    .text.process_dynamic_macro:0000000000000020 $t
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:18     .text.dynamic_macro_led_blink:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:26     .text.dynamic_macro_led_blink:0000000000000000 dynamic_macro_led_blink
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:40     .text.dynamic_macro_record_start_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:47     .text.dynamic_macro_record_start_user:0000000000000000 dynamic_macro_record_start_user
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:62     .text.dynamic_macro_play_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:69     .text.dynamic_macro_play_user:0000000000000000 dynamic_macro_play_user
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:85     .text.dynamic_macro_record_key_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:92     .text.dynamic_macro_record_key_user:0000000000000000 dynamic_macro_record_key_user
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:108    .text.dynamic_macro_record_end_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:115    .text.dynamic_macro_record_end_user:0000000000000000 dynamic_macro_record_end_user
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:129    .text.dynamic_macro_record_start:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:136    .text.dynamic_macro_record_start:0000000000000000 dynamic_macro_record_start
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:188    .text.dynamic_macro_record_start:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:197    .text.dynamic_macro_play:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:204    .text.dynamic_macro_play:0000000000000000 dynamic_macro_play
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:294    .text.dynamic_macro_play:0000000000000054 $d
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:307    .text.dynamic_macro_record_key:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:314    .text.dynamic_macro_record_key:0000000000000000 dynamic_macro_record_key
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:449    .text.dynamic_macro_record_key:0000000000000088 $d
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:462    .text.dynamic_macro_record_end:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:469    .text.dynamic_macro_record_end:0000000000000000 dynamic_macro_record_end
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:568    .text.dynamic_macro_record_end:0000000000000064 $d
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:575    .text.process_dynamic_macro:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:582    .text.process_dynamic_macro:0000000000000000 process_dynamic_macro
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:621    .text.process_dynamic_macro:000000000000001a $d
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:801    .text.process_dynamic_macro:00000000000000d4 $d
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:811    .bss.macro_buffer.2:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:815    .bss.macro_buffer.2:0000000000000000 macro_buffer.2
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:821    .bss.macro_id.4:0000000000000000 macro_id.4
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:822    .bss.macro_id.4:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:824    .bss.macro_pointer.3:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:828    .bss.macro_pointer.3:0000000000000000 macro_pointer.3
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:831    .data.macro_end.1:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:835    .data.macro_end.1:0000000000000000 macro_end.1
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:838    .data.r_macro_end.0:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:842    .data.r_macro_end.0:0000000000000000 r_macro_end.0
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:626    .text.process_dynamic_macro:000000000000001f $d
+C:\Users\lhanj\AppData\Local\Temp\cclyUiVc.s:626    .text.process_dynamic_macro:0000000000000020 $t
 
 UNDEFINED SYMBOLS
 printf_

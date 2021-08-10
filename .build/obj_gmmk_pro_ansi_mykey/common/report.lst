@@ -1105,34 +1105,34 @@
  786              		.file 11 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 report.c
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:18     .text.has_anykey:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:26     .text.has_anykey:0000000000000000 has_anykey
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:101    .text.has_anykey:0000000000000034 $d
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:107    .text.get_first_key:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:114    .text.get_first_key:0000000000000000 get_first_key
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:194    .text.get_first_key:000000000000003c $d
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:200    .text.is_key_pressed:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:207    .text.is_key_pressed:0000000000000000 is_key_pressed
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:296    .text.is_key_pressed:000000000000004c $d
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:302    .text.add_key_byte:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:309    .text.add_key_byte:0000000000000000 add_key_byte
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:382    .text.del_key_byte:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:389    .text.del_key_byte:0000000000000000 del_key_byte
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:439    .text.add_key_bit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:446    .text.add_key_bit:0000000000000000 add_key_bit
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:505    .text.add_key_bit:000000000000002c $d
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:514    .text.del_key_bit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:521    .text.del_key_bit:0000000000000000 del_key_bit
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:579    .text.del_key_bit:000000000000002c $d
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:585    .text.add_key_to_report:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:592    .text.add_key_to_report:0000000000000000 add_key_to_report
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:648    .text.add_key_to_report:000000000000002c $d
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:654    .text.del_key_from_report:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:661    .text.del_key_from_report:0000000000000000 del_key_from_report
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:717    .text.del_key_from_report:000000000000002c $d
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:723    .text.clear_keys_from_report:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:730    .text.clear_keys_from_report:0000000000000000 clear_keys_from_report
-C:\Users\lhanj\AppData\Local\Temp\ccCgdLYe.s:770    .text.clear_keys_from_report:0000000000000028 $d
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:18     .text.has_anykey:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:26     .text.has_anykey:0000000000000000 has_anykey
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:101    .text.has_anykey:0000000000000034 $d
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:107    .text.get_first_key:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:114    .text.get_first_key:0000000000000000 get_first_key
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:194    .text.get_first_key:000000000000003c $d
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:200    .text.is_key_pressed:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:207    .text.is_key_pressed:0000000000000000 is_key_pressed
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:296    .text.is_key_pressed:000000000000004c $d
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:302    .text.add_key_byte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:309    .text.add_key_byte:0000000000000000 add_key_byte
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:382    .text.del_key_byte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:389    .text.del_key_byte:0000000000000000 del_key_byte
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:439    .text.add_key_bit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:446    .text.add_key_bit:0000000000000000 add_key_bit
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:505    .text.add_key_bit:000000000000002c $d
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:514    .text.del_key_bit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:521    .text.del_key_bit:0000000000000000 del_key_bit
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:579    .text.del_key_bit:000000000000002c $d
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:585    .text.add_key_to_report:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:592    .text.add_key_to_report:0000000000000000 add_key_to_report
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:648    .text.add_key_to_report:000000000000002c $d
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:654    .text.del_key_from_report:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:661    .text.del_key_from_report:0000000000000000 del_key_from_report
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:717    .text.del_key_from_report:000000000000002c $d
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:723    .text.clear_keys_from_report:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:730    .text.clear_keys_from_report:0000000000000000 clear_keys_from_report
+C:\Users\lhanj\AppData\Local\Temp\ccvaaGLE.s:770    .text.clear_keys_from_report:0000000000000028 $d
 
 UNDEFINED SYMBOLS
 keyboard_protocol

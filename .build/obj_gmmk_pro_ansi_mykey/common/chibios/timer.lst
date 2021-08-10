@@ -2420,22 +2420,22 @@
  523              		.file 14 "./lib/chibios/os/rt/include/chmtx.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 timer.c
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:18     .text.timer_clear:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:26     .text.timer_clear:0000000000000000 timer_clear
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:188    .text.timer_clear:0000000000000018 $d
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:193    .text.timer_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:200    .text.timer_init:0000000000000000 timer_init
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:216    .text.timer_read32:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:223    .text.timer_read32:0000000000000000 timer_read32
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:393    .text.timer_read32:000000000000002c $d
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:400    .text.timer_read:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:407    .text.timer_read:0000000000000000 timer_read
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:429    .text.timer_elapsed:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:436    .text.timer_elapsed:0000000000000000 timer_elapsed
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:475    .text.timer_elapsed32:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:482    .text.timer_elapsed32:0000000000000000 timer_elapsed32
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:508    .bss.reset_point:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccny3dE3.s:512    .bss.reset_point:0000000000000000 reset_point
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:18     .text.timer_clear:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:26     .text.timer_clear:0000000000000000 timer_clear
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:188    .text.timer_clear:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:193    .text.timer_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:200    .text.timer_init:0000000000000000 timer_init
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:216    .text.timer_read32:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:223    .text.timer_read32:0000000000000000 timer_read32
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:393    .text.timer_read32:000000000000002c $d
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:400    .text.timer_read:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:407    .text.timer_read:0000000000000000 timer_read
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:429    .text.timer_elapsed:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:436    .text.timer_elapsed:0000000000000000 timer_elapsed
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:475    .text.timer_elapsed32:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:482    .text.timer_elapsed32:0000000000000000 timer_elapsed32
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:508    .bss.reset_point:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccDzcLLe.s:512    .bss.reset_point:0000000000000000 reset_point
 
 UNDEFINED SYMBOLS
 stGetCounter

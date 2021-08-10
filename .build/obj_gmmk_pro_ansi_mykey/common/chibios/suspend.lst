@@ -563,27 +563,27 @@
  399              		.file 12 "./lib/chibios/os/rt/include/chthreads.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 suspend.c
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:20     .text.suspend_idle:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:28     .text.suspend_idle:0000000000000000 suspend_idle
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:76     .text.suspend_idle:0000000000000028 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:81     .text.suspend_power_down_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:88     .text.suspend_power_down_user:0000000000000000 suspend_power_down_user
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:99     .text.suspend_power_down_kb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:106    .text.suspend_power_down_kb:0000000000000000 suspend_power_down_kb
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:127    .text.suspend_power_down:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:134    .text.suspend_power_down:0000000000000000 suspend_power_down
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:177    .text.matrix_power_up:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:184    .text.matrix_power_up:0000000000000000 matrix_power_up
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:197    .text.matrix_power_down:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:204    .text.matrix_power_down:0000000000000000 matrix_power_down
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:215    .text.suspend_wakeup_condition:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:222    .text.suspend_wakeup_condition:0000000000000000 suspend_wakeup_condition
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:285    .text.suspend_wakeup_init_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:292    .text.suspend_wakeup_init_user:0000000000000000 suspend_wakeup_init_user
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:303    .text.suspend_wakeup_init_kb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:310    .text.suspend_wakeup_init_kb:0000000000000000 suspend_wakeup_init_kb
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:331    .text.suspend_wakeup_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZZ83gw.s:338    .text.suspend_wakeup_init:0000000000000000 suspend_wakeup_init
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:20     .text.suspend_idle:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:28     .text.suspend_idle:0000000000000000 suspend_idle
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:76     .text.suspend_idle:0000000000000028 $d
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:81     .text.suspend_power_down_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:88     .text.suspend_power_down_user:0000000000000000 suspend_power_down_user
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:99     .text.suspend_power_down_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:106    .text.suspend_power_down_kb:0000000000000000 suspend_power_down_kb
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:127    .text.suspend_power_down:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:134    .text.suspend_power_down:0000000000000000 suspend_power_down
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:177    .text.matrix_power_up:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:184    .text.matrix_power_up:0000000000000000 matrix_power_up
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:197    .text.matrix_power_down:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:204    .text.matrix_power_down:0000000000000000 matrix_power_down
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:215    .text.suspend_wakeup_condition:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:222    .text.suspend_wakeup_condition:0000000000000000 suspend_wakeup_condition
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:285    .text.suspend_wakeup_init_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:292    .text.suspend_wakeup_init_user:0000000000000000 suspend_wakeup_init_user
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:303    .text.suspend_wakeup_init_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:310    .text.suspend_wakeup_init_kb:0000000000000000 suspend_wakeup_init_kb
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:331    .text.suspend_wakeup_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccM097NU.s:338    .text.suspend_wakeup_init:0000000000000000 suspend_wakeup_init
 
 UNDEFINED SYMBOLS
 __aeabi_uldivmod

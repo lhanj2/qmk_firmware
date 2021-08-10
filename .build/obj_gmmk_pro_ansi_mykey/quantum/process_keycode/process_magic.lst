@@ -259,7 +259,7 @@
   43:quantum/process_keycode/process_magic.c ****             case MAGIC_SWAP_CONTROL_CAPSLOCK ... MAGIC_TOGGLE_ALT_GUI:
   86              		.loc 1 43 9 view .LVU15
   87 0042 A5F5B943 		sub	r3, r5, #23680
-  88 0046 7A3B     		subs	r3, r3, #122
+  88 0046 7B3B     		subs	r3, r3, #123
   89 0048 082B     		cmp	r3, #8
   90 004a E7D9     		bls	.L4
   91              	.LVL6:
@@ -301,7 +301,7 @@
  121 006f 00       		.p2align 1
  122              	.L5:
  123 0070 A5F5B945 		sub	r5, r5, #23680
- 124 0074 7A3D     		subs	r5, r5, #122
+ 124 0074 7B3D     		subs	r5, r5, #123
  125 0076 ABB2     		uxth	r3, r5
  126 0078 082B     		cmp	r3, #8
  127 007a DBD8     		bhi	.L7
@@ -630,15 +630,15 @@
  375              		.file 8 "quantum/quantum_keycodes.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 process_magic.c
-C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:18     .text.process_magic:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:26     .text.process_magic:0000000000000000 process_magic
-C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:102    .text.process_magic:000000000000005c $d
-C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:132    .text.process_magic:0000000000000084 $d
-C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:363    .text.process_magic:00000000000001b0 $d
-C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:121    .text.process_magic:000000000000006f $d
-C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:121    .text.process_magic:0000000000000070 $t
-C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:141    .text.process_magic:000000000000008d $d
-C:\Users\lhanj\AppData\Local\Temp\cc8k3NN1.s:141    .text.process_magic:000000000000008e $t
+C:\Users\lhanj\AppData\Local\Temp\ccyzKYfn.s:18     .text.process_magic:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccyzKYfn.s:26     .text.process_magic:0000000000000000 process_magic
+C:\Users\lhanj\AppData\Local\Temp\ccyzKYfn.s:102    .text.process_magic:000000000000005c $d
+C:\Users\lhanj\AppData\Local\Temp\ccyzKYfn.s:132    .text.process_magic:0000000000000084 $d
+C:\Users\lhanj\AppData\Local\Temp\ccyzKYfn.s:363    .text.process_magic:00000000000001b0 $d
+C:\Users\lhanj\AppData\Local\Temp\ccyzKYfn.s:121    .text.process_magic:000000000000006f $d
+C:\Users\lhanj\AppData\Local\Temp\ccyzKYfn.s:121    .text.process_magic:0000000000000070 $t
+C:\Users\lhanj\AppData\Local\Temp\ccyzKYfn.s:141    .text.process_magic:000000000000008d $d
+C:\Users\lhanj\AppData\Local\Temp\ccyzKYfn.s:141    .text.process_magic:000000000000008e $t
 
 UNDEFINED SYMBOLS
 eeconfig_read_keymap

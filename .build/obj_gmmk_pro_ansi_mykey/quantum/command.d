@@ -189,8 +189,8 @@
  quantum/process_keycode/process_magic.h \
  quantum/process_keycode/process_grave_esc.h \
  quantum/process_keycode/process_rgb.h \
- quantum/process_keycode/process_dynamic_macro.h quantum/dynamic_keymap.h \
- quantum/via.h quantum/encoder.h quantum/version.h quantum/mousekey.h
+ quantum/process_keycode/process_dynamic_macro.h quantum/encoder.h \
+ quantum/version.h quantum/mousekey.h
 platforms/chibios/GENERIC_STM32_F303XC/configs/bootloader_defs.h:
 keyboards/gmmk/pro/config.h:
 quantum/config_common.h:
@@ -423,8 +423,6 @@ quantum/process_keycode/process_magic.h:
 quantum/process_keycode/process_grave_esc.h:
 quantum/process_keycode/process_rgb.h:
 quantum/process_keycode/process_dynamic_macro.h:
-quantum/dynamic_keymap.h:
-quantum/via.h:
 quantum/encoder.h:
 quantum/version.h:
 quantum/mousekey.h:

@@ -596,14 +596,14 @@
  330              		.file 7 "./lib/chibios/os/common/ext/ST/STM32F3xx/system_stm32f3xx.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 hal_lld.c
-C:\Users\lhanj\AppData\Local\Temp\ccraYCqm.s:18     .text.hal_lld_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccraYCqm.s:26     .text.hal_lld_init:0000000000000000 hal_lld_init
-C:\Users\lhanj\AppData\Local\Temp\ccraYCqm.s:157    .text.hal_lld_init:000000000000008c $d
-C:\Users\lhanj\AppData\Local\Temp\ccraYCqm.s:164    .text.stm32_clock_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccraYCqm.s:171    .text.stm32_clock_init:0000000000000000 stm32_clock_init
-C:\Users\lhanj\AppData\Local\Temp\ccraYCqm.s:310    .text.stm32_clock_init:000000000000008c $d
-C:\Users\lhanj\AppData\Local\Temp\ccraYCqm.s:321    .data.SystemCoreClock:0000000000000000 SystemCoreClock
-C:\Users\lhanj\AppData\Local\Temp\ccraYCqm.s:318    .data.SystemCoreClock:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccnyeFED.s:18     .text.hal_lld_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccnyeFED.s:26     .text.hal_lld_init:0000000000000000 hal_lld_init
+C:\Users\lhanj\AppData\Local\Temp\ccnyeFED.s:157    .text.hal_lld_init:000000000000008c $d
+C:\Users\lhanj\AppData\Local\Temp\ccnyeFED.s:164    .text.stm32_clock_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccnyeFED.s:171    .text.stm32_clock_init:0000000000000000 stm32_clock_init
+C:\Users\lhanj\AppData\Local\Temp\ccnyeFED.s:310    .text.stm32_clock_init:000000000000008c $d
+C:\Users\lhanj\AppData\Local\Temp\ccnyeFED.s:321    .data.SystemCoreClock:0000000000000000 SystemCoreClock
+C:\Users\lhanj\AppData\Local\Temp\ccnyeFED.s:318    .data.SystemCoreClock:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 dmaInit

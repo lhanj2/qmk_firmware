@@ -6547,38 +6547,38 @@
  2242              		.file 17 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 hal_queues.c
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:18     .text.iq_read:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:25     .text.iq_read:0000000000000000 iq_read
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:148    .text.oq_write:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:154    .text.oq_write:0000000000000000 oq_write
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:269    .text.iqObjectInit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:276    .text.iqObjectInit:0000000000000000 iqObjectInit
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:360    .text.iqResetI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:367    .text.iqResetI:0000000000000000 iqResetI
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:402    .text.iqPutI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:409    .text.iqPutI:0000000000000000 iqPutI
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:484    .text.iqGetI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:491    .text.iqGetI:0000000000000000 iqGetI
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:564    .text.iqGetTimeout:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:571    .text.iqGetTimeout:0000000000000000 iqGetTimeout
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:847    .text.iqReadI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:854    .text.iqReadI:0000000000000000 iqReadI
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:902    .text.iqReadTimeout:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:909    .text.iqReadTimeout:0000000000000000 iqReadTimeout
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1260   .text.oqObjectInit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1267   .text.oqObjectInit:0000000000000000 oqObjectInit
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1341   .text.oqResetI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1348   .text.oqResetI:0000000000000000 oqResetI
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1385   .text.oqPutI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1392   .text.oqPutI:0000000000000000 oqPutI
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1465   .text.oqPutTimeout:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1472   .text.oqPutTimeout:0000000000000000 oqPutTimeout
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1732   .text.oqGetI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1739   .text.oqGetI:0000000000000000 oqGetI
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1819   .text.oqWriteI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1826   .text.oqWriteI:0000000000000000 oqWriteI
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1874   .text.oqWriteTimeout:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccTS6AmL.s:1881   .text.oqWriteTimeout:0000000000000000 oqWriteTimeout
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:18     .text.iq_read:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:25     .text.iq_read:0000000000000000 iq_read
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:148    .text.oq_write:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:154    .text.oq_write:0000000000000000 oq_write
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:269    .text.iqObjectInit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:276    .text.iqObjectInit:0000000000000000 iqObjectInit
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:360    .text.iqResetI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:367    .text.iqResetI:0000000000000000 iqResetI
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:402    .text.iqPutI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:409    .text.iqPutI:0000000000000000 iqPutI
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:484    .text.iqGetI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:491    .text.iqGetI:0000000000000000 iqGetI
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:564    .text.iqGetTimeout:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:571    .text.iqGetTimeout:0000000000000000 iqGetTimeout
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:847    .text.iqReadI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:854    .text.iqReadI:0000000000000000 iqReadI
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:902    .text.iqReadTimeout:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:909    .text.iqReadTimeout:0000000000000000 iqReadTimeout
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1260   .text.oqObjectInit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1267   .text.oqObjectInit:0000000000000000 oqObjectInit
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1341   .text.oqResetI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1348   .text.oqResetI:0000000000000000 oqResetI
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1385   .text.oqPutI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1392   .text.oqPutI:0000000000000000 oqPutI
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1465   .text.oqPutTimeout:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1472   .text.oqPutTimeout:0000000000000000 oqPutTimeout
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1732   .text.oqGetI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1739   .text.oqGetI:0000000000000000 oqGetI
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1819   .text.oqWriteI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1826   .text.oqWriteI:0000000000000000 oqWriteI
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1874   .text.oqWriteTimeout:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc9WWoR1.s:1881   .text.oqWriteTimeout:0000000000000000 oqWriteTimeout
 
 UNDEFINED SYMBOLS
 memcpy

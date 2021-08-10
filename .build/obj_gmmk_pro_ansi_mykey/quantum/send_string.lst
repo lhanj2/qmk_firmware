@@ -1558,38 +1558,38 @@
  1010              		.file 11 "quantum/sequencer/sequencer.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 send_string.c
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:18     .text.send_char:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:26     .text.send_char:0000000000000000 send_char
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:146    .text.send_char:0000000000000060 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:984    .rodata.ascii_to_keycode_lut:0000000000000000 ascii_to_keycode_lut
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:974    .rodata.ascii_to_altgr_lut:0000000000000000 ascii_to_altgr_lut
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:996    .rodata.ascii_to_shift_lut:0000000000000000 ascii_to_shift_lut
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:979    .rodata.ascii_to_dead_lut:0000000000000000 ascii_to_dead_lut
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:154    .text.send_string_with_delay:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:161    .text.send_string_with_delay:0000000000000000 send_string_with_delay
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:393    .text.send_string_with_delay:0000000000000094 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:398    .text.send_string:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:405    .text.send_string:0000000000000000 send_string
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:422    .text.send_string_with_delay_P:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:429    .text.send_string_with_delay_P:0000000000000000 send_string_with_delay_P
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:663    .text.send_string_with_delay_P:0000000000000094 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:668    .text.send_string_P:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:675    .text.send_string_P:0000000000000000 send_string_P
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:692    .text.send_nibble:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:699    .text.send_nibble:0000000000000000 send_nibble
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:724    .text.send_byte:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:731    .text.send_byte:0000000000000000 send_byte
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:766    .text.send_word:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:773    .text.send_word:0000000000000000 send_word
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:808    .text.send_dword:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:815    .text.send_dword:0000000000000000 send_dword
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:851    .text.tap_random_base64:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:858    .text.tap_random_base64:0000000000000000 tap_random_base64
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:903    .text.tap_random_base64:0000000000000034 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:975    .rodata.ascii_to_altgr_lut:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:980    .rodata.ascii_to_dead_lut:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:914    .text.tap_random_base64:000000000000003f $d
-C:\Users\lhanj\AppData\Local\Temp\ccZw32Y5.s:914    .text.tap_random_base64:0000000000000040 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:18     .text.send_char:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:26     .text.send_char:0000000000000000 send_char
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:146    .text.send_char:0000000000000060 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:984    .rodata.ascii_to_keycode_lut:0000000000000000 ascii_to_keycode_lut
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:974    .rodata.ascii_to_altgr_lut:0000000000000000 ascii_to_altgr_lut
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:996    .rodata.ascii_to_shift_lut:0000000000000000 ascii_to_shift_lut
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:979    .rodata.ascii_to_dead_lut:0000000000000000 ascii_to_dead_lut
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:154    .text.send_string_with_delay:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:161    .text.send_string_with_delay:0000000000000000 send_string_with_delay
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:393    .text.send_string_with_delay:0000000000000094 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:398    .text.send_string:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:405    .text.send_string:0000000000000000 send_string
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:422    .text.send_string_with_delay_P:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:429    .text.send_string_with_delay_P:0000000000000000 send_string_with_delay_P
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:663    .text.send_string_with_delay_P:0000000000000094 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:668    .text.send_string_P:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:675    .text.send_string_P:0000000000000000 send_string_P
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:692    .text.send_nibble:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:699    .text.send_nibble:0000000000000000 send_nibble
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:724    .text.send_byte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:731    .text.send_byte:0000000000000000 send_byte
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:766    .text.send_word:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:773    .text.send_word:0000000000000000 send_word
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:808    .text.send_dword:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:815    .text.send_dword:0000000000000000 send_dword
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:851    .text.tap_random_base64:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:858    .text.tap_random_base64:0000000000000000 tap_random_base64
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:903    .text.tap_random_base64:0000000000000034 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:975    .rodata.ascii_to_altgr_lut:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:980    .rodata.ascii_to_dead_lut:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:914    .text.tap_random_base64:000000000000003f $d
+C:\Users\lhanj\AppData\Local\Temp\ccUSYLQo.s:914    .text.tap_random_base64:0000000000000040 $t
 
 UNDEFINED SYMBOLS
 register_code

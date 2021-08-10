@@ -1,7 +1,8 @@
 /* 20210806 HJLee - macro, mapping, knob layer added. 
    20210807 HJLee - knob function changed(brightness)
    20210808 HJLee - RGB works with RGB_TOG
-   20210809 HJLee - (macro not working)
+   20210809 HJLee - Test
+   20210810 HJLee - Added Knod brightness control
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -123,7 +124,7 @@ static uint16_t timeout_timer = 0;
 static uint16_t timeout_counter = 0;  //in minute intervals
 static uint16_t timeout_threshold = TIMEOUT_THRESHOLD_DEFAULT;
 static bool     Shift_Pressed = false;  // for knob custom 210807
-static bool     RGB_TOGGLED = false;
+static bool     Caps_Pressed     = false;
 
 void timeout_reset_timer(void) {
     timeout_timer = timer_read();
@@ -195,21 +196,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case MY_SLEEP:
         if (record->event.pressed) tap_code(KC_SLEP);
         return false;
-    case RGB_TOG:
-        if (record->event.pressed && !RGB_TOGGLED) {  // reset activity timer
-            #ifdef RGB_MATRIX_ENABLE //if rgb enabled
-            rgb_matrix_enable();
-            RGB_TOGGLED = true;
-            #endif
-            timeout_reset_timer();
-        } else if (record->event.pressed && RGB_TOGGLED) {
-            #ifdef RGB_MATRIX_ENABLE //if rgb enabled
-            rgb_matrix_disable_noeeprom();
-            RGB_TOGGLED = false;
-            #endif
-            timeout_reset_timer();
-        }
-        return false;
+    case KC_CAPS:
+        record->event.pressed ? (Caps_Pressed = true) : (Caps_Pressed = false);
+        return true;
     default:
         return true;
     }
@@ -232,23 +221,23 @@ void matrix_scan_user(void) {
 
 #ifdef ENCODER_ENABLE       // Encoder Function
     bool encoder_update_user(uint8_t index, bool clockwise) {
-    switch (nob_layer_state) {
+    if (!Shift_Pressed && !Caps_Pressed) {
+        switch (nob_layer_state) {
         case _WHEEL:
-            if (clockwise && Shift_Pressed)                 tap_code(KC_VOLU);
-            else if (!clockwise && Shift_Pressed)         tap_code(KC_VOLD);
-            else if (clockwise && !Shift_Pressed)           tap_code(KC_WH_D);
-            else if (!clockwise && !Shift_Pressed)        tap_code(KC_WH_U);
+            clockwise ? tap_code(KC_WH_D) : tap_code(KC_WH_U);
             break;
         case _MUSIC:
-            if (clockwise && Shift_Pressed)                 tap_code(KC_VOLU);
-            else if (!clockwise && Shift_Pressed)         tap_code(KC_VOLD);
-            else if (clockwise && !Shift_Pressed)           tap_code16(KC_MNXT);
-            else if (!clockwise && !Shift_Pressed)        tap_code16(KC_MPRV);
+            clockwise ? tap_code16(KC_MNXT) : tap_code16(KC_MPRV);
             break;
         case _VOLUME:  // 210807 not use
             clockwise ? tap_code(KC_VOLU) : tap_code(KC_VOLD);
             break;
+        }
     }
+    if  (clockwise && Shift_Pressed) tap_code(KC_VOLU);      //210810 Always Volume control with L,R shift
+    else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
+    else if  (clockwise && Caps_Pressed) tap_code(KC_BRIU);  //210810 Always Brightness control with L,R CapsLock
+    else if (!clockwise && Caps_Pressed) tap_code(KC_BRID);
     return true;
 }
 #endif

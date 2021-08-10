@@ -761,7 +761,7 @@
  584 0026 0420     		movs	r0, #4
   49:tmk_core/common/eeconfig.c ****     eeprom_update_byte(EECONFIG_KEYMAP_LOWER_BYTE, 0);
  585              		.loc 1 49 25 view .LVU98
- 586 0028 1C70     		strb	r4, [r3]
+ 586 0028 1C60     		str	r4, [r3]
   50:tmk_core/common/eeconfig.c ****     eeprom_update_byte(EECONFIG_KEYMAP_UPPER_BYTE, 0);
  587              		.loc 1 50 5 is_stmt 1 view .LVU99
  588 002a FFF7FEFF 		bl	eeprom_update_byte
@@ -1001,55 +1001,55 @@
  796              		.file 6 "tmk_core/common/chibios/eeprom_stm32.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 eeconfig.c
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:18     .text.eeconfig_enable:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:26     .text.eeconfig_enable:0000000000000000 eeconfig_enable
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:43     .text.eeconfig_disable:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:50     .text.eeconfig_disable:0000000000000000 eeconfig_disable
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:80     .text.eeconfig_is_enabled:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:87     .text.eeconfig_is_enabled:0000000000000000 eeconfig_is_enabled
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:113    .text.eeconfig_is_disabled:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:120    .text.eeconfig_is_disabled:0000000000000000 eeconfig_is_disabled
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:146    .text.eeconfig_read_debug:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:153    .text.eeconfig_read_debug:0000000000000000 eeconfig_read_debug
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:169    .text.eeconfig_update_debug:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:176    .text.eeconfig_update_debug:0000000000000000 eeconfig_update_debug
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:197    .text.eeconfig_read_default_layer:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:204    .text.eeconfig_read_default_layer:0000000000000000 eeconfig_read_default_layer
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:220    .text.eeconfig_update_default_layer:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:227    .text.eeconfig_update_default_layer:0000000000000000 eeconfig_update_default_layer
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:248    .text.eeconfig_read_keymap:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:255    .text.eeconfig_read_keymap:0000000000000000 eeconfig_read_keymap
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:285    .text.eeconfig_update_keymap:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:292    .text.eeconfig_update_keymap:0000000000000000 eeconfig_update_keymap
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:330    .text.eeconfig_read_audio:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:337    .text.eeconfig_read_audio:0000000000000000 eeconfig_read_audio
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:353    .text.eeconfig_update_audio:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:360    .text.eeconfig_update_audio:0000000000000000 eeconfig_update_audio
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:381    .text.eeconfig_read_kb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:388    .text.eeconfig_read_kb:0000000000000000 eeconfig_read_kb
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:404    .text.eeconfig_update_kb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:411    .text.eeconfig_update_kb:0000000000000000 eeconfig_update_kb
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:433    .text.eeconfig_read_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:440    .text.eeconfig_read_user:0000000000000000 eeconfig_read_user
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:456    .text.eeconfig_update_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:463    .text.eeconfig_update_user:0000000000000000 eeconfig_update_user
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:485    .text.eeconfig_init_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:492    .text.eeconfig_init_user:0000000000000000 eeconfig_init_user
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:507    .text.eeconfig_init_kb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:514    .text.eeconfig_init_kb:0000000000000000 eeconfig_init_kb
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:539    .text.eeconfig_init_quantum:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:546    .text.eeconfig_init_quantum:0000000000000000 eeconfig_init_quantum
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:653    .text.eeconfig_init_quantum:000000000000008c $d
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:658    .text.eeconfig_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:665    .text.eeconfig_init:0000000000000000 eeconfig_init
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:679    .text.eeconfig_read_haptic:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:686    .text.eeconfig_read_haptic:0000000000000000 eeconfig_read_haptic
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:702    .text.eeconfig_update_haptic:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:709    .text.eeconfig_update_haptic:0000000000000000 eeconfig_update_haptic
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:731    .text.eeconfig_read_handedness:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:738    .text.eeconfig_read_handedness:0000000000000000 eeconfig_read_handedness
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:763    .text.eeconfig_update_handedness:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccLLxzfX.s:770    .text.eeconfig_update_handedness:0000000000000000 eeconfig_update_handedness
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:18     .text.eeconfig_enable:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:26     .text.eeconfig_enable:0000000000000000 eeconfig_enable
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:43     .text.eeconfig_disable:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:50     .text.eeconfig_disable:0000000000000000 eeconfig_disable
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:80     .text.eeconfig_is_enabled:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:87     .text.eeconfig_is_enabled:0000000000000000 eeconfig_is_enabled
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:113    .text.eeconfig_is_disabled:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:120    .text.eeconfig_is_disabled:0000000000000000 eeconfig_is_disabled
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:146    .text.eeconfig_read_debug:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:153    .text.eeconfig_read_debug:0000000000000000 eeconfig_read_debug
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:169    .text.eeconfig_update_debug:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:176    .text.eeconfig_update_debug:0000000000000000 eeconfig_update_debug
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:197    .text.eeconfig_read_default_layer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:204    .text.eeconfig_read_default_layer:0000000000000000 eeconfig_read_default_layer
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:220    .text.eeconfig_update_default_layer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:227    .text.eeconfig_update_default_layer:0000000000000000 eeconfig_update_default_layer
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:248    .text.eeconfig_read_keymap:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:255    .text.eeconfig_read_keymap:0000000000000000 eeconfig_read_keymap
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:285    .text.eeconfig_update_keymap:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:292    .text.eeconfig_update_keymap:0000000000000000 eeconfig_update_keymap
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:330    .text.eeconfig_read_audio:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:337    .text.eeconfig_read_audio:0000000000000000 eeconfig_read_audio
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:353    .text.eeconfig_update_audio:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:360    .text.eeconfig_update_audio:0000000000000000 eeconfig_update_audio
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:381    .text.eeconfig_read_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:388    .text.eeconfig_read_kb:0000000000000000 eeconfig_read_kb
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:404    .text.eeconfig_update_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:411    .text.eeconfig_update_kb:0000000000000000 eeconfig_update_kb
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:433    .text.eeconfig_read_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:440    .text.eeconfig_read_user:0000000000000000 eeconfig_read_user
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:456    .text.eeconfig_update_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:463    .text.eeconfig_update_user:0000000000000000 eeconfig_update_user
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:485    .text.eeconfig_init_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:492    .text.eeconfig_init_user:0000000000000000 eeconfig_init_user
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:507    .text.eeconfig_init_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:514    .text.eeconfig_init_kb:0000000000000000 eeconfig_init_kb
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:539    .text.eeconfig_init_quantum:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:546    .text.eeconfig_init_quantum:0000000000000000 eeconfig_init_quantum
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:653    .text.eeconfig_init_quantum:000000000000008c $d
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:658    .text.eeconfig_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:665    .text.eeconfig_init:0000000000000000 eeconfig_init
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:679    .text.eeconfig_read_haptic:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:686    .text.eeconfig_read_haptic:0000000000000000 eeconfig_read_haptic
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:702    .text.eeconfig_update_haptic:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:709    .text.eeconfig_update_haptic:0000000000000000 eeconfig_update_haptic
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:731    .text.eeconfig_read_handedness:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:738    .text.eeconfig_read_handedness:0000000000000000 eeconfig_read_handedness
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:763    .text.eeconfig_update_handedness:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc1E57ba.s:770    .text.eeconfig_update_handedness:0000000000000000 eeconfig_update_handedness
 
 UNDEFINED SYMBOLS
 eeprom_update_word

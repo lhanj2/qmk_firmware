@@ -862,1964 +862,1962 @@
  105              		.loc 1 743 49 view .LVU9
  106 0004 0446     		mov	r4, r0
  107              		.loc 1 744 5 view .LVU10
- 108 0006 0648     		ldr	r0, .L5
+ 108 0006 0548     		ldr	r0, .L5
  109              	.LVL2:
  110              		.loc 1 744 5 view .LVU11
  111 0008 FFF7FEFF 		bl	printf_
  112              	.LVL3:
  745:quantum/command.c ****     default_layer_set((layer_state_t)1 << layer);
  113              		.loc 1 745 5 is_stmt 1 view .LVU12
- 114              		.loc 1 745 40 is_stmt 0 view .LVU13
- 115 000c 0120     		movs	r0, #1
- 116 000e A040     		lsls	r0, r0, r4
- 117              		.loc 1 745 5 view .LVU14
- 118 0010 C0B2     		uxtb	r0, r0
- 119 0012 FFF7FEFF 		bl	default_layer_set
- 120              	.LVL4:
+ 114 000c 0120     		movs	r0, #1
+ 115 000e A040     		lsls	r0, r0, r4
+ 116 0010 FFF7FEFF 		bl	default_layer_set
+ 117              	.LVL4:
  746:quantum/command.c ****     clear_keyboard();
- 121              		.loc 1 746 5 is_stmt 1 view .LVU15
+ 118              		.loc 1 746 5 view .LVU13
  747:quantum/command.c **** }
- 122              		.loc 1 747 1 is_stmt 0 view .LVU16
- 123 0016 BDE81040 		pop	{r4, lr}
- 124              		.cfi_restore 14
- 125              		.cfi_restore 4
- 126              		.cfi_def_cfa_offset 0
+ 119              		.loc 1 747 1 is_stmt 0 view .LVU14
+ 120 0014 BDE81040 		pop	{r4, lr}
+ 121              		.cfi_restore 14
+ 122              		.cfi_restore 4
+ 123              		.cfi_def_cfa_offset 0
  746:quantum/command.c ****     clear_keyboard();
- 127              		.loc 1 746 5 view .LVU17
- 128 001a FFF7FEBF 		b	clear_keyboard
- 129              	.LVL5:
- 130              	.L6:
- 131 001e 00BF     		.align	2
- 132              	.L5:
- 133 0020 00000000 		.word	.LC1
- 134              		.cfi_endproc
- 135              	.LFE304:
- 137              		.section	.rodata.command_common.str1.1,"aMS",%progbits,1
- 138              	.LC2:
- 139 0000 6565636F 		.ascii	"eeconfig:\012default_layer: %u\012\000"
- 139      6E666967 
- 139      3A0A6465 
- 139      6661756C 
- 139      745F6C61 
- 140              	.LC3:
- 141 001d 64656275 		.ascii	"debug_config.raw: %02X\012.enable: %u\012.matrix: %"
- 141      675F636F 
- 141      6E666967 
- 141      2E726177 
- 141      3A202530 
- 142 004a 750A2E6B 		.ascii	"u\012.keyboard: %u\012.mouse: %u\012\000"
- 142      6579626F 
- 142      6172643A 
- 142      2025750A 
- 142      2E6D6F75 
- 143              	.LC4:
- 144 0066 6B65796D 		.ascii	"keymap_config.raw: %02X\012.swap_control_capslock: "
- 144      61705F63 
- 144      6F6E6669 
- 144      672E7261 
- 144      773A2025 
- 145 0096 25750A2E 		.ascii	"%u\012.capslock_to_control: %u\012.swap_lctl_lgui: "
- 145      63617073 
- 145      6C6F636B 
- 145      5F746F5F 
- 145      636F6E74 
- 146 00c3 25750A2E 		.ascii	"%u\012.swap_rctl_rgui: %u\012.swap_lalt_lgui: %u\012"
- 146      73776170 
- 146      5F726374 
- 146      6C5F7267 
- 146      75693A20 
- 147 00ee 2E737761 		.ascii	".swap_ralt_rgui: %u\012.no_gui: %u\012.swap_grave_e"
- 147      705F7261 
- 147      6C745F72 
- 147      6775693A 
- 147      2025750A 
- 148 011b 73633A20 		.ascii	"sc: %u\012.swap_backslash_backspace: %u\012.nkro: %"
- 148      25750A2E 
- 148      73776170 
- 148      5F626163 
- 148      6B736C61 
- 149 0148 750A00   		.ascii	"u\012\000"
- 150              	.LC5:
- 151 014b 436C6561 		.ascii	"Clearing EEPROM\012\000"
- 151      72696E67 
- 151      20454550 
- 151      524F4D0A 
- 151      00
- 152              	.LC6:
- 153 015c 0A092D20 		.ascii	"\012\011- Magic -\012D:\011Debug Message Toggle\012"
- 153      4D616769 
- 153      63202D0A 
- 153      443A0944 
- 153      65627567 
- 154 0180 583A094D 		.ascii	"X:\011Matrix Debug Mode Toggle - Show keypresses in"
- 154      61747269 
- 154      78204465 
- 154      62756720 
- 154      4D6F6465 
- 155 01b0 206D6174 		.ascii	" matrix grid\012K:\011Keyboard Debug Toggle - Show "
- 155      72697820 
- 155      67726964 
- 155      0A4B3A09 
- 155      4B657962 
- 156 01dd 6B657970 		.ascii	"keypress report\012M:\011Debug Mouse Toggle\012V:\011"
- 156      72657373 
- 156      20726570 
- 156      6F72740A 
- 156      4D3A0944 
- 157 0206 56657273 		.ascii	"Version\012S:\011Status\012C:\011Activate Console M"
- 157      696F6E0A 
- 157      533A0953 
- 157      74617475 
- 157      730A433A 
- 158 022d 6F64650A 		.ascii	"ode\012F1-F10:\011Switch to Layer 0-9 (F10 = L0)\012"
- 158      46312D46 
- 158      31303A09 
- 158      53776974 
- 158      63682074 
- 159 0258 302D393A 		.ascii	"0-9:\011Switch to Layer 0-9\012GRAVE:\011Switch to "
- 159      09537769 
- 159      74636820 
- 159      746F204C 
- 159      61796572 
- 160 0282 4C617965 		.ascii	"Layer 0 (alternate)\012B:\011Jump to Bootloader\012"
- 160      72203020 
- 160      28616C74 
- 160      65726E61 
- 160      7465290A 
- 161 02ac 4553433A 		.ascii	"ESC:\011Jump to Bootloader (alternate)\012E:\011Pri"
- 161      094A756D 
- 161      7020746F 
- 161      20426F6F 
- 161      746C6F61 
- 162 02d6 6E742045 		.ascii	"nt EEPROM Settings\012BSPACE:\011Clear EEPROM\012N:"
- 162      4550524F 
- 162      4D205365 
- 162      7474696E 
- 162      67730A42 
- 163 0300 094E4B52 		.ascii	"\011NKRO Toggle\012\000"
- 163      4F20546F 
- 163      67676C65 
+ 124              		.loc 1 746 5 view .LVU15
+ 125 0018 FFF7FEBF 		b	clear_keyboard
+ 126              	.LVL5:
+ 127              	.L6:
+ 128              		.align	2
+ 129              	.L5:
+ 130 001c 00000000 		.word	.LC1
+ 131              		.cfi_endproc
+ 132              	.LFE304:
+ 134              		.section	.rodata.command_common.str1.1,"aMS",%progbits,1
+ 135              	.LC2:
+ 136 0000 6565636F 		.ascii	"eeconfig:\012default_layer: %u\012\000"
+ 136      6E666967 
+ 136      3A0A6465 
+ 136      6661756C 
+ 136      745F6C61 
+ 137              	.LC3:
+ 138 001d 64656275 		.ascii	"debug_config.raw: %02X\012.enable: %u\012.matrix: %"
+ 138      675F636F 
+ 138      6E666967 
+ 138      2E726177 
+ 138      3A202530 
+ 139 004a 750A2E6B 		.ascii	"u\012.keyboard: %u\012.mouse: %u\012\000"
+ 139      6579626F 
+ 139      6172643A 
+ 139      2025750A 
+ 139      2E6D6F75 
+ 140              	.LC4:
+ 141 0066 6B65796D 		.ascii	"keymap_config.raw: %02X\012.swap_control_capslock: "
+ 141      61705F63 
+ 141      6F6E6669 
+ 141      672E7261 
+ 141      773A2025 
+ 142 0096 25750A2E 		.ascii	"%u\012.capslock_to_control: %u\012.swap_lctl_lgui: "
+ 142      63617073 
+ 142      6C6F636B 
+ 142      5F746F5F 
+ 142      636F6E74 
+ 143 00c3 25750A2E 		.ascii	"%u\012.swap_rctl_rgui: %u\012.swap_lalt_lgui: %u\012"
+ 143      73776170 
+ 143      5F726374 
+ 143      6C5F7267 
+ 143      75693A20 
+ 144 00ee 2E737761 		.ascii	".swap_ralt_rgui: %u\012.no_gui: %u\012.swap_grave_e"
+ 144      705F7261 
+ 144      6C745F72 
+ 144      6775693A 
+ 144      2025750A 
+ 145 011b 73633A20 		.ascii	"sc: %u\012.swap_backslash_backspace: %u\012.nkro: %"
+ 145      25750A2E 
+ 145      73776170 
+ 145      5F626163 
+ 145      6B736C61 
+ 146 0148 750A00   		.ascii	"u\012\000"
+ 147              	.LC5:
+ 148 014b 436C6561 		.ascii	"Clearing EEPROM\012\000"
+ 148      72696E67 
+ 148      20454550 
+ 148      524F4D0A 
+ 148      00
+ 149              	.LC6:
+ 150 015c 0A092D20 		.ascii	"\012\011- Magic -\012D:\011Debug Message Toggle\012"
+ 150      4D616769 
+ 150      63202D0A 
+ 150      443A0944 
+ 150      65627567 
+ 151 0180 583A094D 		.ascii	"X:\011Matrix Debug Mode Toggle - Show keypresses in"
+ 151      61747269 
+ 151      78204465 
+ 151      62756720 
+ 151      4D6F6465 
+ 152 01b0 206D6174 		.ascii	" matrix grid\012K:\011Keyboard Debug Toggle - Show "
+ 152      72697820 
+ 152      67726964 
+ 152      0A4B3A09 
+ 152      4B657962 
+ 153 01dd 6B657970 		.ascii	"keypress report\012M:\011Debug Mouse Toggle\012V:\011"
+ 153      72657373 
+ 153      20726570 
+ 153      6F72740A 
+ 153      4D3A0944 
+ 154 0206 56657273 		.ascii	"Version\012S:\011Status\012C:\011Activate Console M"
+ 154      696F6E0A 
+ 154      533A0953 
+ 154      74617475 
+ 154      730A433A 
+ 155 022d 6F64650A 		.ascii	"ode\012F1-F10:\011Switch to Layer 0-9 (F10 = L0)\012"
+ 155      46312D46 
+ 155      31303A09 
+ 155      53776974 
+ 155      63682074 
+ 156 0258 302D393A 		.ascii	"0-9:\011Switch to Layer 0-9\012GRAVE:\011Switch to "
+ 156      09537769 
+ 156      74636820 
+ 156      746F204C 
+ 156      61796572 
+ 157 0282 4C617965 		.ascii	"Layer 0 (alternate)\012B:\011Jump to Bootloader\012"
+ 157      72203020 
+ 157      28616C74 
+ 157      65726E61 
+ 157      7465290A 
+ 158 02ac 4553433A 		.ascii	"ESC:\011Jump to Bootloader (alternate)\012E:\011Pri"
+ 158      094A756D 
+ 158      7020746F 
+ 158      20426F6F 
+ 158      746C6F61 
+ 159 02d6 6E742045 		.ascii	"nt EEPROM Settings\012BSPACE:\011Clear EEPROM\012N:"
+ 159      4550524F 
+ 159      4D205365 
+ 159      7474696E 
+ 159      67730A42 
+ 160 0300 094E4B52 		.ascii	"\011NKRO Toggle\012\000"
+ 160      4F20546F 
+ 160      67676C65 
+ 160      0A00
+ 161              	.LC7:
+ 162 030e 0A092D20 		.ascii	"\012\011- Console -\012ESC/q:\011quit\012m:\011mous"
+ 162      436F6E73 
+ 162      6F6C6520 
+ 162      2D0A4553 
+ 162      432F713A 
+ 163 032f 656B6579 		.ascii	"ekey\012\000"
  163      0A00
- 164              	.LC7:
- 165 030e 0A092D20 		.ascii	"\012\011- Console -\012ESC/q:\011quit\012m:\011mous"
- 165      436F6E73 
- 165      6F6C6520 
- 165      2D0A4553 
- 165      432F713A 
- 166 032f 656B6579 		.ascii	"ekey\012\000"
- 166      0A00
- 167              	.LC8:
- 168 0335 433E2000 		.ascii	"C> \000"
- 169              	.LC9:
- 170 0339 0A0A4A75 		.ascii	"\012\012Jumping to bootloader... \000"
- 170      6D70696E 
- 170      6720746F 
- 170      20626F6F 
- 170      746C6F61 
- 171              	.LC10:
- 172 0355 0A646562 		.ascii	"\012debug: on\012\000"
- 172      75673A20 
- 172      6F6E0A00 
- 173              	.LC11:
- 174 0361 0A646562 		.ascii	"\012debug: off\012\000"
- 174      75673A20 
- 174      6F66660A 
- 174      00
- 175              	.LC12:
- 176 036e 0A6D6174 		.ascii	"\012matrix: on\012\000"
- 176      7269783A 
- 176      206F6E0A 
- 176      00
- 177              	.LC13:
- 178 037b 0A6D6174 		.ascii	"\012matrix: off\012\000"
- 178      7269783A 
- 178      206F6666 
- 178      0A00
- 179              	.LC14:
- 180 0389 0A6B6579 		.ascii	"\012keyboard: on\012\000"
- 180      626F6172 
- 180      643A206F 
- 180      6E0A00
- 181              	.LC15:
- 182 0398 0A6B6579 		.ascii	"\012keyboard: off\012\000"
- 182      626F6172 
- 182      643A206F 
- 182      66660A00 
- 183              	.LC16:
- 184 03a8 0A6D6F75 		.ascii	"\012mouse: on\012\000"
- 184      73653A20 
- 184      6F6E0A00 
- 185              	.LC17:
- 186 03b4 0A6D6F75 		.ascii	"\012mouse: off\012\000"
- 186      73653A20 
- 186      6F66660A 
- 186      00
- 187              	.LC18:
- 188 03c1 0A092D20 		.ascii	"\012\011- Version -\012VID: 0x320F(Glorious) PID: 0"
- 188      56657273 
- 188      696F6E20 
- 188      2D0A5649 
- 188      443A2030 
- 189 03eb 78353034 		.ascii	"x5044(GMMK Pro) VER: 0x0001\012BUILD:  (Aug  9 2021"
- 189      3428474D 
- 189      4D4B2050 
- 189      726F2920 
- 189      5645523A 
- 190 041b 290A4348 		.ascii	")\012CHIBIOS: \"9be452-dirty\", CONTRIB: \"9be452-d"
- 190      4942494F 
- 190      533A2022 
- 190      39626534 
- 190      35322D64 
- 191 0448 69727479 		.ascii	"irty\"\012OPTIONS: MOUSEKEY EXTRAKEY CONSOLE COMMAN"
- 191      220A4F50 
- 191      54494F4E 
- 191      533A204D 
- 191      4F555345 
- 192 0477 44204E4B 		.ascii	"D NKRO BOOTLOADER_SIZE\012GCC: 10.1.0\012\000"
- 192      524F2042 
- 192      4F4F544C 
- 192      4F414445 
- 192      525F5349 
- 193              	.LC19:
- 194 049b 0A092D20 		.ascii	"\012\011- Status -\012host_keyboard_leds(): %02X\012"
- 194      53746174 
- 194      7573202D 
- 194      0A686F73 
- 194      745F6B65 
- 195 04c3 6B657962 		.ascii	"keyboard_protocol: %02X\012keyboard_idle: %02X\012k"
- 195      6F617264 
- 195      5F70726F 
- 195      746F636F 
- 195      6C3A2025 
- 196 04f0 65796D61 		.ascii	"eymap_config.nkro: %02X\012timer_read32(): %08lX\012"
- 196      705F636F 
- 196      6E666967 
- 196      2E6E6B72 
- 196      6F3A2025 
- 197 051e 00       		.ascii	"\000"
- 198              	.LC20:
- 199 051f 4E4B524F 		.ascii	"NKRO: on\012\000"
- 199      3A206F6E 
- 199      0A00
- 200              	.LC21:
- 201 0529 4E4B524F 		.ascii	"NKRO: off\012\000"
- 201      3A206F66 
- 201      660A00
- 202              	.LC22:
- 203 0534 3F00     		.ascii	"?\000"
- 204              		.section	.text.command_common,"ax",%progbits
- 205              		.align	1
- 206              		.syntax unified
- 207              		.thumb
- 208              		.thumb_func
- 209              		.fpu fpv4-sp-d16
- 211              	command_common:
- 212              	.LVL6:
- 213              	.LFB298:
+ 164              	.LC8:
+ 165 0335 433E2000 		.ascii	"C> \000"
+ 166              	.LC9:
+ 167 0339 0A0A4A75 		.ascii	"\012\012Jumping to bootloader... \000"
+ 167      6D70696E 
+ 167      6720746F 
+ 167      20626F6F 
+ 167      746C6F61 
+ 168              	.LC10:
+ 169 0355 0A646562 		.ascii	"\012debug: on\012\000"
+ 169      75673A20 
+ 169      6F6E0A00 
+ 170              	.LC11:
+ 171 0361 0A646562 		.ascii	"\012debug: off\012\000"
+ 171      75673A20 
+ 171      6F66660A 
+ 171      00
+ 172              	.LC12:
+ 173 036e 0A6D6174 		.ascii	"\012matrix: on\012\000"
+ 173      7269783A 
+ 173      206F6E0A 
+ 173      00
+ 174              	.LC13:
+ 175 037b 0A6D6174 		.ascii	"\012matrix: off\012\000"
+ 175      7269783A 
+ 175      206F6666 
+ 175      0A00
+ 176              	.LC14:
+ 177 0389 0A6B6579 		.ascii	"\012keyboard: on\012\000"
+ 177      626F6172 
+ 177      643A206F 
+ 177      6E0A00
+ 178              	.LC15:
+ 179 0398 0A6B6579 		.ascii	"\012keyboard: off\012\000"
+ 179      626F6172 
+ 179      643A206F 
+ 179      66660A00 
+ 180              	.LC16:
+ 181 03a8 0A6D6F75 		.ascii	"\012mouse: on\012\000"
+ 181      73653A20 
+ 181      6F6E0A00 
+ 182              	.LC17:
+ 183 03b4 0A6D6F75 		.ascii	"\012mouse: off\012\000"
+ 183      73653A20 
+ 183      6F66660A 
+ 183      00
+ 184              	.LC18:
+ 185 03c1 0A092D20 		.ascii	"\012\011- Version -\012VID: 0x320F(Glorious) PID: 0"
+ 185      56657273 
+ 185      696F6E20 
+ 185      2D0A5649 
+ 185      443A2030 
+ 186 03eb 78353034 		.ascii	"x5044(GMMK Pro) VER: 0x0001\012BUILD:  (Aug 10 2021"
+ 186      3428474D 
+ 186      4D4B2050 
+ 186      726F2920 
+ 186      5645523A 
+ 187 041b 290A4348 		.ascii	")\012CHIBIOS: \"1.04-1-g91779d-dirty\", CONTRIB: \""
+ 187      4942494F 
+ 187      533A2022 
+ 187      312E3034 
+ 187      2D312D67 
+ 188 0448 312E3034 		.ascii	"1.04-1-g91779d-dirty\"\012OPTIONS: MOUSEKEY EXTRAKE"
+ 188      2D312D67 
+ 188      39313737 
+ 188      39642D64 
+ 188      69727479 
+ 189 0477 5920434F 		.ascii	"Y CONSOLE COMMAND NKRO BOOTLOADER_SIZE\012GCC: 10.1"
+ 189      4E534F4C 
+ 189      4520434F 
+ 189      4D4D414E 
+ 189      44204E4B 
+ 190 04a7 2E300A00 		.ascii	".0\012\000"
+ 191              	.LC19:
+ 192 04ab 0A092D20 		.ascii	"\012\011- Status -\012host_keyboard_leds(): %02X\012"
+ 192      53746174 
+ 192      7573202D 
+ 192      0A686F73 
+ 192      745F6B65 
+ 193 04d3 6B657962 		.ascii	"keyboard_protocol: %02X\012keyboard_idle: %02X\012k"
+ 193      6F617264 
+ 193      5F70726F 
+ 193      746F636F 
+ 193      6C3A2025 
+ 194 0500 65796D61 		.ascii	"eymap_config.nkro: %02X\012timer_read32(): %08lX\012"
+ 194      705F636F 
+ 194      6E666967 
+ 194      2E6E6B72 
+ 194      6F3A2025 
+ 195 052e 00       		.ascii	"\000"
+ 196              	.LC20:
+ 197 052f 4E4B524F 		.ascii	"NKRO: on\012\000"
+ 197      3A206F6E 
+ 197      0A00
+ 198              	.LC21:
+ 199 0539 4E4B524F 		.ascii	"NKRO: off\012\000"
+ 199      3A206F66 
+ 199      660A00
+ 200              	.LC22:
+ 201 0544 3F00     		.ascii	"?\000"
+ 202              		.section	.text.command_common,"ax",%progbits
+ 203              		.align	1
+ 204              		.syntax unified
+ 205              		.thumb
+ 206              		.thumb_func
+ 207              		.fpu fpv4-sp-d16
+ 209              	command_common:
+ 210              	.LVL6:
+ 211              	.LFB298:
  320:quantum/command.c **** #ifdef KEYBOARD_LOCK_ENABLE
- 214              		.loc 1 320 42 is_stmt 1 view -0
- 215              		.cfi_startproc
- 216              		@ args = 0, pretend = 0, frame = 16
- 217              		@ frame_needed = 0, uses_anonymous_args = 0
+ 212              		.loc 1 320 42 is_stmt 1 view -0
+ 213              		.cfi_startproc
+ 214              		@ args = 0, pretend = 0, frame = 16
+ 215              		@ frame_needed = 0, uses_anonymous_args = 0
  325:quantum/command.c **** #ifdef SLEEP_LED_ENABLE
- 218              		.loc 1 325 5 view .LVU19
+ 216              		.loc 1 325 5 view .LVU17
  320:quantum/command.c **** #ifdef KEYBOARD_LOCK_ENABLE
- 219              		.loc 1 320 42 is_stmt 0 view .LVU20
- 220 0000 10B5     		push	{r4, lr}
- 221              		.cfi_def_cfa_offset 8
- 222              		.cfi_offset 4, -8
- 223              		.cfi_offset 14, -4
- 224 0002 431F     		subs	r3, r0, #5
- 225 0004 8CB0     		sub	sp, sp, #48
- 226              		.cfi_def_cfa_offset 56
- 227 0006 3E2B     		cmp	r3, #62
- 228 0008 00F21481 		bhi	.L8
- 229 000c DFE813F0 		tbh	[pc, r3, lsl #1]
- 230              	.L10:
- 231 0010 9300     		.2byte	(.L14-.L10)/2
- 232 0012 8300     		.2byte	(.L24-.L10)/2
- 233 0014 9900     		.2byte	(.L23-.L10)/2
- 234 0016 3F00     		.2byte	(.L22-.L10)/2
- 235 0018 1201     		.2byte	(.L8-.L10)/2
- 236 001a 1201     		.2byte	(.L8-.L10)/2
- 237 001c 7F00     		.2byte	(.L12-.L10)/2
- 238 001e 1201     		.2byte	(.L8-.L10)/2
- 239 0020 1201     		.2byte	(.L8-.L10)/2
- 240 0022 C200     		.2byte	(.L21-.L10)/2
- 241 0024 1201     		.2byte	(.L8-.L10)/2
- 242 0026 D100     		.2byte	(.L20-.L10)/2
- 243 0028 F900     		.2byte	(.L19-.L10)/2
- 244 002a 1201     		.2byte	(.L8-.L10)/2
- 245 002c 1201     		.2byte	(.L8-.L10)/2
- 246 002e 1201     		.2byte	(.L8-.L10)/2
- 247 0030 1201     		.2byte	(.L8-.L10)/2
- 248 0032 E200     		.2byte	(.L18-.L10)/2
- 249 0034 1201     		.2byte	(.L8-.L10)/2
- 250 0036 1201     		.2byte	(.L8-.L10)/2
- 251 0038 E000     		.2byte	(.L17-.L10)/2
- 252 003a 1201     		.2byte	(.L8-.L10)/2
- 253 003c AE00     		.2byte	(.L16-.L10)/2
- 254 003e 1201     		.2byte	(.L8-.L10)/2
- 255 0040 1201     		.2byte	(.L8-.L10)/2
- 256 0042 1001     		.2byte	(.L15-.L10)/2
- 257 0044 1001     		.2byte	(.L15-.L10)/2
- 258 0046 1001     		.2byte	(.L15-.L10)/2
- 259 0048 1001     		.2byte	(.L15-.L10)/2
- 260 004a 1001     		.2byte	(.L15-.L10)/2
- 261 004c 1001     		.2byte	(.L15-.L10)/2
- 262 004e 1001     		.2byte	(.L15-.L10)/2
- 263 0050 1001     		.2byte	(.L15-.L10)/2
- 264 0052 1001     		.2byte	(.L15-.L10)/2
- 265 0054 0901     		.2byte	(.L9-.L10)/2
- 266 0056 1201     		.2byte	(.L8-.L10)/2
- 267 0058 9300     		.2byte	(.L14-.L10)/2
- 268 005a 7900     		.2byte	(.L13-.L10)/2
- 269 005c 1201     		.2byte	(.L8-.L10)/2
- 270 005e 1201     		.2byte	(.L8-.L10)/2
- 271 0060 1201     		.2byte	(.L8-.L10)/2
- 272 0062 1201     		.2byte	(.L8-.L10)/2
- 273 0064 1201     		.2byte	(.L8-.L10)/2
- 274 0066 1201     		.2byte	(.L8-.L10)/2
- 275 0068 1201     		.2byte	(.L8-.L10)/2
- 276 006a 1201     		.2byte	(.L8-.L10)/2
- 277 006c 1201     		.2byte	(.L8-.L10)/2
- 278 006e 1201     		.2byte	(.L8-.L10)/2
- 279 0070 0901     		.2byte	(.L9-.L10)/2
- 280 0072 1201     		.2byte	(.L8-.L10)/2
- 281 0074 1201     		.2byte	(.L8-.L10)/2
- 282 0076 7F00     		.2byte	(.L12-.L10)/2
- 283 0078 1201     		.2byte	(.L8-.L10)/2
- 284 007a 0D01     		.2byte	(.L11-.L10)/2
- 285 007c 0D01     		.2byte	(.L11-.L10)/2
- 286 007e 0D01     		.2byte	(.L11-.L10)/2
- 287 0080 0D01     		.2byte	(.L11-.L10)/2
- 288 0082 0D01     		.2byte	(.L11-.L10)/2
- 289 0084 0D01     		.2byte	(.L11-.L10)/2
- 290 0086 0D01     		.2byte	(.L11-.L10)/2
- 291 0088 0D01     		.2byte	(.L11-.L10)/2
- 292 008a 0D01     		.2byte	(.L11-.L10)/2
- 293 008c 0901     		.2byte	(.L9-.L10)/2
- 294              		.p2align 1
- 295              	.L22:
+ 217              		.loc 1 320 42 is_stmt 0 view .LVU18
+ 218 0000 10B5     		push	{r4, lr}
+ 219              		.cfi_def_cfa_offset 8
+ 220              		.cfi_offset 4, -8
+ 221              		.cfi_offset 14, -4
+ 222 0002 431F     		subs	r3, r0, #5
+ 223 0004 8CB0     		sub	sp, sp, #48
+ 224              		.cfi_def_cfa_offset 56
+ 225 0006 3E2B     		cmp	r3, #62
+ 226 0008 00F21481 		bhi	.L8
+ 227 000c DFE813F0 		tbh	[pc, r3, lsl #1]
+ 228              	.L10:
+ 229 0010 9300     		.2byte	(.L14-.L10)/2
+ 230 0012 8300     		.2byte	(.L24-.L10)/2
+ 231 0014 9900     		.2byte	(.L23-.L10)/2
+ 232 0016 3F00     		.2byte	(.L22-.L10)/2
+ 233 0018 1201     		.2byte	(.L8-.L10)/2
+ 234 001a 1201     		.2byte	(.L8-.L10)/2
+ 235 001c 7F00     		.2byte	(.L12-.L10)/2
+ 236 001e 1201     		.2byte	(.L8-.L10)/2
+ 237 0020 1201     		.2byte	(.L8-.L10)/2
+ 238 0022 C200     		.2byte	(.L21-.L10)/2
+ 239 0024 1201     		.2byte	(.L8-.L10)/2
+ 240 0026 D100     		.2byte	(.L20-.L10)/2
+ 241 0028 F900     		.2byte	(.L19-.L10)/2
+ 242 002a 1201     		.2byte	(.L8-.L10)/2
+ 243 002c 1201     		.2byte	(.L8-.L10)/2
+ 244 002e 1201     		.2byte	(.L8-.L10)/2
+ 245 0030 1201     		.2byte	(.L8-.L10)/2
+ 246 0032 E200     		.2byte	(.L18-.L10)/2
+ 247 0034 1201     		.2byte	(.L8-.L10)/2
+ 248 0036 1201     		.2byte	(.L8-.L10)/2
+ 249 0038 E000     		.2byte	(.L17-.L10)/2
+ 250 003a 1201     		.2byte	(.L8-.L10)/2
+ 251 003c AE00     		.2byte	(.L16-.L10)/2
+ 252 003e 1201     		.2byte	(.L8-.L10)/2
+ 253 0040 1201     		.2byte	(.L8-.L10)/2
+ 254 0042 1001     		.2byte	(.L15-.L10)/2
+ 255 0044 1001     		.2byte	(.L15-.L10)/2
+ 256 0046 1001     		.2byte	(.L15-.L10)/2
+ 257 0048 1001     		.2byte	(.L15-.L10)/2
+ 258 004a 1001     		.2byte	(.L15-.L10)/2
+ 259 004c 1001     		.2byte	(.L15-.L10)/2
+ 260 004e 1001     		.2byte	(.L15-.L10)/2
+ 261 0050 1001     		.2byte	(.L15-.L10)/2
+ 262 0052 1001     		.2byte	(.L15-.L10)/2
+ 263 0054 0901     		.2byte	(.L9-.L10)/2
+ 264 0056 1201     		.2byte	(.L8-.L10)/2
+ 265 0058 9300     		.2byte	(.L14-.L10)/2
+ 266 005a 7900     		.2byte	(.L13-.L10)/2
+ 267 005c 1201     		.2byte	(.L8-.L10)/2
+ 268 005e 1201     		.2byte	(.L8-.L10)/2
+ 269 0060 1201     		.2byte	(.L8-.L10)/2
+ 270 0062 1201     		.2byte	(.L8-.L10)/2
+ 271 0064 1201     		.2byte	(.L8-.L10)/2
+ 272 0066 1201     		.2byte	(.L8-.L10)/2
+ 273 0068 1201     		.2byte	(.L8-.L10)/2
+ 274 006a 1201     		.2byte	(.L8-.L10)/2
+ 275 006c 1201     		.2byte	(.L8-.L10)/2
+ 276 006e 1201     		.2byte	(.L8-.L10)/2
+ 277 0070 0901     		.2byte	(.L9-.L10)/2
+ 278 0072 1201     		.2byte	(.L8-.L10)/2
+ 279 0074 1201     		.2byte	(.L8-.L10)/2
+ 280 0076 7F00     		.2byte	(.L12-.L10)/2
+ 281 0078 1201     		.2byte	(.L8-.L10)/2
+ 282 007a 0D01     		.2byte	(.L11-.L10)/2
+ 283 007c 0D01     		.2byte	(.L11-.L10)/2
+ 284 007e 0D01     		.2byte	(.L11-.L10)/2
+ 285 0080 0D01     		.2byte	(.L11-.L10)/2
+ 286 0082 0D01     		.2byte	(.L11-.L10)/2
+ 287 0084 0D01     		.2byte	(.L11-.L10)/2
+ 288 0086 0D01     		.2byte	(.L11-.L10)/2
+ 289 0088 0D01     		.2byte	(.L11-.L10)/2
+ 290 008a 0D01     		.2byte	(.L11-.L10)/2
+ 291 008c 0901     		.2byte	(.L9-.L10)/2
+ 292              		.p2align 1
+ 293              	.L22:
  339:quantum/command.c **** #endif /* !NO_PRINT && !USER_PRINT */
- 296              		.loc 1 339 13 is_stmt 1 view .LVU21
- 297              	.LBB13:
- 298              	.LBI13:
+ 294              		.loc 1 339 13 is_stmt 1 view .LVU19
+ 295              	.LBB13:
+ 296              	.LBI13:
  250:quantum/command.c ****     xprintf("eeconfig:\ndefault_layer: %u\n", eeconfig_read_default_layer());
- 299              		.loc 1 250 13 view .LVU22
- 300              	.LBB14:
+ 297              		.loc 1 250 13 view .LVU20
+ 298              	.LBB14:
  251:quantum/command.c **** 
- 301              		.loc 1 251 5 view .LVU23
+ 299              		.loc 1 251 5 view .LVU21
  251:quantum/command.c **** 
- 302              		.loc 1 251 47 is_stmt 0 view .LVU24
- 303 008e FFF7FEFF 		bl	eeconfig_read_default_layer
- 304              	.LVL7:
+ 300              		.loc 1 251 47 is_stmt 0 view .LVU22
+ 301 008e FFF7FEFF 		bl	eeconfig_read_default_layer
+ 302              	.LVL7:
  251:quantum/command.c **** 
- 305              		.loc 1 251 47 view .LVU25
- 306 0092 0146     		mov	r1, r0
+ 303              		.loc 1 251 47 view .LVU23
+ 304 0092 0146     		mov	r1, r0
  251:quantum/command.c **** 
- 307              		.loc 1 251 5 view .LVU26
- 308 0094 6A48     		ldr	r0, .L37
- 309 0096 FFF7FEFF 		bl	printf_
- 310              	.LVL8:
+ 305              		.loc 1 251 5 view .LVU24
+ 306 0094 6A48     		ldr	r0, .L37
+ 307 0096 FFF7FEFF 		bl	printf_
+ 308              	.LVL8:
  253:quantum/command.c ****     dc.raw = eeconfig_read_debug();
- 311              		.loc 1 253 5 is_stmt 1 view .LVU27
+ 309              		.loc 1 253 5 is_stmt 1 view .LVU25
  254:quantum/command.c ****     xprintf(/* clang-format off */
- 312              		.loc 1 254 5 view .LVU28
+ 310              		.loc 1 254 5 view .LVU26
  254:quantum/command.c ****     xprintf(/* clang-format off */
- 313              		.loc 1 254 14 is_stmt 0 view .LVU29
- 314 009a FFF7FEFF 		bl	eeconfig_read_debug
- 315              	.LVL9:
+ 311              		.loc 1 254 14 is_stmt 0 view .LVU27
+ 312 009a FFF7FEFF 		bl	eeconfig_read_debug
+ 313              	.LVL9:
  255:quantum/command.c **** 
- 316              		.loc 1 255 5 view .LVU30
- 317 009e C0F3C003 		ubfx	r3, r0, #3, #1
- 318 00a2 0193     		str	r3, [sp, #4]
- 319 00a4 C0F38003 		ubfx	r3, r0, #2, #1
+ 314              		.loc 1 255 5 view .LVU28
+ 315 009e C0F3C003 		ubfx	r3, r0, #3, #1
+ 316 00a2 0193     		str	r3, [sp, #4]
+ 317 00a4 C0F38003 		ubfx	r3, r0, #2, #1
  254:quantum/command.c ****     xprintf(/* clang-format off */
- 320              		.loc 1 254 14 view .LVU31
- 321 00a8 0146     		mov	r1, r0
+ 318              		.loc 1 254 14 view .LVU29
+ 319 00a8 0146     		mov	r1, r0
  255:quantum/command.c **** 
- 322              		.loc 1 255 5 is_stmt 1 view .LVU32
- 323 00aa 00F00102 		and	r2, r0, #1
- 324 00ae 0093     		str	r3, [sp]
- 325 00b0 C0F34003 		ubfx	r3, r0, #1, #1
- 326 00b4 6348     		ldr	r0, .L37+4
- 327 00b6 FFF7FEFF 		bl	printf_
- 328              	.LVL10:
+ 320              		.loc 1 255 5 is_stmt 1 view .LVU30
+ 321 00aa 00F00102 		and	r2, r0, #1
+ 322 00ae 0093     		str	r3, [sp]
+ 323 00b0 C0F34003 		ubfx	r3, r0, #1, #1
+ 324 00b4 6348     		ldr	r0, .L37+4
+ 325 00b6 FFF7FEFF 		bl	printf_
+ 326              	.LVL10:
  270:quantum/command.c ****     kc.raw = eeconfig_read_keymap();
- 329              		.loc 1 270 5 view .LVU33
+ 327              		.loc 1 270 5 view .LVU31
  271:quantum/command.c ****     xprintf(/* clang-format off */
- 330              		.loc 1 271 5 view .LVU34
+ 328              		.loc 1 271 5 view .LVU32
  271:quantum/command.c ****     xprintf(/* clang-format off */
- 331              		.loc 1 271 14 is_stmt 0 view .LVU35
- 332 00ba FFF7FEFF 		bl	eeconfig_read_keymap
- 333              	.LVL11:
+ 329              		.loc 1 271 14 is_stmt 0 view .LVU33
+ 330 00ba FFF7FEFF 		bl	eeconfig_read_keymap
+ 331              	.LVL11:
  272:quantum/command.c **** 
- 334              		.loc 1 272 5 view .LVU36
- 335 00be C0F3C013 		ubfx	r3, r0, #7, #1
- 336 00c2 0793     		str	r3, [sp, #28]
- 337 00c4 C0F38013 		ubfx	r3, r0, #6, #1
- 338 00c8 0693     		str	r3, [sp, #24]
- 339 00ca C0F34013 		ubfx	r3, r0, #5, #1
- 340 00ce 0593     		str	r3, [sp, #20]
- 341 00d0 C0F30013 		ubfx	r3, r0, #4, #1
- 342 00d4 0493     		str	r3, [sp, #16]
- 343 00d6 C0F3C003 		ubfx	r3, r0, #3, #1
- 344 00da 0393     		str	r3, [sp, #12]
- 345 00dc C0F38003 		ubfx	r3, r0, #2, #1
- 346 00e0 0293     		str	r3, [sp, #8]
- 347 00e2 C0F34023 		ubfx	r3, r0, #9, #1
- 348 00e6 0193     		str	r3, [sp, #4]
- 349 00e8 C0F30023 		ubfx	r3, r0, #8, #1
+ 332              		.loc 1 272 5 view .LVU34
+ 333 00be C0F3C013 		ubfx	r3, r0, #7, #1
+ 334 00c2 0793     		str	r3, [sp, #28]
+ 335 00c4 C0F38013 		ubfx	r3, r0, #6, #1
+ 336 00c8 0693     		str	r3, [sp, #24]
+ 337 00ca C0F34013 		ubfx	r3, r0, #5, #1
+ 338 00ce 0593     		str	r3, [sp, #20]
+ 339 00d0 C0F30013 		ubfx	r3, r0, #4, #1
+ 340 00d4 0493     		str	r3, [sp, #16]
+ 341 00d6 C0F3C003 		ubfx	r3, r0, #3, #1
+ 342 00da 0393     		str	r3, [sp, #12]
+ 343 00dc C0F38003 		ubfx	r3, r0, #2, #1
+ 344 00e0 0293     		str	r3, [sp, #8]
+ 345 00e2 C0F34023 		ubfx	r3, r0, #9, #1
+ 346 00e6 0193     		str	r3, [sp, #4]
+ 347 00e8 C0F30023 		ubfx	r3, r0, #8, #1
  271:quantum/command.c ****     xprintf(/* clang-format off */
- 350              		.loc 1 271 14 view .LVU37
- 351 00ec 0146     		mov	r1, r0
+ 348              		.loc 1 271 14 view .LVU35
+ 349 00ec 0146     		mov	r1, r0
  272:quantum/command.c **** 
- 352              		.loc 1 272 5 is_stmt 1 view .LVU38
- 353 00ee 0093     		str	r3, [sp]
- 354 00f0 00F00102 		and	r2, r0, #1
- 355 00f4 C0F34003 		ubfx	r3, r0, #1, #1
- 356 00f8 5348     		ldr	r0, .L37+8
- 357 00fa FFF7FEFF 		bl	printf_
- 358              	.LVL12:
- 359              	.L31:
- 360              	.LBE14:
- 361              	.LBE13:
+ 350              		.loc 1 272 5 is_stmt 1 view .LVU36
+ 351 00ee 0093     		str	r3, [sp]
+ 352 00f0 00F00102 		and	r2, r0, #1
+ 353 00f4 C0F34003 		ubfx	r3, r0, #1, #1
+ 354 00f8 5348     		ldr	r0, .L37+8
+ 355 00fa FFF7FEFF 		bl	printf_
+ 356              	.LVL12:
+ 357              	.L31:
+ 358              	.LBE14:
+ 359              	.LBE13:
  532:quantum/command.c **** }
- 362              		.loc 1 532 12 is_stmt 0 view .LVU39
- 363 00fe 0120     		movs	r0, #1
- 364              	.LBB15:
- 365              	.LBB16:
+ 360              		.loc 1 532 12 is_stmt 0 view .LVU37
+ 361 00fe 0120     		movs	r0, #1
+ 362              	.LBB15:
+ 363              	.LBB16:
  247:quantum/command.c **** 
- 366              		.loc 1 247 1 view .LVU40
- 367 0100 17E0     		b	.L25
- 368              	.LVL13:
- 369              	.L13:
+ 364              		.loc 1 247 1 view .LVU38
+ 365 0100 17E0     		b	.L25
+ 366              	.LVL13:
+ 367              	.L13:
  247:quantum/command.c **** 
- 370              		.loc 1 247 1 view .LVU41
- 371              	.LBE16:
- 372              	.LBE15:
+ 368              		.loc 1 247 1 view .LVU39
+ 369              	.LBE16:
+ 370              	.LBE15:
  345:quantum/command.c ****             eeconfig_init();
- 373              		.loc 1 345 13 is_stmt 1 view .LVU42
- 374 0102 5248     		ldr	r0, .L37+12
- 375              	.LVL14:
+ 371              		.loc 1 345 13 is_stmt 1 view .LVU40
+ 372 0102 5248     		ldr	r0, .L37+12
+ 373              	.LVL14:
  345:quantum/command.c ****             eeconfig_init();
- 376              		.loc 1 345 13 is_stmt 0 view .LVU43
- 377 0104 FFF7FEFF 		bl	printf_
- 378              	.LVL15:
+ 374              		.loc 1 345 13 is_stmt 0 view .LVU41
+ 375 0104 FFF7FEFF 		bl	printf_
+ 376              	.LVL15:
  346:quantum/command.c ****             break;
- 379              		.loc 1 346 13 is_stmt 1 view .LVU44
- 380 0108 FFF7FEFF 		bl	eeconfig_init
- 381              	.LVL16:
+ 377              		.loc 1 346 13 is_stmt 1 view .LVU42
+ 378 0108 FFF7FEFF 		bl	eeconfig_init
+ 379              	.LVL16:
  347:quantum/command.c **** 
- 382              		.loc 1 347 13 view .LVU45
- 383 010c F7E7     		b	.L31
- 384              	.LVL17:
- 385              	.L12:
+ 380              		.loc 1 347 13 view .LVU43
+ 381 010c F7E7     		b	.L31
+ 382              	.LVL17:
+ 383              	.L12:
  368:quantum/command.c ****             break;
- 386              		.loc 1 368 13 view .LVU46
- 387              	.LBB18:
- 388              	.LBI18:
+ 384              		.loc 1 368 13 view .LVU44
+ 385              	.LBB18:
+ 386              	.LBI18:
  106:quantum/command.c ****     print(/* clang-format off */
- 389              		.loc 1 106 13 view .LVU47
- 390              	.LBB19:
+ 387              		.loc 1 106 13 view .LVU45
+ 388              	.LBB19:
  107:quantum/command.c ****         "\n\t- Magic -\n"
- 391              		.loc 1 107 5 view .LVU48
- 392 010e 5048     		ldr	r0, .L37+16
- 393              	.LVL18:
- 394              	.L32:
+ 389              		.loc 1 107 5 view .LVU46
+ 390 010e 5048     		ldr	r0, .L37+16
+ 391              	.LVL18:
+ 392              	.L32:
  107:quantum/command.c ****         "\n\t- Magic -\n"
- 395              		.loc 1 107 5 is_stmt 0 view .LVU49
- 396              	.LBE19:
- 397              	.LBE18:
+ 393              		.loc 1 107 5 is_stmt 0 view .LVU47
+ 394              	.LBE19:
+ 395              	.LBE18:
  431:quantum/command.c ****             }
- 398              		.loc 1 431 17 view .LVU50
- 399 0110 FFF7FEFF 		bl	printf_
- 400              	.LVL19:
- 401 0114 F3E7     		b	.L31
- 402              	.LVL20:
- 403              	.L24:
+ 396              		.loc 1 431 17 view .LVU48
+ 397 0110 FFF7FEFF 		bl	printf_
+ 398              	.LVL19:
+ 399 0114 F3E7     		b	.L31
+ 400              	.LVL20:
+ 401              	.L24:
  373:quantum/command.c ****             debug_keyboard = false;
- 404              		.loc 1 373 13 is_stmt 1 view .LVU51
+ 402              		.loc 1 373 13 is_stmt 1 view .LVU49
  374:quantum/command.c ****             debug_mouse    = false;
- 405              		.loc 1 374 13 view .LVU52
+ 403              		.loc 1 374 13 view .LVU50
  375:quantum/command.c ****             debug_enable   = false;
- 406              		.loc 1 375 13 view .LVU53
+ 404              		.loc 1 375 13 view .LVU51
  376:quantum/command.c ****             command_console_help();
- 407              		.loc 1 376 13 view .LVU54
+ 405              		.loc 1 376 13 view .LVU52
  376:quantum/command.c ****             command_console_help();
- 408              		.loc 1 376 28 is_stmt 0 view .LVU55
- 409 0116 4F4A     		ldr	r2, .L37+20
- 410              	.LBB20:
- 411              	.LBB21:
+ 406              		.loc 1 376 28 is_stmt 0 view .LVU53
+ 407 0116 4F4A     		ldr	r2, .L37+20
+ 408              	.LBB20:
+ 409              	.LBB21:
  539:quantum/command.c ****           "ESC/q:	quit\n"
- 412              		.loc 1 539 5 view .LVU56
- 413 0118 4F48     		ldr	r0, .L37+24
- 414              	.LVL21:
+ 410              		.loc 1 539 5 view .LVU54
+ 411 0118 4F48     		ldr	r0, .L37+24
+ 412              	.LVL21:
  539:quantum/command.c ****           "ESC/q:	quit\n"
- 415              		.loc 1 539 5 view .LVU57
- 416              	.LBE21:
- 417              	.LBE20:
+ 413              		.loc 1 539 5 view .LVU55
+ 414              	.LBE21:
+ 415              	.LBE20:
  376:quantum/command.c ****             command_console_help();
- 418              		.loc 1 376 28 view .LVU58
- 419 011a 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
- 420 011c 23F00F03 		bic	r3, r3, #15
- 421 0120 1370     		strb	r3, [r2]
+ 416              		.loc 1 376 28 view .LVU56
+ 417 011a 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 418 011c 23F00F03 		bic	r3, r3, #15
+ 419 0120 1370     		strb	r3, [r2]
  377:quantum/command.c ****             print("C> ");
- 422              		.loc 1 377 13 is_stmt 1 view .LVU59
- 423              	.LBB23:
- 424              	.LBI20:
+ 420              		.loc 1 377 13 is_stmt 1 view .LVU57
+ 421              	.LBB23:
+ 422              	.LBI20:
  538:quantum/command.c ****     print("\n\t- Console -\n"
- 425              		.loc 1 538 13 view .LVU60
- 426              	.LBB22:
+ 423              		.loc 1 538 13 view .LVU58
+ 424              	.LBB22:
  539:quantum/command.c ****           "ESC/q:	quit\n"
- 427              		.loc 1 539 5 view .LVU61
- 428 0122 FFF7FEFF 		bl	printf_
- 429              	.LVL22:
- 430              	.LBE22:
- 431              	.LBE23:
+ 425              		.loc 1 539 5 view .LVU59
+ 426 0122 FFF7FEFF 		bl	printf_
+ 427              	.LVL22:
+ 428              	.LBE22:
+ 429              	.LBE23:
  378:quantum/command.c ****             command_state = CONSOLE;
- 432              		.loc 1 378 13 view .LVU62
- 433 0126 4D48     		ldr	r0, .L37+28
- 434 0128 FFF7FEFF 		bl	printf_
- 435              	.LVL23:
+ 430              		.loc 1 378 13 view .LVU60
+ 431 0126 4D48     		ldr	r0, .L37+28
+ 432 0128 FFF7FEFF 		bl	printf_
+ 433              	.LVL23:
  379:quantum/command.c ****             break;
- 436              		.loc 1 379 13 view .LVU63
+ 434              		.loc 1 379 13 view .LVU61
  379:quantum/command.c ****             break;
- 437              		.loc 1 379 27 is_stmt 0 view .LVU64
- 438 012c 4C4B     		ldr	r3, .L37+32
- 439 012e 0120     		movs	r0, #1
- 440 0130 1870     		strb	r0, [r3]
+ 435              		.loc 1 379 27 is_stmt 0 view .LVU62
+ 436 012c 4C4B     		ldr	r3, .L37+32
+ 437 012e 0120     		movs	r0, #1
+ 438 0130 1870     		strb	r0, [r3]
  380:quantum/command.c **** 
- 441              		.loc 1 380 13 is_stmt 1 view .LVU65
- 442              	.L25:
+ 439              		.loc 1 380 13 is_stmt 1 view .LVU63
+ 440              	.L25:
  533:quantum/command.c **** 
- 443              		.loc 1 533 1 is_stmt 0 view .LVU66
- 444 0132 0CB0     		add	sp, sp, #48
- 445              		.cfi_remember_state
- 446              		.cfi_def_cfa_offset 8
- 447              		@ sp needed
- 448 0134 10BD     		pop	{r4, pc}
- 449              	.LVL24:
- 450              	.L14:
- 451              		.cfi_restore_state
+ 441              		.loc 1 533 1 is_stmt 0 view .LVU64
+ 442 0132 0CB0     		add	sp, sp, #48
+ 443              		.cfi_remember_state
+ 444              		.cfi_def_cfa_offset 8
+ 445              		@ sp needed
+ 446 0134 10BD     		pop	{r4, pc}
+ 447              	.LVL24:
+ 448              	.L14:
+ 449              		.cfi_restore_state
  385:quantum/command.c ****             reset_keyboard();
- 452              		.loc 1 385 13 is_stmt 1 view .LVU67
- 453 0136 4B48     		ldr	r0, .L37+36
- 454              	.LVL25:
+ 450              		.loc 1 385 13 is_stmt 1 view .LVU65
+ 451 0136 4B48     		ldr	r0, .L37+36
+ 452              	.LVL25:
  385:quantum/command.c ****             reset_keyboard();
- 455              		.loc 1 385 13 is_stmt 0 view .LVU68
- 456 0138 FFF7FEFF 		bl	printf_
- 457              	.LVL26:
+ 453              		.loc 1 385 13 is_stmt 0 view .LVU66
+ 454 0138 FFF7FEFF 		bl	printf_
+ 455              	.LVL26:
  386:quantum/command.c ****             break;
- 458              		.loc 1 386 13 is_stmt 1 view .LVU69
- 459 013c FFF7FEFF 		bl	reset_keyboard
- 460              	.LVL27:
+ 456              		.loc 1 386 13 is_stmt 1 view .LVU67
+ 457 013c FFF7FEFF 		bl	reset_keyboard
+ 458              	.LVL27:
  387:quantum/command.c **** 
- 461              		.loc 1 387 13 view .LVU70
- 462 0140 DDE7     		b	.L31
- 463              	.LVL28:
- 464              	.L23:
+ 459              		.loc 1 387 13 view .LVU68
+ 460 0140 DDE7     		b	.L31
+ 461              	.LVL28:
+ 462              	.L23:
  391:quantum/command.c ****             if (debug_enable) {
- 465              		.loc 1 391 13 view .LVU71
+ 463              		.loc 1 391 13 view .LVU69
  391:quantum/command.c ****             if (debug_enable) {
- 466              		.loc 1 391 26 is_stmt 0 view .LVU72
- 467 0142 444C     		ldr	r4, .L37+20
+ 464              		.loc 1 391 26 is_stmt 0 view .LVU70
+ 465 0142 444C     		ldr	r4, .L37+20
  391:quantum/command.c ****             if (debug_enable) {
- 468              		.loc 1 391 29 view .LVU73
- 469 0144 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
- 470 0146 C3F30002 		ubfx	r2, r3, #0, #1
+ 466              		.loc 1 391 29 view .LVU71
+ 467 0144 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 468 0146 C3F30002 		ubfx	r2, r3, #0, #1
  391:quantum/command.c ****             if (debug_enable) {
- 471              		.loc 1 391 13 view .LVU74
- 472 014a 82F00102 		eor	r2, r2, #1
+ 469              		.loc 1 391 13 view .LVU72
+ 470 014a 82F00102 		eor	r2, r2, #1
  391:quantum/command.c ****             if (debug_enable) {
- 473              		.loc 1 391 26 view .LVU75
- 474 014e 62F30003 		bfi	r3, r2, #0, #1
- 475 0152 2370     		strb	r3, [r4]
+ 471              		.loc 1 391 26 view .LVU73
+ 472 014e 62F30003 		bfi	r3, r2, #0, #1
+ 473 0152 2370     		strb	r3, [r4]
  392:quantum/command.c ****                 print("\ndebug: on\n");
- 476              		.loc 1 392 13 is_stmt 1 view .LVU76
+ 474              		.loc 1 392 13 is_stmt 1 view .LVU74
  392:quantum/command.c ****                 print("\ndebug: on\n");
- 477              		.loc 1 392 16 is_stmt 0 view .LVU77
- 478 0154 DB07     		lsls	r3, r3, #31
- 479 0156 01D5     		bpl	.L26
+ 475              		.loc 1 392 16 is_stmt 0 view .LVU75
+ 476 0154 DB07     		lsls	r3, r3, #31
+ 477 0156 01D5     		bpl	.L26
  393:quantum/command.c ****             } else {
- 480              		.loc 1 393 17 is_stmt 1 view .LVU78
- 481 0158 4348     		ldr	r0, .L37+40
- 482              	.LVL29:
+ 478              		.loc 1 393 17 is_stmt 1 view .LVU76
+ 479 0158 4348     		ldr	r0, .L37+40
+ 480              	.LVL29:
  393:quantum/command.c ****             } else {
- 483              		.loc 1 393 17 is_stmt 0 view .LVU79
- 484 015a D9E7     		b	.L32
- 485              	.LVL30:
- 486              	.L26:
+ 481              		.loc 1 393 17 is_stmt 0 view .LVU77
+ 482 015a D9E7     		b	.L32
+ 483              	.LVL30:
+ 484              	.L26:
  395:quantum/command.c ****                 debug_matrix   = false;
- 487              		.loc 1 395 17 is_stmt 1 view .LVU80
- 488 015c 4348     		ldr	r0, .L37+44
- 489              	.LVL31:
+ 485              		.loc 1 395 17 is_stmt 1 view .LVU78
+ 486 015c 4348     		ldr	r0, .L37+44
+ 487              	.LVL31:
  395:quantum/command.c ****                 debug_matrix   = false;
- 490              		.loc 1 395 17 is_stmt 0 view .LVU81
- 491 015e FFF7FEFF 		bl	printf_
- 492              	.LVL32:
+ 488              		.loc 1 395 17 is_stmt 0 view .LVU79
+ 489 015e FFF7FEFF 		bl	printf_
+ 490              	.LVL32:
  396:quantum/command.c ****                 debug_keyboard = false;
- 493              		.loc 1 396 17 is_stmt 1 view .LVU82
+ 491              		.loc 1 396 17 is_stmt 1 view .LVU80
  397:quantum/command.c ****                 debug_mouse    = false;
- 494              		.loc 1 397 17 view .LVU83
+ 492              		.loc 1 397 17 view .LVU81
  398:quantum/command.c ****             }
- 495              		.loc 1 398 17 view .LVU84
+ 493              		.loc 1 398 17 view .LVU82
  396:quantum/command.c ****                 debug_keyboard = false;
- 496              		.loc 1 396 32 is_stmt 0 view .LVU85
- 497 0162 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
- 498 0164 23F00E03 		bic	r3, r3, #14
- 499              	.L33:
+ 494              		.loc 1 396 32 is_stmt 0 view .LVU83
+ 495 0162 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 496 0164 23F00E03 		bic	r3, r3, #14
+ 497              	.L33:
  407:quantum/command.c ****             } else {
- 500              		.loc 1 407 30 view .LVU86
- 501 0168 2370     		strb	r3, [r4]
- 502 016a C8E7     		b	.L31
- 503              	.LVL33:
- 504              	.L16:
+ 498              		.loc 1 407 30 view .LVU84
+ 499 0168 2370     		strb	r3, [r4]
+ 500 016a C8E7     		b	.L31
+ 501              	.LVL33:
+ 502              	.L16:
  404:quantum/command.c ****             if (debug_matrix) {
- 505              		.loc 1 404 13 is_stmt 1 view .LVU87
+ 503              		.loc 1 404 13 is_stmt 1 view .LVU85
  404:quantum/command.c ****             if (debug_matrix) {
- 506              		.loc 1 404 26 is_stmt 0 view .LVU88
- 507 016c 394C     		ldr	r4, .L37+20
+ 504              		.loc 1 404 26 is_stmt 0 view .LVU86
+ 505 016c 394C     		ldr	r4, .L37+20
  404:quantum/command.c ****             if (debug_matrix) {
- 508              		.loc 1 404 29 view .LVU89
- 509 016e 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
- 510 0170 C3F34002 		ubfx	r2, r3, #1, #1
+ 506              		.loc 1 404 29 view .LVU87
+ 507 016e 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 508 0170 C3F34002 		ubfx	r2, r3, #1, #1
  404:quantum/command.c ****             if (debug_matrix) {
- 511              		.loc 1 404 13 view .LVU90
- 512 0174 82F00102 		eor	r2, r2, #1
+ 509              		.loc 1 404 13 view .LVU88
+ 510 0174 82F00102 		eor	r2, r2, #1
  404:quantum/command.c ****             if (debug_matrix) {
- 513              		.loc 1 404 26 view .LVU91
- 514 0178 62F34103 		bfi	r3, r2, #1, #1
+ 511              		.loc 1 404 26 view .LVU89
+ 512 0178 62F34103 		bfi	r3, r2, #1, #1
  405:quantum/command.c ****                 print("\nmatrix: on\n");
- 515              		.loc 1 405 16 view .LVU92
- 516 017c 9807     		lsls	r0, r3, #30
- 517              	.LVL34:
+ 513              		.loc 1 405 16 view .LVU90
+ 514 017c 9807     		lsls	r0, r3, #30
+ 515              	.LVL34:
  404:quantum/command.c ****             if (debug_matrix) {
- 518              		.loc 1 404 26 view .LVU93
- 519 017e 2370     		strb	r3, [r4]
+ 516              		.loc 1 404 26 view .LVU91
+ 517 017e 2370     		strb	r3, [r4]
  405:quantum/command.c ****                 print("\nmatrix: on\n");
- 520              		.loc 1 405 13 is_stmt 1 view .LVU94
+ 518              		.loc 1 405 13 is_stmt 1 view .LVU92
  405:quantum/command.c ****                 print("\nmatrix: on\n");
- 521              		.loc 1 405 16 is_stmt 0 view .LVU95
- 522 0180 06D5     		bpl	.L27
+ 519              		.loc 1 405 16 is_stmt 0 view .LVU93
+ 520 0180 06D5     		bpl	.L27
  406:quantum/command.c ****                 debug_enable = true;
- 523              		.loc 1 406 17 is_stmt 1 view .LVU96
- 524 0182 3B48     		ldr	r0, .L37+48
- 525              	.L34:
- 526 0184 FFF7FEFF 		bl	printf_
- 527              	.LVL35:
+ 521              		.loc 1 406 17 is_stmt 1 view .LVU94
+ 522 0182 3B48     		ldr	r0, .L37+48
+ 523              	.L34:
+ 524 0184 FFF7FEFF 		bl	printf_
+ 525              	.LVL35:
  407:quantum/command.c ****             } else {
- 528              		.loc 1 407 17 view .LVU97
+ 526              		.loc 1 407 17 view .LVU95
  407:quantum/command.c ****             } else {
- 529              		.loc 1 407 30 is_stmt 0 view .LVU98
- 530 0188 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
- 531 018a 43F00103 		orr	r3, r3, #1
- 532 018e EBE7     		b	.L33
- 533              	.L27:
+ 527              		.loc 1 407 30 is_stmt 0 view .LVU96
+ 528 0188 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 529 018a 43F00103 		orr	r3, r3, #1
+ 530 018e EBE7     		b	.L33
+ 531              	.L27:
  409:quantum/command.c ****             }
- 534              		.loc 1 409 17 is_stmt 1 view .LVU99
- 535 0190 3848     		ldr	r0, .L37+52
- 536 0192 BDE7     		b	.L32
- 537              	.LVL36:
- 538              	.L21:
+ 532              		.loc 1 409 17 is_stmt 1 view .LVU97
+ 533 0190 3848     		ldr	r0, .L37+52
+ 534 0192 BDE7     		b	.L32
+ 535              	.LVL36:
+ 536              	.L21:
  415:quantum/command.c ****             if (debug_keyboard) {
- 539              		.loc 1 415 13 view .LVU100
+ 537              		.loc 1 415 13 view .LVU98
  415:quantum/command.c ****             if (debug_keyboard) {
- 540              		.loc 1 415 28 is_stmt 0 view .LVU101
- 541 0194 2F4C     		ldr	r4, .L37+20
+ 538              		.loc 1 415 28 is_stmt 0 view .LVU99
+ 539 0194 2F4C     		ldr	r4, .L37+20
  415:quantum/command.c ****             if (debug_keyboard) {
- 542              		.loc 1 415 31 view .LVU102
- 543 0196 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
- 544 0198 C3F38002 		ubfx	r2, r3, #2, #1
+ 540              		.loc 1 415 31 view .LVU100
+ 541 0196 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 542 0198 C3F38002 		ubfx	r2, r3, #2, #1
  415:quantum/command.c ****             if (debug_keyboard) {
- 545              		.loc 1 415 13 view .LVU103
- 546 019c 82F00102 		eor	r2, r2, #1
+ 543              		.loc 1 415 13 view .LVU101
+ 544 019c 82F00102 		eor	r2, r2, #1
  415:quantum/command.c ****             if (debug_keyboard) {
- 547              		.loc 1 415 28 view .LVU104
- 548 01a0 62F38203 		bfi	r3, r2, #2, #1
+ 545              		.loc 1 415 28 view .LVU102
+ 546 01a0 62F38203 		bfi	r3, r2, #2, #1
  416:quantum/command.c ****                 print("\nkeyboard: on\n");
- 549              		.loc 1 416 16 view .LVU105
- 550 01a4 5907     		lsls	r1, r3, #29
+ 547              		.loc 1 416 16 view .LVU103
+ 548 01a4 5907     		lsls	r1, r3, #29
  415:quantum/command.c ****             if (debug_keyboard) {
- 551              		.loc 1 415 28 view .LVU106
- 552 01a6 2370     		strb	r3, [r4]
+ 549              		.loc 1 415 28 view .LVU104
+ 550 01a6 2370     		strb	r3, [r4]
  416:quantum/command.c ****                 print("\nkeyboard: on\n");
- 553              		.loc 1 416 13 is_stmt 1 view .LVU107
+ 551              		.loc 1 416 13 is_stmt 1 view .LVU105
  416:quantum/command.c ****                 print("\nkeyboard: on\n");
- 554              		.loc 1 416 16 is_stmt 0 view .LVU108
- 555 01a8 01D5     		bpl	.L28
+ 552              		.loc 1 416 16 is_stmt 0 view .LVU106
+ 553 01a8 01D5     		bpl	.L28
  417:quantum/command.c ****                 debug_enable = true;
- 556              		.loc 1 417 17 is_stmt 1 view .LVU109
- 557 01aa 3348     		ldr	r0, .L37+56
- 558              	.LVL37:
+ 554              		.loc 1 417 17 is_stmt 1 view .LVU107
+ 555 01aa 3348     		ldr	r0, .L37+56
+ 556              	.LVL37:
  417:quantum/command.c ****                 debug_enable = true;
- 559              		.loc 1 417 17 is_stmt 0 view .LVU110
- 560 01ac EAE7     		b	.L34
- 561              	.LVL38:
- 562              	.L28:
+ 557              		.loc 1 417 17 is_stmt 0 view .LVU108
+ 558 01ac EAE7     		b	.L34
+ 559              	.LVL38:
+ 560              	.L28:
  420:quantum/command.c ****             }
- 563              		.loc 1 420 17 is_stmt 1 view .LVU111
- 564 01ae 3348     		ldr	r0, .L37+60
- 565              	.LVL39:
+ 561              		.loc 1 420 17 is_stmt 1 view .LVU109
+ 562 01ae 3348     		ldr	r0, .L37+60
+ 563              	.LVL39:
  420:quantum/command.c ****             }
- 566              		.loc 1 420 17 is_stmt 0 view .LVU112
- 567 01b0 AEE7     		b	.L32
- 568              	.LVL40:
- 569              	.L20:
+ 564              		.loc 1 420 17 is_stmt 0 view .LVU110
+ 565 01b0 AEE7     		b	.L32
+ 566              	.LVL40:
+ 567              	.L20:
  426:quantum/command.c ****             if (debug_mouse) {
- 570              		.loc 1 426 13 is_stmt 1 view .LVU113
+ 568              		.loc 1 426 13 is_stmt 1 view .LVU111
  426:quantum/command.c ****             if (debug_mouse) {
- 571              		.loc 1 426 25 is_stmt 0 view .LVU114
- 572 01b2 284C     		ldr	r4, .L37+20
+ 569              		.loc 1 426 25 is_stmt 0 view .LVU112
+ 570 01b2 284C     		ldr	r4, .L37+20
  426:quantum/command.c ****             if (debug_mouse) {
- 573              		.loc 1 426 28 view .LVU115
- 574 01b4 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
- 575 01b6 C3F3C002 		ubfx	r2, r3, #3, #1
+ 571              		.loc 1 426 28 view .LVU113
+ 572 01b4 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 573 01b6 C3F3C002 		ubfx	r2, r3, #3, #1
  426:quantum/command.c ****             if (debug_mouse) {
- 576              		.loc 1 426 13 view .LVU116
- 577 01ba 82F00102 		eor	r2, r2, #1
+ 574              		.loc 1 426 13 view .LVU114
+ 575 01ba 82F00102 		eor	r2, r2, #1
  426:quantum/command.c ****             if (debug_mouse) {
- 578              		.loc 1 426 25 view .LVU117
- 579 01be 62F3C303 		bfi	r3, r2, #3, #1
+ 576              		.loc 1 426 25 view .LVU115
+ 577 01be 62F3C303 		bfi	r3, r2, #3, #1
  427:quantum/command.c ****                 print("\nmouse: on\n");
- 580              		.loc 1 427 16 view .LVU118
- 581 01c2 1A07     		lsls	r2, r3, #28
+ 578              		.loc 1 427 16 view .LVU116
+ 579 01c2 1A07     		lsls	r2, r3, #28
  426:quantum/command.c ****             if (debug_mouse) {
- 582              		.loc 1 426 25 view .LVU119
- 583 01c4 2370     		strb	r3, [r4]
+ 580              		.loc 1 426 25 view .LVU117
+ 581 01c4 2370     		strb	r3, [r4]
  427:quantum/command.c ****                 print("\nmouse: on\n");
- 584              		.loc 1 427 13 is_stmt 1 view .LVU120
+ 582              		.loc 1 427 13 is_stmt 1 view .LVU118
  427:quantum/command.c ****                 print("\nmouse: on\n");
- 585              		.loc 1 427 16 is_stmt 0 view .LVU121
- 586 01c6 01D5     		bpl	.L29
+ 583              		.loc 1 427 16 is_stmt 0 view .LVU119
+ 584 01c6 01D5     		bpl	.L29
  428:quantum/command.c ****                 debug_enable = true;
- 587              		.loc 1 428 17 is_stmt 1 view .LVU122
- 588 01c8 2D48     		ldr	r0, .L37+64
- 589              	.LVL41:
+ 585              		.loc 1 428 17 is_stmt 1 view .LVU120
+ 586 01c8 2D48     		ldr	r0, .L37+64
+ 587              	.LVL41:
  428:quantum/command.c ****                 debug_enable = true;
- 590              		.loc 1 428 17 is_stmt 0 view .LVU123
- 591 01ca DBE7     		b	.L34
- 592              	.LVL42:
- 593              	.L29:
+ 588              		.loc 1 428 17 is_stmt 0 view .LVU121
+ 589 01ca DBE7     		b	.L34
+ 590              	.LVL42:
+ 591              	.L29:
  431:quantum/command.c ****             }
- 594              		.loc 1 431 17 is_stmt 1 view .LVU124
- 595 01cc 2D48     		ldr	r0, .L37+68
- 596              	.LVL43:
+ 592              		.loc 1 431 17 is_stmt 1 view .LVU122
+ 593 01cc 2D48     		ldr	r0, .L37+68
+ 594              	.LVL43:
  431:quantum/command.c ****             }
- 597              		.loc 1 431 17 is_stmt 0 view .LVU125
- 598 01ce 9FE7     		b	.L32
- 599              	.LVL44:
- 600              	.L17:
+ 595              		.loc 1 431 17 is_stmt 0 view .LVU123
+ 596 01ce 9FE7     		b	.L32
+ 597              	.LVL44:
+ 598              	.L17:
  437:quantum/command.c ****             break;
- 601              		.loc 1 437 13 is_stmt 1 view .LVU126
- 602              	.LBB24:
- 603              	.LBI24:
+ 599              		.loc 1 437 13 is_stmt 1 view .LVU124
+ 600              	.LBB24:
+ 601              	.LBI24:
  163:quantum/command.c ****     print(/* clang-format off */
- 604              		.loc 1 163 13 view .LVU127
- 605              	.LBB25:
+ 602              		.loc 1 163 13 view .LVU125
+ 603              	.LBB25:
  164:quantum/command.c ****         "\n\t- Version -\n"
- 606              		.loc 1 164 5 view .LVU128
- 607 01d0 2D48     		ldr	r0, .L37+72
- 608              	.LVL45:
+ 604              		.loc 1 164 5 view .LVU126
+ 605 01d0 2D48     		ldr	r0, .L37+72
+ 606              	.LVL45:
  164:quantum/command.c ****         "\n\t- Version -\n"
- 609              		.loc 1 164 5 is_stmt 0 view .LVU129
- 610 01d2 9DE7     		b	.L32
- 611              	.LVL46:
- 612              	.L18:
+ 607              		.loc 1 164 5 is_stmt 0 view .LVU127
+ 608 01d2 9DE7     		b	.L32
+ 609              	.LVL46:
+ 610              	.L18:
  164:quantum/command.c ****         "\n\t- Version -\n"
- 613              		.loc 1 164 5 view .LVU130
- 614              	.LBE25:
- 615              	.LBE24:
+ 611              		.loc 1 164 5 view .LVU128
+ 612              	.LBE25:
+ 613              	.LBE24:
  442:quantum/command.c ****             break;
- 616              		.loc 1 442 13 is_stmt 1 view .LVU131
- 617              	.LBB26:
- 618              	.LBI15:
+ 614              		.loc 1 442 13 is_stmt 1 view .LVU129
+ 615              	.LBB26:
+ 616              	.LBI15:
  221:quantum/command.c ****     xprintf(/* clang-format off */
- 619              		.loc 1 221 13 view .LVU132
- 620              	.LBB17:
+ 617              		.loc 1 221 13 view .LVU130
+ 618              	.LBB17:
  222:quantum/command.c ****         "\n\t- Status -\n"
- 621              		.loc 1 222 5 view .LVU133
+ 619              		.loc 1 222 5 view .LVU131
  235:quantum/command.c **** #ifndef PROTOCOL_VUSB
- 622              		.loc 1 235 11 is_stmt 0 view .LVU134
- 623 01d4 FFF7FEFF 		bl	host_keyboard_leds
- 624              	.LVL47:
+ 620              		.loc 1 235 11 is_stmt 0 view .LVU132
+ 621 01d4 FFF7FEFF 		bl	host_keyboard_leds
+ 622              	.LVL47:
  222:quantum/command.c ****         "\n\t- Status -\n"
- 625              		.loc 1 222 5 view .LVU135
- 626 01d8 2C4B     		ldr	r3, .L37+76
+ 623              		.loc 1 222 5 view .LVU133
+ 624 01d8 2C4B     		ldr	r3, .L37+76
  235:quantum/command.c **** #ifndef PROTOCOL_VUSB
- 627              		.loc 1 235 11 view .LVU136
- 628 01da 0B90     		str	r0, [sp, #44]
+ 625              		.loc 1 235 11 view .LVU134
+ 626 01da 0B90     		str	r0, [sp, #44]
  222:quantum/command.c ****         "\n\t- Status -\n"
- 629              		.loc 1 222 5 view .LVU137
- 630 01dc 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
- 631 01de 2C4B     		ldr	r3, .L37+80
+ 627              		.loc 1 222 5 view .LVU135
+ 628 01dc 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 629 01de 2C4B     		ldr	r3, .L37+80
  242:quantum/command.c **** #endif
- 632              		.loc 1 242 24 view .LVU138
- 633 01e0 2C48     		ldr	r0, .L37+84
+ 630              		.loc 1 242 24 view .LVU136
+ 631 01e0 2C48     		ldr	r0, .L37+84
  222:quantum/command.c ****         "\n\t- Status -\n"
- 634              		.loc 1 222 5 view .LVU139
- 635 01e2 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 636 01e4 0A92     		str	r2, [sp, #40]
- 637 01e6 0993     		str	r3, [sp, #36]
+ 632              		.loc 1 222 5 view .LVU137
+ 633 01e2 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 634 01e4 0A92     		str	r2, [sp, #40]
+ 635 01e6 0993     		str	r3, [sp, #36]
  242:quantum/command.c **** #endif
- 638              		.loc 1 242 24 view .LVU140
- 639 01e8 0478     		ldrb	r4, [r0]	@ zero_extendqisi2
+ 636              		.loc 1 242 24 view .LVU138
+ 637 01e8 0478     		ldrb	r4, [r0]	@ zero_extendqisi2
  222:quantum/command.c ****         "\n\t- Status -\n"
- 640              		.loc 1 222 5 view .LVU141
- 641 01ea FFF7FEFF 		bl	timer_read32
- 642              	.LVL48:
- 643 01ee E409     		lsrs	r4, r4, #7
- 644 01f0 CDE90040 		strd	r4, r0, [sp]
- 645 01f4 DDE90932 		ldrd	r3, r2, [sp, #36]
- 646 01f8 0B99     		ldr	r1, [sp, #44]
- 647 01fa 2748     		ldr	r0, .L37+88
- 648 01fc FFF7FEFF 		bl	printf_
- 649              	.LVL49:
- 650 0200 7DE7     		b	.L31
- 651              	.LVL50:
- 652              	.L19:
+ 638              		.loc 1 222 5 view .LVU139
+ 639 01ea FFF7FEFF 		bl	timer_read32
+ 640              	.LVL48:
+ 641 01ee E409     		lsrs	r4, r4, #7
+ 642 01f0 CDE90040 		strd	r4, r0, [sp]
+ 643 01f4 DDE90932 		ldrd	r3, r2, [sp, #36]
+ 644 01f8 0B99     		ldr	r1, [sp, #44]
+ 645 01fa 2748     		ldr	r0, .L37+88
+ 646 01fc FFF7FEFF 		bl	printf_
+ 647              	.LVL49:
+ 648 0200 7DE7     		b	.L31
+ 649              	.LVL50:
+ 650              	.L19:
  222:quantum/command.c ****         "\n\t- Status -\n"
- 653              		.loc 1 222 5 view .LVU142
- 654              	.LBE17:
- 655              	.LBE26:
+ 651              		.loc 1 222 5 view .LVU140
+ 652              	.LBE17:
+ 653              	.LBE26:
  449:quantum/command.c ****             keymap_config.nkro = !keymap_config.nkro;
- 656              		.loc 1 449 13 is_stmt 1 view .LVU143
- 657 0202 FFF7FEFF 		bl	clear_keyboard
- 658              	.LVL51:
+ 654              		.loc 1 449 13 is_stmt 1 view .LVU141
+ 655 0202 FFF7FEFF 		bl	clear_keyboard
+ 656              	.LVL51:
  450:quantum/command.c ****             if (keymap_config.nkro) {
- 659              		.loc 1 450 13 view .LVU144
+ 657              		.loc 1 450 13 view .LVU142
  450:quantum/command.c ****             if (keymap_config.nkro) {
- 660              		.loc 1 450 32 is_stmt 0 view .LVU145
- 661 0206 2349     		ldr	r1, .L37+84
+ 658              		.loc 1 450 32 is_stmt 0 view .LVU143
+ 659 0206 2349     		ldr	r1, .L37+84
  450:quantum/command.c ****             if (keymap_config.nkro) {
- 662              		.loc 1 450 48 view .LVU146
- 663 0208 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
- 664 020a C3F3C012 		ubfx	r2, r3, #7, #1
+ 660              		.loc 1 450 48 view .LVU144
+ 661 0208 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 662 020a C3F3C012 		ubfx	r2, r3, #7, #1
  450:quantum/command.c ****             if (keymap_config.nkro) {
- 665              		.loc 1 450 13 view .LVU147
- 666 020e 82F00102 		eor	r2, r2, #1
+ 663              		.loc 1 450 13 view .LVU145
+ 664 020e 82F00102 		eor	r2, r2, #1
  450:quantum/command.c ****             if (keymap_config.nkro) {
- 667              		.loc 1 450 32 view .LVU148
- 668 0212 62F3C713 		bfi	r3, r2, #7, #1
- 669 0216 0B70     		strb	r3, [r1]
+ 665              		.loc 1 450 32 view .LVU146
+ 666 0212 62F3C713 		bfi	r3, r2, #7, #1
+ 667 0216 0B70     		strb	r3, [r1]
  451:quantum/command.c ****                 print("NKRO: on\n");
- 670              		.loc 1 451 13 is_stmt 1 view .LVU149
+ 668              		.loc 1 451 13 is_stmt 1 view .LVU147
  451:quantum/command.c ****                 print("NKRO: on\n");
- 671              		.loc 1 451 16 is_stmt 0 view .LVU150
- 672 0218 1B06     		lsls	r3, r3, #24
+ 669              		.loc 1 451 16 is_stmt 0 view .LVU148
+ 670 0218 1B06     		lsls	r3, r3, #24
  452:quantum/command.c ****             } else {
- 673              		.loc 1 452 17 is_stmt 1 view .LVU151
- 674 021a 4CBF     		ite	mi
- 675 021c 1F48     		ldrmi	r0, .L37+92
+ 671              		.loc 1 452 17 is_stmt 1 view .LVU149
+ 672 021a 4CBF     		ite	mi
+ 673 021c 1F48     		ldrmi	r0, .L37+92
  454:quantum/command.c ****             }
- 676              		.loc 1 454 17 view .LVU152
- 677 021e 2048     		ldrpl	r0, .L37+96
- 678 0220 76E7     		b	.L32
- 679              	.LVL52:
- 680              	.L9:
+ 674              		.loc 1 454 17 view .LVU150
+ 675 021e 2048     		ldrpl	r0, .L37+96
+ 676 0220 76E7     		b	.L32
+ 677              	.LVL52:
+ 678              	.L9:
  462:quantum/command.c ****             break;
- 681              		.loc 1 462 13 view .LVU153
- 682 0222 0020     		movs	r0, #0
- 683              	.LVL53:
- 684              	.L36:
+ 679              		.loc 1 462 13 view .LVU151
+ 680 0222 0020     		movs	r0, #0
+ 681              	.LVL53:
+ 682              	.L36:
  521:quantum/command.c ****             break;
- 685              		.loc 1 521 13 is_stmt 0 view .LVU154
- 686 0224 FFF7FEFF 		bl	switch_default_layer
- 687              	.LVL54:
+ 683              		.loc 1 521 13 is_stmt 0 view .LVU152
+ 684 0224 FFF7FEFF 		bl	switch_default_layer
+ 685              	.LVL54:
  522:quantum/command.c ****         case KC_0:
- 688              		.loc 1 522 13 is_stmt 1 view .LVU155
- 689 0228 69E7     		b	.L31
- 690              	.LVL55:
- 691              	.L11:
+ 686              		.loc 1 522 13 is_stmt 1 view .LVU153
+ 687 0228 69E7     		b	.L31
+ 688              	.LVL55:
+ 689              	.L11:
  511:quantum/command.c ****             break;
- 692              		.loc 1 511 13 view .LVU156
- 693 022a 3938     		subs	r0, r0, #57
- 694              	.LVL56:
- 695              	.L35:
+ 690              		.loc 1 511 13 view .LVU154
+ 691 022a 3938     		subs	r0, r0, #57
+ 692              	.LVL56:
+ 693              	.L35:
  521:quantum/command.c ****             break;
- 696              		.loc 1 521 13 is_stmt 0 view .LVU157
- 697 022c C0B2     		uxtb	r0, r0
- 698 022e F9E7     		b	.L36
- 699              	.LVL57:
- 700              	.L15:
+ 694              		.loc 1 521 13 is_stmt 0 view .LVU155
+ 695 022c C0B2     		uxtb	r0, r0
+ 696 022e F9E7     		b	.L36
+ 697              	.LVL57:
+ 698              	.L15:
  521:quantum/command.c ****             break;
- 701              		.loc 1 521 13 is_stmt 1 view .LVU158
- 702 0230 1D38     		subs	r0, r0, #29
- 703              	.LVL58:
+ 699              		.loc 1 521 13 is_stmt 1 view .LVU156
+ 700 0230 1D38     		subs	r0, r0, #29
+ 701              	.LVL58:
  521:quantum/command.c ****             break;
- 704              		.loc 1 521 13 is_stmt 0 view .LVU159
- 705 0232 FBE7     		b	.L35
- 706              	.LVL59:
- 707              	.L8:
+ 702              		.loc 1 521 13 is_stmt 0 view .LVU157
+ 703 0232 FBE7     		b	.L35
+ 704              	.LVL59:
+ 705              	.L8:
  529:quantum/command.c ****             return false;
- 708              		.loc 1 529 13 is_stmt 1 view .LVU160
- 709 0234 1B48     		ldr	r0, .L37+100
- 710              	.LVL60:
+ 706              		.loc 1 529 13 is_stmt 1 view .LVU158
+ 707 0234 1B48     		ldr	r0, .L37+100
+ 708              	.LVL60:
  529:quantum/command.c ****             return false;
- 711              		.loc 1 529 13 is_stmt 0 view .LVU161
- 712 0236 FFF7FEFF 		bl	printf_
- 713              	.LVL61:
+ 709              		.loc 1 529 13 is_stmt 0 view .LVU159
+ 710 0236 FFF7FEFF 		bl	printf_
+ 711              	.LVL61:
  530:quantum/command.c ****     }
- 714              		.loc 1 530 13 is_stmt 1 view .LVU162
+ 712              		.loc 1 530 13 is_stmt 1 view .LVU160
  530:quantum/command.c ****     }
- 715              		.loc 1 530 20 is_stmt 0 view .LVU163
- 716 023a 0020     		movs	r0, #0
- 717 023c 79E7     		b	.L25
- 718              	.L38:
- 719 023e 00BF     		.align	2
- 720              	.L37:
- 721 0240 00000000 		.word	.LC2
- 722 0244 1D000000 		.word	.LC3
- 723 0248 66000000 		.word	.LC4
- 724 024c 4B010000 		.word	.LC5
- 725 0250 5C010000 		.word	.LC6
- 726 0254 00000000 		.word	debug_config
- 727 0258 0E030000 		.word	.LC7
- 728 025c 35030000 		.word	.LC8
- 729 0260 00000000 		.word	.LANCHOR0
- 730 0264 39030000 		.word	.LC9
- 731 0268 55030000 		.word	.LC10
- 732 026c 61030000 		.word	.LC11
- 733 0270 6E030000 		.word	.LC12
- 734 0274 7B030000 		.word	.LC13
- 735 0278 89030000 		.word	.LC14
- 736 027c 98030000 		.word	.LC15
- 737 0280 A8030000 		.word	.LC16
- 738 0284 B4030000 		.word	.LC17
- 739 0288 C1030000 		.word	.LC18
- 740 028c 00000000 		.word	keyboard_protocol
- 741 0290 00000000 		.word	keyboard_idle
- 742 0294 00000000 		.word	keymap_config
- 743 0298 9B040000 		.word	.LC19
- 744 029c 1F050000 		.word	.LC20
- 745 02a0 29050000 		.word	.LC21
- 746 02a4 34050000 		.word	.LC22
- 747              		.cfi_endproc
- 748              	.LFE298:
- 750              		.section	.rodata.mousekey_console.isra.0.str1.1,"aMS",%progbits,1
- 751              	.LC23:
- 752 0000 3F3F3F00 		.ascii	"???\000"
- 753              	.LC24:
- 754 0004 0A092D20 		.ascii	"\012\011- Mousekey -\012\000"
- 754      4D6F7573 
- 754      656B6579 
- 754      202D0A00 
- 755              	.LC25:
- 756 0014 703A0970 		.ascii	"p:\011print values\012d:\011set defaults\012up:\011"
- 756      72696E74 
- 756      2076616C 
- 756      7565730A 
- 756      643A0973 
- 757 0038 2B310A64 		.ascii	"+1\012dn:\011-1\012lt:\011+10\012rt:\011-10\012ESC/"
- 757      6E3A092D 
- 757      310A6C74 
- 757      3A092B31 
- 757      300A7274 
- 758 0056 713A0971 		.ascii	"q:\011quit\012\012speed = delta * max_speed * (repe"
- 758      7569740A 
- 758      0A737065 
- 758      6564203D 
- 758      2064656C 
- 759 0080 6174202F 		.ascii	"at / time_to_max)\012where delta: cursor=%d, wheel="
- 759      2074696D 
- 759      655F746F 
- 759      5F6D6178 
- 759      290A7768 
- 760 00b0 25640A53 		.ascii	"%d\012See http://en.wikipedia.org/wiki/Mouse_keys\012"
- 760      65652068 
- 760      7474703A 
- 760      2F2F656E 
- 760      2E77696B 
- 761 00df 00       		.ascii	"\000"
- 762              	.LC26:
- 763 00e0 710A00   		.ascii	"q\012\000"
- 764              	.LC27:
- 765 00e3 0A092D20 		.ascii	"\012\011- Values -\012\000"
- 765      56616C75 
- 765      6573202D 
- 765      0A00
- 766              	.LC28:
- 767 00f1 6D6B5F64 		.ascii	"mk_delay\000"
- 767      656C6179 
- 767      00
- 768              	.LC29:
- 769 00fa 6D6B5F69 		.ascii	"mk_interval\000"
- 769      6E746572 
- 769      76616C00 
- 770              	.LC30:
- 771 0106 6D6B5F6D 		.ascii	"mk_max_speed\000"
- 771      61785F73 
- 771      70656564 
- 771      00
- 772              	.LC31:
- 773 0113 6D6B5F74 		.ascii	"mk_time_to_max\000"
- 773      696D655F 
- 773      746F5F6D 
- 773      617800
- 774              	.LC32:
- 775 0122 6D6B5F77 		.ascii	"mk_wheel_max_speed\000"
+ 713              		.loc 1 530 20 is_stmt 0 view .LVU161
+ 714 023a 0020     		movs	r0, #0
+ 715 023c 79E7     		b	.L25
+ 716              	.L38:
+ 717 023e 00BF     		.align	2
+ 718              	.L37:
+ 719 0240 00000000 		.word	.LC2
+ 720 0244 1D000000 		.word	.LC3
+ 721 0248 66000000 		.word	.LC4
+ 722 024c 4B010000 		.word	.LC5
+ 723 0250 5C010000 		.word	.LC6
+ 724 0254 00000000 		.word	debug_config
+ 725 0258 0E030000 		.word	.LC7
+ 726 025c 35030000 		.word	.LC8
+ 727 0260 00000000 		.word	.LANCHOR0
+ 728 0264 39030000 		.word	.LC9
+ 729 0268 55030000 		.word	.LC10
+ 730 026c 61030000 		.word	.LC11
+ 731 0270 6E030000 		.word	.LC12
+ 732 0274 7B030000 		.word	.LC13
+ 733 0278 89030000 		.word	.LC14
+ 734 027c 98030000 		.word	.LC15
+ 735 0280 A8030000 		.word	.LC16
+ 736 0284 B4030000 		.word	.LC17
+ 737 0288 C1030000 		.word	.LC18
+ 738 028c 00000000 		.word	keyboard_protocol
+ 739 0290 00000000 		.word	keyboard_idle
+ 740 0294 00000000 		.word	keymap_config
+ 741 0298 AB040000 		.word	.LC19
+ 742 029c 2F050000 		.word	.LC20
+ 743 02a0 39050000 		.word	.LC21
+ 744 02a4 44050000 		.word	.LC22
+ 745              		.cfi_endproc
+ 746              	.LFE298:
+ 748              		.section	.rodata.mousekey_console.isra.0.str1.1,"aMS",%progbits,1
+ 749              	.LC23:
+ 750 0000 3F3F3F00 		.ascii	"???\000"
+ 751              	.LC24:
+ 752 0004 0A092D20 		.ascii	"\012\011- Mousekey -\012\000"
+ 752      4D6F7573 
+ 752      656B6579 
+ 752      202D0A00 
+ 753              	.LC25:
+ 754 0014 703A0970 		.ascii	"p:\011print values\012d:\011set defaults\012up:\011"
+ 754      72696E74 
+ 754      2076616C 
+ 754      7565730A 
+ 754      643A0973 
+ 755 0038 2B310A64 		.ascii	"+1\012dn:\011-1\012lt:\011+10\012rt:\011-10\012ESC/"
+ 755      6E3A092D 
+ 755      310A6C74 
+ 755      3A092B31 
+ 755      300A7274 
+ 756 0056 713A0971 		.ascii	"q:\011quit\012\012speed = delta * max_speed * (repe"
+ 756      7569740A 
+ 756      0A737065 
+ 756      6564203D 
+ 756      2064656C 
+ 757 0080 6174202F 		.ascii	"at / time_to_max)\012where delta: cursor=%d, wheel="
+ 757      2074696D 
+ 757      655F746F 
+ 757      5F6D6178 
+ 757      290A7768 
+ 758 00b0 25640A53 		.ascii	"%d\012See http://en.wikipedia.org/wiki/Mouse_keys\012"
+ 758      65652068 
+ 758      7474703A 
+ 758      2F2F656E 
+ 758      2E77696B 
+ 759 00df 00       		.ascii	"\000"
+ 760              	.LC26:
+ 761 00e0 710A00   		.ascii	"q\012\000"
+ 762              	.LC27:
+ 763 00e3 0A092D20 		.ascii	"\012\011- Values -\012\000"
+ 763      56616C75 
+ 763      6573202D 
+ 763      0A00
+ 764              	.LC28:
+ 765 00f1 6D6B5F64 		.ascii	"mk_delay\000"
+ 765      656C6179 
+ 765      00
+ 766              	.LC29:
+ 767 00fa 6D6B5F69 		.ascii	"mk_interval\000"
+ 767      6E746572 
+ 767      76616C00 
+ 768              	.LC30:
+ 769 0106 6D6B5F6D 		.ascii	"mk_max_speed\000"
+ 769      61785F73 
+ 769      70656564 
+ 769      00
+ 770              	.LC31:
+ 771 0113 6D6B5F74 		.ascii	"mk_time_to_max\000"
+ 771      696D655F 
+ 771      746F5F6D 
+ 771      617800
+ 772              	.LC32:
+ 773 0122 6D6B5F77 		.ascii	"mk_wheel_max_speed\000"
+ 773      6865656C 
+ 773      5F6D6178 
+ 773      5F737065 
+ 773      656400
+ 774              	.LC33:
+ 775 0135 6D6B5F77 		.ascii	"mk_wheel_time_to_max\000"
  775      6865656C 
+ 775      5F74696D 
+ 775      655F746F 
  775      5F6D6178 
- 775      5F737065 
- 775      656400
- 776              	.LC33:
- 777 0135 6D6B5F77 		.ascii	"mk_wheel_time_to_max\000"
- 777      6865656C 
- 777      5F74696D 
- 777      655F746F 
- 777      5F6D6178 
- 778              	.LC34:
- 779 014a 3F0A00   		.ascii	"?\012\000"
- 780              	.LC35:
- 781 014d 25750A00 		.ascii	"%u\012\000"
- 782              	.LC36:
- 783 0151 64656661 		.ascii	"defaults\012\000"
- 783      756C7473 
+ 776              	.LC34:
+ 777 014a 3F0A00   		.ascii	"?\012\000"
+ 778              	.LC35:
+ 779 014d 25750A00 		.ascii	"%u\012\000"
+ 780              	.LC36:
+ 781 0151 64656661 		.ascii	"defaults\012\000"
+ 781      756C7473 
+ 781      0A00
+ 782              	.LC37:
+ 783 015b 3D202575 		.ascii	"= %u\012\000"
  783      0A00
- 784              	.LC37:
- 785 015b 3D202575 		.ascii	"= %u\012\000"
- 785      0A00
- 786              	.LC38:
- 787 0161 4D25753A 		.ascii	"M%u:%s> \000"
- 787      25733E20 
- 787      00
- 788              	.LC39:
- 789 016a 4D3E2000 		.ascii	"M> \000"
- 790              		.section	.text.mousekey_console.isra.0,"ax",%progbits
- 791              		.align	1
- 792              		.syntax unified
- 793              		.thumb
- 794              		.thumb_func
- 795              		.fpu fpv4-sp-d16
- 797              	mousekey_console.isra.0:
- 798              	.LVL62:
- 799              	.LFB307:
+ 784              	.LC38:
+ 785 0161 4D25753A 		.ascii	"M%u:%s> \000"
+ 785      25733E20 
+ 785      00
+ 786              	.LC39:
+ 787 016a 4D3E2000 		.ascii	"M> \000"
+ 788              		.section	.text.mousekey_console.isra.0,"ax",%progbits
+ 789              		.align	1
+ 790              		.syntax unified
+ 791              		.thumb
+ 792              		.thumb_func
+ 793              		.fpu fpv4-sp-d16
+ 795              	mousekey_console.isra.0:
+ 796              	.LVL62:
+ 797              	.LFB307:
  629:quantum/command.c ****     static uint8_t  param = 0;
- 800              		.loc 1 629 6 is_stmt 1 view -0
- 801              		.cfi_startproc
- 802              		@ args = 0, pretend = 0, frame = 0
- 803              		@ frame_needed = 0, uses_anonymous_args = 0
+ 798              		.loc 1 629 6 is_stmt 1 view -0
+ 799              		.cfi_startproc
+ 800              		@ args = 0, pretend = 0, frame = 0
+ 801              		@ frame_needed = 0, uses_anonymous_args = 0
  630:quantum/command.c ****     static uint8_t *pp    = NULL;
- 804              		.loc 1 630 5 view .LVU165
+ 802              		.loc 1 630 5 view .LVU163
  631:quantum/command.c ****     static char *   desc  = NULL;
- 805              		.loc 1 631 5 view .LVU166
+ 803              		.loc 1 631 5 view .LVU164
  632:quantum/command.c **** 
- 806              		.loc 1 632 5 view .LVU167
+ 804              		.loc 1 632 5 view .LVU165
  638:quantum/command.c **** 
- 807              		.loc 1 638 5 view .LVU168
+ 805              		.loc 1 638 5 view .LVU166
  640:quantum/command.c ****         case KC_H:
- 808              		.loc 1 640 5 view .LVU169
- 809 0000 2928     		cmp	r0, #41
+ 806              		.loc 1 640 5 view .LVU167
+ 807 0000 2928     		cmp	r0, #41
  629:quantum/command.c ****     static uint8_t  param = 0;
- 810              		.loc 1 629 6 is_stmt 0 view .LVU170
- 811 0002 10B5     		push	{r4, lr}
- 812              		.cfi_def_cfa_offset 8
- 813              		.cfi_offset 4, -8
- 814              		.cfi_offset 14, -4
- 815 0004 614C     		ldr	r4, .L91
+ 808              		.loc 1 629 6 is_stmt 0 view .LVU168
+ 809 0002 10B5     		push	{r4, lr}
+ 810              		.cfi_def_cfa_offset 8
+ 811              		.cfi_offset 4, -8
+ 812              		.cfi_offset 14, -4
+ 813 0004 614C     		ldr	r4, .L91
  640:quantum/command.c ****         case KC_H:
- 816              		.loc 1 640 5 view .LVU171
- 817 0006 55D0     		beq	.L40
- 818 0008 29D8     		bhi	.L41
- 819 000a 1328     		cmp	r0, #19
- 820 000c 5FD0     		beq	.L42
- 821 000e 15D8     		bhi	.L43
- 822 0010 0728     		cmp	r0, #7
- 823 0012 00F09380 		beq	.L44
- 824 0016 0B28     		cmp	r0, #11
- 825 0018 34D0     		beq	.L45
- 826              	.LVL63:
- 827              	.L64:
+ 814              		.loc 1 640 5 view .LVU169
+ 815 0006 55D0     		beq	.L40
+ 816 0008 29D8     		bhi	.L41
+ 817 000a 1328     		cmp	r0, #19
+ 818 000c 5FD0     		beq	.L42
+ 819 000e 15D8     		bhi	.L43
+ 820 0010 0728     		cmp	r0, #7
+ 821 0012 00F09380 		beq	.L44
+ 822 0016 0B28     		cmp	r0, #11
+ 823 0018 34D0     		beq	.L45
+ 824              	.LVL63:
+ 825              	.L64:
  725:quantum/command.c ****         }
- 828              		.loc 1 725 13 is_stmt 1 view .LVU172
- 829 001a 5D48     		ldr	r0, .L91+4
- 830 001c A1E0     		b	.L90
- 831              	.LVL64:
- 832              	.L51:
+ 826              		.loc 1 725 13 is_stmt 1 view .LVU170
+ 827 001a 5D48     		ldr	r0, .L91+4
+ 828 001c A1E0     		b	.L90
+ 829              	.LVL64:
+ 830              	.L51:
  640:quantum/command.c ****         case KC_H:
- 833              		.loc 1 640 5 is_stmt 0 view .LVU173
- 834 001e 0A21     		movs	r1, #10
- 835              	.L47:
- 836              	.LVL65:
+ 831              		.loc 1 640 5 is_stmt 0 view .LVU171
+ 832 001e 0A21     		movs	r1, #10
+ 833              	.L47:
+ 834              	.LVL65:
  715:quantum/command.c ****             int16_t val = *pp + change;
- 837              		.loc 1 715 9 is_stmt 1 view .LVU174
+ 835              		.loc 1 715 9 is_stmt 1 view .LVU172
  715:quantum/command.c ****             int16_t val = *pp + change;
- 838              		.loc 1 715 13 is_stmt 0 view .LVU175
- 839 0020 5C4B     		ldr	r3, .L91+8
- 840 0022 1B68     		ldr	r3, [r3]
+ 836              		.loc 1 715 13 is_stmt 0 view .LVU173
+ 837 0020 5C4B     		ldr	r3, .L91+8
+ 838 0022 1B68     		ldr	r3, [r3]
  715:quantum/command.c ****             int16_t val = *pp + change;
- 841              		.loc 1 715 12 view .LVU176
- 842 0024 002B     		cmp	r3, #0
- 843 0026 F8D0     		beq	.L64
- 844              	.LBB30:
+ 839              		.loc 1 715 12 view .LVU174
+ 840 0024 002B     		cmp	r3, #0
+ 841 0026 F8D0     		beq	.L64
+ 842              	.LBB30:
  716:quantum/command.c ****             if (val > (int16_t)UINT8_MAX)
- 845              		.loc 1 716 13 is_stmt 1 view .LVU177
+ 843              		.loc 1 716 13 is_stmt 1 view .LVU175
  716:quantum/command.c ****             if (val > (int16_t)UINT8_MAX)
- 846              		.loc 1 716 27 is_stmt 0 view .LVU178
- 847 0028 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 844              		.loc 1 716 27 is_stmt 0 view .LVU176
+ 845 0028 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
  716:quantum/command.c ****             if (val > (int16_t)UINT8_MAX)
- 848              		.loc 1 716 21 view .LVU179
- 849 002a 0A44     		add	r2, r2, r1
- 850              	.LVL66:
+ 846              		.loc 1 716 21 view .LVU177
+ 847 002a 0A44     		add	r2, r2, r1
+ 848              	.LVL66:
  717:quantum/command.c ****                 *pp = UINT8_MAX;
- 851              		.loc 1 717 13 is_stmt 1 view .LVU180
+ 849              		.loc 1 717 13 is_stmt 1 view .LVU178
  717:quantum/command.c ****                 *pp = UINT8_MAX;
- 852              		.loc 1 717 16 is_stmt 0 view .LVU181
- 853 002c FF2A     		cmp	r2, #255
- 854 002e 40F3A380 		ble	.L65
+ 850              		.loc 1 717 16 is_stmt 0 view .LVU179
+ 851 002c FF2A     		cmp	r2, #255
+ 852 002e 40F3A380 		ble	.L65
  718:quantum/command.c ****             else if (val < 0)
- 855              		.loc 1 718 17 is_stmt 1 view .LVU182
+ 853              		.loc 1 718 17 is_stmt 1 view .LVU180
  718:quantum/command.c ****             else if (val < 0)
- 856              		.loc 1 718 21 is_stmt 0 view .LVU183
- 857 0032 FF22     		movs	r2, #255
- 858              	.LVL67:
- 859              	.L67:
+ 854              		.loc 1 718 21 is_stmt 0 view .LVU181
+ 855 0032 FF22     		movs	r2, #255
+ 856              	.LVL67:
+ 857              	.L67:
  722:quantum/command.c ****             xprintf("= %u\n", *pp);
- 860              		.loc 1 722 17 is_stmt 1 view .LVU184
+ 858              		.loc 1 722 17 is_stmt 1 view .LVU182
  722:quantum/command.c ****             xprintf("= %u\n", *pp);
- 861              		.loc 1 722 23 is_stmt 0 view .LVU185
- 862 0034 1A70     		strb	r2, [r3]
- 863              	.LVL68:
+ 859              		.loc 1 722 23 is_stmt 0 view .LVU183
+ 860 0034 1A70     		strb	r2, [r3]
+ 861              	.LVL68:
  723:quantum/command.c ****         } else {
- 864              		.loc 1 723 13 is_stmt 1 view .LVU186
- 865 0036 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
- 866 0038 5748     		ldr	r0, .L91+12
- 867 003a 58E0     		b	.L89
- 868              	.LVL69:
- 869              	.L43:
+ 862              		.loc 1 723 13 is_stmt 1 view .LVU184
+ 863 0036 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 864 0038 5748     		ldr	r0, .L91+12
+ 865 003a 58E0     		b	.L89
+ 866              	.LVL69:
+ 867              	.L43:
  723:quantum/command.c ****         } else {
- 870              		.loc 1 723 13 is_stmt 0 view .LVU187
- 871              	.LBE30:
+ 868              		.loc 1 723 13 is_stmt 0 view .LVU185
+ 869              	.LBE30:
  640:quantum/command.c ****         case KC_H:
- 872              		.loc 1 640 5 view .LVU188
- 873 003c 1428     		cmp	r0, #20
- 874 003e 39D0     		beq	.L40
- 875 0040 A0F11E03 		sub	r3, r0, #30
- 876 0044 092B     		cmp	r3, #9
- 877 0046 E8D8     		bhi	.L64
+ 870              		.loc 1 640 5 view .LVU186
+ 871 003c 1428     		cmp	r0, #20
+ 872 003e 39D0     		beq	.L40
+ 873 0040 A0F11E03 		sub	r3, r0, #30
+ 874 0044 092B     		cmp	r3, #9
+ 875 0046 E8D8     		bhi	.L64
  666:quantum/command.c ****             switch (param) { /* clang-format off */
- 878              		.loc 1 666 13 is_stmt 1 view .LVU189
+ 876              		.loc 1 666 13 is_stmt 1 view .LVU187
  666:quantum/command.c ****             switch (param) { /* clang-format off */
- 879              		.loc 1 666 30 is_stmt 0 view .LVU190
- 880 0048 1D38     		subs	r0, r0, #29
- 881              	.LVL70:
+ 877              		.loc 1 666 30 is_stmt 0 view .LVU188
+ 878 0048 1D38     		subs	r0, r0, #29
+ 879              	.LVL70:
  666:quantum/command.c ****             switch (param) { /* clang-format off */
- 882              		.loc 1 666 30 view .LVU191
- 883 004a C0B2     		uxtb	r0, r0
+ 880              		.loc 1 666 30 view .LVU189
+ 881 004a C0B2     		uxtb	r0, r0
  666:quantum/command.c ****             switch (param) { /* clang-format off */
- 884              		.loc 1 666 19 view .LVU192
- 885 004c 2070     		strb	r0, [r4]
+ 882              		.loc 1 666 19 view .LVU190
+ 883 004c 2070     		strb	r0, [r4]
  667:quantum/command.c **** #               define PARAM(n, v) case n: pp = &(v); desc = #v; break
- 886              		.loc 1 667 13 is_stmt 1 view .LVU193
- 887 004e 0138     		subs	r0, r0, #1
- 888 0050 0528     		cmp	r0, #5
- 889 0052 6DD8     		bhi	.L52
- 890 0054 DFE800F0 		tbb	[pc, r0]
- 891              	.L54:
- 892 0058 41       		.byte	(.L59-.L54)/2
- 893 0059 4E       		.byte	(.L58-.L54)/2
- 894 005a 54       		.byte	(.L57-.L54)/2
- 895 005b 5A       		.byte	(.L56-.L54)/2
- 896 005c 60       		.byte	(.L55-.L54)/2
- 897 005d 66       		.byte	(.L53-.L54)/2
- 898              	.LVL71:
- 899              		.p2align 1
- 900              	.L41:
+ 884              		.loc 1 667 13 is_stmt 1 view .LVU191
+ 885 004e 0138     		subs	r0, r0, #1
+ 886 0050 0528     		cmp	r0, #5
+ 887 0052 6DD8     		bhi	.L52
+ 888 0054 DFE800F0 		tbb	[pc, r0]
+ 889              	.L54:
+ 890 0058 41       		.byte	(.L59-.L54)/2
+ 891 0059 4E       		.byte	(.L58-.L54)/2
+ 892 005a 54       		.byte	(.L57-.L54)/2
+ 893 005b 5A       		.byte	(.L56-.L54)/2
+ 894 005c 60       		.byte	(.L55-.L54)/2
+ 895 005d 66       		.byte	(.L53-.L54)/2
+ 896              	.LVL71:
+ 897              		.p2align 1
+ 898              	.L41:
  640:quantum/command.c ****         case KC_H:
- 901              		.loc 1 640 5 is_stmt 0 view .LVU194
- 902 005e 3828     		cmp	r0, #56
- 903 0060 10D0     		beq	.L45
- 904 0062 4F38     		subs	r0, r0, #79
- 905              	.LVL72:
+ 899              		.loc 1 640 5 is_stmt 0 view .LVU192
+ 900 005e 3828     		cmp	r0, #56
+ 901 0060 10D0     		beq	.L45
+ 902 0062 4F38     		subs	r0, r0, #79
+ 903              	.LVL72:
  640:quantum/command.c ****         case KC_H:
- 906              		.loc 1 640 5 view .LVU195
- 907 0064 C3B2     		uxtb	r3, r0
- 908 0066 032B     		cmp	r3, #3
- 909 0068 D7D8     		bhi	.L64
- 910 006a 0328     		cmp	r0, #3
- 911 006c D5D8     		bhi	.L64
- 912 006e 01A3     		adr	r3, .L48
- 913 0070 53F820F0 		ldr	pc, [r3, r0, lsl #2]
- 914              		.p2align 2
- 915              	.L48:
- 916 0074 1F000000 		.word	.L51+1
- 917 0078 69010000 		.word	.L50+1
- 918 007c 6F010000 		.word	.L49+1
- 919 0080 75010000 		.word	.L70+1
- 920              	.LVL73:
- 921              		.p2align 1
- 922              	.L45:
+ 904              		.loc 1 640 5 view .LVU193
+ 905 0064 C3B2     		uxtb	r3, r0
+ 906 0066 032B     		cmp	r3, #3
+ 907 0068 D7D8     		bhi	.L64
+ 908 006a 0328     		cmp	r0, #3
+ 909 006c D5D8     		bhi	.L64
+ 910 006e 01A3     		adr	r3, .L48
+ 911 0070 53F820F0 		ldr	pc, [r3, r0, lsl #2]
+ 912              		.p2align 2
+ 913              	.L48:
+ 914 0074 1F000000 		.word	.L51+1
+ 915 0078 69010000 		.word	.L50+1
+ 916 007c 6F010000 		.word	.L49+1
+ 917 0080 75010000 		.word	.L70+1
+ 918              	.LVL73:
+ 919              		.p2align 1
+ 920              	.L45:
  644:quantum/command.c ****             mousekey_console_help();
- 923              		.loc 1 644 13 is_stmt 1 view .LVU196
- 924 0084 4548     		ldr	r0, .L91+16
- 925              	.LVL74:
+ 921              		.loc 1 644 13 is_stmt 1 view .LVU194
+ 922 0084 4548     		ldr	r0, .L91+16
+ 923              	.LVL74:
  644:quantum/command.c ****             mousekey_console_help();
- 926              		.loc 1 644 13 is_stmt 0 view .LVU197
- 927 0086 FFF7FEFF 		bl	printf_
- 928              	.LVL75:
+ 924              		.loc 1 644 13 is_stmt 0 view .LVU195
+ 925 0086 FFF7FEFF 		bl	printf_
+ 926              	.LVL75:
  645:quantum/command.c **** #    endif
- 929              		.loc 1 645 13 is_stmt 1 view .LVU198
- 930              	.LBB31:
- 931              	.LBI31:
+ 927              		.loc 1 645 13 is_stmt 1 view .LVU196
+ 928              	.LBB31:
+ 929              	.LBI31:
  603:quantum/command.c ****     mousekey_param_print();
- 932              		.loc 1 603 13 view .LVU199
- 933              	.LBB32:
+ 930              		.loc 1 603 13 view .LVU197
+ 931              	.LBB32:
  604:quantum/command.c ****     xprintf(/* clang-format off */
- 934              		.loc 1 604 5 view .LVU200
- 935 008a FFF7FEFF 		bl	mousekey_param_print
- 936              	.LVL76:
+ 932              		.loc 1 604 5 view .LVU198
+ 933 008a FFF7FEFF 		bl	mousekey_param_print
+ 934              	.LVL76:
  605:quantum/command.c ****         "p:	print values\n"
- 937              		.loc 1 605 5 view .LVU201
- 938 008e 4448     		ldr	r0, .L91+20
- 939 0090 0122     		movs	r2, #1
- 940 0092 0521     		movs	r1, #5
- 941 0094 FFF7FEFF 		bl	printf_
- 942              	.LVL77:
- 943              	.L61:
+ 935              		.loc 1 605 5 view .LVU199
+ 936 008e 4448     		ldr	r0, .L91+20
+ 937 0090 0122     		movs	r2, #1
+ 938 0092 0521     		movs	r1, #5
+ 939 0094 FFF7FEFF 		bl	printf_
+ 940              	.LVL77:
+ 941              	.L61:
  605:quantum/command.c ****         "p:	print values\n"
- 944              		.loc 1 605 5 is_stmt 0 view .LVU202
- 945              	.LBE32:
- 946              	.LBE31:
+ 942              		.loc 1 605 5 is_stmt 0 view .LVU200
+ 943              	.LBE32:
+ 944              	.LBE31:
  729:quantum/command.c ****         xprintf("M%u:%s> ", param, desc ? desc : "???");
- 947              		.loc 1 729 5 is_stmt 1 view .LVU203
+ 945              		.loc 1 729 5 is_stmt 1 view .LVU201
  729:quantum/command.c ****         xprintf("M%u:%s> ", param, desc ? desc : "???");
- 948              		.loc 1 729 9 is_stmt 0 view .LVU204
- 949 0098 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 946              		.loc 1 729 9 is_stmt 0 view .LVU202
+ 947 0098 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
  729:quantum/command.c ****         xprintf("M%u:%s> ", param, desc ? desc : "???");
- 950              		.loc 1 729 8 view .LVU205
- 951 009a 0029     		cmp	r1, #0
- 952 009c 70D0     		beq	.L68
+ 948              		.loc 1 729 8 view .LVU203
+ 949 009a 0029     		cmp	r1, #0
+ 950 009c 70D0     		beq	.L68
  730:quantum/command.c ****     } else {
- 953              		.loc 1 730 9 is_stmt 1 view .LVU206
+ 951              		.loc 1 730 9 is_stmt 1 view .LVU204
  730:quantum/command.c ****     } else {
- 954              		.loc 1 730 41 is_stmt 0 view .LVU207
- 955 009e 414B     		ldr	r3, .L91+24
+ 952              		.loc 1 730 41 is_stmt 0 view .LVU205
+ 953 009e 414B     		ldr	r3, .L91+24
  730:quantum/command.c ****     } else {
- 956              		.loc 1 730 9 view .LVU208
- 957 00a0 4148     		ldr	r0, .L91+28
+ 954              		.loc 1 730 9 view .LVU206
+ 955 00a0 4148     		ldr	r0, .L91+28
  730:quantum/command.c ****     } else {
- 958              		.loc 1 730 41 view .LVU209
- 959 00a2 1A68     		ldr	r2, [r3]
+ 956              		.loc 1 730 41 view .LVU207
+ 957 00a2 1A68     		ldr	r2, [r3]
  730:quantum/command.c ****     } else {
- 960              		.loc 1 730 9 view .LVU210
- 961 00a4 414B     		ldr	r3, .L91+32
+ 958              		.loc 1 730 9 view .LVU208
+ 959 00a4 414B     		ldr	r3, .L91+32
  735:quantum/command.c **** 
- 962              		.loc 1 735 1 view .LVU211
- 963 00a6 BDE81040 		pop	{r4, lr}
- 964              		.cfi_remember_state
- 965              		.cfi_restore 14
- 966              		.cfi_restore 4
- 967              		.cfi_def_cfa_offset 0
+ 960              		.loc 1 735 1 view .LVU209
+ 961 00a6 BDE81040 		pop	{r4, lr}
+ 962              		.cfi_remember_state
+ 963              		.cfi_restore 14
+ 964              		.cfi_restore 4
+ 965              		.cfi_def_cfa_offset 0
  730:quantum/command.c ****     } else {
- 968              		.loc 1 730 9 view .LVU212
- 969 00aa 002A     		cmp	r2, #0
- 970 00ac 08BF     		it	eq
- 971 00ae 1A46     		moveq	r2, r3
- 972 00b0 FFF7FEBF 		b	printf_
- 973              	.LVL78:
- 974              	.L40:
- 975              		.cfi_restore_state
+ 966              		.loc 1 730 9 view .LVU210
+ 967 00aa 002A     		cmp	r2, #0
+ 968 00ac 08BF     		it	eq
+ 969 00ae 1A46     		moveq	r2, r3
+ 970 00b0 FFF7FEBF 		b	printf_
+ 971              	.LVL78:
+ 972              	.L40:
+ 973              		.cfi_restore_state
  651:quantum/command.c ****             if (!param) return false;
- 976              		.loc 1 651 13 is_stmt 1 view .LVU213
- 977 00b4 3E48     		ldr	r0, .L91+36
- 978              	.LVL79:
+ 974              		.loc 1 651 13 is_stmt 1 view .LVU211
+ 975 00b4 3E48     		ldr	r0, .L91+36
+ 976              	.LVL79:
  651:quantum/command.c ****             if (!param) return false;
- 979              		.loc 1 651 13 is_stmt 0 view .LVU214
- 980 00b6 FFF7FEFF 		bl	printf_
- 981              	.LVL80:
+ 977              		.loc 1 651 13 is_stmt 0 view .LVU212
+ 978 00b6 FFF7FEFF 		bl	printf_
+ 979              	.LVL80:
  652:quantum/command.c ****             param = 0;
- 982              		.loc 1 652 13 is_stmt 1 view .LVU215
+ 980              		.loc 1 652 13 is_stmt 1 view .LVU213
  652:quantum/command.c ****             param = 0;
- 983              		.loc 1 652 16 is_stmt 0 view .LVU216
- 984 00ba 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
- 985 00bc 002B     		cmp	r3, #0
- 986 00be 64D0     		beq	.L39
+ 981              		.loc 1 652 16 is_stmt 0 view .LVU214
+ 982 00ba 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 983 00bc 002B     		cmp	r3, #0
+ 984 00be 64D0     		beq	.L39
  653:quantum/command.c ****             pp    = NULL;
- 987              		.loc 1 653 13 is_stmt 1 view .LVU217
+ 985              		.loc 1 653 13 is_stmt 1 view .LVU215
  654:quantum/command.c ****             desc  = NULL;
- 988              		.loc 1 654 19 is_stmt 0 view .LVU218
- 989 00c0 344A     		ldr	r2, .L91+8
+ 986              		.loc 1 654 19 is_stmt 0 view .LVU216
+ 987 00c0 344A     		ldr	r2, .L91+8
  653:quantum/command.c ****             pp    = NULL;
- 990              		.loc 1 653 19 view .LVU219
- 991 00c2 0023     		movs	r3, #0
+ 988              		.loc 1 653 19 view .LVU217
+ 989 00c2 0023     		movs	r3, #0
  654:quantum/command.c ****             desc  = NULL;
- 992              		.loc 1 654 19 view .LVU220
- 993 00c4 1360     		str	r3, [r2]
+ 990              		.loc 1 654 19 view .LVU218
+ 991 00c4 1360     		str	r3, [r2]
  655:quantum/command.c ****             break;
- 994              		.loc 1 655 19 view .LVU221
- 995 00c6 374A     		ldr	r2, .L91+24
+ 992              		.loc 1 655 19 view .LVU219
+ 993 00c6 374A     		ldr	r2, .L91+24
  653:quantum/command.c ****             pp    = NULL;
- 996              		.loc 1 653 19 view .LVU222
- 997 00c8 2370     		strb	r3, [r4]
+ 994              		.loc 1 653 19 view .LVU220
+ 995 00c8 2370     		strb	r3, [r4]
  654:quantum/command.c ****             desc  = NULL;
- 998              		.loc 1 654 13 is_stmt 1 view .LVU223
+ 996              		.loc 1 654 13 is_stmt 1 view .LVU221
  655:quantum/command.c ****             break;
- 999              		.loc 1 655 13 view .LVU224
+ 997              		.loc 1 655 13 view .LVU222
  655:quantum/command.c ****             break;
- 1000              		.loc 1 655 19 is_stmt 0 view .LVU225
- 1001 00ca 1360     		str	r3, [r2]
+ 998              		.loc 1 655 19 is_stmt 0 view .LVU223
+ 999 00ca 1360     		str	r3, [r2]
  656:quantum/command.c **** 
- 1002              		.loc 1 656 13 is_stmt 1 view .LVU226
+ 1000              		.loc 1 656 13 is_stmt 1 view .LVU224
  714:quantum/command.c ****         if (pp) {
- 1003              		.loc 1 714 5 view .LVU227
- 1004 00cc E4E7     		b	.L61
- 1005              	.LVL81:
- 1006              	.L42:
+ 1001              		.loc 1 714 5 view .LVU225
+ 1002 00cc E4E7     		b	.L61
+ 1003              	.LVL81:
+ 1004              	.L42:
  660:quantum/command.c ****             mousekey_param_print();
- 1007              		.loc 1 660 13 view .LVU228
- 1008 00ce 3948     		ldr	r0, .L91+40
- 1009              	.LVL82:
+ 1005              		.loc 1 660 13 view .LVU226
+ 1006 00ce 3948     		ldr	r0, .L91+40
+ 1007              	.LVL82:
  660:quantum/command.c ****             mousekey_param_print();
- 1010              		.loc 1 660 13 is_stmt 0 view .LVU229
- 1011 00d0 FFF7FEFF 		bl	printf_
- 1012              	.LVL83:
+ 1008              		.loc 1 660 13 is_stmt 0 view .LVU227
+ 1009 00d0 FFF7FEFF 		bl	printf_
+ 1010              	.LVL83:
  661:quantum/command.c **** #    endif
- 1013              		.loc 1 661 13 is_stmt 1 view .LVU230
- 1014 00d4 FFF7FEFF 		bl	mousekey_param_print
- 1015              	.LVL84:
+ 1011              		.loc 1 661 13 is_stmt 1 view .LVU228
+ 1012 00d4 FFF7FEFF 		bl	mousekey_param_print
+ 1013              	.LVL84:
  663:quantum/command.c **** 
- 1016              		.loc 1 663 13 view .LVU231
+ 1014              		.loc 1 663 13 view .LVU229
  714:quantum/command.c ****         if (pp) {
- 1017              		.loc 1 714 5 view .LVU232
- 1018 00d8 DEE7     		b	.L61
- 1019              	.L59:
+ 1015              		.loc 1 714 5 view .LVU230
+ 1016 00d8 DEE7     		b	.L61
+ 1017              	.L59:
  671:quantum/command.c ****                 PARAM(2, mk_interval);
- 1020              		.loc 1 671 17 view .LVU233
- 1021 00da 2E4B     		ldr	r3, .L91+8
- 1022 00dc 364A     		ldr	r2, .L91+44
- 1023 00de 1A60     		str	r2, [r3]
+ 1018              		.loc 1 671 17 view .LVU231
+ 1019 00da 2E4B     		ldr	r3, .L91+8
+ 1020 00dc 364A     		ldr	r2, .L91+44
+ 1021 00de 1A60     		str	r2, [r3]
  671:quantum/command.c ****                 PARAM(2, mk_interval);
- 1024              		.loc 1 671 17 view .LVU234
- 1025 00e0 304B     		ldr	r3, .L91+24
- 1026 00e2 364A     		ldr	r2, .L91+48
- 1027              	.L88:
+ 1022              		.loc 1 671 17 view .LVU232
+ 1023 00e0 304B     		ldr	r3, .L91+24
+ 1024 00e2 364A     		ldr	r2, .L91+48
+ 1025              	.L88:
  672:quantum/command.c ****                 PARAM(3, mk_max_speed);
- 1028              		.loc 1 672 17 is_stmt 0 view .LVU235
- 1029 00e4 1A60     		str	r2, [r3]
+ 1026              		.loc 1 672 17 is_stmt 0 view .LVU233
+ 1027 00e4 1A60     		str	r2, [r3]
  672:quantum/command.c ****                 PARAM(3, mk_max_speed);
- 1030              		.loc 1 672 17 is_stmt 1 view .LVU236
- 1031              	.L63:
+ 1028              		.loc 1 672 17 is_stmt 1 view .LVU234
+ 1029              	.L63:
  685:quantum/command.c ****             break;
- 1032              		.loc 1 685 13 view .LVU237
+ 1030              		.loc 1 685 13 view .LVU235
  685:quantum/command.c ****             break;
- 1033              		.loc 1 685 17 is_stmt 0 view .LVU238
- 1034 00e6 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1031              		.loc 1 685 17 is_stmt 0 view .LVU236
+ 1032 00e6 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
  685:quantum/command.c ****             break;
- 1035              		.loc 1 685 16 view .LVU239
- 1036 00e8 0029     		cmp	r1, #0
- 1037 00ea D5D0     		beq	.L61
+ 1033              		.loc 1 685 16 view .LVU237
+ 1034 00e8 0029     		cmp	r1, #0
+ 1035 00ea D5D0     		beq	.L61
  685:quantum/command.c ****             break;
- 1038              		.loc 1 685 24 is_stmt 1 view .LVU240
- 1039 00ec 3448     		ldr	r0, .L91+52
- 1040              	.LVL85:
- 1041              	.L89:
- 1042              	.LBB33:
+ 1036              		.loc 1 685 24 is_stmt 1 view .LVU238
+ 1037 00ec 3448     		ldr	r0, .L91+52
+ 1038              	.LVL85:
+ 1039              	.L89:
+ 1040              	.LBB33:
  723:quantum/command.c ****         } else {
- 1043              		.loc 1 723 13 is_stmt 0 view .LVU241
- 1044 00ee FFF7FEFF 		bl	printf_
- 1045              	.LVL86:
- 1046              	.LBE33:
- 1047 00f2 D1E7     		b	.L61
- 1048              	.LVL87:
- 1049              	.L58:
+ 1041              		.loc 1 723 13 is_stmt 0 view .LVU239
+ 1042 00ee FFF7FEFF 		bl	printf_
+ 1043              	.LVL86:
+ 1044              	.LBE33:
+ 1045 00f2 D1E7     		b	.L61
+ 1046              	.LVL87:
+ 1047              	.L58:
  672:quantum/command.c ****                 PARAM(3, mk_max_speed);
- 1050              		.loc 1 672 17 is_stmt 1 view .LVU242
- 1051 00f4 274B     		ldr	r3, .L91+8
- 1052 00f6 334A     		ldr	r2, .L91+56
- 1053 00f8 1A60     		str	r2, [r3]
+ 1048              		.loc 1 672 17 is_stmt 1 view .LVU240
+ 1049 00f4 274B     		ldr	r3, .L91+8
+ 1050 00f6 334A     		ldr	r2, .L91+56
+ 1051 00f8 1A60     		str	r2, [r3]
  672:quantum/command.c ****                 PARAM(3, mk_max_speed);
- 1054              		.loc 1 672 17 view .LVU243
- 1055 00fa 2A4B     		ldr	r3, .L91+24
- 1056 00fc 324A     		ldr	r2, .L91+60
- 1057 00fe F1E7     		b	.L88
- 1058              	.L57:
+ 1052              		.loc 1 672 17 view .LVU241
+ 1053 00fa 2A4B     		ldr	r3, .L91+24
+ 1054 00fc 324A     		ldr	r2, .L91+60
+ 1055 00fe F1E7     		b	.L88
+ 1056              	.L57:
  673:quantum/command.c ****                 PARAM(4, mk_time_to_max);
- 1059              		.loc 1 673 17 view .LVU244
- 1060 0100 244B     		ldr	r3, .L91+8
- 1061 0102 324A     		ldr	r2, .L91+64
- 1062 0104 1A60     		str	r2, [r3]
+ 1057              		.loc 1 673 17 view .LVU242
+ 1058 0100 244B     		ldr	r3, .L91+8
+ 1059 0102 324A     		ldr	r2, .L91+64
+ 1060 0104 1A60     		str	r2, [r3]
  673:quantum/command.c ****                 PARAM(4, mk_time_to_max);
- 1063              		.loc 1 673 17 view .LVU245
- 1064 0106 274B     		ldr	r3, .L91+24
- 1065 0108 314A     		ldr	r2, .L91+68
- 1066 010a EBE7     		b	.L88
- 1067              	.L56:
+ 1061              		.loc 1 673 17 view .LVU243
+ 1062 0106 274B     		ldr	r3, .L91+24
+ 1063 0108 314A     		ldr	r2, .L91+68
+ 1064 010a EBE7     		b	.L88
+ 1065              	.L56:
  674:quantum/command.c ****                 PARAM(5, mk_wheel_max_speed);
- 1068              		.loc 1 674 17 view .LVU246
- 1069 010c 214B     		ldr	r3, .L91+8
- 1070 010e 314A     		ldr	r2, .L91+72
- 1071 0110 1A60     		str	r2, [r3]
+ 1066              		.loc 1 674 17 view .LVU244
+ 1067 010c 214B     		ldr	r3, .L91+8
+ 1068 010e 314A     		ldr	r2, .L91+72
+ 1069 0110 1A60     		str	r2, [r3]
  674:quantum/command.c ****                 PARAM(5, mk_wheel_max_speed);
- 1072              		.loc 1 674 17 view .LVU247
- 1073 0112 244B     		ldr	r3, .L91+24
- 1074 0114 304A     		ldr	r2, .L91+76
- 1075 0116 E5E7     		b	.L88
- 1076              	.L55:
+ 1070              		.loc 1 674 17 view .LVU245
+ 1071 0112 244B     		ldr	r3, .L91+24
+ 1072 0114 304A     		ldr	r2, .L91+76
+ 1073 0116 E5E7     		b	.L88
+ 1074              	.L55:
  675:quantum/command.c ****                 PARAM(6, mk_wheel_time_to_max);
- 1077              		.loc 1 675 17 view .LVU248
- 1078 0118 1E4B     		ldr	r3, .L91+8
- 1079 011a 304A     		ldr	r2, .L91+80
- 1080 011c 1A60     		str	r2, [r3]
+ 1075              		.loc 1 675 17 view .LVU246
+ 1076 0118 1E4B     		ldr	r3, .L91+8
+ 1077 011a 304A     		ldr	r2, .L91+80
+ 1078 011c 1A60     		str	r2, [r3]
  675:quantum/command.c ****                 PARAM(6, mk_wheel_time_to_max);
- 1081              		.loc 1 675 17 view .LVU249
- 1082 011e 214B     		ldr	r3, .L91+24
- 1083 0120 2F4A     		ldr	r2, .L91+84
- 1084 0122 DFE7     		b	.L88
- 1085              	.L53:
+ 1079              		.loc 1 675 17 view .LVU247
+ 1080 011e 214B     		ldr	r3, .L91+24
+ 1081 0120 2F4A     		ldr	r2, .L91+84
+ 1082 0122 DFE7     		b	.L88
+ 1083              	.L53:
  676:quantum/command.c **** #endif /* MK_3_SPEED */
- 1086              		.loc 1 676 17 view .LVU250
- 1087 0124 1B4B     		ldr	r3, .L91+8
- 1088 0126 2F4A     		ldr	r2, .L91+88
- 1089 0128 1A60     		str	r2, [r3]
+ 1084              		.loc 1 676 17 view .LVU248
+ 1085 0124 1B4B     		ldr	r3, .L91+8
+ 1086 0126 2F4A     		ldr	r2, .L91+88
+ 1087 0128 1A60     		str	r2, [r3]
  676:quantum/command.c **** #endif /* MK_3_SPEED */
- 1090              		.loc 1 676 17 view .LVU251
- 1091 012a 1E4B     		ldr	r3, .L91+24
- 1092 012c 2E4A     		ldr	r2, .L91+92
- 1093 012e D9E7     		b	.L88
- 1094              	.L52:
+ 1088              		.loc 1 676 17 view .LVU249
+ 1089 012a 1E4B     		ldr	r3, .L91+24
+ 1090 012c 2E4A     		ldr	r2, .L91+92
+ 1091 012e D9E7     		b	.L88
+ 1092              	.L52:
  681:quantum/command.c ****                     print("?\n");
- 1095              		.loc 1 681 21 view .LVU252
+ 1093              		.loc 1 681 21 view .LVU250
  681:quantum/command.c ****                     print("?\n");
- 1096              		.loc 1 681 27 is_stmt 0 view .LVU253
- 1097 0130 0023     		movs	r3, #0
+ 1094              		.loc 1 681 27 is_stmt 0 view .LVU251
+ 1095 0130 0023     		movs	r3, #0
  682:quantum/command.c ****                     break;
- 1098              		.loc 1 682 21 view .LVU254
- 1099 0132 1748     		ldr	r0, .L91+4
+ 1096              		.loc 1 682 21 view .LVU252
+ 1097 0132 1748     		ldr	r0, .L91+4
  681:quantum/command.c ****                     print("?\n");
- 1100              		.loc 1 681 27 view .LVU255
- 1101 0134 2370     		strb	r3, [r4]
+ 1098              		.loc 1 681 27 view .LVU253
+ 1099 0134 2370     		strb	r3, [r4]
  682:quantum/command.c ****                     break;
- 1102              		.loc 1 682 21 is_stmt 1 view .LVU256
- 1103 0136 FFF7FEFF 		bl	printf_
- 1104              	.LVL88:
+ 1100              		.loc 1 682 21 is_stmt 1 view .LVU254
+ 1101 0136 FFF7FEFF 		bl	printf_
+ 1102              	.LVL88:
  683:quantum/command.c ****             } /* clang-format on */
- 1105              		.loc 1 683 21 view .LVU257
- 1106 013a D4E7     		b	.L63
- 1107              	.LVL89:
- 1108              	.L44:
+ 1103              		.loc 1 683 21 view .LVU255
+ 1104 013a D4E7     		b	.L63
+ 1105              	.LVL89:
+ 1106              	.L44:
  698:quantum/command.c ****             mk_interval          = MOUSEKEY_INTERVAL;
- 1109              		.loc 1 698 13 view .LVU258
+ 1107              		.loc 1 698 13 view .LVU256
  698:quantum/command.c ****             mk_interval          = MOUSEKEY_INTERVAL;
- 1110              		.loc 1 698 34 is_stmt 0 view .LVU259
- 1111 013c 1E4B     		ldr	r3, .L91+44
+ 1108              		.loc 1 698 34 is_stmt 0 view .LVU257
+ 1109 013c 1E4B     		ldr	r3, .L91+44
  706:quantum/command.c ****             break;
- 1112              		.loc 1 706 13 view .LVU260
- 1113 013e 2B48     		ldr	r0, .L91+96
- 1114              	.LVL90:
+ 1110              		.loc 1 706 13 view .LVU258
+ 1111 013e 2B48     		ldr	r0, .L91+96
+ 1112              	.LVL90:
  698:quantum/command.c ****             mk_interval          = MOUSEKEY_INTERVAL;
- 1115              		.loc 1 698 34 view .LVU261
- 1116 0140 1E22     		movs	r2, #30
- 1117 0142 1A70     		strb	r2, [r3]
+ 1113              		.loc 1 698 34 view .LVU259
+ 1114 0140 1E22     		movs	r2, #30
+ 1115 0142 1A70     		strb	r2, [r3]
  699:quantum/command.c ****             mk_max_speed         = MOUSEKEY_MAX_SPEED;
- 1118              		.loc 1 699 13 is_stmt 1 view .LVU262
+ 1116              		.loc 1 699 13 is_stmt 1 view .LVU260
  699:quantum/command.c ****             mk_max_speed         = MOUSEKEY_MAX_SPEED;
- 1119              		.loc 1 699 34 is_stmt 0 view .LVU263
- 1120 0144 1F4B     		ldr	r3, .L91+56
- 1121 0146 3222     		movs	r2, #50
- 1122 0148 1A70     		strb	r2, [r3]
+ 1117              		.loc 1 699 34 is_stmt 0 view .LVU261
+ 1118 0144 1F4B     		ldr	r3, .L91+56
+ 1119 0146 3222     		movs	r2, #50
+ 1120 0148 1A70     		strb	r2, [r3]
  700:quantum/command.c ****             mk_time_to_max       = MOUSEKEY_TIME_TO_MAX;
- 1123              		.loc 1 700 13 is_stmt 1 view .LVU264
+ 1121              		.loc 1 700 13 is_stmt 1 view .LVU262
  700:quantum/command.c ****             mk_time_to_max       = MOUSEKEY_TIME_TO_MAX;
- 1124              		.loc 1 700 34 is_stmt 0 view .LVU265
- 1125 014a 204B     		ldr	r3, .L91+64
- 1126 014c 0A22     		movs	r2, #10
- 1127 014e 1A70     		strb	r2, [r3]
+ 1122              		.loc 1 700 34 is_stmt 0 view .LVU263
+ 1123 014a 204B     		ldr	r3, .L91+64
+ 1124 014c 0A22     		movs	r2, #10
+ 1125 014e 1A70     		strb	r2, [r3]
  701:quantum/command.c ****             mk_wheel_max_speed   = MOUSEKEY_WHEEL_MAX_SPEED;
- 1128              		.loc 1 701 13 is_stmt 1 view .LVU266
+ 1126              		.loc 1 701 13 is_stmt 1 view .LVU264
  701:quantum/command.c ****             mk_wheel_max_speed   = MOUSEKEY_WHEEL_MAX_SPEED;
- 1129              		.loc 1 701 34 is_stmt 0 view .LVU267
- 1130 0150 204B     		ldr	r3, .L91+72
- 1131 0152 1422     		movs	r2, #20
- 1132 0154 1A70     		strb	r2, [r3]
+ 1127              		.loc 1 701 34 is_stmt 0 view .LVU265
+ 1128 0150 204B     		ldr	r3, .L91+72
+ 1129 0152 1422     		movs	r2, #20
+ 1130 0154 1A70     		strb	r2, [r3]
  702:quantum/command.c ****             mk_wheel_time_to_max = MOUSEKEY_WHEEL_TIME_TO_MAX;
- 1133              		.loc 1 702 13 is_stmt 1 view .LVU268
+ 1131              		.loc 1 702 13 is_stmt 1 view .LVU266
  702:quantum/command.c ****             mk_wheel_time_to_max = MOUSEKEY_WHEEL_TIME_TO_MAX;
- 1134              		.loc 1 702 34 is_stmt 0 view .LVU269
- 1135 0156 214B     		ldr	r3, .L91+80
- 1136 0158 0822     		movs	r2, #8
- 1137 015a 1A70     		strb	r2, [r3]
+ 1132              		.loc 1 702 34 is_stmt 0 view .LVU267
+ 1133 0156 214B     		ldr	r3, .L91+80
+ 1134 0158 0822     		movs	r2, #8
+ 1135 015a 1A70     		strb	r2, [r3]
  703:quantum/command.c **** #    endif /* MK_3_SPEED */
- 1138              		.loc 1 703 13 is_stmt 1 view .LVU270
+ 1136              		.loc 1 703 13 is_stmt 1 view .LVU268
  703:quantum/command.c **** #    endif /* MK_3_SPEED */
- 1139              		.loc 1 703 34 is_stmt 0 view .LVU271
- 1140 015c 214B     		ldr	r3, .L91+88
- 1141 015e 2822     		movs	r2, #40
- 1142 0160 1A70     		strb	r2, [r3]
+ 1137              		.loc 1 703 34 is_stmt 0 view .LVU269
+ 1138 015c 214B     		ldr	r3, .L91+88
+ 1139 015e 2822     		movs	r2, #40
+ 1140 0160 1A70     		strb	r2, [r3]
  706:quantum/command.c ****             break;
- 1143              		.loc 1 706 13 is_stmt 1 view .LVU272
- 1144              	.LVL91:
- 1145              	.L90:
+ 1141              		.loc 1 706 13 is_stmt 1 view .LVU270
+ 1142              	.LVL91:
+ 1143              	.L90:
  725:quantum/command.c ****         }
- 1146              		.loc 1 725 13 is_stmt 0 view .LVU273
- 1147 0162 FFF7FEFF 		bl	printf_
- 1148              	.LVL92:
- 1149 0166 97E7     		b	.L61
- 1150              	.LVL93:
- 1151              	.L50:
+ 1144              		.loc 1 725 13 is_stmt 0 view .LVU271
+ 1145 0162 FFF7FEFF 		bl	printf_
+ 1146              	.LVL92:
+ 1147 0166 97E7     		b	.L61
+ 1148              	.LVL93:
+ 1149              	.L50:
  691:quantum/command.c ****         case KC_RIGHT: change = +10; break;
- 1152              		.loc 1 691 31 view .LVU274
- 1153 0168 6FF00901 		mvn	r1, #9
- 1154 016c 58E7     		b	.L47
- 1155              	.L49:
+ 1150              		.loc 1 691 31 view .LVU272
+ 1151 0168 6FF00901 		mvn	r1, #9
+ 1152 016c 58E7     		b	.L47
+ 1153              	.L49:
  690:quantum/command.c ****         case KC_LEFT:  change = -10; break;
- 1156              		.loc 1 690 31 view .LVU275
- 1157 016e 4FF0FF31 		mov	r1, #-1
- 1158 0172 55E7     		b	.L47
- 1159              	.L70:
+ 1154              		.loc 1 690 31 view .LVU273
+ 1155 016e 4FF0FF31 		mov	r1, #-1
+ 1156 0172 55E7     		b	.L47
+ 1157              	.L70:
  689:quantum/command.c ****         case KC_DOWN:  change =  -1; break;
- 1160              		.loc 1 689 31 view .LVU276
- 1161 0174 0121     		movs	r1, #1
- 1162 0176 53E7     		b	.L47
- 1163              	.LVL94:
- 1164              	.L65:
- 1165              	.LBB34:
+ 1158              		.loc 1 689 31 view .LVU274
+ 1159 0174 0121     		movs	r1, #1
+ 1160 0176 53E7     		b	.L47
+ 1161              	.LVL94:
+ 1162              	.L65:
+ 1163              	.LBB34:
  719:quantum/command.c ****                 *pp = 0;
- 1166              		.loc 1 719 18 is_stmt 1 view .LVU277
+ 1164              		.loc 1 719 18 is_stmt 1 view .LVU275
  719:quantum/command.c ****                 *pp = 0;
- 1167              		.loc 1 719 21 is_stmt 0 view .LVU278
- 1168 0178 002A     		cmp	r2, #0
+ 1165              		.loc 1 719 21 is_stmt 0 view .LVU276
+ 1166 0178 002A     		cmp	r2, #0
  720:quantum/command.c ****             else
- 1169              		.loc 1 720 17 is_stmt 1 view .LVU279
+ 1167              		.loc 1 720 17 is_stmt 1 view .LVU277
  720:quantum/command.c ****             else
- 1170              		.loc 1 720 21 is_stmt 0 view .LVU280
- 1171 017a B8BF     		it	lt
- 1172 017c 0022     		movlt	r2, #0
- 1173              	.LVL95:
+ 1168              		.loc 1 720 21 is_stmt 0 view .LVU278
+ 1169 017a B8BF     		it	lt
+ 1170 017c 0022     		movlt	r2, #0
+ 1171              	.LVL95:
  720:quantum/command.c ****             else
- 1174              		.loc 1 720 21 view .LVU281
- 1175 017e 59E7     		b	.L67
- 1176              	.LVL96:
- 1177              	.L68:
+ 1172              		.loc 1 720 21 view .LVU279
+ 1173 017e 59E7     		b	.L67
+ 1174              	.LVL96:
+ 1175              	.L68:
  720:quantum/command.c ****             else
- 1178              		.loc 1 720 21 view .LVU282
- 1179              	.LBE34:
+ 1176              		.loc 1 720 21 view .LVU280
+ 1177              	.LBE34:
  732:quantum/command.c ****     }
- 1180              		.loc 1 732 9 is_stmt 1 view .LVU283
+ 1178              		.loc 1 732 9 is_stmt 1 view .LVU281
  735:quantum/command.c **** 
- 1181              		.loc 1 735 1 is_stmt 0 view .LVU284
- 1182 0180 BDE81040 		pop	{r4, lr}
- 1183              		.cfi_remember_state
- 1184              		.cfi_restore 14
- 1185              		.cfi_restore 4
- 1186              		.cfi_def_cfa_offset 0
+ 1179              		.loc 1 735 1 is_stmt 0 view .LVU282
+ 1180 0180 BDE81040 		pop	{r4, lr}
+ 1181              		.cfi_remember_state
+ 1182              		.cfi_restore 14
+ 1183              		.cfi_restore 4
+ 1184              		.cfi_def_cfa_offset 0
  732:quantum/command.c ****     }
- 1187              		.loc 1 732 9 view .LVU285
- 1188 0184 1A48     		ldr	r0, .L91+100
- 1189 0186 FFF7FEBF 		b	printf_
- 1190              	.LVL97:
- 1191              	.L39:
- 1192              		.cfi_restore_state
+ 1185              		.loc 1 732 9 view .LVU283
+ 1186 0184 1A48     		ldr	r0, .L91+100
+ 1187 0186 FFF7FEBF 		b	printf_
+ 1188              	.LVL97:
+ 1189              	.L39:
+ 1190              		.cfi_restore_state
  735:quantum/command.c **** 
- 1193              		.loc 1 735 1 view .LVU286
- 1194 018a 10BD     		pop	{r4, pc}
- 1195              	.L92:
- 1196              		.align	2
- 1197              	.L91:
- 1198 018c 00000000 		.word	.LANCHOR1
- 1199 0190 4A010000 		.word	.LC34
- 1200 0194 00000000 		.word	.LANCHOR2
- 1201 0198 5B010000 		.word	.LC37
- 1202 019c 04000000 		.word	.LC24
- 1203 01a0 14000000 		.word	.LC25
- 1204 01a4 00000000 		.word	.LANCHOR3
- 1205 01a8 61010000 		.word	.LC38
- 1206 01ac 00000000 		.word	.LC23
- 1207 01b0 E0000000 		.word	.LC26
- 1208 01b4 E3000000 		.word	.LC27
- 1209 01b8 00000000 		.word	mk_delay
- 1210 01bc F1000000 		.word	.LC28
- 1211 01c0 4D010000 		.word	.LC35
- 1212 01c4 00000000 		.word	mk_interval
- 1213 01c8 FA000000 		.word	.LC29
- 1214 01cc 00000000 		.word	mk_max_speed
- 1215 01d0 06010000 		.word	.LC30
- 1216 01d4 00000000 		.word	mk_time_to_max
- 1217 01d8 13010000 		.word	.LC31
- 1218 01dc 00000000 		.word	mk_wheel_max_speed
- 1219 01e0 22010000 		.word	.LC32
- 1220 01e4 00000000 		.word	mk_wheel_time_to_max
- 1221 01e8 35010000 		.word	.LC33
- 1222 01ec 51010000 		.word	.LC36
- 1223 01f0 6A010000 		.word	.LC39
- 1224              		.cfi_endproc
- 1225              	.LFE307:
- 1227              		.section	.text.command_extra,"ax",%progbits
- 1228              		.align	1
- 1229              		.weak	command_extra
- 1230              		.syntax unified
- 1231              		.thumb
- 1232              		.thumb_func
- 1233              		.fpu fpv4-sp-d16
- 1235              	command_extra:
- 1236              	.LVL98:
- 1237              	.LFB292:
+ 1191              		.loc 1 735 1 view .LVU284
+ 1192 018a 10BD     		pop	{r4, pc}
+ 1193              	.L92:
+ 1194              		.align	2
+ 1195              	.L91:
+ 1196 018c 00000000 		.word	.LANCHOR1
+ 1197 0190 4A010000 		.word	.LC34
+ 1198 0194 00000000 		.word	.LANCHOR2
+ 1199 0198 5B010000 		.word	.LC37
+ 1200 019c 04000000 		.word	.LC24
+ 1201 01a0 14000000 		.word	.LC25
+ 1202 01a4 00000000 		.word	.LANCHOR3
+ 1203 01a8 61010000 		.word	.LC38
+ 1204 01ac 00000000 		.word	.LC23
+ 1205 01b0 E0000000 		.word	.LC26
+ 1206 01b4 E3000000 		.word	.LC27
+ 1207 01b8 00000000 		.word	mk_delay
+ 1208 01bc F1000000 		.word	.LC28
+ 1209 01c0 4D010000 		.word	.LC35
+ 1210 01c4 00000000 		.word	mk_interval
+ 1211 01c8 FA000000 		.word	.LC29
+ 1212 01cc 00000000 		.word	mk_max_speed
+ 1213 01d0 06010000 		.word	.LC30
+ 1214 01d4 00000000 		.word	mk_time_to_max
+ 1215 01d8 13010000 		.word	.LC31
+ 1216 01dc 00000000 		.word	mk_wheel_max_speed
+ 1217 01e0 22010000 		.word	.LC32
+ 1218 01e4 00000000 		.word	mk_wheel_time_to_max
+ 1219 01e8 35010000 		.word	.LC33
+ 1220 01ec 51010000 		.word	.LC36
+ 1221 01f0 6A010000 		.word	.LC39
+ 1222              		.cfi_endproc
+ 1223              	.LFE307:
+ 1225              		.section	.text.command_extra,"ax",%progbits
+ 1226              		.align	1
+ 1227              		.weak	command_extra
+ 1228              		.syntax unified
+ 1229              		.thumb
+ 1230              		.thumb_func
+ 1231              		.fpu fpv4-sp-d16
+ 1233              	command_extra:
+ 1234              	.LVL98:
+ 1235              	.LFB292:
   91:quantum/command.c ****     (void)code;
- 1238              		.loc 1 91 34 is_stmt 1 view -0
- 1239              		.cfi_startproc
- 1240              		@ args = 0, pretend = 0, frame = 0
- 1241              		@ frame_needed = 0, uses_anonymous_args = 0
- 1242              		@ link register save eliminated.
+ 1236              		.loc 1 91 34 is_stmt 1 view -0
+ 1237              		.cfi_startproc
+ 1238              		@ args = 0, pretend = 0, frame = 0
+ 1239              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1240              		@ link register save eliminated.
   92:quantum/command.c ****     return false;
- 1243              		.loc 1 92 5 view .LVU288
+ 1241              		.loc 1 92 5 view .LVU286
   93:quantum/command.c **** }
- 1244              		.loc 1 93 5 view .LVU289
+ 1242              		.loc 1 93 5 view .LVU287
   94:quantum/command.c **** 
- 1245              		.loc 1 94 1 is_stmt 0 view .LVU290
- 1246 0000 0020     		movs	r0, #0
- 1247              	.LVL99:
+ 1243              		.loc 1 94 1 is_stmt 0 view .LVU288
+ 1244 0000 0020     		movs	r0, #0
+ 1245              	.LVL99:
   94:quantum/command.c **** 
- 1248              		.loc 1 94 1 view .LVU291
- 1249 0002 7047     		bx	lr
- 1250              		.cfi_endproc
- 1251              	.LFE292:
- 1253              		.section	.text.command_console_extra,"ax",%progbits
- 1254              		.align	1
- 1255              		.weak	command_console_extra
- 1256              		.syntax unified
- 1257              		.thumb
- 1258              		.thumb_func
- 1259              		.fpu fpv4-sp-d16
- 1261              	command_console_extra:
- 1262              	.LFB306:
- 1263              		.cfi_startproc
- 1264              		@ args = 0, pretend = 0, frame = 0
- 1265              		@ frame_needed = 0, uses_anonymous_args = 0
- 1266              		@ link register save eliminated.
- 1267 0000 0020     		movs	r0, #0
- 1268 0002 7047     		bx	lr
- 1269              		.cfi_endproc
- 1270              	.LFE306:
- 1272              		.section	.text.command_proc,"ax",%progbits
- 1273              		.align	1
- 1274              		.global	command_proc
- 1275              		.syntax unified
- 1276              		.thumb
- 1277              		.thumb_func
- 1278              		.fpu fpv4-sp-d16
- 1280              	command_proc:
- 1281              	.LVL100:
- 1282              	.LFB291:
+ 1246              		.loc 1 94 1 view .LVU289
+ 1247 0002 7047     		bx	lr
+ 1248              		.cfi_endproc
+ 1249              	.LFE292:
+ 1251              		.section	.text.command_console_extra,"ax",%progbits
+ 1252              		.align	1
+ 1253              		.weak	command_console_extra
+ 1254              		.syntax unified
+ 1255              		.thumb
+ 1256              		.thumb_func
+ 1257              		.fpu fpv4-sp-d16
+ 1259              	command_console_extra:
+ 1260              	.LFB306:
+ 1261              		.cfi_startproc
+ 1262              		@ args = 0, pretend = 0, frame = 0
+ 1263              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1264              		@ link register save eliminated.
+ 1265 0000 0020     		movs	r0, #0
+ 1266 0002 7047     		bx	lr
+ 1267              		.cfi_endproc
+ 1268              	.LFE306:
+ 1270              		.section	.text.command_proc,"ax",%progbits
+ 1271              		.align	1
+ 1272              		.global	command_proc
+ 1273              		.syntax unified
+ 1274              		.thumb
+ 1275              		.thumb_func
+ 1276              		.fpu fpv4-sp-d16
+ 1278              	command_proc:
+ 1279              	.LVL100:
+ 1280              	.LFB291:
   64:quantum/command.c ****     switch (command_state) {
- 1283              		.loc 1 64 33 is_stmt 1 view -0
- 1284              		.cfi_startproc
- 1285              		@ args = 0, pretend = 0, frame = 0
- 1286              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1281              		.loc 1 64 33 is_stmt 1 view -0
+ 1282              		.cfi_startproc
+ 1283              		@ args = 0, pretend = 0, frame = 0
+ 1284              		@ frame_needed = 0, uses_anonymous_args = 0
   65:quantum/command.c ****         case ONESHOT:
- 1287              		.loc 1 65 5 view .LVU293
+ 1285              		.loc 1 65 5 view .LVU291
   64:quantum/command.c ****     switch (command_state) {
- 1288              		.loc 1 64 33 is_stmt 0 view .LVU294
- 1289 0000 70B5     		push	{r4, r5, r6, lr}
- 1290              		.cfi_def_cfa_offset 16
- 1291              		.cfi_offset 4, -16
- 1292              		.cfi_offset 5, -12
- 1293              		.cfi_offset 6, -8
- 1294              		.cfi_offset 14, -4
+ 1286              		.loc 1 64 33 is_stmt 0 view .LVU292
+ 1287 0000 70B5     		push	{r4, r5, r6, lr}
+ 1288              		.cfi_def_cfa_offset 16
+ 1289              		.cfi_offset 4, -16
+ 1290              		.cfi_offset 5, -12
+ 1291              		.cfi_offset 6, -8
+ 1292              		.cfi_offset 14, -4
   65:quantum/command.c ****         case ONESHOT:
- 1295              		.loc 1 65 5 view .LVU295
- 1296 0002 264E     		ldr	r6, .L124
- 1297 0004 3478     		ldrb	r4, [r6]	@ zero_extendqisi2
- 1298 0006 012C     		cmp	r4, #1
+ 1293              		.loc 1 65 5 view .LVU293
+ 1294 0002 264E     		ldr	r6, .L124
+ 1295 0004 3478     		ldrb	r4, [r6]	@ zero_extendqisi2
+ 1296 0006 012C     		cmp	r4, #1
   64:quantum/command.c ****     switch (command_state) {
- 1299              		.loc 1 64 33 view .LVU296
- 1300 0008 0546     		mov	r5, r0
+ 1297              		.loc 1 64 33 view .LVU294
+ 1298 0008 0546     		mov	r5, r0
   65:quantum/command.c ****         case ONESHOT:
- 1301              		.loc 1 65 5 view .LVU297
- 1302 000a 14D0     		beq	.L96
- 1303 000c 022C     		cmp	r4, #2
- 1304 000e 3FD0     		beq	.L97
- 1305 0010 002C     		cmp	r4, #0
- 1306 0012 40D1     		bne	.L98
+ 1299              		.loc 1 65 5 view .LVU295
+ 1300 000a 14D0     		beq	.L96
+ 1301 000c 022C     		cmp	r4, #2
+ 1302 000e 3FD0     		beq	.L97
+ 1303 0010 002C     		cmp	r4, #0
+ 1304 0012 40D1     		bne	.L98
   67:quantum/command.c ****             return (command_extra(code) || command_common(code));
- 1307              		.loc 1 67 13 is_stmt 1 view .LVU298
+ 1305              		.loc 1 67 13 is_stmt 1 view .LVU296
   67:quantum/command.c ****             return (command_extra(code) || command_common(code));
- 1308              		.loc 1 67 18 is_stmt 0 view .LVU299
- 1309 0014 FFF7FEFF 		bl	get_mods
- 1310              	.LVL101:
+ 1306              		.loc 1 67 18 is_stmt 0 view .LVU297
+ 1307 0014 FFF7FEFF 		bl	get_mods
+ 1308              	.LVL101:
   67:quantum/command.c ****             return (command_extra(code) || command_common(code));
- 1311              		.loc 1 67 16 view .LVU300
- 1312 0018 2228     		cmp	r0, #34
- 1313 001a 0AD1     		bne	.L99
+ 1309              		.loc 1 67 16 view .LVU298
+ 1310 0018 2228     		cmp	r0, #34
+ 1311 001a 0AD1     		bne	.L99
   68:quantum/command.c ****             break;
- 1314              		.loc 1 68 13 is_stmt 1 view .LVU301
+ 1312              		.loc 1 68 13 is_stmt 1 view .LVU299
   68:quantum/command.c ****             break;
- 1315              		.loc 1 68 21 is_stmt 0 view .LVU302
- 1316 001c 2846     		mov	r0, r5
- 1317 001e FFF7FEFF 		bl	command_extra
- 1318              	.LVL102:
+ 1313              		.loc 1 68 21 is_stmt 0 view .LVU300
+ 1314 001c 2846     		mov	r0, r5
+ 1315 001e FFF7FEFF 		bl	command_extra
+ 1316              	.LVL102:
   68:quantum/command.c ****             break;
- 1319              		.loc 1 68 41 view .LVU303
- 1320 0022 18B9     		cbnz	r0, .L110
- 1321              	.L123:
+ 1317              		.loc 1 68 41 view .LVU301
+ 1318 0022 18B9     		cbnz	r0, .L110
+ 1319              	.L123:
   72:quantum/command.c ****             else
- 1322              		.loc 1 72 48 discriminator 2 view .LVU304
- 1323 0024 2846     		mov	r0, r5
- 1324 0026 FFF7FEFF 		bl	command_common
- 1325              	.LVL103:
- 1326 002a 00E0     		b	.L102
- 1327              	.L110:
+ 1320              		.loc 1 72 48 discriminator 2 view .LVU302
+ 1321 0024 2846     		mov	r0, r5
+ 1322 0026 FFF7FEFF 		bl	command_common
+ 1323              	.LVL103:
+ 1324 002a 00E0     		b	.L102
+ 1325              	.L110:
   68:quantum/command.c ****             break;
- 1328              		.loc 1 68 41 view .LVU305
- 1329 002c 0120     		movs	r0, #1
- 1330              	.L102:
+ 1326              		.loc 1 68 41 view .LVU303
+ 1327 002c 0120     		movs	r0, #1
+ 1328              	.L102:
   72:quantum/command.c ****             else
- 1331              		.loc 1 72 45 discriminator 6 view .LVU306
- 1332 002e 00F00104 		and	r4, r0, #1
- 1333              	.L99:
+ 1329              		.loc 1 72 45 discriminator 6 view .LVU304
+ 1330 002e 00F00104 		and	r4, r0, #1
+ 1331              	.L99:
   86:quantum/command.c **** 
- 1334              		.loc 1 86 1 view .LVU307
- 1335 0032 2046     		mov	r0, r4
- 1336 0034 70BD     		pop	{r4, r5, r6, pc}
- 1337              	.LVL104:
- 1338              	.L96:
+ 1332              		.loc 1 86 1 view .LVU305
+ 1333 0032 2046     		mov	r0, r4
+ 1334 0034 70BD     		pop	{r4, r5, r6, pc}
+ 1335              	.LVL104:
+ 1336              	.L96:
   69:quantum/command.c ****         case CONSOLE:
- 1339              		.loc 1 69 13 is_stmt 1 view .LVU308
+ 1337              		.loc 1 69 13 is_stmt 1 view .LVU306
   71:quantum/command.c ****                 return (command_extra(code) || command_common(code));
- 1340              		.loc 1 71 13 view .LVU309
+ 1338              		.loc 1 71 13 view .LVU307
   71:quantum/command.c ****                 return (command_extra(code) || command_common(code));
- 1341              		.loc 1 71 17 is_stmt 0 view .LVU310
- 1342 0036 FFF7FEFF 		bl	get_mods
- 1343              	.LVL105:
+ 1339              		.loc 1 71 17 is_stmt 0 view .LVU308
+ 1340 0036 FFF7FEFF 		bl	get_mods
+ 1341              	.LVL105:
   71:quantum/command.c ****                 return (command_extra(code) || command_common(code));
- 1344              		.loc 1 71 16 view .LVU311
- 1345 003a 2228     		cmp	r0, #34
+ 1342              		.loc 1 71 16 view .LVU309
+ 1343 003a 2228     		cmp	r0, #34
   72:quantum/command.c ****             else
- 1346              		.loc 1 72 25 view .LVU312
- 1347 003c 2846     		mov	r0, r5
+ 1344              		.loc 1 72 25 view .LVU310
+ 1345 003c 2846     		mov	r0, r5
   71:quantum/command.c ****                 return (command_extra(code) || command_common(code));
- 1348              		.loc 1 71 16 view .LVU313
- 1349 003e 05D1     		bne	.L101
+ 1346              		.loc 1 71 16 view .LVU311
+ 1347 003e 05D1     		bne	.L101
   72:quantum/command.c ****             else
- 1350              		.loc 1 72 17 is_stmt 1 view .LVU314
+ 1348              		.loc 1 72 17 is_stmt 1 view .LVU312
   72:quantum/command.c ****             else
- 1351              		.loc 1 72 25 is_stmt 0 view .LVU315
- 1352 0040 FFF7FEFF 		bl	command_extra
- 1353              	.LVL106:
+ 1349              		.loc 1 72 25 is_stmt 0 view .LVU313
+ 1350 0040 FFF7FEFF 		bl	command_extra
+ 1351              	.LVL106:
   72:quantum/command.c ****             else
- 1354              		.loc 1 72 45 view .LVU316
- 1355 0044 0028     		cmp	r0, #0
- 1356 0046 EDD0     		beq	.L123
- 1357 0048 2046     		mov	r0, r4
- 1358 004a F0E7     		b	.L102
- 1359              	.L101:
+ 1352              		.loc 1 72 45 view .LVU314
+ 1353 0044 0028     		cmp	r0, #0
+ 1354 0046 EDD0     		beq	.L123
+ 1355 0048 2046     		mov	r0, r4
+ 1356 004a F0E7     		b	.L102
+ 1357              	.L101:
   74:quantum/command.c ****             break;
- 1360              		.loc 1 74 17 is_stmt 1 view .LVU317
+ 1358              		.loc 1 74 17 is_stmt 1 view .LVU315
   74:quantum/command.c ****             break;
- 1361              		.loc 1 74 25 is_stmt 0 view .LVU318
- 1362 004c FFF7FEFF 		bl	command_console_extra
- 1363              	.LVL107:
+ 1359              		.loc 1 74 25 is_stmt 0 view .LVU316
+ 1360 004c FFF7FEFF 		bl	command_console_extra
+ 1361              	.LVL107:
   74:quantum/command.c ****             break;
- 1364              		.loc 1 74 53 view .LVU319
- 1365 0050 0028     		cmp	r0, #0
- 1366 0052 EED1     		bne	.L99
- 1367              	.LVL108:
- 1368              	.LBB39:
- 1369              	.LBI39:
+ 1362              		.loc 1 74 53 view .LVU317
+ 1363 0050 0028     		cmp	r0, #0
+ 1364 0052 EED1     		bne	.L99
+ 1365              	.LVL108:
+ 1366              	.LBB39:
+ 1367              	.LBI39:
  547:quantum/command.c ****     switch (code) {
- 1370              		.loc 1 547 13 is_stmt 1 view .LVU320
- 1371              	.LBB40:
+ 1368              		.loc 1 547 13 is_stmt 1 view .LVU318
+ 1369              	.LBB40:
  548:quantum/command.c ****         case KC_H:
- 1372              		.loc 1 548 5 view .LVU321
- 1373 0054 142D     		cmp	r5, #20
- 1374 0056 1ED0     		beq	.L98
- 1375 0058 08D8     		bhi	.L105
- 1376 005a 0B2D     		cmp	r5, #11
- 1377 005c 0AD0     		beq	.L106
- 1378 005e 102D     		cmp	r5, #16
- 1379 0060 10D0     		beq	.L107
- 1380              	.L108:
+ 1370              		.loc 1 548 5 view .LVU319
+ 1371 0054 142D     		cmp	r5, #20
+ 1372 0056 1ED0     		beq	.L98
+ 1373 0058 08D8     		bhi	.L105
+ 1374 005a 0B2D     		cmp	r5, #11
+ 1375 005c 0AD0     		beq	.L106
+ 1376 005e 102D     		cmp	r5, #16
+ 1377 0060 10D0     		beq	.L107
+ 1378              	.L108:
  565:quantum/command.c ****             return false;
- 1381              		.loc 1 565 13 view .LVU322
- 1382 0062 0F48     		ldr	r0, .L124+4
- 1383 0064 FFF7FEFF 		bl	printf_
- 1384              	.LVL109:
+ 1379              		.loc 1 565 13 view .LVU320
+ 1380 0062 0F48     		ldr	r0, .L124+4
+ 1381 0064 FFF7FEFF 		bl	printf_
+ 1382              	.LVL109:
  566:quantum/command.c ****     }
- 1385              		.loc 1 566 13 view .LVU323
+ 1383              		.loc 1 566 13 view .LVU321
  566:quantum/command.c ****     }
- 1386              		.loc 1 566 13 is_stmt 0 view .LVU324
- 1387              	.LBE40:
- 1388              	.LBE39:
+ 1384              		.loc 1 566 13 is_stmt 0 view .LVU322
+ 1385              	.LBE40:
+ 1386              	.LBE39:
   74:quantum/command.c ****             break;
- 1389              		.loc 1 74 53 view .LVU325
- 1390 0068 0024     		movs	r4, #0
- 1391 006a E2E7     		b	.L99
- 1392              	.LVL110:
- 1393              	.L105:
- 1394              	.LBB45:
- 1395              	.LBB43:
+ 1387              		.loc 1 74 53 view .LVU323
+ 1388 0068 0024     		movs	r4, #0
+ 1389 006a E2E7     		b	.L99
+ 1390              	.LVL110:
+ 1391              	.L105:
+ 1392              	.LBB45:
+ 1393              	.LBB43:
  548:quantum/command.c ****         case KC_H:
- 1396              		.loc 1 548 5 view .LVU326
- 1397 006c 292D     		cmp	r5, #41
- 1398 006e 12D0     		beq	.L98
- 1399 0070 382D     		cmp	r5, #56
- 1400 0072 F6D1     		bne	.L108
- 1401              	.L106:
+ 1394              		.loc 1 548 5 view .LVU324
+ 1395 006c 292D     		cmp	r5, #41
+ 1396 006e 12D0     		beq	.L98
+ 1397 0070 382D     		cmp	r5, #56
+ 1398 0072 F6D1     		bne	.L108
+ 1399              	.L106:
  551:quantum/command.c ****             print("C> ");
- 1402              		.loc 1 551 13 is_stmt 1 view .LVU327
- 1403              	.LBB41:
- 1404              	.LBI41:
+ 1400              		.loc 1 551 13 is_stmt 1 view .LVU325
+ 1401              	.LBB41:
+ 1402              	.LBI41:
  538:quantum/command.c ****     print("\n\t- Console -\n"
- 1405              		.loc 1 538 13 view .LVU328
- 1406              	.LBB42:
+ 1403              		.loc 1 538 13 view .LVU326
+ 1404              	.LBB42:
  539:quantum/command.c ****           "ESC/q:	quit\n"
- 1407              		.loc 1 539 5 view .LVU329
- 1408 0074 0B48     		ldr	r0, .L124+8
- 1409 0076 FFF7FEFF 		bl	printf_
- 1410              	.LVL111:
- 1411              	.LBE42:
- 1412              	.LBE41:
+ 1405              		.loc 1 539 5 view .LVU327
+ 1406 0074 0B48     		ldr	r0, .L124+8
+ 1407 0076 FFF7FEFF 		bl	printf_
+ 1408              	.LVL111:
+ 1409              	.LBE42:
+ 1410              	.LBE41:
  552:quantum/command.c ****             return true;
- 1413              		.loc 1 552 13 view .LVU330
- 1414 007a 0B48     		ldr	r0, .L124+12
- 1415 007c FFF7FEFF 		bl	printf_
- 1416              	.LVL112:
+ 1411              		.loc 1 552 13 view .LVU328
+ 1412 007a 0B48     		ldr	r0, .L124+12
+ 1413 007c FFF7FEFF 		bl	printf_
+ 1414              	.LVL112:
  553:quantum/command.c ****         case KC_Q:
- 1417              		.loc 1 553 13 view .LVU331
- 1418              	.L122:
+ 1415              		.loc 1 553 13 view .LVU329
+ 1416              	.L122:
  553:quantum/command.c ****         case KC_Q:
- 1419              		.loc 1 553 13 is_stmt 0 view .LVU332
- 1420              	.LBE43:
- 1421              	.LBE45:
+ 1417              		.loc 1 553 13 is_stmt 0 view .LVU330
+ 1418              	.LBE43:
+ 1419              	.LBE45:
   79:quantum/command.c **** #endif
- 1422              		.loc 1 79 13 is_stmt 1 view .LVU333
+ 1420              		.loc 1 79 13 is_stmt 1 view .LVU331
   85:quantum/command.c **** }
- 1423              		.loc 1 85 5 view .LVU334
+ 1421              		.loc 1 85 5 view .LVU332
   85:quantum/command.c **** }
- 1424              		.loc 1 85 12 is_stmt 0 view .LVU335
- 1425 0080 0124     		movs	r4, #1
- 1426 0082 D6E7     		b	.L99
- 1427              	.LVL113:
- 1428              	.L107:
- 1429              	.LBB46:
- 1430              	.LBB44:
+ 1422              		.loc 1 85 12 is_stmt 0 view .LVU333
+ 1423 0080 0124     		movs	r4, #1
+ 1424 0082 D6E7     		b	.L99
+ 1425              	.LVL113:
+ 1426              	.L107:
+ 1427              	.LBB46:
+ 1428              	.LBB44:
  560:quantum/command.c ****             mousekey_console(KC_SLASH /* ? */);
- 1431              		.loc 1 560 13 is_stmt 1 view .LVU336
+ 1429              		.loc 1 560 13 is_stmt 1 view .LVU334
  560:quantum/command.c ****             mousekey_console(KC_SLASH /* ? */);
- 1432              		.loc 1 560 27 is_stmt 0 view .LVU337
- 1433 0084 0223     		movs	r3, #2
+ 1430              		.loc 1 560 27 is_stmt 0 view .LVU335
+ 1431 0084 0223     		movs	r3, #2
  561:quantum/command.c ****             return true;
- 1434              		.loc 1 561 13 view .LVU338
- 1435 0086 3820     		movs	r0, #56
+ 1432              		.loc 1 561 13 view .LVU336
+ 1433 0086 3820     		movs	r0, #56
  560:quantum/command.c ****             mousekey_console(KC_SLASH /* ? */);
- 1436              		.loc 1 560 27 view .LVU339
- 1437 0088 3370     		strb	r3, [r6]
+ 1434              		.loc 1 560 27 view .LVU337
+ 1435 0088 3370     		strb	r3, [r6]
  561:quantum/command.c ****             return true;
- 1438              		.loc 1 561 13 is_stmt 1 view .LVU340
- 1439 008a FFF7FEFF 		bl	mousekey_console.isra.0
- 1440              	.LVL114:
+ 1436              		.loc 1 561 13 is_stmt 1 view .LVU338
+ 1437 008a FFF7FEFF 		bl	mousekey_console.isra.0
+ 1438              	.LVL114:
  562:quantum/command.c **** #endif
- 1441              		.loc 1 562 13 view .LVU341
+ 1439              		.loc 1 562 13 view .LVU339
  562:quantum/command.c **** #endif
- 1442              		.loc 1 562 13 is_stmt 0 view .LVU342
- 1443 008e D0E7     		b	.L99
- 1444              	.LVL115:
- 1445              	.L97:
+ 1440              		.loc 1 562 13 is_stmt 0 view .LVU340
+ 1441 008e D0E7     		b	.L99
+ 1442              	.LVL115:
+ 1443              	.L97:
  562:quantum/command.c **** #endif
- 1446              		.loc 1 562 13 view .LVU343
- 1447              	.LBE44:
- 1448              	.LBE46:
+ 1444              		.loc 1 562 13 view .LVU341
+ 1445              	.LBE44:
+ 1446              	.LBE46:
   75:quantum/command.c **** #if defined(MOUSEKEY_ENABLE) && !defined(MK_3_SPEED)
- 1449              		.loc 1 75 13 is_stmt 1 view .LVU344
+ 1447              		.loc 1 75 13 is_stmt 1 view .LVU342
   78:quantum/command.c ****             break;
- 1450              		.loc 1 78 13 view .LVU345
- 1451 0090 FFF7FEFF 		bl	mousekey_console.isra.0
- 1452              	.LVL116:
+ 1448              		.loc 1 78 13 view .LVU343
+ 1449 0090 FFF7FEFF 		bl	mousekey_console.isra.0
+ 1450              	.LVL116:
   78:quantum/command.c ****             break;
- 1453              		.loc 1 78 13 is_stmt 0 view .LVU346
- 1454 0094 F4E7     		b	.L122
- 1455              	.L98:
+ 1451              		.loc 1 78 13 is_stmt 0 view .LVU344
+ 1452 0094 F4E7     		b	.L122
+ 1453              	.L98:
   82:quantum/command.c ****             return false;
- 1456              		.loc 1 82 13 is_stmt 1 view .LVU347
+ 1454              		.loc 1 82 13 is_stmt 1 view .LVU345
   82:quantum/command.c ****             return false;
- 1457              		.loc 1 82 27 is_stmt 0 view .LVU348
- 1458 0096 0024     		movs	r4, #0
- 1459 0098 3470     		strb	r4, [r6]
+ 1455              		.loc 1 82 27 is_stmt 0 view .LVU346
+ 1456 0096 0024     		movs	r4, #0
+ 1457 0098 3470     		strb	r4, [r6]
   83:quantum/command.c ****     }
- 1460              		.loc 1 83 13 is_stmt 1 view .LVU349
+ 1458              		.loc 1 83 13 is_stmt 1 view .LVU347
   83:quantum/command.c ****     }
- 1461              		.loc 1 83 20 is_stmt 0 view .LVU350
- 1462 009a CAE7     		b	.L99
- 1463              	.L125:
- 1464              		.align	2
- 1465              	.L124:
- 1466 009c 00000000 		.word	.LANCHOR0
- 1467 00a0 34050000 		.word	.LC22
- 1468 00a4 0E030000 		.word	.LC7
- 1469 00a8 35030000 		.word	.LC8
- 1470              		.cfi_endproc
- 1471              	.LFE291:
- 1473              		.global	command_state
- 1474              		.section	.bss.command_state,"aw",%nobits
- 1475              		.set	.LANCHOR0,. + 0
- 1478              	command_state:
- 1479 0000 00       		.space	1
- 1480              		.section	.bss.desc.0,"aw",%nobits
- 1481              		.align	2
- 1482              		.set	.LANCHOR3,. + 0
- 1485              	desc.0:
- 1486 0000 00000000 		.space	4
- 1487              		.section	.bss.param.2,"aw",%nobits
- 1488              		.set	.LANCHOR1,. + 0
- 1491              	param.2:
- 1492 0000 00       		.space	1
- 1493              		.section	.bss.pp.1,"aw",%nobits
- 1494              		.align	2
- 1495              		.set	.LANCHOR2,. + 0
- 1498              	pp.1:
- 1499 0000 00000000 		.space	4
- 1500              		.text
- 1501              	.Letext0:
- 1502              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
- 1503              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
- 1504              		.file 4 "tmk_core/common/host.h"
- 1505              		.file 5 "quantum/logging/debug.h"
- 1506              		.file 6 "quantum/keycode_config.h"
- 1507              		.file 7 "tmk_core/common/action_layer.h"
- 1508              		.file 8 "quantum/sequencer/sequencer.h"
- 1509              		.file 9 "quantum/command.h"
- 1510              		.file 10 "quantum/mousekey.h"
- 1511              		.file 11 "lib/printf/printf.h"
- 1512              		.file 12 "tmk_core/common/action.h"
- 1513              		.file 13 "tmk_core/common/eeconfig.h"
- 1514              		.file 14 "tmk_core/common/timer.h"
- 1515              		.file 15 "quantum/quantum.h"
- 1516              		.file 16 "tmk_core/common/action_util.h"
- 1517              		.file 17 "tmk_core/common/keycode.h"
+ 1459              		.loc 1 83 20 is_stmt 0 view .LVU348
+ 1460 009a CAE7     		b	.L99
+ 1461              	.L125:
+ 1462              		.align	2
+ 1463              	.L124:
+ 1464 009c 00000000 		.word	.LANCHOR0
+ 1465 00a0 44050000 		.word	.LC22
+ 1466 00a4 0E030000 		.word	.LC7
+ 1467 00a8 35030000 		.word	.LC8
+ 1468              		.cfi_endproc
+ 1469              	.LFE291:
+ 1471              		.global	command_state
+ 1472              		.section	.bss.command_state,"aw",%nobits
+ 1473              		.set	.LANCHOR0,. + 0
+ 1476              	command_state:
+ 1477 0000 00       		.space	1
+ 1478              		.section	.bss.desc.0,"aw",%nobits
+ 1479              		.align	2
+ 1480              		.set	.LANCHOR3,. + 0
+ 1483              	desc.0:
+ 1484 0000 00000000 		.space	4
+ 1485              		.section	.bss.param.2,"aw",%nobits
+ 1486              		.set	.LANCHOR1,. + 0
+ 1489              	param.2:
+ 1490 0000 00       		.space	1
+ 1491              		.section	.bss.pp.1,"aw",%nobits
+ 1492              		.align	2
+ 1493              		.set	.LANCHOR2,. + 0
+ 1496              	pp.1:
+ 1497 0000 00000000 		.space	4
+ 1498              		.text
+ 1499              	.Letext0:
+ 1500              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1501              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1502              		.file 4 "tmk_core/common/host.h"
+ 1503              		.file 5 "quantum/logging/debug.h"
+ 1504              		.file 6 "quantum/keycode_config.h"
+ 1505              		.file 7 "tmk_core/common/action_layer.h"
+ 1506              		.file 8 "quantum/sequencer/sequencer.h"
+ 1507              		.file 9 "quantum/command.h"
+ 1508              		.file 10 "quantum/mousekey.h"
+ 1509              		.file 11 "lib/printf/printf.h"
+ 1510              		.file 12 "tmk_core/common/action.h"
+ 1511              		.file 13 "tmk_core/common/eeconfig.h"
+ 1512              		.file 14 "tmk_core/common/timer.h"
+ 1513              		.file 15 "quantum/quantum.h"
+ 1514              		.file 16 "tmk_core/common/action_util.h"
+ 1515              		.file 17 "tmk_core/common/keycode.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 command.c
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:24     .text.mousekey_param_print:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:31     .text.mousekey_param_print:0000000000000000 mousekey_param_print
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:70     .text.mousekey_param_print:000000000000002c $d
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:84     .text.switch_default_layer:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:90     .text.switch_default_layer:0000000000000000 switch_default_layer
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:133    .text.switch_default_layer:0000000000000020 $d
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:205    .text.command_common:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:211    .text.command_common:0000000000000000 command_common
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:231    .text.command_common:0000000000000010 $d
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:294    .text.command_common:000000000000008e $t
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:721    .text.command_common:0000000000000240 $d
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:791    .text.mousekey_console.isra.0:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:797    .text.mousekey_console.isra.0:0000000000000000 mousekey_console.isra.0
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:892    .text.mousekey_console.isra.0:0000000000000058 $d
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:899    .text.mousekey_console.isra.0:000000000000005e $t
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:916    .text.mousekey_console.isra.0:0000000000000074 $d
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:921    .text.mousekey_console.isra.0:0000000000000084 $t
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1198   .text.mousekey_console.isra.0:000000000000018c $d
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1228   .text.command_extra:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1235   .text.command_extra:0000000000000000 command_extra
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1254   .text.command_console_extra:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1261   .text.command_console_extra:0000000000000000 command_console_extra
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1273   .text.command_proc:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1280   .text.command_proc:0000000000000000 command_proc
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1466   .text.command_proc:000000000000009c $d
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1478   .bss.command_state:0000000000000000 command_state
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1479   .bss.command_state:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1481   .bss.desc.0:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1485   .bss.desc.0:0000000000000000 desc.0
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1491   .bss.param.2:0000000000000000 param.2
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1492   .bss.param.2:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1494   .bss.pp.1:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\cc5SMY28.s:1498   .bss.pp.1:0000000000000000 pp.1
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:24     .text.mousekey_param_print:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:31     .text.mousekey_param_print:0000000000000000 mousekey_param_print
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:70     .text.mousekey_param_print:000000000000002c $d
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:84     .text.switch_default_layer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:90     .text.switch_default_layer:0000000000000000 switch_default_layer
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:130    .text.switch_default_layer:000000000000001c $d
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:203    .text.command_common:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:209    .text.command_common:0000000000000000 command_common
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:229    .text.command_common:0000000000000010 $d
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:292    .text.command_common:000000000000008e $t
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:719    .text.command_common:0000000000000240 $d
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:789    .text.mousekey_console.isra.0:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:795    .text.mousekey_console.isra.0:0000000000000000 mousekey_console.isra.0
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:890    .text.mousekey_console.isra.0:0000000000000058 $d
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:897    .text.mousekey_console.isra.0:000000000000005e $t
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:914    .text.mousekey_console.isra.0:0000000000000074 $d
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:919    .text.mousekey_console.isra.0:0000000000000084 $t
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1196   .text.mousekey_console.isra.0:000000000000018c $d
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1226   .text.command_extra:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1233   .text.command_extra:0000000000000000 command_extra
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1252   .text.command_console_extra:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1259   .text.command_console_extra:0000000000000000 command_console_extra
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1271   .text.command_proc:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1278   .text.command_proc:0000000000000000 command_proc
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1464   .text.command_proc:000000000000009c $d
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1476   .bss.command_state:0000000000000000 command_state
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1477   .bss.command_state:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1479   .bss.desc.0:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1483   .bss.desc.0:0000000000000000 desc.0
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1489   .bss.param.2:0000000000000000 param.2
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1490   .bss.param.2:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1492   .bss.pp.1:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccJIhTRd.s:1496   .bss.pp.1:0000000000000000 pp.1
 
 UNDEFINED SYMBOLS
 printf_

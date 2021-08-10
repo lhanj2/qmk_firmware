@@ -684,23 +684,23 @@
  545              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 bitwise.c
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:18     .text.bitpop:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:26     .text.bitpop:0000000000000000 bitpop
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:67     .text.bitpop16:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:74     .text.bitpop16:0000000000000000 bitpop16
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:114    .text.bitpop32:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:121    .text.bitpop32:0000000000000000 bitpop32
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:161    .text.biton:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:168    .text.biton:0000000000000000 biton
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:223    .text.biton16:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:230    .text.biton16:0000000000000000 biton16
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:307    .text.biton32:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:314    .text.biton32:0000000000000000 biton32
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:398    .text.bitrev:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:405    .text.bitrev:0000000000000000 bitrev
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:453    .text.bitrev16:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:460    .text.bitrev16:0000000000000000 bitrev16
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:497    .text.bitrev32:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccO49Ysu.s:504    .text.bitrev32:0000000000000000 bitrev32
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:18     .text.bitpop:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:26     .text.bitpop:0000000000000000 bitpop
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:67     .text.bitpop16:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:74     .text.bitpop16:0000000000000000 bitpop16
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:114    .text.bitpop32:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:121    .text.bitpop32:0000000000000000 bitpop32
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:161    .text.biton:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:168    .text.biton:0000000000000000 biton
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:223    .text.biton16:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:230    .text.biton16:0000000000000000 biton16
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:307    .text.biton32:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:314    .text.biton32:0000000000000000 biton32
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:398    .text.bitrev:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:405    .text.bitrev:0000000000000000 bitrev
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:453    .text.bitrev16:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:460    .text.bitrev16:0000000000000000 bitrev16
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:497    .text.bitrev32:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc0r0OMV.s:504    .text.bitrev32:0000000000000000 bitrev32
 
 NO UNDEFINED SYMBOLS

@@ -4056,31 +4056,31 @@
  1289              		.file 12 "./lib/chibios/os/rt/include/chmtx.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 chsem.c
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:18     .text.chSemObjectInit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:26     .text.chSemObjectInit:0000000000000000 chSemObjectInit
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:60     .text.chSemResetWithMessageI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:67     .text.chSemResetWithMessageI:0000000000000000 chSemResetWithMessageI
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:146    .text.chSemResetWithMessage:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:153    .text.chSemResetWithMessage:0000000000000000 chSemResetWithMessage
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:264    .text.chSemWaitS:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:271    .text.chSemWaitS:0000000000000000 chSemWaitS
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:365    .text.chSemWaitS:000000000000002c $d
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:370    .text.chSemWait:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:377    .text.chSemWait:0000000000000000 chSemWait
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:485    .text.chSemWaitTimeoutS:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:492    .text.chSemWaitTimeoutS:0000000000000000 chSemWaitTimeoutS
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:607    .text.chSemWaitTimeoutS:0000000000000038 $d
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:612    .text.chSemWaitTimeout:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:619    .text.chSemWaitTimeout:0000000000000000 chSemWaitTimeout
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:727    .text.chSemSignal:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:734    .text.chSemSignal:0000000000000000 chSemSignal
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:886    .text.chSemSignalI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:893    .text.chSemSignalI:0000000000000000 chSemSignalI
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:960    .text.chSemAddCounterI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:967    .text.chSemAddCounterI:0000000000000000 chSemAddCounterI
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:1048   .text.chSemSignalWait:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:1055   .text.chSemSignalWait:0000000000000000 chSemSignalWait
-C:\Users\lhanj\AppData\Local\Temp\ccA3qdfP.s:1277   .text.chSemSignalWait:0000000000000058 $d
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:18     .text.chSemObjectInit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:26     .text.chSemObjectInit:0000000000000000 chSemObjectInit
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:60     .text.chSemResetWithMessageI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:67     .text.chSemResetWithMessageI:0000000000000000 chSemResetWithMessageI
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:146    .text.chSemResetWithMessage:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:153    .text.chSemResetWithMessage:0000000000000000 chSemResetWithMessage
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:264    .text.chSemWaitS:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:271    .text.chSemWaitS:0000000000000000 chSemWaitS
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:365    .text.chSemWaitS:000000000000002c $d
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:370    .text.chSemWait:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:377    .text.chSemWait:0000000000000000 chSemWait
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:485    .text.chSemWaitTimeoutS:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:492    .text.chSemWaitTimeoutS:0000000000000000 chSemWaitTimeoutS
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:607    .text.chSemWaitTimeoutS:0000000000000038 $d
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:612    .text.chSemWaitTimeout:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:619    .text.chSemWaitTimeout:0000000000000000 chSemWaitTimeout
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:727    .text.chSemSignal:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:734    .text.chSemSignal:0000000000000000 chSemSignal
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:886    .text.chSemSignalI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:893    .text.chSemSignalI:0000000000000000 chSemSignalI
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:960    .text.chSemAddCounterI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:967    .text.chSemAddCounterI:0000000000000000 chSemAddCounterI
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:1048   .text.chSemSignalWait:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:1055   .text.chSemSignalWait:0000000000000000 chSemSignalWait
+C:\Users\lhanj\AppData\Local\Temp\ccn6QEQc.s:1277   .text.chSemSignalWait:0000000000000058 $d
 
 UNDEFINED SYMBOLS
 chSchReadyI
