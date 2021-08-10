@@ -4341,43 +4341,43 @@
  980              		.file 13 "./lib/chibios/os/rt/include/chmtx.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 chschd.c
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:18     .text._scheduler_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:26     .text._scheduler_init:0000000000000000 _scheduler_init
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:64     .text._scheduler_init:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:18     .text._scheduler_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:26     .text._scheduler_init:0000000000000000 _scheduler_init
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:64     .text._scheduler_init:000000000000000c $d
                             *COM*:000000000000004c ch
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:69     .text.chSchReadyI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:76     .text.chSchReadyI:0000000000000000 chSchReadyI
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:134    .text.chSchReadyI:000000000000001c $d
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:139    .text.wakeup:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:145    .text.wakeup:0000000000000000 wakeup
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:225    .text.wakeup:0000000000000014 $d
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:231    .text.wakeup:000000000000001a $t
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:345    .text.chSchReadyAheadI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:352    .text.chSchReadyAheadI:0000000000000000 chSchReadyAheadI
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:410    .text.chSchReadyAheadI:000000000000001c $d
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:415    .text.chSchGoSleepS:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:422    .text.chSchGoSleepS:0000000000000000 chSchGoSleepS
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:482    .text.chSchGoSleepS:0000000000000018 $d
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:487    .text.chSchGoSleepTimeoutS:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:494    .text.chSchGoSleepTimeoutS:0000000000000000 chSchGoSleepTimeoutS
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:574    .text.chSchGoSleepTimeoutS:0000000000000034 $d
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:580    .text.chSchWakeupS:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:587    .text.chSchWakeupS:0000000000000000 chSchWakeupS
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:683    .text.chSchWakeupS:0000000000000034 $d
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:688    .text.chSchIsPreemptionRequired:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:695    .text.chSchIsPreemptionRequired:0000000000000000 chSchIsPreemptionRequired
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:726    .text.chSchIsPreemptionRequired:0000000000000014 $d
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:695    .text.chSchIsPreemptionRequired:0000000000000000 chSchIsRescRequiredI
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:732    .text.chSchDoRescheduleBehind:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:739    .text.chSchDoRescheduleBehind:0000000000000000 chSchDoRescheduleBehind
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:817    .text.chSchDoRescheduleBehind:0000000000000024 $d
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:822    .text.chSchDoRescheduleAhead:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:829    .text.chSchDoRescheduleAhead:0000000000000000 chSchDoRescheduleAhead
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:907    .text.chSchDoRescheduleAhead:0000000000000024 $d
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:912    .text.chSchRescheduleS:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:919    .text.chSchRescheduleS:0000000000000000 chSchRescheduleS
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:955    .text.chSchDoReschedule:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccxovC5d.s:962    .text.chSchDoReschedule:0000000000000000 chSchDoReschedule
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:69     .text.chSchReadyI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:76     .text.chSchReadyI:0000000000000000 chSchReadyI
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:134    .text.chSchReadyI:000000000000001c $d
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:139    .text.wakeup:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:145    .text.wakeup:0000000000000000 wakeup
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:225    .text.wakeup:0000000000000014 $d
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:231    .text.wakeup:000000000000001a $t
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:345    .text.chSchReadyAheadI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:352    .text.chSchReadyAheadI:0000000000000000 chSchReadyAheadI
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:410    .text.chSchReadyAheadI:000000000000001c $d
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:415    .text.chSchGoSleepS:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:422    .text.chSchGoSleepS:0000000000000000 chSchGoSleepS
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:482    .text.chSchGoSleepS:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:487    .text.chSchGoSleepTimeoutS:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:494    .text.chSchGoSleepTimeoutS:0000000000000000 chSchGoSleepTimeoutS
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:574    .text.chSchGoSleepTimeoutS:0000000000000034 $d
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:580    .text.chSchWakeupS:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:587    .text.chSchWakeupS:0000000000000000 chSchWakeupS
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:683    .text.chSchWakeupS:0000000000000034 $d
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:688    .text.chSchIsPreemptionRequired:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:695    .text.chSchIsPreemptionRequired:0000000000000000 chSchIsPreemptionRequired
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:726    .text.chSchIsPreemptionRequired:0000000000000014 $d
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:695    .text.chSchIsPreemptionRequired:0000000000000000 chSchIsRescRequiredI
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:732    .text.chSchDoRescheduleBehind:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:739    .text.chSchDoRescheduleBehind:0000000000000000 chSchDoRescheduleBehind
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:817    .text.chSchDoRescheduleBehind:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:822    .text.chSchDoRescheduleAhead:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:829    .text.chSchDoRescheduleAhead:0000000000000000 chSchDoRescheduleAhead
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:907    .text.chSchDoRescheduleAhead:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:912    .text.chSchRescheduleS:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:919    .text.chSchRescheduleS:0000000000000000 chSchRescheduleS
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:955    .text.chSchDoReschedule:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc5heGkC.s:962    .text.chSchDoReschedule:0000000000000000 chSchDoReschedule
 
 UNDEFINED SYMBOLS
 _port_switch

@@ -1040,7 +1040,7 @@
   55 0012 124B     		ldr	r3, .L13
  986:tmk_core/protocol/usb_descriptor.c ****             Size    = sizeof(USB_Descriptor_Configuration_t);
   56              		.loc 1 986 21 view .LVU9
-  57 0014 5B20     		movs	r0, #91
+  57 0014 7B20     		movs	r0, #123
   58              	.LVL2:
   59              	.L4:
  987:tmk_core/protocol/usb_descriptor.c **** 
@@ -1224,7 +1224,7 @@
   98              	.L5:
 1017:tmk_core/protocol/usb_descriptor.c **** #ifndef KEYBOARD_SHARED_EP
   99              		.loc 1 1017 13 is_stmt 1 view .LVU20
- 100 003a 0229     		cmp	r1, #2
+ 100 003a 0329     		cmp	r1, #3
  101 003c F1D8     		bhi	.L11
  102 003e 0A4B     		ldr	r3, .L13+12
  978:tmk_core/protocol/usb_descriptor.c ****         case DTYPE_Device:
@@ -1239,7 +1239,7 @@
  110              	.L6:
 1066:tmk_core/protocol/usb_descriptor.c **** #ifndef KEYBOARD_SHARED_EP
  111              		.loc 1 1066 13 is_stmt 1 view .LVU23
- 112 0048 0229     		cmp	r1, #2
+ 112 0048 0329     		cmp	r1, #3
  113 004a EAD8     		bhi	.L11
  114 004c 074B     		ldr	r3, .L13+16
  115 004e 0848     		ldr	r0, .L13+20
@@ -1276,276 +1276,320 @@
  144              		.global	ConfigurationDescriptor
  145              		.global	DeviceDescriptor
  146              		.global	ConsoleReport
- 147              		.global	SharedReport
- 148              		.global	KeyboardReport
- 149              		.section	.rodata.CSWTCH.1,"a"
- 150              		.align	2
- 151              		.set	.LANCHOR2,. + 0
- 154              	CSWTCH.1:
- 155 0000 00000000 		.word	LanguageString
- 156 0004 00000000 		.word	ManufacturerString
- 157 0008 00000000 		.word	ProductString
- 158              		.section	.rodata.CSWTCH.2,"a"
- 159              		.set	.LANCHOR3,. + 0
- 162              	CSWTCH.2:
- 163 0000 04       		.byte	4
- 164 0001 12       		.byte	18
- 165 0002 12       		.byte	18
- 166              		.section	.rodata.CSWTCH.3,"a"
- 167              		.align	2
- 168              		.set	.LANCHOR4,. + 0
- 171              	CSWTCH.3:
- 172 0000 12000000 		.word	ConfigurationDescriptor+18
- 173 0004 2B000000 		.word	ConfigurationDescriptor+43
- 174 0008 44000000 		.word	ConfigurationDescriptor+68
- 175              		.section	.rodata.CSWTCH.4,"a"
- 176              		.align	2
- 177              		.set	.LANCHOR5,. + 0
- 180              	CSWTCH.4:
- 181 0000 00000000 		.word	KeyboardReport
- 182 0004 00000000 		.word	SharedReport
- 183 0008 00000000 		.word	ConsoleReport
- 184              		.section	.rodata.CSWTCH.5,"a"
- 185              		.set	.LANCHOR6,. + 0
- 188              	CSWTCH.5:
- 189 0000 40       		.byte	64
- 190 0001 B6       		.byte	-74
- 191 0002 22       		.byte	34
- 192              		.section	.rodata.ConfigurationDescriptor,"a"
- 193              		.set	.LANCHOR0,. + 0
- 196              	ConfigurationDescriptor:
- 197 0000 09       		.byte	9
- 198 0001 02       		.byte	2
- 199 0002 5B00     		.2byte	91
- 200 0004 03       		.byte	3
- 201 0005 01       		.byte	1
- 202 0006 00       		.byte	0
- 203 0007 A0       		.byte	-96
- 204 0008 FA       		.byte	-6
- 205 0009 09       		.byte	9
- 206 000a 04       		.byte	4
- 207 000b 00       		.byte	0
- 208 000c 00       		.byte	0
- 209 000d 01       		.byte	1
- 210 000e 03       		.byte	3
- 211 000f 01       		.byte	1
- 212 0010 01       		.byte	1
- 213 0011 00       		.byte	0
- 214 0012 09       		.byte	9
- 215 0013 21       		.byte	33
- 216 0014 1101     		.2byte	273
- 217 0016 00       		.byte	0
- 218 0017 01       		.byte	1
- 219 0018 22       		.byte	34
- 220 0019 4000     		.2byte	64
- 221 001b 07       		.byte	7
- 222 001c 05       		.byte	5
- 223 001d 81       		.byte	-127
- 224 001e 03       		.byte	3
- 225 001f 0800     		.2byte	8
- 226 0021 01       		.byte	1
- 227 0022 09       		.byte	9
- 228 0023 04       		.byte	4
- 229 0024 01       		.byte	1
- 230 0025 00       		.byte	0
- 231 0026 01       		.byte	1
- 232 0027 03       		.byte	3
- 233 0028 00       		.byte	0
- 234 0029 00       		.byte	0
- 235 002a 00       		.byte	0
- 236 002b 09       		.byte	9
- 237 002c 21       		.byte	33
- 238 002d 1101     		.2byte	273
- 239 002f 00       		.byte	0
- 240 0030 01       		.byte	1
- 241 0031 22       		.byte	34
- 242 0032 B600     		.2byte	182
- 243 0034 07       		.byte	7
- 244 0035 05       		.byte	5
- 245 0036 82       		.byte	-126
- 246 0037 03       		.byte	3
- 247 0038 2000     		.2byte	32
- 248 003a 01       		.byte	1
- 249 003b 09       		.byte	9
- 250 003c 04       		.byte	4
- 251 003d 02       		.byte	2
- 252 003e 00       		.byte	0
- 253 003f 02       		.byte	2
- 254 0040 03       		.byte	3
- 255 0041 00       		.byte	0
- 256 0042 00       		.byte	0
- 257 0043 00       		.byte	0
- 258 0044 09       		.byte	9
- 259 0045 21       		.byte	33
- 260 0046 1101     		.2byte	273
- 261 0048 00       		.byte	0
- 262 0049 01       		.byte	1
- 263 004a 22       		.byte	34
- 264 004b 2200     		.2byte	34
- 265 004d 07       		.byte	7
- 266 004e 05       		.byte	5
- 267 004f 83       		.byte	-125
- 268 0050 03       		.byte	3
- 269 0051 2000     		.2byte	32
- 270 0053 01       		.byte	1
- 271 0054 07       		.byte	7
- 272 0055 05       		.byte	5
- 273 0056 04       		.byte	4
- 274 0057 03       		.byte	3
- 275 0058 2000     		.2byte	32
- 276 005a 01       		.byte	1
- 277              		.section	.rodata.ConsoleReport,"a"
- 280              	ConsoleReport:
- 281 0000 0631FF09 		.ascii	"\0061\377\011t\241\001\011u\025\000&\377\000\225 u\010"
- 281      74A10109 
- 281      75150026 
- 281      FF009520 
- 281      7508
- 282 0012 81020976 		.ascii	"\201\002\011v\025\000&\377\000\225 u\010\221\002\300"
- 282      150026FF 
- 282      00952075 
- 282      089102C0 
- 283              		.section	.rodata.DeviceDescriptor,"a"
- 284              		.set	.LANCHOR1,. + 0
- 287              	DeviceDescriptor:
- 288 0000 12       		.byte	18
- 289 0001 01       		.byte	1
- 290 0002 0002     		.2byte	512
- 291 0004 00       		.byte	0
- 292 0005 00       		.byte	0
- 293 0006 00       		.byte	0
- 294 0007 40       		.byte	64
- 295 0008 0F32     		.2byte	12815
- 296 000a 4450     		.2byte	20548
- 297 000c 0100     		.2byte	1
- 298 000e 01       		.byte	1
- 299 000f 02       		.byte	2
- 300 0010 00       		.byte	0
- 301 0011 01       		.byte	1
- 302              		.section	.rodata.KeyboardReport,"a"
- 305              	KeyboardReport:
- 306 0000 05010906 		.ascii	"\005\001\011\006\241\001\005\007\031\340)\347\025\000"
- 306      A1010507 
- 306      19E029E7 
- 306      1500
- 307 000e 25019508 		.ascii	"%\001\225\010u\001\201\002\225\001u\010\201\001\005"
- 307      75018102 
- 307      95017508 
- 307      810105
- 308 001d 07190029 		.ascii	"\007\031\000)\377\025\000&\377\000\225\006u\010\201"
- 308      FF150026 
- 308      FF009506 
- 308      750881
- 309 002c 00050819 		.ascii	"\000\005\010\031\001)\005\225\005u\001\221\002\225\001"
- 309      01290595 
- 309      05750191 
- 309      029501
- 310 003b 75039101 		.ascii	"u\003\221\001\300"
- 310      C0
- 311              		.section	.rodata.LanguageString,"a"
- 314              	LanguageString:
- 315 0000 04       		.byte	4
- 316 0001 03       		.byte	3
- 317 0002 0904     		.2byte	1033
- 318              		.section	.rodata.ManufacturerString,"a"
- 321              	ManufacturerString:
- 322 0000 12       		.byte	18
- 323 0001 03       		.byte	3
- 324 0002 47006C00 		.ascii	"G\000l\000o\000r\000i\000o\000u\000s\000\000\000"
- 324      6F007200 
- 324      69006F00 
- 324      75007300 
- 324      0000
- 325              		.section	.rodata.ProductString,"a"
- 328              	ProductString:
- 329 0000 12       		.byte	18
- 330 0001 03       		.byte	3
- 331 0002 47004D00 		.ascii	"G\000M\000M\000K\000 \000P\000r\000o\000\000\000"
- 331      4D004B00 
- 331      20005000 
- 331      72006F00 
- 331      0000
- 332              		.section	.rodata.SharedReport,"a"
- 335              	SharedReport:
- 336 0000 05010902 		.ascii	"\005\001\011\002\241\001\205\002\011\001\241\000\005"
- 336      A1018502 
- 336      0901A100 
- 336      05
- 337 000d 09190129 		.ascii	"\011\031\001)\010\025\000%\001\225\010u\001\201\002"
- 337      08150025 
- 337      01950875 
- 337      018102
- 338 001c 05010930 		.ascii	"\005\001\0110\0111\025\201%\177\225\002u\010\201\006"
- 338      09311581 
- 338      257F9502 
- 338      75088106 
- 339 002c 09381581 		.ascii	"\0118\025\201%\177\225\001u\010\201\006\005\014\012"
- 339      257F9501 
- 339      75088106 
- 339      050C0A
- 340 003b 38021581 		.ascii	"8\002\025\201%\177\225\001u\010\201\006\300\300\005"
- 340      257F9501 
- 340      75088106 
- 340      C0C005
- 341 004a 010980A1 		.ascii	"\001\011\200\241\001\205\003\031\001*\267\000\025\001"
- 341      01850319 
- 341      012AB700 
- 341      1501
- 342 0058 26B70095 		.ascii	"&\267\000\225\001u\020\201\000\300\005\014\011\001\241"
- 342      01751081 
- 342      00C0050C 
- 342      0901A1
- 343 0067 01850419 		.ascii	"\001\205\004\031\001*\240\002\025\001&\240\002\225\001"
- 343      012AA002 
- 343      150126A0 
- 343      029501
- 344 0076 75108100 		.ascii	"u\020\201\000\300\005\001\011\006\241\001\205\005\005"
- 344      C0050109 
- 344      06A10185 
- 344      0505
- 345 0084 0719E029 		.ascii	"\007\031\340)\347\025\000%\001\225\010u\001\201\002"
- 345      E7150025 
- 345      01950875 
- 345      018102
- 346 0093 05071900 		.ascii	"\005\007\031\000)\357\025\000%\001\225\360u\001\201"
- 346      29EF1500 
- 346      250195F0 
- 346      750181
- 347 00a2 02050819 		.ascii	"\002\005\010\031\001)\005\225\005u\001\221\002\225\001"
- 347      01290595 
- 347      05750191 
- 347      029501
- 348 00b1 75039101 		.ascii	"u\003\221\001\300"
- 348      C0
- 349              		.text
- 350              	.Letext0:
- 351              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
- 352              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
- 353              		.file 4 "c:\\qmk_msys\\mingw64\\lib\\gcc\\arm-none-eabi\\10.1.0\\include\\stddef.h"
- 354              		.file 5 "tmk_core/common/report.h"
- 355              		.file 6 "./lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/StdDescriptors.h"
- 356              		.file 7 "./lib/lufa/LUFA/Drivers/USB/Class/Common/HIDClassCommon.h"
- 357              		.file 8 "tmk_core/protocol/usb_descriptor.h"
+ 147              		.global	RawReport
+ 148              		.global	SharedReport
+ 149              		.global	KeyboardReport
+ 150              		.section	.rodata.CSWTCH.1,"a"
+ 151              		.align	2
+ 152              		.set	.LANCHOR2,. + 0
+ 155              	CSWTCH.1:
+ 156 0000 00000000 		.word	LanguageString
+ 157 0004 00000000 		.word	ManufacturerString
+ 158 0008 00000000 		.word	ProductString
+ 159              		.section	.rodata.CSWTCH.2,"a"
+ 160              		.set	.LANCHOR3,. + 0
+ 163              	CSWTCH.2:
+ 164 0000 04       		.byte	4
+ 165 0001 12       		.byte	18
+ 166 0002 12       		.byte	18
+ 167              		.section	.rodata.CSWTCH.3,"a"
+ 168              		.align	2
+ 169              		.set	.LANCHOR4,. + 0
+ 172              	CSWTCH.3:
+ 173 0000 12000000 		.word	ConfigurationDescriptor+18
+ 174 0004 2B000000 		.word	ConfigurationDescriptor+43
+ 175 0008 4B000000 		.word	ConfigurationDescriptor+75
+ 176 000c 64000000 		.word	ConfigurationDescriptor+100
+ 177              		.section	.rodata.CSWTCH.4,"a"
+ 178              		.align	2
+ 179              		.set	.LANCHOR5,. + 0
+ 182              	CSWTCH.4:
+ 183 0000 00000000 		.word	KeyboardReport
+ 184 0004 00000000 		.word	RawReport
+ 185 0008 00000000 		.word	SharedReport
+ 186 000c 00000000 		.word	ConsoleReport
+ 187              		.section	.rodata.CSWTCH.5,"a"
+ 188              		.set	.LANCHOR6,. + 0
+ 191              	CSWTCH.5:
+ 192 0000 40       		.byte	64
+ 193 0001 22       		.byte	34
+ 194 0002 B6       		.byte	-74
+ 195 0003 22       		.byte	34
+ 196              		.section	.rodata.ConfigurationDescriptor,"a"
+ 197              		.set	.LANCHOR0,. + 0
+ 200              	ConfigurationDescriptor:
+ 201 0000 09       		.byte	9
+ 202 0001 02       		.byte	2
+ 203 0002 7B00     		.2byte	123
+ 204 0004 04       		.byte	4
+ 205 0005 01       		.byte	1
+ 206 0006 00       		.byte	0
+ 207 0007 A0       		.byte	-96
+ 208 0008 FA       		.byte	-6
+ 209 0009 09       		.byte	9
+ 210 000a 04       		.byte	4
+ 211 000b 00       		.byte	0
+ 212 000c 00       		.byte	0
+ 213 000d 01       		.byte	1
+ 214 000e 03       		.byte	3
+ 215 000f 01       		.byte	1
+ 216 0010 01       		.byte	1
+ 217 0011 00       		.byte	0
+ 218 0012 09       		.byte	9
+ 219 0013 21       		.byte	33
+ 220 0014 1101     		.2byte	273
+ 221 0016 00       		.byte	0
+ 222 0017 01       		.byte	1
+ 223 0018 22       		.byte	34
+ 224 0019 4000     		.2byte	64
+ 225 001b 07       		.byte	7
+ 226 001c 05       		.byte	5
+ 227 001d 81       		.byte	-127
+ 228 001e 03       		.byte	3
+ 229 001f 0800     		.2byte	8
+ 230 0021 01       		.byte	1
+ 231 0022 09       		.byte	9
+ 232 0023 04       		.byte	4
+ 233 0024 01       		.byte	1
+ 234 0025 00       		.byte	0
+ 235 0026 02       		.byte	2
+ 236 0027 03       		.byte	3
+ 237 0028 00       		.byte	0
+ 238 0029 00       		.byte	0
+ 239 002a 00       		.byte	0
+ 240 002b 09       		.byte	9
+ 241 002c 21       		.byte	33
+ 242 002d 1101     		.2byte	273
+ 243 002f 00       		.byte	0
+ 244 0030 01       		.byte	1
+ 245 0031 22       		.byte	34
+ 246 0032 2200     		.2byte	34
+ 247 0034 07       		.byte	7
+ 248 0035 05       		.byte	5
+ 249 0036 82       		.byte	-126
+ 250 0037 03       		.byte	3
+ 251 0038 2000     		.2byte	32
+ 252 003a 01       		.byte	1
+ 253 003b 07       		.byte	7
+ 254 003c 05       		.byte	5
+ 255 003d 03       		.byte	3
+ 256 003e 03       		.byte	3
+ 257 003f 2000     		.2byte	32
+ 258 0041 01       		.byte	1
+ 259 0042 09       		.byte	9
+ 260 0043 04       		.byte	4
+ 261 0044 02       		.byte	2
+ 262 0045 00       		.byte	0
+ 263 0046 01       		.byte	1
+ 264 0047 03       		.byte	3
+ 265 0048 00       		.byte	0
+ 266 0049 00       		.byte	0
+ 267 004a 00       		.byte	0
+ 268 004b 09       		.byte	9
+ 269 004c 21       		.byte	33
+ 270 004d 1101     		.2byte	273
+ 271 004f 00       		.byte	0
+ 272 0050 01       		.byte	1
+ 273 0051 22       		.byte	34
+ 274 0052 B600     		.2byte	182
+ 275 0054 07       		.byte	7
+ 276 0055 05       		.byte	5
+ 277 0056 84       		.byte	-124
+ 278 0057 03       		.byte	3
+ 279 0058 2000     		.2byte	32
+ 280 005a 01       		.byte	1
+ 281 005b 09       		.byte	9
+ 282 005c 04       		.byte	4
+ 283 005d 03       		.byte	3
+ 284 005e 00       		.byte	0
+ 285 005f 02       		.byte	2
+ 286 0060 03       		.byte	3
+ 287 0061 00       		.byte	0
+ 288 0062 00       		.byte	0
+ 289 0063 00       		.byte	0
+ 290 0064 09       		.byte	9
+ 291 0065 21       		.byte	33
+ 292 0066 1101     		.2byte	273
+ 293 0068 00       		.byte	0
+ 294 0069 01       		.byte	1
+ 295 006a 22       		.byte	34
+ 296 006b 2200     		.2byte	34
+ 297 006d 07       		.byte	7
+ 298 006e 05       		.byte	5
+ 299 006f 85       		.byte	-123
+ 300 0070 03       		.byte	3
+ 301 0071 2000     		.2byte	32
+ 302 0073 01       		.byte	1
+ 303 0074 07       		.byte	7
+ 304 0075 05       		.byte	5
+ 305 0076 06       		.byte	6
+ 306 0077 03       		.byte	3
+ 307 0078 2000     		.2byte	32
+ 308 007a 01       		.byte	1
+ 309              		.section	.rodata.ConsoleReport,"a"
+ 312              	ConsoleReport:
+ 313 0000 0631FF09 		.ascii	"\0061\377\011t\241\001\011u\025\000&\377\000\225 u\010"
+ 313      74A10109 
+ 313      75150026 
+ 313      FF009520 
+ 313      7508
+ 314 0012 81020976 		.ascii	"\201\002\011v\025\000&\377\000\225 u\010\221\002\300"
+ 314      150026FF 
+ 314      00952075 
+ 314      089102C0 
+ 315              		.section	.rodata.DeviceDescriptor,"a"
+ 316              		.set	.LANCHOR1,. + 0
+ 319              	DeviceDescriptor:
+ 320 0000 12       		.byte	18
+ 321 0001 01       		.byte	1
+ 322 0002 0002     		.2byte	512
+ 323 0004 00       		.byte	0
+ 324 0005 00       		.byte	0
+ 325 0006 00       		.byte	0
+ 326 0007 40       		.byte	64
+ 327 0008 0F32     		.2byte	12815
+ 328 000a 4450     		.2byte	20548
+ 329 000c 0100     		.2byte	1
+ 330 000e 01       		.byte	1
+ 331 000f 02       		.byte	2
+ 332 0010 00       		.byte	0
+ 333 0011 01       		.byte	1
+ 334              		.section	.rodata.KeyboardReport,"a"
+ 337              	KeyboardReport:
+ 338 0000 05010906 		.ascii	"\005\001\011\006\241\001\005\007\031\340)\347\025\000"
+ 338      A1010507 
+ 338      19E029E7 
+ 338      1500
+ 339 000e 25019508 		.ascii	"%\001\225\010u\001\201\002\225\001u\010\201\001\005"
+ 339      75018102 
+ 339      95017508 
+ 339      810105
+ 340 001d 07190029 		.ascii	"\007\031\000)\377\025\000&\377\000\225\006u\010\201"
+ 340      FF150026 
+ 340      FF009506 
+ 340      750881
+ 341 002c 00050819 		.ascii	"\000\005\010\031\001)\005\225\005u\001\221\002\225\001"
+ 341      01290595 
+ 341      05750191 
+ 341      029501
+ 342 003b 75039101 		.ascii	"u\003\221\001\300"
+ 342      C0
+ 343              		.section	.rodata.LanguageString,"a"
+ 346              	LanguageString:
+ 347 0000 04       		.byte	4
+ 348 0001 03       		.byte	3
+ 349 0002 0904     		.2byte	1033
+ 350              		.section	.rodata.ManufacturerString,"a"
+ 353              	ManufacturerString:
+ 354 0000 12       		.byte	18
+ 355 0001 03       		.byte	3
+ 356 0002 47006C00 		.ascii	"G\000l\000o\000r\000i\000o\000u\000s\000\000\000"
+ 356      6F007200 
+ 356      69006F00 
+ 356      75007300 
+ 356      0000
+ 357              		.section	.rodata.ProductString,"a"
+ 360              	ProductString:
+ 361 0000 12       		.byte	18
+ 362 0001 03       		.byte	3
+ 363 0002 47004D00 		.ascii	"G\000M\000M\000K\000 \000P\000r\000o\000\000\000"
+ 363      4D004B00 
+ 363      20005000 
+ 363      72006F00 
+ 363      0000
+ 364              		.section	.rodata.RawReport,"a"
+ 367              	RawReport:
+ 368 0000 0660FF09 		.ascii	"\006`\377\011a\241\001\011b\025\000&\377\000\225 u\010"
+ 368      61A10109 
+ 368      62150026 
+ 368      FF009520 
+ 368      7508
+ 369 0012 81020963 		.ascii	"\201\002\011c\025\000&\377\000\225 u\010\221\002\300"
+ 369      150026FF 
+ 369      00952075 
+ 369      089102C0 
+ 370              		.section	.rodata.SharedReport,"a"
+ 373              	SharedReport:
+ 374 0000 05010902 		.ascii	"\005\001\011\002\241\001\205\002\011\001\241\000\005"
+ 374      A1018502 
+ 374      0901A100 
+ 374      05
+ 375 000d 09190129 		.ascii	"\011\031\001)\010\025\000%\001\225\010u\001\201\002"
+ 375      08150025 
+ 375      01950875 
+ 375      018102
+ 376 001c 05010930 		.ascii	"\005\001\0110\0111\025\201%\177\225\002u\010\201\006"
+ 376      09311581 
+ 376      257F9502 
+ 376      75088106 
+ 377 002c 09381581 		.ascii	"\0118\025\201%\177\225\001u\010\201\006\005\014\012"
+ 377      257F9501 
+ 377      75088106 
+ 377      050C0A
+ 378 003b 38021581 		.ascii	"8\002\025\201%\177\225\001u\010\201\006\300\300\005"
+ 378      257F9501 
+ 378      75088106 
+ 378      C0C005
+ 379 004a 010980A1 		.ascii	"\001\011\200\241\001\205\003\031\001*\267\000\025\001"
+ 379      01850319 
+ 379      012AB700 
+ 379      1501
+ 380 0058 26B70095 		.ascii	"&\267\000\225\001u\020\201\000\300\005\014\011\001\241"
+ 380      01751081 
+ 380      00C0050C 
+ 380      0901A1
+ 381 0067 01850419 		.ascii	"\001\205\004\031\001*\240\002\025\001&\240\002\225\001"
+ 381      012AA002 
+ 381      150126A0 
+ 381      029501
+ 382 0076 75108100 		.ascii	"u\020\201\000\300\005\001\011\006\241\001\205\005\005"
+ 382      C0050109 
+ 382      06A10185 
+ 382      0505
+ 383 0084 0719E029 		.ascii	"\007\031\340)\347\025\000%\001\225\010u\001\201\002"
+ 383      E7150025 
+ 383      01950875 
+ 383      018102
+ 384 0093 05071900 		.ascii	"\005\007\031\000)\357\025\000%\001\225\360u\001\201"
+ 384      29EF1500 
+ 384      250195F0 
+ 384      750181
+ 385 00a2 02050819 		.ascii	"\002\005\010\031\001)\005\225\005u\001\221\002\225\001"
+ 385      01290595 
+ 385      05750191 
+ 385      029501
+ 386 00b1 75039101 		.ascii	"u\003\221\001\300"
+ 386      C0
+ 387              		.text
+ 388              	.Letext0:
+ 389              		.file 2 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 390              		.file 3 "c:\\qmk_msys\\mingw64\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 391              		.file 4 "c:\\qmk_msys\\mingw64\\lib\\gcc\\arm-none-eabi\\10.1.0\\include\\stddef.h"
+ 392              		.file 5 "tmk_core/common/report.h"
+ 393              		.file 6 "./lib/lufa/LUFA/Drivers/USB/Class/Common/../../Core/StdDescriptors.h"
+ 394              		.file 7 "./lib/lufa/LUFA/Drivers/USB/Class/Common/HIDClassCommon.h"
+ 395              		.file 8 "tmk_core/protocol/usb_descriptor.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 usb_descriptor.c
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:18     .text.get_usb_descriptor:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:26     .text.get_usb_descriptor:0000000000000000 get_usb_descriptor
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:131    .text.get_usb_descriptor:000000000000005c $d
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:328    .rodata.ProductString:0000000000000000 ProductString
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:321    .rodata.ManufacturerString:0000000000000000 ManufacturerString
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:314    .rodata.LanguageString:0000000000000000 LanguageString
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:196    .rodata.ConfigurationDescriptor:0000000000000000 ConfigurationDescriptor
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:287    .rodata.DeviceDescriptor:0000000000000000 DeviceDescriptor
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:280    .rodata.ConsoleReport:0000000000000000 ConsoleReport
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:335    .rodata.SharedReport:0000000000000000 SharedReport
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:305    .rodata.KeyboardReport:0000000000000000 KeyboardReport
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:150    .rodata.CSWTCH.1:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:154    .rodata.CSWTCH.1:0000000000000000 CSWTCH.1
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:162    .rodata.CSWTCH.2:0000000000000000 CSWTCH.2
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:167    .rodata.CSWTCH.3:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:171    .rodata.CSWTCH.3:0000000000000000 CSWTCH.3
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:176    .rodata.CSWTCH.4:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:180    .rodata.CSWTCH.4:0000000000000000 CSWTCH.4
-C:\Users\lhanj\AppData\Local\Temp\ccMh8Xq1.s:188    .rodata.CSWTCH.5:0000000000000000 CSWTCH.5
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:18     .text.get_usb_descriptor:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:26     .text.get_usb_descriptor:0000000000000000 get_usb_descriptor
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:131    .text.get_usb_descriptor:000000000000005c $d
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:360    .rodata.ProductString:0000000000000000 ProductString
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:353    .rodata.ManufacturerString:0000000000000000 ManufacturerString
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:346    .rodata.LanguageString:0000000000000000 LanguageString
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:200    .rodata.ConfigurationDescriptor:0000000000000000 ConfigurationDescriptor
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:319    .rodata.DeviceDescriptor:0000000000000000 DeviceDescriptor
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:312    .rodata.ConsoleReport:0000000000000000 ConsoleReport
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:367    .rodata.RawReport:0000000000000000 RawReport
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:373    .rodata.SharedReport:0000000000000000 SharedReport
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:337    .rodata.KeyboardReport:0000000000000000 KeyboardReport
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:151    .rodata.CSWTCH.1:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:155    .rodata.CSWTCH.1:0000000000000000 CSWTCH.1
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:163    .rodata.CSWTCH.2:0000000000000000 CSWTCH.2
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:168    .rodata.CSWTCH.3:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:172    .rodata.CSWTCH.3:0000000000000000 CSWTCH.3
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:178    .rodata.CSWTCH.4:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:182    .rodata.CSWTCH.4:0000000000000000 CSWTCH.4
+C:\Users\lhanj\AppData\Local\Temp\ccMhnTs7.s:191    .rodata.CSWTCH.5:0000000000000000 CSWTCH.5
 
 NO UNDEFINED SYMBOLS

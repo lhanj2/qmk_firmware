@@ -1110,13 +1110,13 @@
  249              		.file 8 "./lib/chibios/os/rt/include/chthreads.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 hal_flash.c
-C:\Users\lhanj\AppData\Local\Temp\cckAomZm.s:20     .text.flashWaitErase:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cckAomZm.s:28     .text.flashWaitErase:0000000000000000 flashWaitErase
-C:\Users\lhanj\AppData\Local\Temp\cckAomZm.s:118    .text.flashWaitErase:0000000000000038 $d
-C:\Users\lhanj\AppData\Local\Temp\cckAomZm.s:123    .text.flashGetSectorOffset:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cckAomZm.s:130    .text.flashGetSectorOffset:0000000000000000 flashGetSectorOffset
-C:\Users\lhanj\AppData\Local\Temp\cckAomZm.s:184    .text.flashGetSectorSize:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cckAomZm.s:191    .text.flashGetSectorSize:0000000000000000 flashGetSectorSize
+C:\Users\lhanj\AppData\Local\Temp\ccCthj9Q.s:20     .text.flashWaitErase:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccCthj9Q.s:28     .text.flashWaitErase:0000000000000000 flashWaitErase
+C:\Users\lhanj\AppData\Local\Temp\ccCthj9Q.s:118    .text.flashWaitErase:0000000000000038 $d
+C:\Users\lhanj\AppData\Local\Temp\ccCthj9Q.s:123    .text.flashGetSectorOffset:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccCthj9Q.s:130    .text.flashGetSectorOffset:0000000000000000 flashGetSectorOffset
+C:\Users\lhanj\AppData\Local\Temp\ccCthj9Q.s:184    .text.flashGetSectorSize:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccCthj9Q.s:191    .text.flashGetSectorSize:0000000000000000 flashGetSectorSize
 
 UNDEFINED SYMBOLS
 __aeabi_uldivmod

@@ -700,25 +700,25 @@
  484              		.file 5 "tmk_core/common/chibios/flash_stm32.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 flash_stm32.c
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:18     .text.FLASH_GetStatus:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:26     .text.FLASH_GetStatus:0000000000000000 FLASH_GetStatus
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:84     .text.FLASH_GetStatus:0000000000000030 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:89     .text.FLASH_WaitForLastOperation:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:96     .text.FLASH_WaitForLastOperation:0000000000000000 FLASH_WaitForLastOperation
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:202    .text.FLASH_ErasePage:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:209    .text.FLASH_ErasePage:0000000000000000 FLASH_ErasePage
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:281    .text.FLASH_ErasePage:0000000000000040 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:286    .text.FLASH_ProgramHalfWord:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:293    .text.FLASH_ProgramHalfWord:0000000000000000 FLASH_ProgramHalfWord
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:375    .text.FLASH_ProgramHalfWord:0000000000000044 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:381    .text.FLASH_Unlock:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:388    .text.FLASH_Unlock:0000000000000000 FLASH_Unlock
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:415    .text.FLASH_Unlock:0000000000000014 $d
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:421    .text.FLASH_Lock:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:428    .text.FLASH_Lock:0000000000000000 FLASH_Lock
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:446    .text.FLASH_Lock:000000000000000c $d
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:451    .text.FLASH_ClearFlag:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:458    .text.FLASH_ClearFlag:0000000000000000 FLASH_ClearFlag
-C:\Users\lhanj\AppData\Local\Temp\ccZHoBmR.s:475    .text.FLASH_ClearFlag:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:18     .text.FLASH_GetStatus:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:26     .text.FLASH_GetStatus:0000000000000000 FLASH_GetStatus
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:84     .text.FLASH_GetStatus:0000000000000030 $d
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:89     .text.FLASH_WaitForLastOperation:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:96     .text.FLASH_WaitForLastOperation:0000000000000000 FLASH_WaitForLastOperation
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:202    .text.FLASH_ErasePage:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:209    .text.FLASH_ErasePage:0000000000000000 FLASH_ErasePage
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:281    .text.FLASH_ErasePage:0000000000000040 $d
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:286    .text.FLASH_ProgramHalfWord:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:293    .text.FLASH_ProgramHalfWord:0000000000000000 FLASH_ProgramHalfWord
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:375    .text.FLASH_ProgramHalfWord:0000000000000044 $d
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:381    .text.FLASH_Unlock:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:388    .text.FLASH_Unlock:0000000000000000 FLASH_Unlock
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:415    .text.FLASH_Unlock:0000000000000014 $d
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:421    .text.FLASH_Lock:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:428    .text.FLASH_Lock:0000000000000000 FLASH_Lock
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:446    .text.FLASH_Lock:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:451    .text.FLASH_ClearFlag:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:458    .text.FLASH_ClearFlag:0000000000000000 FLASH_ClearFlag
+C:\Users\lhanj\AppData\Local\Temp\ccdXvJhh.s:475    .text.FLASH_ClearFlag:0000000000000008 $d
 
 NO UNDEFINED SYMBOLS

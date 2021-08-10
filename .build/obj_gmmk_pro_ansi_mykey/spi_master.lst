@@ -837,33 +837,33 @@
  602              		.file 20 "./lib/chibios/os/rt/include/chthreads.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 spi_master.c
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:18     .text.spi_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:26     .text.spi_init:0000000000000000 spi_init
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:107    .text.spi_init:0000000000000070 $d
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:112    .text.spi_start:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:119    .text.spi_start:0000000000000000 spi_start
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:334    .text.spi_start:00000000000000dc $d
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:341    .text.spi_write:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:348    .text.spi_write:0000000000000000 spi_write
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:385    .text.spi_write:0000000000000020 $d
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:390    .text.spi_read:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:397    .text.spi_read:0000000000000000 spi_read
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:429    .text.spi_read:0000000000000020 $d
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:434    .text.spi_transmit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:441    .text.spi_transmit:0000000000000000 spi_transmit
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:469    .text.spi_transmit:0000000000000010 $d
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:474    .text.spi_receive:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:481    .text.spi_receive:0000000000000000 spi_receive
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:509    .text.spi_receive:0000000000000010 $d
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:514    .text.spi_stop:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:521    .text.spi_stop:0000000000000000 spi_stop
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:557    .text.spi_stop:0000000000000020 $d
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:566    .bss.is_initialised.0:0000000000000000 is_initialised.0
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:567    .bss.is_initialised.0:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:569    .bss.spiConfig:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:573    .bss.spiConfig:0000000000000000 spiConfig
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:576    .data.currentSlavePin:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccwXx7Xf.s:580    .data.currentSlavePin:0000000000000000 currentSlavePin
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:18     .text.spi_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:26     .text.spi_init:0000000000000000 spi_init
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:107    .text.spi_init:0000000000000070 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:112    .text.spi_start:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:119    .text.spi_start:0000000000000000 spi_start
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:334    .text.spi_start:00000000000000dc $d
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:341    .text.spi_write:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:348    .text.spi_write:0000000000000000 spi_write
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:385    .text.spi_write:0000000000000020 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:390    .text.spi_read:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:397    .text.spi_read:0000000000000000 spi_read
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:429    .text.spi_read:0000000000000020 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:434    .text.spi_transmit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:441    .text.spi_transmit:0000000000000000 spi_transmit
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:469    .text.spi_transmit:0000000000000010 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:474    .text.spi_receive:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:481    .text.spi_receive:0000000000000000 spi_receive
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:509    .text.spi_receive:0000000000000010 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:514    .text.spi_stop:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:521    .text.spi_stop:0000000000000000 spi_stop
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:557    .text.spi_stop:0000000000000020 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:566    .bss.is_initialised.0:0000000000000000 is_initialised.0
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:567    .bss.is_initialised.0:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:569    .bss.spiConfig:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:573    .bss.spiConfig:0000000000000000 spiConfig
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:576    .data.currentSlavePin:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccUdeq3p.s:580    .data.currentSlavePin:0000000000000000 currentSlavePin
 
 UNDEFINED SYMBOLS
 _pal_lld_setgroupmode

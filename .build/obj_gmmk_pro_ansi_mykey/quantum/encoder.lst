@@ -514,23 +514,23 @@
  348              		.file 7 "quantum/sequencer/sequencer.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 encoder.c
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:18     .text.encoder_update_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:26     .text.encoder_update_user:0000000000000000 encoder_update_user
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:45     .text.encoder_update_kb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:52     .text.encoder_update_kb:0000000000000000 encoder_update_kb
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:74     .text.encoder_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:81     .text.encoder_init:0000000000000000 encoder_init
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:138    .text.encoder_init:0000000000000034 $d
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:144    .text.encoder_read:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:151    .text.encoder_read:0000000000000000 encoder_read
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:305    .text.encoder_read:000000000000007c $d
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:320    .bss.encoder_pulses:0000000000000000 encoder_pulses
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:321    .bss.encoder_pulses:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:326    .bss.encoder_state:0000000000000000 encoder_state
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:327    .bss.encoder_state:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:332    .bss.encoder_value:0000000000000000 encoder_value
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:333    .bss.encoder_value:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccDMQN2s.s:338    .rodata.encoder_LUT:0000000000000000 encoder_LUT
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:18     .text.encoder_update_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:26     .text.encoder_update_user:0000000000000000 encoder_update_user
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:45     .text.encoder_update_kb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:52     .text.encoder_update_kb:0000000000000000 encoder_update_kb
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:74     .text.encoder_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:81     .text.encoder_init:0000000000000000 encoder_init
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:138    .text.encoder_init:0000000000000034 $d
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:144    .text.encoder_read:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:151    .text.encoder_read:0000000000000000 encoder_read
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:305    .text.encoder_read:000000000000007c $d
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:320    .bss.encoder_pulses:0000000000000000 encoder_pulses
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:321    .bss.encoder_pulses:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:326    .bss.encoder_state:0000000000000000 encoder_state
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:327    .bss.encoder_state:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:332    .bss.encoder_value:0000000000000000 encoder_value
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:333    .bss.encoder_value:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccQD5ZwZ.s:338    .rodata.encoder_LUT:0000000000000000 encoder_LUT
 
 UNDEFINED SYMBOLS
 _pal_lld_setgroupmode

@@ -2289,23 +2289,23 @@
  484              		.file 13 "./lib/chibios/os/oslib/include/chmemcore.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 chmemcore.c
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:18     .text._core_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:26     .text._core_init:0000000000000000 _core_init
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:50     .text._core_init:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:18     .text._core_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:26     .text._core_init:0000000000000000 _core_init
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:50     .text._core_init:000000000000000c $d
                             *COM*:0000000000000008 ch_memcore
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:57     .text.chCoreAllocFromBaseI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:64     .text.chCoreAllocFromBaseI:0000000000000000 chCoreAllocFromBaseI
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:132    .text.chCoreAllocFromBaseI:0000000000000028 $d
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:137    .text.chCoreAllocFromTopI:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:144    .text.chCoreAllocFromTopI:0000000000000000 chCoreAllocFromTopI
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:206    .text.chCoreAllocFromTopI:0000000000000020 $d
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:211    .text.chCoreAllocFromBase:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:218    .text.chCoreAllocFromBase:0000000000000000 chCoreAllocFromBase
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:329    .text.chCoreAllocFromTop:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:336    .text.chCoreAllocFromTop:0000000000000000 chCoreAllocFromTop
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:444    .text.chCoreGetStatusX:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:451    .text.chCoreGetStatusX:0000000000000000 chCoreGetStatusX
-C:\Users\lhanj\AppData\Local\Temp\ccaXx9Ly.s:469    .text.chCoreGetStatusX:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:57     .text.chCoreAllocFromBaseI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:64     .text.chCoreAllocFromBaseI:0000000000000000 chCoreAllocFromBaseI
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:132    .text.chCoreAllocFromBaseI:0000000000000028 $d
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:137    .text.chCoreAllocFromTopI:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:144    .text.chCoreAllocFromTopI:0000000000000000 chCoreAllocFromTopI
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:206    .text.chCoreAllocFromTopI:0000000000000020 $d
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:211    .text.chCoreAllocFromBase:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:218    .text.chCoreAllocFromBase:0000000000000000 chCoreAllocFromBase
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:329    .text.chCoreAllocFromTop:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:336    .text.chCoreAllocFromTop:0000000000000000 chCoreAllocFromTop
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:444    .text.chCoreGetStatusX:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:451    .text.chCoreGetStatusX:0000000000000000 chCoreGetStatusX
+C:\Users\lhanj\AppData\Local\Temp\ccmD1Nz5.s:469    .text.chCoreGetStatusX:000000000000000c $d
 
 UNDEFINED SYMBOLS
 __heap_base__

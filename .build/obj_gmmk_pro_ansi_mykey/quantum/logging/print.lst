@@ -131,15 +131,15 @@
  112              		.file 4 "quantum/logging/sendchar.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 print.c
-C:\Users\lhanj\AppData\Local\Temp\cccTGMMe.s:18     .text.null_sendchar_func:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cccTGMMe.s:25     .text.null_sendchar_func:0000000000000000 null_sendchar_func
-C:\Users\lhanj\AppData\Local\Temp\cccTGMMe.s:44     .text.print_set_sendchar:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cccTGMMe.s:51     .text.print_set_sendchar:0000000000000000 print_set_sendchar
-C:\Users\lhanj\AppData\Local\Temp\cccTGMMe.s:68     .text.print_set_sendchar:0000000000000008 $d
-C:\Users\lhanj\AppData\Local\Temp\cccTGMMe.s:73     .text._putchar:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cccTGMMe.s:80     .text._putchar:0000000000000000 _putchar
-C:\Users\lhanj\AppData\Local\Temp\cccTGMMe.s:97     .text._putchar:0000000000000008 $d
-C:\Users\lhanj\AppData\Local\Temp\cccTGMMe.s:102    .data.func:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\cccTGMMe.s:106    .data.func:0000000000000000 func
+C:\Users\lhanj\AppData\Local\Temp\ccakqYvG.s:18     .text.null_sendchar_func:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccakqYvG.s:25     .text.null_sendchar_func:0000000000000000 null_sendchar_func
+C:\Users\lhanj\AppData\Local\Temp\ccakqYvG.s:44     .text.print_set_sendchar:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccakqYvG.s:51     .text.print_set_sendchar:0000000000000000 print_set_sendchar
+C:\Users\lhanj\AppData\Local\Temp\ccakqYvG.s:68     .text.print_set_sendchar:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccakqYvG.s:73     .text._putchar:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccakqYvG.s:80     .text._putchar:0000000000000000 _putchar
+C:\Users\lhanj\AppData\Local\Temp\ccakqYvG.s:97     .text._putchar:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccakqYvG.s:102    .data.func:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccakqYvG.s:106    .data.func:0000000000000000 func
 
 NO UNDEFINED SYMBOLS

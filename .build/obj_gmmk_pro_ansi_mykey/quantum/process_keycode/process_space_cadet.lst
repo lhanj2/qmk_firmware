@@ -412,7 +412,7 @@
  245              		.cfi_offset 4, -8
  246              		.cfi_offset 14, -4
  247              		.loc 1 129 5 view .LVU62
- 248 0002 45F6F743 		movw	r3, #23799
+ 248 0002 45F6F643 		movw	r3, #23798
  128:quantum/process_keycode/process_space_cadet.c ****     switch (keycode) {
  249              		.loc 1 128 65 view .LVU63
  250 0006 0446     		mov	r4, r0
@@ -424,16 +424,16 @@
  255              	.LVL19:
  256              		.loc 1 129 5 view .LVU66
  257 000c 0FD8     		bhi	.L15
- 258 000e 45F6F343 		movw	r3, #23795
+ 258 000e 45F6F243 		movw	r3, #23794
  259 0012 9C42     		cmp	r4, r3
  260 0014 12D8     		bhi	.L16
- 261 0016 45F6D943 		movw	r3, #23769
+ 261 0016 45F6D843 		movw	r3, #23768
  262 001a 9C42     		cmp	r4, r3
  263 001c 1DD0     		beq	.L17
- 264 001e 45F6DA43 		movw	r3, #23770
+ 264 001e 45F6D943 		movw	r3, #23769
  265 0022 9C42     		cmp	r4, r3
  266 0024 3ED0     		beq	.L18
- 267 0026 45F6D843 		movw	r3, #23768
+ 267 0026 45F6D743 		movw	r3, #23767
  268 002a 9C42     		cmp	r4, r3
  269 002c 0FD0     		beq	.L19
  270              	.L15:
@@ -484,7 +484,7 @@
  284              	.L16:
  285              		.loc 1 160 25 view .LVU72
  286 003c A4F5B944 		sub	r4, r4, #23680
- 287 0040 753C     		subs	r4, r4, #117
+ 287 0040 743C     		subs	r4, r4, #116
  288 0042 022C     		cmp	r4, #2
  289 0044 0ED8     		bhi	.L20
  290 0046 DFE804F0 		tbb	[pc, r4]
@@ -523,7 +523,7 @@
  318 0066 0093     		str	r3, [sp]
  319 0068 E022     		movs	r2, #224
  320 006a E123     		movs	r3, #225
- 321 006c 45F6F441 		movw	r1, #23796
+ 321 006c 45F6F341 		movw	r1, #23795
  322              	.L29:
  155:quantum/process_keycode/process_space_cadet.c ****             return false;
  323              		.loc 1 155 13 is_stmt 0 view .LVU78
@@ -556,7 +556,7 @@
  341 007c 0093     		str	r3, [sp]
  342 007e E422     		movs	r2, #228
  343 0080 E523     		movs	r3, #229
- 344 0082 45F6F541 		movw	r1, #23797
+ 344 0082 45F6F441 		movw	r1, #23796
  345 0086 F3E7     		b	.L29
  346              	.L23:
  147:quantum/process_keycode/process_space_cadet.c ****             return false;
@@ -565,7 +565,7 @@
  349 008a 0093     		str	r3, [sp]
  350 008c E222     		movs	r2, #226
  351 008e E123     		movs	r3, #225
- 352 0090 45F6F641 		movw	r1, #23798
+ 352 0090 45F6F541 		movw	r1, #23797
  353 0094 ECE7     		b	.L29
  354              	.L21:
  151:quantum/process_keycode/process_space_cadet.c ****             return false;
@@ -574,7 +574,7 @@
  357 0098 0093     		str	r3, [sp]
  358 009a E622     		movs	r2, #230
  359 009c E523     		movs	r3, #229
- 360 009e 45F6F741 		movw	r1, #23799
+ 360 009e 45F6F641 		movw	r1, #23798
  361 00a2 E5E7     		b	.L29
  362              	.L18:
  155:quantum/process_keycode/process_space_cadet.c ****             return false;
@@ -616,19 +616,19 @@
  402              		.file 9 "quantum/sequencer/sequencer.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 process_space_cadet.c
-C:\Users\lhanj\AppData\Local\Temp\ccr6GKR0.s:18     .text.perform_space_cadet:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccr6GKR0.s:26     .text.perform_space_cadet:0000000000000000 perform_space_cadet
-C:\Users\lhanj\AppData\Local\Temp\ccr6GKR0.s:221    .text.perform_space_cadet:00000000000000b0 $d
-C:\Users\lhanj\AppData\Local\Temp\ccr6GKR0.s:227    .text.process_space_cadet:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccr6GKR0.s:234    .text.process_space_cadet:0000000000000000 process_space_cadet
-C:\Users\lhanj\AppData\Local\Temp\ccr6GKR0.s:292    .text.process_space_cadet:000000000000004a $d
-C:\Users\lhanj\AppData\Local\Temp\ccr6GKR0.s:376    .text.process_space_cadet:00000000000000b0 $d
-C:\Users\lhanj\AppData\Local\Temp\ccr6GKR0.s:384    .bss.sc_last:0000000000000000 sc_last
-C:\Users\lhanj\AppData\Local\Temp\ccr6GKR0.s:385    .bss.sc_last:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccr6GKR0.s:387    .bss.sc_timer:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccr6GKR0.s:391    .bss.sc_timer:0000000000000000 sc_timer
-C:\Users\lhanj\AppData\Local\Temp\ccr6GKR0.s:295    .text.process_space_cadet:000000000000004d $d
-C:\Users\lhanj\AppData\Local\Temp\ccr6GKR0.s:295    .text.process_space_cadet:000000000000004e $t
+C:\Users\lhanj\AppData\Local\Temp\ccCHBqdd.s:18     .text.perform_space_cadet:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccCHBqdd.s:26     .text.perform_space_cadet:0000000000000000 perform_space_cadet
+C:\Users\lhanj\AppData\Local\Temp\ccCHBqdd.s:221    .text.perform_space_cadet:00000000000000b0 $d
+C:\Users\lhanj\AppData\Local\Temp\ccCHBqdd.s:227    .text.process_space_cadet:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccCHBqdd.s:234    .text.process_space_cadet:0000000000000000 process_space_cadet
+C:\Users\lhanj\AppData\Local\Temp\ccCHBqdd.s:292    .text.process_space_cadet:000000000000004a $d
+C:\Users\lhanj\AppData\Local\Temp\ccCHBqdd.s:376    .text.process_space_cadet:00000000000000b0 $d
+C:\Users\lhanj\AppData\Local\Temp\ccCHBqdd.s:384    .bss.sc_last:0000000000000000 sc_last
+C:\Users\lhanj\AppData\Local\Temp\ccCHBqdd.s:385    .bss.sc_last:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccCHBqdd.s:387    .bss.sc_timer:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccCHBqdd.s:391    .bss.sc_timer:0000000000000000 sc_timer
+C:\Users\lhanj\AppData\Local\Temp\ccCHBqdd.s:295    .text.process_space_cadet:000000000000004d $d
+C:\Users\lhanj\AppData\Local\Temp\ccCHBqdd.s:295    .text.process_space_cadet:000000000000004e $t
 
 UNDEFINED SYMBOLS
 timer_read

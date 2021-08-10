@@ -151,8 +151,8 @@
  quantum/process_keycode/process_magic.h \
  quantum/process_keycode/process_grave_esc.h \
  quantum/process_keycode/process_rgb.h \
- quantum/process_keycode/process_dynamic_macro.h quantum/encoder.h \
- drivers/led/aw20216.h \
+ quantum/process_keycode/process_dynamic_macro.h quantum/dynamic_keymap.h \
+ quantum/via.h quantum/encoder.h drivers/led/aw20216.h \
  quantum/rgb_matrix/animations/rgb_matrix_effects.inc \
  quantum/rgb_matrix/animations/solid_color_anim.h \
  quantum/rgb_matrix/animations/alpha_mods_anim.h \
@@ -383,6 +383,8 @@ quantum/process_keycode/process_magic.h:
 quantum/process_keycode/process_grave_esc.h:
 quantum/process_keycode/process_rgb.h:
 quantum/process_keycode/process_dynamic_macro.h:
+quantum/dynamic_keymap.h:
+quantum/via.h:
 quantum/encoder.h:
 drivers/led/aw20216.h:
 quantum/rgb_matrix/animations/rgb_matrix_effects.inc:

@@ -600,7 +600,7 @@
  265:quantum/mousekey.c ****     if (code == KC_MS_UP)
  287              		.loc 1 265 5 view .LVU87
  288              		.loc 1 265 8 is_stmt 0 view .LVU88
- 289 0000 ED28     		cmp	r0, #237
+ 289 0000 F028     		cmp	r0, #240
  258:quantum/mousekey.c **** #    ifdef MK_KINETIC_SPEED
  290              		.loc 1 258 32 view .LVU89
  291 0002 08B5     		push	{r3, lr}
@@ -652,7 +652,7 @@
  312              		.loc 1 267 10 is_stmt 1 view .LVU96
  267:quantum/mousekey.c ****     else if (code == KC_MS_DOWN)
  313              		.loc 1 267 13 is_stmt 0 view .LVU97
- 314 0012 EE28     		cmp	r0, #238
+ 314 0012 F128     		cmp	r0, #241
  315 0014 02D1     		bne	.L32
  268:quantum/mousekey.c ****     else if (code == KC_MS_LEFT)
  316              		.loc 1 268 9 is_stmt 1 view .LVU98
@@ -669,7 +669,7 @@
  324              		.loc 1 269 10 is_stmt 1 view .LVU101
  269:quantum/mousekey.c ****     else if (code == KC_MS_LEFT)
  325              		.loc 1 269 13 is_stmt 0 view .LVU102
- 326 001c EF28     		cmp	r0, #239
+ 326 001c F228     		cmp	r0, #242
  327 001e 05D1     		bne	.L33
  270:quantum/mousekey.c ****     else if (code == KC_MS_RIGHT)
  328              		.loc 1 270 9 is_stmt 1 view .LVU103
@@ -692,7 +692,7 @@
  341              		.loc 1 271 10 is_stmt 1 view .LVU107
  271:quantum/mousekey.c ****         mouse_report.x = move_unit();
  342              		.loc 1 271 13 is_stmt 0 view .LVU108
- 343 002c F028     		cmp	r0, #240
+ 343 002c F328     		cmp	r0, #243
  344 002e 02D1     		bne	.L34
  272:quantum/mousekey.c ****     else if (code == KC_MS_WH_UP)
  345              		.loc 1 272 9 is_stmt 1 view .LVU109
@@ -787,11 +787,11 @@
  410              		.loc 1 281 10 is_stmt 1 view .LVU133
  281:quantum/mousekey.c ****         mouse_report.buttons |= 1 << (code - KC_MS_BTN1);
  411              		.loc 1 281 14 is_stmt 0 view .LVU134
- 412 006a 00F10F03 		add	r3, r0, #15
+ 412 006a 00F10C03 		add	r3, r0, #12
  281:quantum/mousekey.c ****         mouse_report.buttons |= 1 << (code - KC_MS_BTN1);
  413              		.loc 1 281 13 view .LVU135
  414 006e DBB2     		uxtb	r3, r3
- 415 0070 072B     		cmp	r3, #7
+ 415 0070 042B     		cmp	r3, #4
  416 0072 08D8     		bhi	.L39
  282:quantum/mousekey.c ****     else if (code == KC_MS_ACCEL0)
  417              		.loc 1 282 9 is_stmt 1 view .LVU136
@@ -803,7 +803,7 @@
  421 0076 0123     		movs	r3, #1
  282:quantum/mousekey.c ****     else if (code == KC_MS_ACCEL0)
  422              		.loc 1 282 44 view .LVU139
- 423 0078 F138     		subs	r0, r0, #241
+ 423 0078 F438     		subs	r0, r0, #244
  424              	.LVL34:
  282:quantum/mousekey.c ****     else if (code == KC_MS_ACCEL0)
  425              		.loc 1 282 35 view .LVU140
@@ -899,7 +899,7 @@
  496 0000 364B     		ldr	r3, .L83
  292:quantum/mousekey.c ****     if (code == KC_MS_UP && mouse_report.y < 0)
  497              		.loc 1 292 8 view .LVU159
- 498 0002 ED28     		cmp	r0, #237
+ 498 0002 F028     		cmp	r0, #240
  499              		.loc 1 296 48 view .LVU160
  500 0004 93F90220 		ldrsb	r2, [r3, #2]
  292:quantum/mousekey.c ****     if (code == KC_MS_UP && mouse_report.y < 0)
@@ -955,7 +955,7 @@
  525              		.loc 1 294 10 is_stmt 1 view .LVU169
  294:quantum/mousekey.c ****         mouse_report.y = 0;
  526              		.loc 1 294 13 is_stmt 0 view .LVU170
- 527 0020 EE28     		cmp	r0, #238
+ 527 0020 F128     		cmp	r0, #241
  528 0022 0DD1     		bne	.L54
  294:quantum/mousekey.c ****         mouse_report.y = 0;
  529              		.loc 1 294 33 discriminator 1 view .LVU171
@@ -996,7 +996,7 @@
  555              		.loc 1 296 10 is_stmt 1 view .LVU179
  296:quantum/mousekey.c ****         mouse_report.x = 0;
  556              		.loc 1 296 13 is_stmt 0 view .LVU180
- 557 0040 EF28     		cmp	r0, #239
+ 557 0040 F228     		cmp	r0, #242
  558 0042 06D1     		bne	.L56
  296:quantum/mousekey.c ****         mouse_report.x = 0;
  559              		.loc 1 296 33 discriminator 1 view .LVU181
@@ -1023,7 +1023,7 @@
  575              		.loc 1 298 10 is_stmt 1 view .LVU186
  298:quantum/mousekey.c ****         mouse_report.x = 0;
  576              		.loc 1 298 13 is_stmt 0 view .LVU187
- 577 0052 F028     		cmp	r0, #240
+ 577 0052 F328     		cmp	r0, #243
  578 0054 02D1     		bne	.L58
  298:quantum/mousekey.c ****         mouse_report.x = 0;
  579              		.loc 1 298 34 discriminator 1 view .LVU188
@@ -1107,17 +1107,17 @@
  636              		.loc 1 308 10 is_stmt 1 view .LVU209
  308:quantum/mousekey.c ****         mouse_report.buttons &= ~(1 << (code - KC_MS_BTN1));
  637              		.loc 1 308 14 is_stmt 0 view .LVU210
- 638 0094 00F10F01 		add	r1, r0, #15
+ 638 0094 00F10C01 		add	r1, r0, #12
  308:quantum/mousekey.c ****         mouse_report.buttons &= ~(1 << (code - KC_MS_BTN1));
  639              		.loc 1 308 13 view .LVU211
  640 0098 C9B2     		uxtb	r1, r1
- 641 009a 0729     		cmp	r1, #7
+ 641 009a 0429     		cmp	r1, #4
  642 009c 07D8     		bhi	.L66
  309:quantum/mousekey.c ****     else if (code == KC_MS_ACCEL0)
  643              		.loc 1 309 9 is_stmt 1 view .LVU212
  309:quantum/mousekey.c ****     else if (code == KC_MS_ACCEL0)
  644              		.loc 1 309 46 is_stmt 0 view .LVU213
- 645 009e F138     		subs	r0, r0, #241
+ 645 009e F438     		subs	r0, r0, #244
  646              	.LVL43:
  309:quantum/mousekey.c ****     else if (code == KC_MS_ACCEL0)
  647              		.loc 1 309 37 view .LVU214
@@ -2212,50 +2212,50 @@
  1442              		.file 10 "tmk_core/common/keycode.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 mousekey.c
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:18     .text.move_unit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:25     .text.move_unit:0000000000000000 move_unit
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:144    .text.move_unit:0000000000000068 $d
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:152    .text.wheel_unit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:158    .text.wheel_unit:0000000000000000 wheel_unit
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:265    .text.wheel_unit:0000000000000058 $d
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:273    .text.mousekey_on:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:280    .text.mousekey_on:0000000000000000 mousekey_on
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:473    .text.mousekey_on:00000000000000b4 $d
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:479    .text.mousekey_off:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:486    .text.mousekey_off:0000000000000000 mousekey_off
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:706    .text.mousekey_off:00000000000000dc $d
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:733    .text.mousekey_send:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:740    .text.mousekey_send:0000000000000000 mousekey_send
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:884    .text.mousekey_send:00000000000000ac $d
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:903    .text.mousekey_task:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:910    .text.mousekey_task:0000000000000000 mousekey_task
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1249   .text.mousekey_task:0000000000000160 $d
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1262   .text.mousekey_clear:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1269   .text.mousekey_clear:0000000000000000 mousekey_clear
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1299   .text.mousekey_clear:0000000000000018 $d
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1307   .text.mousekey_get_report:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1314   .text.mousekey_get_report:0000000000000000 mousekey_get_report
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1334   .text.mousekey_get_report:000000000000000c $d
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1430   .data.mk_wheel_time_to_max:0000000000000000 mk_wheel_time_to_max
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1424   .data.mk_wheel_max_speed:0000000000000000 mk_wheel_max_speed
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1418   .data.mk_wheel_interval:0000000000000000 mk_wheel_interval
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1412   .data.mk_wheel_delay:0000000000000000 mk_wheel_delay
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1406   .data.mk_time_to_max:0000000000000000 mk_time_to_max
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1400   .data.mk_max_speed:0000000000000000 mk_max_speed
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1394   .data.mk_interval:0000000000000000 mk_interval
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1388   .data.mk_delay:0000000000000000 mk_delay
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1347   .bss.last_timer_c:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1351   .bss.last_timer_c:0000000000000000 last_timer_c
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1354   .bss.last_timer_w:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1358   .bss.last_timer_w:0000000000000000 last_timer_w
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1364   .bss.mouse_report:0000000000000000 mouse_report
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1365   .bss.mouse_report:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1370   .bss.mousekey_accel:0000000000000000 mousekey_accel
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1371   .bss.mousekey_accel:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1376   .bss.mousekey_repeat:0000000000000000 mousekey_repeat
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1377   .bss.mousekey_repeat:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1382   .bss.mousekey_wheel_repeat:0000000000000000 mousekey_wheel_repeat
-C:\Users\lhanj\AppData\Local\Temp\ccmgA32U.s:1383   .bss.mousekey_wheel_repeat:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:18     .text.move_unit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:25     .text.move_unit:0000000000000000 move_unit
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:144    .text.move_unit:0000000000000068 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:152    .text.wheel_unit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:158    .text.wheel_unit:0000000000000000 wheel_unit
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:265    .text.wheel_unit:0000000000000058 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:273    .text.mousekey_on:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:280    .text.mousekey_on:0000000000000000 mousekey_on
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:473    .text.mousekey_on:00000000000000b4 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:479    .text.mousekey_off:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:486    .text.mousekey_off:0000000000000000 mousekey_off
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:706    .text.mousekey_off:00000000000000dc $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:733    .text.mousekey_send:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:740    .text.mousekey_send:0000000000000000 mousekey_send
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:884    .text.mousekey_send:00000000000000ac $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:903    .text.mousekey_task:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:910    .text.mousekey_task:0000000000000000 mousekey_task
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1249   .text.mousekey_task:0000000000000160 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1262   .text.mousekey_clear:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1269   .text.mousekey_clear:0000000000000000 mousekey_clear
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1299   .text.mousekey_clear:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1307   .text.mousekey_get_report:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1314   .text.mousekey_get_report:0000000000000000 mousekey_get_report
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1334   .text.mousekey_get_report:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1430   .data.mk_wheel_time_to_max:0000000000000000 mk_wheel_time_to_max
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1424   .data.mk_wheel_max_speed:0000000000000000 mk_wheel_max_speed
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1418   .data.mk_wheel_interval:0000000000000000 mk_wheel_interval
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1412   .data.mk_wheel_delay:0000000000000000 mk_wheel_delay
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1406   .data.mk_time_to_max:0000000000000000 mk_time_to_max
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1400   .data.mk_max_speed:0000000000000000 mk_max_speed
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1394   .data.mk_interval:0000000000000000 mk_interval
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1388   .data.mk_delay:0000000000000000 mk_delay
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1347   .bss.last_timer_c:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1351   .bss.last_timer_c:0000000000000000 last_timer_c
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1354   .bss.last_timer_w:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1358   .bss.last_timer_w:0000000000000000 last_timer_w
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1364   .bss.mouse_report:0000000000000000 mouse_report
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1365   .bss.mouse_report:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1370   .bss.mousekey_accel:0000000000000000 mousekey_accel
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1371   .bss.mousekey_accel:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1376   .bss.mousekey_repeat:0000000000000000 mousekey_repeat
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1377   .bss.mousekey_repeat:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1382   .bss.mousekey_wheel_repeat:0000000000000000 mousekey_wheel_repeat
+C:\Users\lhanj\AppData\Local\Temp\ccGMIxrf.s:1383   .bss.mousekey_wheel_repeat:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 printf_

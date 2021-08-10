@@ -332,14 +332,14 @@
  128              		.file 9 "quantum/sequencer/sequencer.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 rgb_matrix_drivers.c
-C:\Users\lhanj\AppData\Local\Temp\ccXJ5Zfo.s:18     .text.flush:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccXJ5Zfo.s:25     .text.flush:0000000000000000 flush
-C:\Users\lhanj\AppData\Local\Temp\ccXJ5Zfo.s:57     .text.flush:0000000000000018 $d
-C:\Users\lhanj\AppData\Local\Temp\ccXJ5Zfo.s:63     .text.init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccXJ5Zfo.s:69     .text.init:0000000000000000 init
-C:\Users\lhanj\AppData\Local\Temp\ccXJ5Zfo.s:103    .text.init:000000000000001c $d
-C:\Users\lhanj\AppData\Local\Temp\ccXJ5Zfo.s:114    .rodata.rgb_matrix_driver:0000000000000000 rgb_matrix_driver
-C:\Users\lhanj\AppData\Local\Temp\ccXJ5Zfo.s:111    .rodata.rgb_matrix_driver:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGFEftT.s:18     .text.flush:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGFEftT.s:25     .text.flush:0000000000000000 flush
+C:\Users\lhanj\AppData\Local\Temp\ccGFEftT.s:57     .text.flush:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\ccGFEftT.s:63     .text.init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccGFEftT.s:69     .text.init:0000000000000000 init
+C:\Users\lhanj\AppData\Local\Temp\ccGFEftT.s:103    .text.init:000000000000001c $d
+C:\Users\lhanj\AppData\Local\Temp\ccGFEftT.s:114    .rodata.rgb_matrix_driver:0000000000000000 rgb_matrix_driver
+C:\Users\lhanj\AppData\Local\Temp\ccGFEftT.s:111    .rodata.rgb_matrix_driver:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 AW20216_update_pwm_buffers

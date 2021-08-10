@@ -440,20 +440,20 @@
  280              		.file 12 "./lib/chibios/os/oslib/include/chmemcore.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 syscalls.c
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:18     .text._read_r:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:26     .text._read_r:0000000000000000 _read_r
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:55     .text._lseek_r:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:62     .text._lseek_r:0000000000000000 _lseek_r
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:84     .text._write_r:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:91     .text._write_r:0000000000000000 _write_r
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:112    .text._close_r:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:119    .text._close_r:0000000000000000 _close_r
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:139    .text._sbrk_r:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:146    .text._sbrk_r:0000000000000000 _sbrk_r
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:194    .text._fstat_r:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:201    .text._fstat_r:0000000000000000 _fstat_r
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:242    .text._isatty_r:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccOnGMNZ.s:249    .text._isatty_r:0000000000000000 _isatty_r
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:18     .text._read_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:26     .text._read_r:0000000000000000 _read_r
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:55     .text._lseek_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:62     .text._lseek_r:0000000000000000 _lseek_r
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:84     .text._write_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:91     .text._write_r:0000000000000000 _write_r
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:112    .text._close_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:119    .text._close_r:0000000000000000 _close_r
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:139    .text._sbrk_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:146    .text._sbrk_r:0000000000000000 _sbrk_r
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:194    .text._fstat_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:201    .text._fstat_r:0000000000000000 _fstat_r
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:242    .text._isatty_r:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccbpPrdF.s:249    .text._isatty_r:0000000000000000 _isatty_r
 
 UNDEFINED SYMBOLS
 chCoreAllocFromBase

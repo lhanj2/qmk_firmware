@@ -2947,24 +2947,24 @@
  886              		.file 19 "quantum/sequencer/sequencer.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 matrix.c
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:18     .text.setPinInputHigh_atomic:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:25     .text.setPinInputHigh_atomic:0000000000000000 setPinInputHigh_atomic
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:187    .text.matrix_init_pins:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:194    .text.matrix_init_pins:0000000000000000 matrix_init_pins
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:287    .text.matrix_init_pins:0000000000000034 $d
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:293    .text.matrix_read_cols_on_row:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:300    .text.matrix_read_cols_on_row:0000000000000000 matrix_read_cols_on_row
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:663    .text.matrix_read_cols_on_row:000000000000009c $d
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:673    .text.matrix_init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:680    .text.matrix_init:0000000000000000 matrix_init
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:733    .text.matrix_init:000000000000002c $d
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:739    .text.matrix_scan:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:746    .text.matrix_scan:0000000000000000 matrix_scan
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:835    .text.matrix_scan:0000000000000058 $d
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:841    .rodata.col_pins:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:845    .rodata.col_pins:0000000000000000 col_pins
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:855    .rodata.row_pins:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccG1lOQ2.s:859    .rodata.row_pins:0000000000000000 row_pins
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:18     .text.setPinInputHigh_atomic:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:25     .text.setPinInputHigh_atomic:0000000000000000 setPinInputHigh_atomic
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:187    .text.matrix_init_pins:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:194    .text.matrix_init_pins:0000000000000000 matrix_init_pins
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:287    .text.matrix_init_pins:0000000000000034 $d
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:293    .text.matrix_read_cols_on_row:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:300    .text.matrix_read_cols_on_row:0000000000000000 matrix_read_cols_on_row
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:663    .text.matrix_read_cols_on_row:000000000000009c $d
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:673    .text.matrix_init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:680    .text.matrix_init:0000000000000000 matrix_init
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:733    .text.matrix_init:000000000000002c $d
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:739    .text.matrix_scan:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:746    .text.matrix_scan:0000000000000000 matrix_scan
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:835    .text.matrix_scan:0000000000000058 $d
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:841    .rodata.col_pins:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:845    .rodata.col_pins:0000000000000000 col_pins
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:855    .rodata.row_pins:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccQYnSdq.s:859    .rodata.row_pins:0000000000000000 row_pins
 
 UNDEFINED SYMBOLS
 _pal_lld_setgroupmode

@@ -1257,35 +1257,35 @@
  919              		.file 8 "tmk_core/common/keycode.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 dynamic_keymap.c
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:18     .text.dynamic_keymap_get_layer_count:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:26     .text.dynamic_keymap_get_layer_count:0000000000000000 dynamic_keymap_get_layer_count
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:42     .text.dynamic_keymap_key_to_eeprom_address:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:49     .text.dynamic_keymap_key_to_eeprom_address:0000000000000000 dynamic_keymap_key_to_eeprom_address
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:75     .text.dynamic_keymap_get_keycode:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:82     .text.dynamic_keymap_get_keycode:0000000000000000 dynamic_keymap_get_keycode
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:129    .text.dynamic_keymap_set_keycode:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:136    .text.dynamic_keymap_set_keycode:0000000000000000 dynamic_keymap_set_keycode
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:182    .text.dynamic_keymap_reset:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:189    .text.dynamic_keymap_reset:0000000000000000 dynamic_keymap_reset
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:299    .text.dynamic_keymap_reset:000000000000004c $d
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:304    .text.dynamic_keymap_get_buffer:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:311    .text.dynamic_keymap_get_buffer:0000000000000000 dynamic_keymap_get_buffer
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:389    .text.dynamic_keymap_set_buffer:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:396    .text.dynamic_keymap_set_buffer:0000000000000000 dynamic_keymap_set_buffer
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:463    .text.keymap_key_to_keycode:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:470    .text.keymap_key_to_keycode:0000000000000000 keymap_key_to_keycode
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:521    .text.dynamic_keymap_macro_get_count:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:528    .text.dynamic_keymap_macro_get_count:0000000000000000 dynamic_keymap_macro_get_count
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:543    .text.dynamic_keymap_macro_get_buffer_size:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:550    .text.dynamic_keymap_macro_get_buffer_size:0000000000000000 dynamic_keymap_macro_get_buffer_size
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:565    .text.dynamic_keymap_macro_get_buffer:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:572    .text.dynamic_keymap_macro_get_buffer:0000000000000000 dynamic_keymap_macro_get_buffer
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:649    .text.dynamic_keymap_macro_set_buffer:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:656    .text.dynamic_keymap_macro_set_buffer:0000000000000000 dynamic_keymap_macro_set_buffer
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:722    .text.dynamic_keymap_macro_reset:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:729    .text.dynamic_keymap_macro_reset:0000000000000000 dynamic_keymap_macro_reset
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:769    .text.dynamic_keymap_macro_send:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3MA5y4.s:776    .text.dynamic_keymap_macro_send:0000000000000000 dynamic_keymap_macro_send
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:18     .text.dynamic_keymap_get_layer_count:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:26     .text.dynamic_keymap_get_layer_count:0000000000000000 dynamic_keymap_get_layer_count
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:42     .text.dynamic_keymap_key_to_eeprom_address:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:49     .text.dynamic_keymap_key_to_eeprom_address:0000000000000000 dynamic_keymap_key_to_eeprom_address
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:75     .text.dynamic_keymap_get_keycode:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:82     .text.dynamic_keymap_get_keycode:0000000000000000 dynamic_keymap_get_keycode
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:129    .text.dynamic_keymap_set_keycode:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:136    .text.dynamic_keymap_set_keycode:0000000000000000 dynamic_keymap_set_keycode
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:182    .text.dynamic_keymap_reset:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:189    .text.dynamic_keymap_reset:0000000000000000 dynamic_keymap_reset
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:299    .text.dynamic_keymap_reset:000000000000004c $d
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:304    .text.dynamic_keymap_get_buffer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:311    .text.dynamic_keymap_get_buffer:0000000000000000 dynamic_keymap_get_buffer
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:389    .text.dynamic_keymap_set_buffer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:396    .text.dynamic_keymap_set_buffer:0000000000000000 dynamic_keymap_set_buffer
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:463    .text.keymap_key_to_keycode:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:470    .text.keymap_key_to_keycode:0000000000000000 keymap_key_to_keycode
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:521    .text.dynamic_keymap_macro_get_count:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:528    .text.dynamic_keymap_macro_get_count:0000000000000000 dynamic_keymap_macro_get_count
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:543    .text.dynamic_keymap_macro_get_buffer_size:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:550    .text.dynamic_keymap_macro_get_buffer_size:0000000000000000 dynamic_keymap_macro_get_buffer_size
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:565    .text.dynamic_keymap_macro_get_buffer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:572    .text.dynamic_keymap_macro_get_buffer:0000000000000000 dynamic_keymap_macro_get_buffer
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:649    .text.dynamic_keymap_macro_set_buffer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:656    .text.dynamic_keymap_macro_set_buffer:0000000000000000 dynamic_keymap_macro_set_buffer
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:722    .text.dynamic_keymap_macro_reset:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:729    .text.dynamic_keymap_macro_reset:0000000000000000 dynamic_keymap_macro_reset
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:769    .text.dynamic_keymap_macro_send:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cc775LiS.s:776    .text.dynamic_keymap_macro_send:0000000000000000 dynamic_keymap_macro_send
 
 UNDEFINED SYMBOLS
 eeprom_read_byte

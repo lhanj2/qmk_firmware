@@ -271,12 +271,12 @@
  154              		.file 7 "./lib/chibios/os/hal/include/hal_pal.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 hal_pal.c
-C:\Users\lhanj\AppData\Local\Temp\cc1tUy9s.s:18     .text.palReadBus:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc1tUy9s.s:26     .text.palReadBus:0000000000000000 palReadBus
-C:\Users\lhanj\AppData\Local\Temp\cc1tUy9s.s:54     .text.palWriteBus:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc1tUy9s.s:61     .text.palWriteBus:0000000000000000 palWriteBus
-C:\Users\lhanj\AppData\Local\Temp\cc1tUy9s.s:103    .text.palSetBusMode:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc1tUy9s.s:110    .text.palSetBusMode:0000000000000000 palSetBusMode
+C:\Users\lhanj\AppData\Local\Temp\ccNoJo2J.s:18     .text.palReadBus:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccNoJo2J.s:26     .text.palReadBus:0000000000000000 palReadBus
+C:\Users\lhanj\AppData\Local\Temp\ccNoJo2J.s:54     .text.palWriteBus:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccNoJo2J.s:61     .text.palWriteBus:0000000000000000 palWriteBus
+C:\Users\lhanj\AppData\Local\Temp\ccNoJo2J.s:103    .text.palSetBusMode:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccNoJo2J.s:110    .text.palSetBusMode:0000000000000000 palSetBusMode
 
 UNDEFINED SYMBOLS
 _pal_lld_setgroupmode

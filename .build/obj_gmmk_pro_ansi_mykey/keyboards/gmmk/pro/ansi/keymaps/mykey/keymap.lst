@@ -151,18 +151,17 @@
  124:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** static uint16_t timeout_counter = 0;  //in minute intervals
  125:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** static uint16_t timeout_threshold = TIMEOUT_THRESHOLD_DEFAULT;
  126:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** static bool     Shift_Pressed = false;  // for knob custom 210807
- 127:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** //static bool     RGB_TOGGLED = false;
- 128:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** static bool     Caps_Pressed     = false;
- 129:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 130:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** void timeout_reset_timer(void) {
-  29              		.loc 1 130 32 view -0
+ 127:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** static bool     Caps_Pressed     = false;
+ 128:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
+ 129:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** void timeout_reset_timer(void) {
+  29              		.loc 1 129 32 view -0
   30              		.cfi_startproc
   31              		@ args = 0, pretend = 0, frame = 0
   32              		@ frame_needed = 0, uses_anonymous_args = 0
   33              		@ link register save eliminated.
- 131:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     timeout_timer = timer_read();
-  34              		.loc 1 131 5 view .LVU1
-  35              		.loc 1 131 21 is_stmt 0 view .LVU2
+ 130:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     timeout_timer = timer_read();
+  34              		.loc 1 130 5 view .LVU1
+  35              		.loc 1 130 21 is_stmt 0 view .LVU2
   36 0000 FFF7FEBF 		b	timer_read
   37              	.LVL0:
   38              		.cfi_endproc
@@ -177,73 +176,73 @@
   49              	timeout_update_threshold:
   50              	.LVL1:
   51              	.LFB292:
- 132:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     timeout_counter = 0;
- 133:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
- 134:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 135:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** void timeout_update_threshold(bool increase) {
-  52              		.loc 1 135 46 is_stmt 1 view -0
+ 131:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     timeout_counter = 0;
+ 132:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
+ 133:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
+ 134:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** void timeout_update_threshold(bool increase) {
+  52              		.loc 1 134 46 is_stmt 1 view -0
   53              		.cfi_startproc
   54              		@ args = 0, pretend = 0, frame = 0
   55              		@ frame_needed = 0, uses_anonymous_args = 0
   56              		@ link register save eliminated.
- 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (increase && timeout_threshold < TIMEOUT_THRESHOLD_MAX) timeout_threshold++;
-  57              		.loc 1 136 5 view .LVU4
-  58              		.loc 1 136 39 is_stmt 0 view .LVU5
+ 135:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (increase && timeout_threshold < TIMEOUT_THRESHOLD_MAX) timeout_threshold++;
+  57              		.loc 1 135 5 view .LVU4
+  58              		.loc 1 135 39 is_stmt 0 view .LVU5
   59 0000 064A     		ldr	r2, .L7
   60 0002 1388     		ldrh	r3, [r2]
-  61              		.loc 1 136 8 view .LVU6
+  61              		.loc 1 135 8 view .LVU6
   62 0004 30B1     		cbz	r0, .L3
-  63              		.loc 1 136 18 discriminator 1 view .LVU7
+  63              		.loc 1 135 18 discriminator 1 view .LVU7
   64 0006 8B2B     		cmp	r3, #139
   65 0008 06D8     		bhi	.L2
-  66              		.loc 1 136 64 is_stmt 1 discriminator 2 view .LVU8
-  67              		.loc 1 136 81 is_stmt 0 discriminator 2 view .LVU9
+  66              		.loc 1 135 64 is_stmt 1 discriminator 2 view .LVU8
+  67              		.loc 1 135 81 is_stmt 0 discriminator 2 view .LVU9
   68 000a 0133     		adds	r3, r3, #1
   69              	.L6:
   70              	.LBB6:
   71              	.LBB7:
- 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
-  72              		.loc 1 137 62 view .LVU10
+ 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
+  72              		.loc 1 136 62 view .LVU10
   73 000c 1380     		strh	r3, [r2]	@ movhi
   74              	.LBE7:
   75              	.LBE6:
- 138:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
-  76              		.loc 1 138 1 view .LVU11
+ 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
+  76              		.loc 1 137 1 view .LVU11
   77 000e 7047     		bx	lr
   78              	.LVL2:
   79              	.L5:
   80              	.LBB10:
   81              	.LBB8:
- 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
-  82              		.loc 1 137 45 is_stmt 1 view .LVU12
- 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
-  83              		.loc 1 137 62 is_stmt 0 view .LVU13
+ 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
+  82              		.loc 1 136 45 is_stmt 1 view .LVU12
+ 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
+  83              		.loc 1 136 62 is_stmt 0 view .LVU13
   84 0010 013B     		subs	r3, r3, #1
   85 0012 FBE7     		b	.L6
   86              	.LVL3:
   87              	.L3:
- 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
-  88              		.loc 1 137 62 view .LVU14
+ 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
+  88              		.loc 1 136 62 view .LVU14
   89              	.LBE8:
   90              	.LBE10:
- 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
-  91              		.loc 1 137 5 is_stmt 1 view .LVU15
+ 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
+  91              		.loc 1 136 5 is_stmt 1 view .LVU15
   92              	.LBB11:
   93              	.LBI6:
- 135:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (increase && timeout_threshold < TIMEOUT_THRESHOLD_MAX) timeout_threshold++;
-  94              		.loc 1 135 6 view .LVU16
+ 134:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (increase && timeout_threshold < TIMEOUT_THRESHOLD_MAX) timeout_threshold++;
+  94              		.loc 1 134 6 view .LVU16
   95              	.LBB9:
- 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
-  96              		.loc 1 137 19 is_stmt 0 view .LVU17
+ 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
+  96              		.loc 1 136 19 is_stmt 0 view .LVU17
   97 0014 002B     		cmp	r3, #0
   98 0016 FBD1     		bne	.L5
   99              	.LVL4:
  100              	.L2:
- 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
- 101              		.loc 1 137 19 view .LVU18
+ 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
+ 101              		.loc 1 136 19 view .LVU18
  102              	.LBE9:
  103              	.LBE11:
- 104              		.loc 1 138 1 view .LVU19
+ 104              		.loc 1 137 1 view .LVU19
  105 0018 7047     		bx	lr
  106              	.L8:
  107 001a 00BF     		.align	2
@@ -267,29 +266,29 @@
  126              	process_record_user:
  127              	.LVL5:
  128              	.LFB293:
+ 138:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
  139:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 140:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 141:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** bool process_record_user(uint16_t keycode, keyrecord_t *record) {
- 129              		.loc 1 141 65 is_stmt 1 view -0
+ 140:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+ 129              		.loc 1 140 65 is_stmt 1 view -0
  130              		.cfi_startproc
  131              		@ args = 0, pretend = 0, frame = 0
  132              		@ frame_needed = 0, uses_anonymous_args = 0
- 142:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //All of keycodes need return true or false (meaning of send origin keycode after action)
- 143:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     switch (keycode) {
- 133              		.loc 1 143 5 view .LVU21
  141:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //All of keycodes need return true or false (meaning of send origin keycode after action)
- 134              		.loc 1 141 65 is_stmt 0 view .LVU22
+ 142:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     switch (keycode) {
+ 133              		.loc 1 142 5 view .LVU21
+ 140:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //All of keycodes need return true or false (meaning of send origin keycode after action)
+ 134              		.loc 1 140 65 is_stmt 0 view .LVU22
  135 0000 38B5     		push	{r3, r4, r5, lr}
  136              		.cfi_def_cfa_offset 16
  137              		.cfi_offset 3, -16
  138              		.cfi_offset 4, -12
  139              		.cfi_offset 5, -8
  140              		.cfi_offset 14, -4
- 141              		.loc 1 143 5 view .LVU23
- 142 0002 45F66853 		movw	r3, #23912
+ 141              		.loc 1 142 5 view .LVU23
+ 142 0002 45F66753 		movw	r3, #23911
  143 0006 9842     		cmp	r0, r3
  144 0008 09D8     		bhi	.L33
- 145 000a 45F66153 		movw	r3, #23905
+ 145 000a 45F66053 		movw	r3, #23904
  146 000e 9842     		cmp	r0, r3
  147 0010 07D8     		bhi	.L11
  148 0012 20F00403 		bic	r3, r0, #4
@@ -303,8 +302,8 @@
  156              	.L11:
  157 0022 A0F5BA40 		sub	r0, r0, #23808
  158              	.LVL6:
- 159              		.loc 1 143 5 view .LVU24
- 160 0026 6338     		subs	r0, r0, #99
+ 159              		.loc 1 142 5 view .LVU24
+ 160 0026 6238     		subs	r0, r0, #98
  161 0028 8C78     		ldrb	r4, [r1, #2]	@ zero_extendqisi2
  162 002a 0528     		cmp	r0, #5
  163 002c 35D8     		bhi	.L14
@@ -318,355 +317,340 @@
  171 0037 5A       		.byte	(.L15-.L16)/2
  172              		.p2align 1
  173              	.L21:
- 144:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case KC_00:
- 145:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (record->event.pressed) {
- 174              		.loc 1 145 9 is_stmt 1 view .LVU25
- 175              		.loc 1 145 12 is_stmt 0 view .LVU26
+ 143:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case KC_00:
+ 144:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (record->event.pressed) {
+ 174              		.loc 1 144 9 is_stmt 1 view .LVU25
+ 175              		.loc 1 144 12 is_stmt 0 view .LVU26
  176 0038 0CB9     		cbnz	r4, .L22
  177              	.LVL7:
  178              	.L43:
- 146:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             // when keycode KC_00 is pressed
- 147:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             SEND_STRING("00");
- 148:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else {
- 149:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             // when keycode KC_00 is released
- 150:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 151:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 152:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case KC_WINLCK:
- 153:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (record->event.pressed) {
- 154:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             _isWinKeyDisabled = !_isWinKeyDisabled; //toggle status
- 155:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             if(_isWinKeyDisabled) {
- 156:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 process_magic(GUI_OFF, record);
- 157:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else {
- 158:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 process_magic(GUI_ON, record);
- 159:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
- 160:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else  unregister_code16(keycode);
- 161:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 162:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case RGB_TOI:
- 163:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if(record->event.pressed) {
- 164:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             timeout_update_threshold(true);
- 165:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else  unregister_code16(keycode);
- 166:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 179              		.loc 1 166 16 view .LVU27
+ 145:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             // when keycode KC_00 is pressed
+ 146:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             SEND_STRING("00");
+ 147:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else {
+ 148:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             // when keycode KC_00 is released
+ 149:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 150:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 151:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case KC_WINLCK:
+ 152:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (record->event.pressed) {
+ 153:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             _isWinKeyDisabled = !_isWinKeyDisabled; //toggle status
+ 154:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             if(_isWinKeyDisabled) {
+ 155:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 process_magic(GUI_OFF, record);
+ 156:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else {
+ 157:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 process_magic(GUI_ON, record);
+ 158:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
+ 159:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else  unregister_code16(keycode);
+ 160:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 161:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case RGB_TOI:
+ 162:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if(record->event.pressed) {
+ 163:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             timeout_update_threshold(true);
+ 164:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else  unregister_code16(keycode);
+ 165:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 179              		.loc 1 165 16 view .LVU27
  180 003a 0024     		movs	r4, #0
  181 003c 13E0     		b	.L10
  182              	.LVL8:
  183              	.L22:
- 147:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else {
- 184              		.loc 1 147 13 is_stmt 1 view .LVU28
+ 146:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else {
+ 184              		.loc 1 146 13 is_stmt 1 view .LVU28
  185 003e 3048     		ldr	r0, .L48
  186 0040 FFF7FEFF 		bl	send_string_P
  187              	.LVL9:
- 147:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else {
- 188              		.loc 1 147 13 is_stmt 0 view .LVU29
+ 146:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else {
+ 188              		.loc 1 146 13 is_stmt 0 view .LVU29
  189 0044 F9E7     		b	.L43
  190              	.LVL10:
  191              	.L20:
- 153:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             _isWinKeyDisabled = !_isWinKeyDisabled; //toggle status
- 192              		.loc 1 153 9 is_stmt 1 view .LVU30
- 153:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             _isWinKeyDisabled = !_isWinKeyDisabled; //toggle status
- 193              		.loc 1 153 12 is_stmt 0 view .LVU31
+ 152:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             _isWinKeyDisabled = !_isWinKeyDisabled; //toggle status
+ 192              		.loc 1 152 9 is_stmt 1 view .LVU30
+ 152:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             _isWinKeyDisabled = !_isWinKeyDisabled; //toggle status
+ 193              		.loc 1 152 12 is_stmt 0 view .LVU31
  194 0046 84B1     		cbz	r4, .L23
- 154:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             if(_isWinKeyDisabled) {
- 195              		.loc 1 154 13 is_stmt 1 view .LVU32
+ 153:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             if(_isWinKeyDisabled) {
+ 195              		.loc 1 153 13 is_stmt 1 view .LVU32
  196 0048 2E4B     		ldr	r3, .L48+4
  197 004a 1C78     		ldrb	r4, [r3]	@ zero_extendqisi2
  198 004c 84F00104 		eor	r4, r4, #1
- 154:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             if(_isWinKeyDisabled) {
- 199              		.loc 1 154 31 is_stmt 0 view .LVU33
+ 153:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             if(_isWinKeyDisabled) {
+ 199              		.loc 1 153 31 is_stmt 0 view .LVU33
  200 0050 1C70     		strb	r4, [r3]
- 155:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 process_magic(GUI_OFF, record);
- 201              		.loc 1 155 13 is_stmt 1 view .LVU34
- 155:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 process_magic(GUI_OFF, record);
- 202              		.loc 1 155 15 is_stmt 0 view .LVU35
+ 154:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 process_magic(GUI_OFF, record);
+ 201              		.loc 1 154 13 is_stmt 1 view .LVU34
+ 154:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 process_magic(GUI_OFF, record);
+ 202              		.loc 1 154 15 is_stmt 0 view .LVU35
  203 0052 24B1     		cbz	r4, .L24
- 156:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else {
- 204              		.loc 1 156 17 is_stmt 1 view .LVU36
+ 155:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else {
+ 204              		.loc 1 155 17 is_stmt 1 view .LVU36
  205 0054 45F60640 		movw	r0, #23558
  206 0058 FFF7FEFF 		bl	process_magic
  207              	.LVL11:
- 156:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else {
- 208              		.loc 1 156 17 is_stmt 0 view .LVU37
+ 155:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else {
+ 208              		.loc 1 155 17 is_stmt 0 view .LVU37
  209 005c EDE7     		b	.L43
  210              	.LVL12:
  211              	.L24:
- 158:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
- 212              		.loc 1 158 17 is_stmt 1 view .LVU38
+ 157:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
+ 212              		.loc 1 157 17 is_stmt 1 view .LVU38
  213 005e 45F60F40 		movw	r0, #23567
  214 0062 FFF7FEFF 		bl	process_magic
  215              	.LVL13:
  216              	.L10:
- 167:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case RGB_TOD:
- 168:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if(record->event.pressed) {
- 169:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****              timeout_update_threshold(false);  //decrease timeout
- 170:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else  unregister_code16(keycode);
- 171:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 172:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case NOB_LAYER_INC://SHIFT KNOB
- 173:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if ((record->event.pressed) && (Shift_Pressed == false)) {
- 174:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             nob_layer_state++;
- 175:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else if ((record->event.pressed) && (Shift_Pressed == true)) {
- 176:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             tap_code(KC_MUTE);
- 177:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 178:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         //If want to use Knob Layer 3, change 2 to 3
- 179:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (nob_layer_state == 2) nob_layer_state = 0;
- 180:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 181:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case KC_RSFT:  // FOR RSFT KNOB VOLUME
- 182:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         record->event.pressed ? (Shift_Pressed = true) : (Shift_Pressed = false);
- 183:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
- 184:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case KC_LSFT:  // FOR LSFT KNOB VOLUME
- 185:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         record->event.pressed ? (Shift_Pressed = true) : (Shift_Pressed = false);
- 186:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
- 187:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case MY_KNOBFNKEY:  // 210809 test
- 188:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (record->event.pressed) {
- 189:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             tap_code(KC_PSCR);
- 190:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             printf("CALC");
- 191:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else {
- 192:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             (Shift_Pressed = false);
- 193:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             printf("CALC");
- 194:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 195:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 196:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         //break;
- 197:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case MY_SLEEP:
- 198:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (record->event.pressed) tap_code(KC_SLEP);
- 199:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 200:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //case RGB_TOG:
- 201:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    if (record->event.pressed && !RGB_TOGGLED) {  // reset activity timer
- 202:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        #ifdef RGB_MATRIX_ENABLE //if rgb enabled
- 203:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        rgb_matrix_enable();
- 204:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        RGB_TOGGLED = true;
- 205:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        #endif
- 206:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        timeout_reset_timer();
- 207:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    } else if (record->event.pressed && RGB_TOGGLED) {
- 208:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        #ifdef RGB_MATRIX_ENABLE //if rgb enabled
- 209:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        rgb_matrix_disable_noeeprom();
- 210:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        RGB_TOGGLED = false;
- 211:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        #endif
- 212:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        timeout_reset_timer();
- 213:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    }
- 214:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    return false;
- 215:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case KC_CAPS:
- 216:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         record->event.pressed ? (Caps_Pressed = true) : (Caps_Pressed = false);
- 217:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
- 218:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     default:
- 219:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
- 220:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     }
- 221:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
- 217              		.loc 1 221 1 is_stmt 0 view .LVU39
+ 166:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case RGB_TOD:
+ 167:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if(record->event.pressed) {
+ 168:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****              timeout_update_threshold(false);  //decrease timeout
+ 169:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else  unregister_code16(keycode);
+ 170:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 171:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case NOB_LAYER_INC://SHIFT KNOB
+ 172:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if ((record->event.pressed) && (Shift_Pressed == false)) {
+ 173:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             nob_layer_state++;
+ 174:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else if ((record->event.pressed) && (Shift_Pressed == true)) {
+ 175:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             tap_code(KC_MUTE);
+ 176:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 177:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         //If want to use Knob Layer 3, change 2 to 3
+ 178:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (nob_layer_state == 2) nob_layer_state = 0;
+ 179:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 180:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case KC_RSFT:  // FOR RSFT KNOB VOLUME
+ 181:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         record->event.pressed ? (Shift_Pressed = true) : (Shift_Pressed = false);
+ 182:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
+ 183:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case KC_LSFT:  // FOR LSFT KNOB VOLUME
+ 184:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         record->event.pressed ? (Shift_Pressed = true) : (Shift_Pressed = false);
+ 185:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
+ 186:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case MY_KNOBFNKEY:  // 210809 test
+ 187:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (record->event.pressed) {
+ 188:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             tap_code(KC_PSCR);
+ 189:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             printf("CALC");
+ 190:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else {
+ 191:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             (Shift_Pressed = false);
+ 192:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             printf("CALC");
+ 193:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 194:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 195:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         //break;
+ 196:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case MY_SLEEP:
+ 197:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (record->event.pressed) tap_code(KC_SLEP);
+ 198:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 199:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     case KC_CAPS:
+ 200:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         record->event.pressed ? (Caps_Pressed = true) : (Caps_Pressed = false);
+ 201:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
+ 202:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     default:
+ 203:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
+ 204:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     }
+ 205:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
+ 217              		.loc 1 205 1 is_stmt 0 view .LVU39
  218 0066 2046     		mov	r0, r4
  219 0068 38BD     		pop	{r3, r4, r5, pc}
  220              	.LVL14:
  221              	.L23:
- 160:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 222              		.loc 1 160 17 is_stmt 1 view .LVU40
- 223 006a 45F66450 		movw	r0, #23908
+ 159:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 222              		.loc 1 159 17 is_stmt 1 view .LVU40
+ 223 006a 45F66350 		movw	r0, #23907
  224              	.L44:
- 170:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 225              		.loc 1 170 17 is_stmt 0 view .LVU41
+ 169:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 225              		.loc 1 169 17 is_stmt 0 view .LVU41
  226 006e FFF7FEFF 		bl	unregister_code16
  227              	.LVL15:
- 170:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 228              		.loc 1 170 17 view .LVU42
+ 169:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 228              		.loc 1 169 17 view .LVU42
  229 0072 F8E7     		b	.L10
  230              	.LVL16:
  231              	.L19:
- 163:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             timeout_update_threshold(true);
- 232              		.loc 1 163 9 is_stmt 1 view .LVU43
- 163:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             timeout_update_threshold(true);
- 233              		.loc 1 163 11 is_stmt 0 view .LVU44
+ 162:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             timeout_update_threshold(true);
+ 232              		.loc 1 162 9 is_stmt 1 view .LVU43
+ 162:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             timeout_update_threshold(true);
+ 233              		.loc 1 162 11 is_stmt 0 view .LVU44
  234 0074 1CB1     		cbz	r4, .L25
- 164:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else  unregister_code16(keycode);
- 235              		.loc 1 164 13 is_stmt 1 view .LVU45
+ 163:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else  unregister_code16(keycode);
+ 235              		.loc 1 163 13 is_stmt 1 view .LVU45
  236 0076 0120     		movs	r0, #1
  237 0078 FFF7FEFF 		bl	timeout_update_threshold
  238              	.LVL17:
  239 007c DDE7     		b	.L43
  240              	.L25:
- 165:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 241              		.loc 1 165 17 view .LVU46
- 242 007e 45F66550 		movw	r0, #23909
+ 164:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 241              		.loc 1 164 17 view .LVU46
+ 242 007e 45F66450 		movw	r0, #23908
  243 0082 F4E7     		b	.L44
  244              	.L18:
- 168:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****              timeout_update_threshold(false);  //decrease timeout
- 245              		.loc 1 168 9 view .LVU47
- 168:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****              timeout_update_threshold(false);  //decrease timeout
- 246              		.loc 1 168 11 is_stmt 0 view .LVU48
+ 167:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****              timeout_update_threshold(false);  //decrease timeout
+ 245              		.loc 1 167 9 view .LVU47
+ 167:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****              timeout_update_threshold(false);  //decrease timeout
+ 246              		.loc 1 167 11 is_stmt 0 view .LVU48
  247 0084 34B1     		cbz	r4, .L26
- 169:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else  unregister_code16(keycode);
- 248              		.loc 1 169 14 is_stmt 1 view .LVU49
+ 168:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else  unregister_code16(keycode);
+ 248              		.loc 1 168 14 is_stmt 1 view .LVU49
  249              	.LVL18:
  250              	.LBB16:
  251              	.LBI16:
- 135:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (increase && timeout_threshold < TIMEOUT_THRESHOLD_MAX) timeout_threshold++;
- 252              		.loc 1 135 6 view .LVU50
+ 134:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (increase && timeout_threshold < TIMEOUT_THRESHOLD_MAX) timeout_threshold++;
+ 252              		.loc 1 134 6 view .LVU50
  253              	.LBE16:
- 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
- 254              		.loc 1 136 5 view .LVU51
- 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
- 255              		.loc 1 137 5 view .LVU52
+ 135:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!increase && timeout_threshold > 0) timeout_threshold--;
+ 254              		.loc 1 135 5 view .LVU51
+ 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
+ 255              		.loc 1 136 5 view .LVU52
  256              	.LBB19:
  257              	.LBB17:
  258              	.LBI17:
- 135:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (increase && timeout_threshold < TIMEOUT_THRESHOLD_MAX) timeout_threshold++;
- 259              		.loc 1 135 6 view .LVU53
+ 134:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (increase && timeout_threshold < TIMEOUT_THRESHOLD_MAX) timeout_threshold++;
+ 259              		.loc 1 134 6 view .LVU53
  260              	.LBB18:
- 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
- 261              		.loc 1 137 40 is_stmt 0 view .LVU54
+ 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
+ 261              		.loc 1 136 40 is_stmt 0 view .LVU54
  262 0086 204A     		ldr	r2, .L48+8
  263 0088 1388     		ldrh	r3, [r2]
- 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
- 264              		.loc 1 137 19 view .LVU55
+ 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
+ 264              		.loc 1 136 19 view .LVU55
  265 008a 002B     		cmp	r3, #0
  266 008c D5D0     		beq	.L43
- 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
- 267              		.loc 1 137 45 is_stmt 1 view .LVU56
- 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
- 268              		.loc 1 137 62 is_stmt 0 view .LVU57
+ 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
+ 267              		.loc 1 136 45 is_stmt 1 view .LVU56
+ 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
+ 268              		.loc 1 136 62 is_stmt 0 view .LVU57
  269 008e 013B     		subs	r3, r3, #1
  270 0090 1380     		strh	r3, [r2]	@ movhi
  271 0092 D2E7     		b	.L43
  272              	.LVL19:
  273              	.L26:
- 137:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
- 274              		.loc 1 137 62 view .LVU58
+ 136:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
+ 274              		.loc 1 136 62 view .LVU58
  275              	.LBE18:
  276              	.LBE17:
  277              	.LBE19:
- 170:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 278              		.loc 1 170 17 is_stmt 1 view .LVU59
- 279 0094 45F66650 		movw	r0, #23910
+ 169:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 278              		.loc 1 169 17 is_stmt 1 view .LVU59
+ 279 0094 45F66550 		movw	r0, #23909
  280 0098 E9E7     		b	.L44
  281              	.L14:
- 173:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             nob_layer_state++;
- 282              		.loc 1 173 9 view .LVU60
+ 172:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             nob_layer_state++;
+ 282              		.loc 1 172 9 view .LVU60
  283 009a 1C4D     		ldr	r5, .L48+12
- 173:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             nob_layer_state++;
- 284              		.loc 1 173 12 is_stmt 0 view .LVU61
+ 172:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             nob_layer_state++;
+ 284              		.loc 1 172 12 is_stmt 0 view .LVU61
  285 009c 2CB1     		cbz	r4, .L28
- 173:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             nob_layer_state++;
- 286              		.loc 1 173 55 discriminator 1 view .LVU62
+ 172:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             nob_layer_state++;
+ 286              		.loc 1 172 55 discriminator 1 view .LVU62
  287 009e 1C4B     		ldr	r3, .L48+16
- 173:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             nob_layer_state++;
- 288              		.loc 1 173 37 discriminator 1 view .LVU63
+ 172:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             nob_layer_state++;
+ 288              		.loc 1 172 37 discriminator 1 view .LVU63
  289 00a0 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  290 00a2 43B9     		cbnz	r3, .L29
- 174:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else if ((record->event.pressed) && (Shift_Pressed == true)) {
- 291              		.loc 1 174 13 is_stmt 1 view .LVU64
- 174:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else if ((record->event.pressed) && (Shift_Pressed == true)) {
- 292              		.loc 1 174 28 is_stmt 0 view .LVU65
+ 173:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else if ((record->event.pressed) && (Shift_Pressed == true)) {
+ 291              		.loc 1 173 13 is_stmt 1 view .LVU64
+ 173:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else if ((record->event.pressed) && (Shift_Pressed == true)) {
+ 292              		.loc 1 173 28 is_stmt 0 view .LVU65
  293 00a4 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
  294 00a6 0133     		adds	r3, r3, #1
  295 00a8 2B70     		strb	r3, [r5]
  296              	.LVL20:
  297              	.L28:
- 179:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 298              		.loc 1 179 9 is_stmt 1 view .LVU66
- 179:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 299              		.loc 1 179 12 is_stmt 0 view .LVU67
+ 178:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 298              		.loc 1 178 9 is_stmt 1 view .LVU66
+ 178:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 299              		.loc 1 178 12 is_stmt 0 view .LVU67
  300 00aa 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
  301 00ac 022B     		cmp	r3, #2
  302 00ae C4D1     		bne	.L43
- 179:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 303              		.loc 1 179 35 is_stmt 1 discriminator 1 view .LVU68
- 179:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 304              		.loc 1 179 51 is_stmt 0 discriminator 1 view .LVU69
+ 178:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 303              		.loc 1 178 35 is_stmt 1 discriminator 1 view .LVU68
+ 178:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 304              		.loc 1 178 51 is_stmt 0 discriminator 1 view .LVU69
  305 00b0 0024     		movs	r4, #0
  306 00b2 2C70     		strb	r4, [r5]
  307 00b4 D7E7     		b	.L10
  308              	.LVL21:
  309              	.L29:
- 175:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             tap_code(KC_MUTE);
- 310              		.loc 1 175 16 is_stmt 1 discriminator 1 view .LVU70
- 176:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 311              		.loc 1 176 13 discriminator 1 view .LVU71
+ 174:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             tap_code(KC_MUTE);
+ 310              		.loc 1 174 16 is_stmt 1 discriminator 1 view .LVU70
+ 175:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 311              		.loc 1 175 13 discriminator 1 view .LVU71
  312 00b6 A820     		movs	r0, #168
  313 00b8 FFF7FEFF 		bl	tap_code
  314              	.LVL22:
- 176:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 315              		.loc 1 176 13 is_stmt 0 discriminator 1 view .LVU72
+ 175:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 315              		.loc 1 175 13 is_stmt 0 discriminator 1 view .LVU72
  316 00bc F5E7     		b	.L28
  317              	.LVL23:
  318              	.L12:
- 182:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
- 319              		.loc 1 182 9 is_stmt 1 view .LVU73
- 182:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
- 320              		.loc 1 182 22 is_stmt 0 view .LVU74
+ 181:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
+ 319              		.loc 1 181 9 is_stmt 1 view .LVU73
+ 181:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
+ 320              		.loc 1 181 22 is_stmt 0 view .LVU74
  321 00be 8C78     		ldrb	r4, [r1, #2]	@ zero_extendqisi2
  322 00c0 134A     		ldr	r2, .L48+16
  323 00c2 0123     		movs	r3, #1
  324              	.L47:
- 216:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
- 325              		.loc 1 216 55 view .LVU75
+ 200:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
+ 325              		.loc 1 200 55 view .LVU75
  326 00c4 CCB1     		cbz	r4, .L32
- 216:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
- 327              		.loc 1 216 47 discriminator 1 view .LVU76
+ 200:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
+ 327              		.loc 1 200 47 discriminator 1 view .LVU76
  328 00c6 1370     		strb	r3, [r2]
  329 00c8 CDE7     		b	.L10
  330              	.LVL24:
  331              	.L17:
- 188:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             tap_code(KC_PSCR);
- 332              		.loc 1 188 9 is_stmt 1 view .LVU77
- 188:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             tap_code(KC_PSCR);
- 333              		.loc 1 188 12 is_stmt 0 view .LVU78
+ 187:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             tap_code(KC_PSCR);
+ 332              		.loc 1 187 9 is_stmt 1 view .LVU77
+ 187:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             tap_code(KC_PSCR);
+ 333              		.loc 1 187 12 is_stmt 0 view .LVU78
  334 00ca 34B1     		cbz	r4, .L31
- 189:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             printf("CALC");
- 335              		.loc 1 189 13 is_stmt 1 view .LVU79
+ 188:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             printf("CALC");
+ 335              		.loc 1 188 13 is_stmt 1 view .LVU79
  336 00cc 4620     		movs	r0, #70
  337 00ce FFF7FEFF 		bl	tap_code
  338              	.LVL25:
- 190:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else {
- 339              		.loc 1 190 13 view .LVU80
+ 189:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         } else {
+ 339              		.loc 1 189 13 view .LVU80
  340 00d2 1048     		ldr	r0, .L48+20
  341 00d4 FFF7FEFF 		bl	printf_
  342              	.LVL26:
  343 00d8 AFE7     		b	.L43
  344              	.LVL27:
  345              	.L31:
- 192:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             printf("CALC");
- 346              		.loc 1 192 13 view .LVU81
- 192:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             printf("CALC");
- 347              		.loc 1 192 28 is_stmt 0 view .LVU82
+ 191:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             printf("CALC");
+ 346              		.loc 1 191 13 view .LVU81
+ 191:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             printf("CALC");
+ 347              		.loc 1 191 28 is_stmt 0 view .LVU82
  348 00da 0D4B     		ldr	r3, .L48+16
- 193:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 349              		.loc 1 193 13 view .LVU83
+ 192:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 349              		.loc 1 192 13 view .LVU83
  350 00dc 0D48     		ldr	r0, .L48+20
- 192:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             printf("CALC");
- 351              		.loc 1 192 28 view .LVU84
+ 191:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             printf("CALC");
+ 351              		.loc 1 191 28 view .LVU84
  352 00de 1C70     		strb	r4, [r3]
- 193:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 353              		.loc 1 193 13 is_stmt 1 view .LVU85
+ 192:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 353              		.loc 1 192 13 is_stmt 1 view .LVU85
  354 00e0 FFF7FEFF 		bl	printf_
  355              	.LVL28:
- 193:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 356              		.loc 1 193 13 is_stmt 0 view .LVU86
+ 192:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 356              		.loc 1 192 13 is_stmt 0 view .LVU86
  357 00e4 BFE7     		b	.L10
  358              	.LVL29:
  359              	.L15:
- 198:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 360              		.loc 1 198 9 is_stmt 1 view .LVU87
- 198:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 361              		.loc 1 198 12 is_stmt 0 view .LVU88
+ 197:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 360              		.loc 1 197 9 is_stmt 1 view .LVU87
+ 197:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 361              		.loc 1 197 12 is_stmt 0 view .LVU88
  362 00e6 002C     		cmp	r4, #0
  363 00e8 A7D0     		beq	.L43
- 198:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 364              		.loc 1 198 36 is_stmt 1 discriminator 1 view .LVU89
+ 197:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 364              		.loc 1 197 36 is_stmt 1 discriminator 1 view .LVU89
  365 00ea A620     		movs	r0, #166
  366 00ec FFF7FEFF 		bl	tap_code
  367              	.LVL30:
- 198:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
- 368              		.loc 1 198 36 is_stmt 0 discriminator 1 view .LVU90
+ 197:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return false;
+ 368              		.loc 1 197 36 is_stmt 0 discriminator 1 view .LVU90
  369 00f0 A3E7     		b	.L43
  370              	.LVL31:
  371              	.L13:
- 216:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
- 372              		.loc 1 216 9 is_stmt 1 view .LVU91
- 216:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
- 373              		.loc 1 216 22 is_stmt 0 view .LVU92
+ 200:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
+ 372              		.loc 1 200 9 is_stmt 1 view .LVU91
+ 200:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
+ 373              		.loc 1 200 22 is_stmt 0 view .LVU92
  374 00f2 8C78     		ldrb	r4, [r1, #2]	@ zero_extendqisi2
  375 00f4 084A     		ldr	r2, .L48+24
  376 00f6 0123     		movs	r3, #1
  377 00f8 E4E7     		b	.L47
  378              	.L32:
- 216:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
- 379              		.loc 1 216 71 discriminator 2 view .LVU93
+ 200:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         return true;
+ 379              		.loc 1 200 71 discriminator 2 view .LVU93
  380 00fa 1470     		strb	r4, [r2]
  381 00fc 8FE7     		b	.L33
  382              	.L49:
@@ -690,26 +674,26 @@
  401              		.fpu fpv4-sp-d16
  403              	matrix_scan_user:
  404              	.LFB294:
- 222:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 223:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** void matrix_scan_user(void) {
- 405              		.loc 1 223 29 is_stmt 1 view -0
+ 206:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
+ 207:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** void matrix_scan_user(void) {
+ 405              		.loc 1 207 29 is_stmt 1 view -0
  406              		.cfi_startproc
  407              		@ args = 0, pretend = 0, frame = 0
  408              		@ frame_needed = 0, uses_anonymous_args = 0
  409              		@ link register save eliminated.
- 224:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //if (timeout_threshold > 0) {
- 225:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    if (timer_elapsed(timeout_timer) >= 60000) { // 1 minute tick
- 226:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        timeout_counter++;
- 227:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        timeout_timer = timer_read();
- 228:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    }
- 229:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    #ifdef RGB_MATRIX_ENABLE
- 230:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        if (timeout_threshold > 0 && timeout_counter >= timeout_threshold) {
- 231:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //            rgb_matrix_disable_noeeprom();
- 232:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        }
- 233:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    #endif
- 234:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //} // timeout_threshold = 0 will disable timeout
- 235:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
- 410              		.loc 1 235 1 view .LVU95
+ 208:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //if (timeout_threshold > 0) {
+ 209:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    if (timer_elapsed(timeout_timer) >= 60000) { // 1 minute tick
+ 210:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        timeout_counter++;
+ 211:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        timeout_timer = timer_read();
+ 212:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    }
+ 213:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    #ifdef RGB_MATRIX_ENABLE
+ 214:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        if (timeout_threshold > 0 && timeout_counter >= timeout_threshold) {
+ 215:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //            rgb_matrix_disable_noeeprom();
+ 216:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //        }
+ 217:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    #endif
+ 218:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //} // timeout_threshold = 0 will disable timeout
+ 219:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** };
+ 410              		.loc 1 219 1 view .LVU95
  411 0000 7047     		bx	lr
  412              		.cfi_endproc
  413              	.LFE294:
@@ -723,36 +707,36 @@
  423              	encoder_update_user:
  424              	.LVL32:
  425              	.LFB295:
- 236:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 237:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 238:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** #ifdef ENCODER_ENABLE       // Encoder Function
- 239:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     bool encoder_update_user(uint8_t index, bool clockwise) {
- 426              		.loc 1 239 61 view -0
+ 220:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
+ 221:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
+ 222:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** #ifdef ENCODER_ENABLE       // Encoder Function
+ 223:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     bool encoder_update_user(uint8_t index, bool clockwise) {
+ 426              		.loc 1 223 61 view -0
  427              		.cfi_startproc
  428              		@ args = 0, pretend = 0, frame = 0
  429              		@ frame_needed = 0, uses_anonymous_args = 0
- 240:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!Shift_Pressed && !Caps_Pressed) {
- 430              		.loc 1 240 5 view .LVU97
- 239:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!Shift_Pressed && !Caps_Pressed) {
- 431              		.loc 1 239 61 is_stmt 0 view .LVU98
+ 224:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!Shift_Pressed && !Caps_Pressed) {
+ 430              		.loc 1 224 5 view .LVU97
+ 223:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (!Shift_Pressed && !Caps_Pressed) {
+ 431              		.loc 1 223 61 is_stmt 0 view .LVU98
  432 0000 38B5     		push	{r3, r4, r5, lr}
  433              		.cfi_def_cfa_offset 16
  434              		.cfi_offset 3, -16
  435              		.cfi_offset 4, -12
  436              		.cfi_offset 5, -8
  437              		.cfi_offset 14, -4
- 438              		.loc 1 240 9 view .LVU99
+ 438              		.loc 1 224 9 view .LVU99
  439 0002 1E4D     		ldr	r5, .L82
- 440              		.loc 1 240 8 view .LVU100
+ 440              		.loc 1 224 8 view .LVU100
  441 0004 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
  442 0006 7BBB     		cbnz	r3, .L52
- 443              		.loc 1 240 27 discriminator 1 view .LVU101
+ 443              		.loc 1 224 27 discriminator 1 view .LVU101
  444 0008 1D4C     		ldr	r4, .L82+4
- 445              		.loc 1 240 24 discriminator 1 view .LVU102
+ 445              		.loc 1 224 24 discriminator 1 view .LVU102
  446 000a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
  447 000c 7BBB     		cbnz	r3, .L53
- 241:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         switch (nob_layer_state) {
- 448              		.loc 1 241 9 is_stmt 1 view .LVU103
+ 225:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         switch (nob_layer_state) {
+ 448              		.loc 1 225 9 is_stmt 1 view .LVU103
  449 000e 1D4B     		ldr	r3, .L82+8
  450 0010 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  451 0012 012B     		cmp	r3, #1
@@ -760,175 +744,175 @@
  453 0016 022B     		cmp	r3, #2
  454 0018 1BD0     		beq	.L55
  455 001a FBB9     		cbnz	r3, .L56
- 242:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _WHEEL:
- 243:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             clockwise ? tap_code(KC_WH_D) : tap_code(KC_WH_U);
- 456              		.loc 1 243 13 view .LVU104
- 457              		.loc 1 243 43 is_stmt 0 view .LVU105
+ 226:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _WHEEL:
+ 227:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             clockwise ? tap_code(KC_WH_D) : tap_code(KC_WH_U);
+ 456              		.loc 1 227 13 view .LVU104
+ 457              		.loc 1 227 43 is_stmt 0 view .LVU105
  458 001c 19B1     		cbz	r1, .L57
- 459              		.loc 1 243 25 discriminator 1 view .LVU106
+ 459              		.loc 1 227 25 discriminator 1 view .LVU106
  460 001e FA20     		movs	r0, #250
  461              	.LVL33:
  462              	.L79:
- 244:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 245:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _MUSIC:
- 246:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             clockwise ? tap_code16(KC_MNXT) : tap_code16(KC_MPRV);
- 247:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 248:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _VOLUME:  // 210807 not use
- 249:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             clockwise ? tap_code(KC_VOLU) : tap_code(KC_VOLD);
- 463              		.loc 1 249 25 discriminator 1 view .LVU107
+ 228:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 229:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _MUSIC:
+ 230:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             clockwise ? tap_code16(KC_MNXT) : tap_code16(KC_MPRV);
+ 231:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 232:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _VOLUME:  // 210807 not use
+ 233:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             clockwise ? tap_code(KC_VOLU) : tap_code(KC_VOLD);
+ 463              		.loc 1 233 25 discriminator 1 view .LVU107
  464 0020 FFF7FEFF 		bl	tap_code
  465              	.LVL34:
- 466              		.loc 1 249 25 discriminator 1 view .LVU108
+ 466              		.loc 1 233 25 discriminator 1 view .LVU108
  467 0024 07E0     		b	.L58
  468              	.LVL35:
  469              	.L57:
- 243:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 470              		.loc 1 243 45 discriminator 2 view .LVU109
+ 227:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 470              		.loc 1 227 45 discriminator 2 view .LVU109
  471 0026 F920     		movs	r0, #249
  472              	.LVL36:
  473              	.L80:
- 474              		.loc 1 249 45 discriminator 2 view .LVU110
+ 474              		.loc 1 233 45 discriminator 2 view .LVU110
  475 0028 FFF7FEFF 		bl	tap_code
  476              	.LVL37:
- 477              		.loc 1 249 45 discriminator 2 view .LVU111
+ 477              		.loc 1 233 45 discriminator 2 view .LVU111
  478 002c 0DE0     		b	.L59
  479              	.LVL38:
  480              	.L54:
- 246:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 481              		.loc 1 246 13 is_stmt 1 view .LVU112
- 246:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 482              		.loc 1 246 45 is_stmt 0 view .LVU113
+ 230:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 481              		.loc 1 230 13 is_stmt 1 view .LVU112
+ 230:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 482              		.loc 1 230 45 is_stmt 0 view .LVU113
  483 002e 49B1     		cbz	r1, .L60
- 246:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 484              		.loc 1 246 25 discriminator 1 view .LVU114
+ 230:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 484              		.loc 1 230 25 discriminator 1 view .LVU114
  485 0030 AB20     		movs	r0, #171
  486              	.LVL39:
- 246:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 487              		.loc 1 246 25 discriminator 1 view .LVU115
+ 230:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 487              		.loc 1 230 25 discriminator 1 view .LVU115
  488 0032 FFF7FEFF 		bl	tap_code16
  489              	.LVL40:
  490              	.L58:
- 250:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 251:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 252:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     }
- 253:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if  (clockwise && Shift_Pressed) tap_code(KC_VOLU);      //210810 Always Volume control with L,
- 491              		.loc 1 253 20 discriminator 1 view .LVU116
+ 234:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 235:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 236:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     }
+ 237:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (clockwise && Shift_Pressed) tap_code(KC_VOLU);      //210810 Always Volume control with L,R
+ 491              		.loc 1 237 19 discriminator 1 view .LVU116
  492 0036 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
  493 0038 8BB1     		cbz	r3, .L62
  494              	.L67:
- 495              		.loc 1 253 38 is_stmt 1 discriminator 2 view .LVU117
+ 495              		.loc 1 237 37 is_stmt 1 discriminator 2 view .LVU117
  496 003a A920     		movs	r0, #169
  497              	.L81:
- 254:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
- 255:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if  (clockwise && Caps_Pressed) tap_code(KC_BRIU);  //210810 Always Brightness control wit
- 256:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Caps_Pressed) tap_code(KC_BRID);
- 498              		.loc 1 256 42 is_stmt 0 discriminator 2 view .LVU118
+ 238:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
+ 239:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (clockwise && Caps_Pressed) tap_code(KC_BRIU);  //210810 Always Brightness control with
+ 240:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Caps_Pressed) tap_code(KC_BRID);
+ 498              		.loc 1 240 42 is_stmt 0 discriminator 2 view .LVU118
  499 003c FFF7FEFF 		bl	tap_code
  500              	.LVL41:
- 257:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     return true;
- 501              		.loc 1 257 5 is_stmt 1 discriminator 2 view .LVU119
+ 241:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     return true;
+ 501              		.loc 1 241 5 is_stmt 1 discriminator 2 view .LVU119
  502              	.L75:
- 258:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** }
- 503              		.loc 1 258 1 is_stmt 0 view .LVU120
+ 242:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** }
+ 503              		.loc 1 242 1 is_stmt 0 view .LVU120
  504 0040 0120     		movs	r0, #1
  505 0042 38BD     		pop	{r3, r4, r5, pc}
  506              	.LVL42:
  507              	.L60:
- 246:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 508              		.loc 1 246 47 discriminator 2 view .LVU121
+ 230:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 508              		.loc 1 230 47 discriminator 2 view .LVU121
  509 0044 AC20     		movs	r0, #172
  510              	.LVL43:
- 246:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 511              		.loc 1 246 47 discriminator 2 view .LVU122
+ 230:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 511              		.loc 1 230 47 discriminator 2 view .LVU122
  512 0046 FFF7FEFF 		bl	tap_code16
  513              	.LVL44:
  514              	.L59:
- 254:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if  (clockwise && Caps_Pressed) tap_code(KC_BRIU);  //210810 Always Brightness control wit
- 515              		.loc 1 254 10 is_stmt 1 view .LVU123
- 254:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if  (clockwise && Caps_Pressed) tap_code(KC_BRIU);  //210810 Always Brightness control wit
- 516              		.loc 1 254 25 is_stmt 0 view .LVU124
+ 238:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (clockwise && Caps_Pressed) tap_code(KC_BRIU);  //210810 Always Brightness control with
+ 515              		.loc 1 238 10 is_stmt 1 view .LVU123
+ 238:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (clockwise && Caps_Pressed) tap_code(KC_BRIU);  //210810 Always Brightness control with
+ 516              		.loc 1 238 25 is_stmt 0 view .LVU124
  517 004a 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
  518 004c 8BB1     		cbz	r3, .L63
  519              	.L68:
- 254:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if  (clockwise && Caps_Pressed) tap_code(KC_BRIU);  //210810 Always Brightness control wit
- 520              		.loc 1 254 43 is_stmt 1 view .LVU125
+ 238:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (clockwise && Caps_Pressed) tap_code(KC_BRIU);  //210810 Always Brightness control with
+ 520              		.loc 1 238 43 is_stmt 1 view .LVU125
  521 004e AA20     		movs	r0, #170
  522 0050 F4E7     		b	.L81
  523              	.LVL45:
  524              	.L55:
- 249:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 525              		.loc 1 249 13 view .LVU126
- 249:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 526              		.loc 1 249 43 is_stmt 0 view .LVU127
+ 233:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 525              		.loc 1 233 13 view .LVU126
+ 233:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 526              		.loc 1 233 43 is_stmt 0 view .LVU127
  527 0052 09B1     		cbz	r1, .L61
- 249:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 528              		.loc 1 249 25 discriminator 1 view .LVU128
+ 233:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 528              		.loc 1 233 25 discriminator 1 view .LVU128
  529 0054 A920     		movs	r0, #169
  530              	.LVL46:
- 249:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 531              		.loc 1 249 25 discriminator 1 view .LVU129
+ 233:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 531              		.loc 1 233 25 discriminator 1 view .LVU129
  532 0056 E3E7     		b	.L79
  533              	.LVL47:
  534              	.L61:
- 249:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 535              		.loc 1 249 45 discriminator 2 view .LVU130
+ 233:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 535              		.loc 1 233 45 discriminator 2 view .LVU130
  536 0058 AA20     		movs	r0, #170
  537              	.LVL48:
- 249:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 538              		.loc 1 249 45 discriminator 2 view .LVU131
+ 233:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 538              		.loc 1 233 45 discriminator 2 view .LVU131
  539 005a E5E7     		b	.L80
  540              	.LVL49:
  541              	.L56:
- 253:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
- 542              		.loc 1 253 5 is_stmt 1 view .LVU132
- 253:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
- 543              		.loc 1 253 9 is_stmt 0 view .LVU133
+ 237:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
+ 542              		.loc 1 237 5 is_stmt 1 view .LVU132
+ 237:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
+ 543              		.loc 1 237 8 is_stmt 0 view .LVU133
  544 005c 49B1     		cbz	r1, .L63
  545              	.LVL50:
  546              	.L62:
- 254:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if  (clockwise && Caps_Pressed) tap_code(KC_BRIU);  //210810 Always Brightness control wit
- 547              		.loc 1 254 10 is_stmt 1 view .LVU134
- 255:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Caps_Pressed) tap_code(KC_BRID);
- 548              		.loc 1 255 10 view .LVU135
- 255:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Caps_Pressed) tap_code(KC_BRID);
- 549              		.loc 1 255 25 is_stmt 0 view .LVU136
+ 238:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (clockwise && Caps_Pressed) tap_code(KC_BRIU);  //210810 Always Brightness control with
+ 547              		.loc 1 238 10 is_stmt 1 view .LVU134
+ 239:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Caps_Pressed) tap_code(KC_BRID);
+ 548              		.loc 1 239 10 view .LVU135
+ 239:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Caps_Pressed) tap_code(KC_BRID);
+ 549              		.loc 1 239 24 is_stmt 0 view .LVU136
  550 005e 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
  551 0060 002B     		cmp	r3, #0
  552 0062 EDD0     		beq	.L75
  553              	.L65:
- 255:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Caps_Pressed) tap_code(KC_BRID);
- 554              		.loc 1 255 42 is_stmt 1 discriminator 2 view .LVU137
+ 239:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Caps_Pressed) tap_code(KC_BRID);
+ 554              		.loc 1 239 41 is_stmt 1 discriminator 2 view .LVU137
  555 0064 BD20     		movs	r0, #189
  556 0066 E9E7     		b	.L81
  557              	.LVL51:
  558              	.L52:
- 253:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
- 559              		.loc 1 253 5 view .LVU138
- 253:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
- 560              		.loc 1 253 9 is_stmt 0 view .LVU139
+ 237:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
+ 559              		.loc 1 237 5 view .LVU138
+ 237:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
+ 560              		.loc 1 237 8 is_stmt 0 view .LVU139
  561 0068 0029     		cmp	r1, #0
  562 006a E6D1     		bne	.L67
  563 006c EFE7     		b	.L68
  564              	.L53:
- 253:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
- 565              		.loc 1 253 5 is_stmt 1 view .LVU140
- 253:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
- 566              		.loc 1 253 9 is_stmt 0 view .LVU141
+ 237:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
+ 565              		.loc 1 237 5 is_stmt 1 view .LVU140
+ 237:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Shift_Pressed) tap_code(KC_VOLD);
+ 566              		.loc 1 237 8 is_stmt 0 view .LVU141
  567 006e 0029     		cmp	r1, #0
  568 0070 F8D1     		bne	.L65
  569              	.LVL52:
  570              	.L63:
- 255:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Caps_Pressed) tap_code(KC_BRID);
- 571              		.loc 1 255 10 is_stmt 1 discriminator 1 view .LVU142
- 256:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     return true;
- 572              		.loc 1 256 10 discriminator 1 view .LVU143
- 256:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     return true;
- 573              		.loc 1 256 25 is_stmt 0 discriminator 1 view .LVU144
+ 239:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     else if (!clockwise && Caps_Pressed) tap_code(KC_BRID);
+ 571              		.loc 1 239 10 is_stmt 1 discriminator 1 view .LVU142
+ 240:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     return true;
+ 572              		.loc 1 240 10 discriminator 1 view .LVU143
+ 240:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     return true;
+ 573              		.loc 1 240 25 is_stmt 0 discriminator 1 view .LVU144
  574 0072 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
  575 0074 002B     		cmp	r3, #0
  576 0076 E3D0     		beq	.L75
- 256:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     return true;
- 577              		.loc 1 256 42 is_stmt 1 discriminator 2 view .LVU145
+ 240:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     return true;
+ 577              		.loc 1 240 42 is_stmt 1 discriminator 2 view .LVU145
  578 0078 BE20     		movs	r0, #190
  579 007a DFE7     		b	.L81
  580              	.L83:
@@ -949,41 +933,41 @@
  597              	rgb_matrix_indicators_advanced_user:
  598              	.LVL53:
  599              	.LFB296:
- 259:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** #endif
- 260:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 261:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** #ifdef RGB_MATRIX_ENABLE
- 262:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     // Capslock, Scroll lock and Numlock  indicator on Left side lights.
- 263:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
- 600              		.loc 1 263 80 view -0
+ 243:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** #endif
+ 244:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
+ 245:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** #ifdef RGB_MATRIX_ENABLE
+ 246:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     // Capslock, Scroll lock and Numlock  indicator on Left side lights.
+ 247:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+ 600              		.loc 1 247 80 view -0
  601              		.cfi_startproc
  602              		@ args = 0, pretend = 0, frame = 0
  603              		@ frame_needed = 0, uses_anonymous_args = 0
- 264:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (IS_HOST_LED_ON(USB_LED_SCROLL_LOCK)) {
- 604              		.loc 1 264 9 view .LVU147
- 263:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (IS_HOST_LED_ON(USB_LED_SCROLL_LOCK)) {
- 605              		.loc 1 263 80 is_stmt 0 view .LVU148
+ 248:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (IS_HOST_LED_ON(USB_LED_SCROLL_LOCK)) {
+ 604              		.loc 1 248 9 view .LVU147
+ 247:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (IS_HOST_LED_ON(USB_LED_SCROLL_LOCK)) {
+ 605              		.loc 1 247 80 is_stmt 0 view .LVU148
  606 0000 70B5     		push	{r4, r5, r6, lr}
  607              		.cfi_def_cfa_offset 16
  608              		.cfi_offset 4, -16
  609              		.cfi_offset 5, -12
  610              		.cfi_offset 6, -8
  611              		.cfi_offset 14, -4
- 612              		.loc 1 264 13 view .LVU149
+ 612              		.loc 1 248 13 view .LVU149
  613 0002 FFF7FEFF 		bl	host_keyboard_leds
  614              	.LVL54:
- 615              		.loc 1 264 12 view .LVU150
+ 615              		.loc 1 248 12 view .LVU150
  616 0006 4107     		lsls	r1, r0, #29
  617 0008 0BD5     		bpl	.L85
- 265:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L1, RGB_GREEN);
- 618              		.loc 1 265 13 is_stmt 1 view .LVU151
+ 249:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L1, RGB_GREEN);
+ 618              		.loc 1 249 13 is_stmt 1 view .LVU151
  619 000a 0023     		movs	r3, #0
  620 000c 1946     		mov	r1, r3
  621 000e FF22     		movs	r2, #255
  622 0010 4320     		movs	r0, #67
  623 0012 FFF7FEFF 		bl	rgb_matrix_set_color
  624              	.LVL55:
- 266:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L2, RGB_GREEN);
- 625              		.loc 1 266 13 view .LVU152
+ 250:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L2, RGB_GREEN);
+ 625              		.loc 1 250 13 view .LVU152
  626 0016 0023     		movs	r3, #0
  627 0018 FF22     		movs	r2, #255
  628 001a 1946     		mov	r1, r3
@@ -991,25 +975,25 @@
  630 001e FFF7FEFF 		bl	rgb_matrix_set_color
  631              	.LVL56:
  632              	.L85:
- 267:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 268:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (IS_HOST_LED_ON(USB_LED_NUM_LOCK)) {   // Num Lock indicator
- 633              		.loc 1 268 9 view .LVU153
- 634              		.loc 1 268 13 is_stmt 0 view .LVU154
+ 251:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 252:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (IS_HOST_LED_ON(USB_LED_NUM_LOCK)) {   // Num Lock indicator
+ 633              		.loc 1 252 9 view .LVU153
+ 634              		.loc 1 252 13 is_stmt 0 view .LVU154
  635 0022 FFF7FEFF 		bl	host_keyboard_leds
  636              	.LVL57:
- 637              		.loc 1 268 12 view .LVU155
+ 637              		.loc 1 252 12 view .LVU155
  638 0026 C207     		lsls	r2, r0, #31
  639 0028 0BD5     		bpl	.L86
- 269:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L3, RGB_MAGENTA);
- 640              		.loc 1 269 13 is_stmt 1 view .LVU156
+ 253:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L3, RGB_MAGENTA);
+ 640              		.loc 1 253 13 is_stmt 1 view .LVU156
  641 002a FF23     		movs	r3, #255
  642 002c 1946     		mov	r1, r3
  643 002e 0022     		movs	r2, #0
  644 0030 4920     		movs	r0, #73
  645 0032 FFF7FEFF 		bl	rgb_matrix_set_color
  646              	.LVL58:
- 270:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L4, RGB_MAGENTA);
- 647              		.loc 1 270 13 view .LVU157
+ 254:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L4, RGB_MAGENTA);
+ 647              		.loc 1 254 13 view .LVU157
  648 0036 FF23     		movs	r3, #255
  649 0038 0022     		movs	r2, #0
  650 003a 1946     		mov	r1, r3
@@ -1017,33 +1001,33 @@
  652 003e FFF7FEFF 		bl	rgb_matrix_set_color
  653              	.LVL59:
  654              	.L86:
- 271:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 272:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK)) {
- 655              		.loc 1 272 9 view .LVU158
- 656              		.loc 1 272 13 is_stmt 0 view .LVU159
+ 255:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 256:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK)) {
+ 655              		.loc 1 256 9 view .LVU158
+ 656              		.loc 1 256 13 is_stmt 0 view .LVU159
  657 0042 FFF7FEFF 		bl	host_keyboard_leds
  658              	.LVL60:
- 659              		.loc 1 272 12 view .LVU160
+ 659              		.loc 1 256 12 view .LVU160
  660 0046 8307     		lsls	r3, r0, #30
  661 0048 11D5     		bpl	.L87
- 273:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L5, RGB_RED);
- 662              		.loc 1 273 13 is_stmt 1 view .LVU161
+ 257:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L5, RGB_RED);
+ 662              		.loc 1 257 13 is_stmt 1 view .LVU161
  663 004a 0023     		movs	r3, #0
  664 004c 1A46     		mov	r2, r3
  665 004e FF21     		movs	r1, #255
  666 0050 5020     		movs	r0, #80
  667 0052 FFF7FEFF 		bl	rgb_matrix_set_color
  668              	.LVL61:
- 274:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L6, RGB_RED);
- 669              		.loc 1 274 13 view .LVU162
+ 258:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L6, RGB_RED);
+ 669              		.loc 1 258 13 view .LVU162
  670 0056 0023     		movs	r3, #0
  671 0058 1A46     		mov	r2, r3
  672 005a FF21     		movs	r1, #255
  673 005c 5320     		movs	r0, #83
  674 005e FFF7FEFF 		bl	rgb_matrix_set_color
  675              	.LVL62:
- 275:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L7, RGB_RED);
- 676              		.loc 1 275 13 view .LVU163
+ 259:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_L7, RGB_RED);
+ 676              		.loc 1 259 13 view .LVU163
  677 0062 0023     		movs	r3, #0
  678 0064 1A46     		mov	r2, r3
  679 0066 FF21     		movs	r1, #255
@@ -1051,16 +1035,16 @@
  681 006a FFF7FEFF 		bl	rgb_matrix_set_color
  682              	.LVL63:
  683              	.L87:
- 276:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 277:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (_isWinKeyDisabled) {
- 684              		.loc 1 277 9 view .LVU164
- 685              		.loc 1 277 13 is_stmt 0 view .LVU165
+ 260:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 261:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         if (_isWinKeyDisabled) {
+ 684              		.loc 1 261 9 view .LVU164
+ 685              		.loc 1 261 13 is_stmt 0 view .LVU165
  686 006e 484B     		ldr	r3, .L110
- 687              		.loc 1 277 12 view .LVU166
+ 687              		.loc 1 261 12 view .LVU166
  688 0070 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  689 0072 2BB1     		cbz	r3, .L88
- 278:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_LWIN, RGB_RED);  //light up Win key when disabled
- 690              		.loc 1 278 13 is_stmt 1 view .LVU167
+ 262:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_LWIN, RGB_RED);  //light up Win key when disabled
+ 690              		.loc 1 262 13 is_stmt 1 view .LVU167
  691 0074 0023     		movs	r3, #0
  692 0076 1A46     		mov	r2, r3
  693 0078 FF21     		movs	r1, #255
@@ -1068,103 +1052,103 @@
  695 007c FFF7FEFF 		bl	rgb_matrix_set_color
  696              	.LVL64:
  697              	.L88:
- 279:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 280:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         switch(get_highest_layer(layer_state)){  // special handling per layer
- 698              		.loc 1 280 9 view .LVU168
- 699              		.loc 1 280 16 is_stmt 0 view .LVU169
+ 263:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 264:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         switch(get_highest_layer(layer_state)){  // special handling per layer
+ 698              		.loc 1 264 9 view .LVU168
+ 699              		.loc 1 264 16 is_stmt 0 view .LVU169
  700 0080 444B     		ldr	r3, .L110+4
- 701 0082 1868     		ldr	r0, [r3]
- 702 0084 FFF7FEFF 		bl	biton32
+ 701 0082 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 702 0084 FFF7FEFF 		bl	biton
  703              	.LVL65:
- 704              		.loc 1 280 9 view .LVU170
+ 704              		.loc 1 264 9 view .LVU170
  705 0088 0228     		cmp	r0, #2
  706 008a 50D0     		beq	.L89
  707 008c 0328     		cmp	r0, #3
  708 008e 6CD0     		beq	.L90
  709 0090 0128     		cmp	r0, #1
  710 0092 7BD1     		bne	.L84
- 281:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _FN1:  // on Fn layer select what the encoder does when pressed
- 282:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R2, RGB_RED);
- 711              		.loc 1 282 13 is_stmt 1 view .LVU171
+ 265:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _FN1:  // on Fn layer select what the encoder does when pressed
+ 266:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R2, RGB_RED);
+ 711              		.loc 1 266 13 is_stmt 1 view .LVU171
  712 0094 0023     		movs	r3, #0
  713 0096 1A46     		mov	r2, r3
  714 0098 FF21     		movs	r1, #255
  715 009a 4720     		movs	r0, #71
  716 009c FFF7FEFF 		bl	rgb_matrix_set_color
  717              	.LVL66:
- 283:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R3, RGB_RED);
- 718              		.loc 1 283 13 view .LVU172
+ 267:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R3, RGB_RED);
+ 718              		.loc 1 267 13 view .LVU172
  719 00a0 0023     		movs	r3, #0
  720 00a2 1A46     		mov	r2, r3
  721 00a4 FF21     		movs	r1, #255
  722 00a6 4A20     		movs	r0, #74
  723 00a8 FFF7FEFF 		bl	rgb_matrix_set_color
  724              	.LVL67:
- 284:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R4, RGB_RED);
- 725              		.loc 1 284 13 view .LVU173
+ 268:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R4, RGB_RED);
+ 725              		.loc 1 268 13 view .LVU173
  726 00ac 0023     		movs	r3, #0
  727 00ae 1A46     		mov	r2, r3
  728 00b0 FF21     		movs	r1, #255
  729 00b2 4D20     		movs	r0, #77
  730 00b4 FFF7FEFF 		bl	rgb_matrix_set_color
  731              	.LVL68:
- 285:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_FN, RGB_RED); //FN key
- 732              		.loc 1 285 13 view .LVU174
- 286:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 287:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             // Add RGB Timeout Indicator -- shows 0 to 139 using F row and num row;  larger numbers
- 288:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             if (timeout_threshold <= 10) rgb_matrix_set_color(LED_LIST_FUNCROW[timeout_threshold], 
- 733              		.loc 1 288 35 is_stmt 0 view .LVU175
+ 269:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_FN, RGB_RED); //FN key
+ 732              		.loc 1 269 13 view .LVU174
+ 270:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
+ 271:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             // Add RGB Timeout Indicator -- shows 0 to 139 using F row and num row;  larger numbers
+ 272:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             if (timeout_threshold <= 10) rgb_matrix_set_color(LED_LIST_FUNCROW[timeout_threshold], 
+ 733              		.loc 1 272 35 is_stmt 0 view .LVU175
  734 00b8 374D     		ldr	r5, .L110+8
- 285:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_FN, RGB_RED); //FN key
- 735              		.loc 1 285 13 view .LVU176
+ 269:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_FN, RGB_RED); //FN key
+ 735              		.loc 1 269 13 view .LVU176
  736 00ba 0023     		movs	r3, #0
  737 00bc 3720     		movs	r0, #55
  738 00be 1A46     		mov	r2, r3
  739 00c0 FF21     		movs	r1, #255
  740 00c2 FFF7FEFF 		bl	rgb_matrix_set_color
  741              	.LVL69:
- 742              		.loc 1 288 13 is_stmt 1 view .LVU177
- 743              		.loc 1 288 35 is_stmt 0 view .LVU178
+ 742              		.loc 1 272 13 is_stmt 1 view .LVU177
+ 743              		.loc 1 272 35 is_stmt 0 view .LVU178
  744 00c6 2888     		ldrh	r0, [r5]
- 745              		.loc 1 288 16 view .LVU179
+ 745              		.loc 1 272 16 view .LVU179
  746 00c8 0A28     		cmp	r0, #10
  747 00ca 08D8     		bhi	.L92
- 748              		.loc 1 288 42 is_stmt 1 discriminator 1 view .LVU180
+ 748              		.loc 1 272 42 is_stmt 1 discriminator 1 view .LVU180
  749 00cc 0023     		movs	r3, #0
  750 00ce 334C     		ldr	r4, .L110+12
  751 00d0 1A46     		mov	r2, r3
  752 00d2 FF21     		movs	r1, #255
  753              	.L109:
- 289:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             else if (timeout_threshold < 140) {
- 290:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_FUNCROW[(timeout_threshold / 10)], RGB_RED);
- 291:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[(timeout_threshold % 10)], RGB_RED);
- 754              		.loc 1 291 17 is_stmt 0 view .LVU181
+ 273:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             else if (timeout_threshold < 140) {
+ 274:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_FUNCROW[(timeout_threshold / 10)], RGB_RED);
+ 275:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[(timeout_threshold % 10)], RGB_RED);
+ 754              		.loc 1 275 17 is_stmt 0 view .LVU181
  755 00d4 205C     		ldrb	r0, [r4, r0]	@ zero_extendqisi2
  756              	.L108:
- 292:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else { // >= 140 minutes, just show these 3 lights
- 293:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[10], RGB_RED);
- 294:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[11], RGB_RED);
- 295:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[12], RGB_RED);
- 296:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
- 297:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 298:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _MO2:
- 299:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             for (uint8_t i=0; i<ARRAYSIZE(LED_LIST_NUMPAD); i++) {
- 300:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMPAD[i], RGB_MAGENTA);
- 301:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
- 302:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R4, RGB_MAGENTA);
- 303:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R5, RGB_MAGENTA);
- 304:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R6, RGB_MAGENTA);
- 305:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 306:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _MO3:
- 307:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R6, RGB_GREEN);
- 308:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R7, RGB_GREEN);
- 309:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R8, RGB_GREEN);
- 310:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 311:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         default:
- 312:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 313:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
- 314:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     }
- 757              		.loc 1 314 5 view .LVU182
+ 276:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else { // >= 140 minutes, just show these 3 lights
+ 277:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[10], RGB_RED);
+ 278:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[11], RGB_RED);
+ 279:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[12], RGB_RED);
+ 280:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
+ 281:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 282:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _MO2:
+ 283:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             for (uint8_t i=0; i<ARRAYSIZE(LED_LIST_NUMPAD); i++) {
+ 284:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMPAD[i], RGB_MAGENTA);
+ 285:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
+ 286:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R4, RGB_MAGENTA);
+ 287:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R5, RGB_MAGENTA);
+ 288:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R6, RGB_MAGENTA);
+ 289:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 290:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _MO3:
+ 291:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R6, RGB_GREEN);
+ 292:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R7, RGB_GREEN);
+ 293:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R8, RGB_GREEN);
+ 294:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 295:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         default:
+ 296:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 297:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         }
+ 298:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     }
+ 757              		.loc 1 298 5 view .LVU182
  758 00d6 BDE87040 		pop	{r4, r5, r6, lr}
  759              		.cfi_remember_state
  760              		.cfi_restore 14
@@ -1172,71 +1156,71 @@
  762              		.cfi_restore 5
  763              		.cfi_restore 4
  764              		.cfi_def_cfa_offset 0
- 309:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 765              		.loc 1 309 13 view .LVU183
+ 293:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 765              		.loc 1 293 13 view .LVU183
  766 00da FFF7FEBF 		b	rgb_matrix_set_color
  767              	.LVL70:
  768              	.L92:
  769              		.cfi_restore_state
- 289:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             else if (timeout_threshold < 140) {
- 770              		.loc 1 289 18 is_stmt 1 view .LVU184
- 289:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             else if (timeout_threshold < 140) {
- 771              		.loc 1 289 21 is_stmt 0 view .LVU185
+ 273:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             else if (timeout_threshold < 140) {
+ 770              		.loc 1 273 18 is_stmt 1 view .LVU184
+ 273:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             else if (timeout_threshold < 140) {
+ 771              		.loc 1 273 21 is_stmt 0 view .LVU185
  772 00de 8B28     		cmp	r0, #139
  773 00e0 14D8     		bhi	.L93
- 290:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[(timeout_threshold % 10)], RGB_RED);
- 774              		.loc 1 290 17 is_stmt 1 view .LVU186
+ 274:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[(timeout_threshold % 10)], RGB_RED);
+ 774              		.loc 1 274 17 is_stmt 1 view .LVU186
  775 00e2 2E4E     		ldr	r6, .L110+12
  776 00e4 0023     		movs	r3, #0
- 290:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[(timeout_threshold % 10)], RGB_RED);
- 777              		.loc 1 290 74 is_stmt 0 view .LVU187
+ 274:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[(timeout_threshold % 10)], RGB_RED);
+ 777              		.loc 1 274 74 is_stmt 0 view .LVU187
  778 00e6 0A24     		movs	r4, #10
- 290:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[(timeout_threshold % 10)], RGB_RED);
- 779              		.loc 1 290 17 view .LVU188
+ 274:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[(timeout_threshold % 10)], RGB_RED);
+ 779              		.loc 1 274 17 view .LVU188
  780 00e8 1A46     		mov	r2, r3
  781 00ea FF21     		movs	r1, #255
- 290:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[(timeout_threshold % 10)], RGB_RED);
- 782              		.loc 1 290 74 view .LVU189
+ 274:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[(timeout_threshold % 10)], RGB_RED);
+ 782              		.loc 1 274 74 view .LVU189
  783 00ec B0FBF4F0 		udiv	r0, r0, r4
- 290:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[(timeout_threshold % 10)], RGB_RED);
- 784              		.loc 1 290 17 view .LVU190
+ 274:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[(timeout_threshold % 10)], RGB_RED);
+ 784              		.loc 1 274 17 view .LVU190
  785 00f0 305C     		ldrb	r0, [r6, r0]	@ zero_extendqisi2
  786 00f2 FFF7FEFF 		bl	rgb_matrix_set_color
  787              	.LVL71:
- 291:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else { // >= 140 minutes, just show these 3 lights
- 788              		.loc 1 291 17 is_stmt 1 view .LVU191
- 291:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else { // >= 140 minutes, just show these 3 lights
- 789              		.loc 1 291 73 is_stmt 0 view .LVU192
+ 275:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else { // >= 140 minutes, just show these 3 lights
+ 788              		.loc 1 275 17 is_stmt 1 view .LVU191
+ 275:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else { // >= 140 minutes, just show these 3 lights
+ 789              		.loc 1 275 73 is_stmt 0 view .LVU192
  790 00f6 2B88     		ldrh	r3, [r5]
  791 00f8 B3FBF4F0 		udiv	r0, r3, r4
  792 00fc 04FB1033 		mls	r3, r4, r0, r3
  793 0100 98B2     		uxth	r0, r3
- 291:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else { // >= 140 minutes, just show these 3 lights
- 794              		.loc 1 291 17 view .LVU193
+ 275:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             } else { // >= 140 minutes, just show these 3 lights
+ 794              		.loc 1 275 17 view .LVU193
  795 0102 0023     		movs	r3, #0
  796 0104 264C     		ldr	r4, .L110+16
  797 0106 1A46     		mov	r2, r3
  798 0108 FF21     		movs	r1, #255
  799 010a E3E7     		b	.L109
  800              	.L93:
- 293:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[11], RGB_RED);
- 801              		.loc 1 293 17 is_stmt 1 view .LVU194
+ 277:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[11], RGB_RED);
+ 801              		.loc 1 277 17 is_stmt 1 view .LVU194
  802 010c 0023     		movs	r3, #0
  803 010e 1A46     		mov	r2, r3
  804 0110 FF21     		movs	r1, #255
  805 0112 3920     		movs	r0, #57
  806 0114 FFF7FEFF 		bl	rgb_matrix_set_color
  807              	.LVL72:
- 294:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[12], RGB_RED);
- 808              		.loc 1 294 17 view .LVU195
+ 278:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMROW[12], RGB_RED);
+ 808              		.loc 1 278 17 view .LVU195
  809 0118 0023     		movs	r3, #0
  810 011a 1A46     		mov	r2, r3
  811 011c FF21     		movs	r1, #255
  812 011e 3E20     		movs	r0, #62
  813 0120 FFF7FEFF 		bl	rgb_matrix_set_color
  814              	.LVL73:
- 295:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
- 815              		.loc 1 295 17 view .LVU196
+ 279:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
+ 815              		.loc 1 279 17 view .LVU196
  816 0124 0023     		movs	r3, #0
  817 0126 1A46     		mov	r2, r3
  818 0128 FF21     		movs	r1, #255
@@ -1244,55 +1228,55 @@
  820 012c D3E7     		b	.L108
  821              	.L89:
  822 012e 1D4D     		ldr	r5, .L110+20
- 280:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _FN1:  // on Fn layer select what the encoder does when pressed
- 823              		.loc 1 280 9 is_stmt 0 view .LVU197
+ 264:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         case _FN1:  // on Fn layer select what the encoder does when pressed
+ 823              		.loc 1 264 9 is_stmt 0 view .LVU197
  824 0130 0C24     		movs	r4, #12
  825              	.L94:
  826              	.LVL74:
  827              	.LBB20:
- 300:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
- 828              		.loc 1 300 17 is_stmt 1 discriminator 3 view .LVU198
+ 284:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
+ 828              		.loc 1 284 17 is_stmt 1 discriminator 3 view .LVU198
  829 0132 FF23     		movs	r3, #255
  830 0134 15F8010B 		ldrb	r0, [r5], #1	@ zero_extendqisi2
  831              	.LVL75:
- 300:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
- 832              		.loc 1 300 17 is_stmt 0 discriminator 3 view .LVU199
+ 284:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
+ 832              		.loc 1 284 17 is_stmt 0 discriminator 3 view .LVU199
  833 0138 0022     		movs	r2, #0
  834 013a 1946     		mov	r1, r3
- 299:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMPAD[i], RGB_MAGENTA);
- 835              		.loc 1 299 13 discriminator 3 view .LVU200
+ 283:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMPAD[i], RGB_MAGENTA);
+ 835              		.loc 1 283 13 discriminator 3 view .LVU200
  836 013c 013C     		subs	r4, r4, #1
- 300:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
- 837              		.loc 1 300 17 discriminator 3 view .LVU201
+ 284:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             }
+ 837              		.loc 1 284 17 discriminator 3 view .LVU201
  838 013e FFF7FEFF 		bl	rgb_matrix_set_color
  839              	.LVL76:
- 299:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMPAD[i], RGB_MAGENTA);
- 840              		.loc 1 299 61 is_stmt 1 discriminator 3 view .LVU202
- 299:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMPAD[i], RGB_MAGENTA);
- 841              		.loc 1 299 31 discriminator 3 view .LVU203
- 299:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMPAD[i], RGB_MAGENTA);
- 842              		.loc 1 299 13 is_stmt 0 discriminator 3 view .LVU204
+ 283:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMPAD[i], RGB_MAGENTA);
+ 840              		.loc 1 283 61 is_stmt 1 discriminator 3 view .LVU202
+ 283:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMPAD[i], RGB_MAGENTA);
+ 841              		.loc 1 283 31 discriminator 3 view .LVU203
+ 283:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****                 rgb_matrix_set_color(LED_LIST_NUMPAD[i], RGB_MAGENTA);
+ 842              		.loc 1 283 13 is_stmt 0 discriminator 3 view .LVU204
  843 0142 14F0FF04 		ands	r4, r4, #255
  844 0146 F4D1     		bne	.L94
  845              	.LBE20:
- 302:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R5, RGB_MAGENTA);
- 846              		.loc 1 302 13 is_stmt 1 view .LVU205
+ 286:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R5, RGB_MAGENTA);
+ 846              		.loc 1 286 13 is_stmt 1 view .LVU205
  847 0148 FF23     		movs	r3, #255
  848 014a 1946     		mov	r1, r3
  849 014c 2246     		mov	r2, r4
  850 014e 4D20     		movs	r0, #77
  851 0150 FFF7FEFF 		bl	rgb_matrix_set_color
  852              	.LVL77:
- 303:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R6, RGB_MAGENTA);
- 853              		.loc 1 303 13 view .LVU206
+ 287:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R6, RGB_MAGENTA);
+ 853              		.loc 1 287 13 view .LVU206
  854 0154 FF23     		movs	r3, #255
  855 0156 1946     		mov	r1, r3
  856 0158 2246     		mov	r2, r4
  857 015a 5120     		movs	r0, #81
  858 015c FFF7FEFF 		bl	rgb_matrix_set_color
  859              	.LVL78:
- 304:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 860              		.loc 1 304 13 view .LVU207
+ 288:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 860              		.loc 1 288 13 view .LVU207
  861 0160 FF23     		movs	r3, #255
  862 0162 2246     		mov	r2, r4
  863 0164 1946     		mov	r1, r3
@@ -1300,31 +1284,31 @@
  865 0168 B5E7     		b	.L108
  866              	.LVL79:
  867              	.L90:
- 307:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R7, RGB_GREEN);
- 868              		.loc 1 307 13 view .LVU208
+ 291:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R7, RGB_GREEN);
+ 868              		.loc 1 291 13 view .LVU208
  869 016a 0023     		movs	r3, #0
  870 016c 1946     		mov	r1, r3
  871 016e FF22     		movs	r2, #255
  872 0170 5420     		movs	r0, #84
  873 0172 FFF7FEFF 		bl	rgb_matrix_set_color
  874              	.LVL80:
- 308:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R8, RGB_GREEN);
- 875              		.loc 1 308 13 view .LVU209
+ 292:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             rgb_matrix_set_color(LED_R8, RGB_GREEN);
+ 875              		.loc 1 292 13 view .LVU209
  876 0176 0023     		movs	r3, #0
  877 0178 1946     		mov	r1, r3
  878 017a FF22     		movs	r2, #255
  879 017c 5820     		movs	r0, #88
  880 017e FFF7FEFF 		bl	rgb_matrix_set_color
  881              	.LVL81:
- 309:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
- 882              		.loc 1 309 13 view .LVU210
+ 293:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****             break;
+ 882              		.loc 1 293 13 view .LVU210
  883 0182 0023     		movs	r3, #0
  884 0184 FF22     		movs	r2, #255
  885 0186 1946     		mov	r1, r3
  886 0188 5C20     		movs	r0, #92
  887 018a A4E7     		b	.L108
  888              	.L84:
- 889              		.loc 1 314 5 is_stmt 0 view .LVU211
+ 889              		.loc 1 298 5 is_stmt 0 view .LVU211
  890 018c 70BD     		pop	{r4, r5, r6, pc}
  891              	.L111:
  892 018e 00BF     		.align	2
@@ -1346,61 +1330,61 @@
  909              		.fpu fpv4-sp-d16
  911              	keyboard_post_init_user:
  912              	.LFB297:
- 315:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //LED SLEEP 210809 remarked
- 316:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //void suspend_power_down_user(void) {
- 317:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    rgb_matrix_set_suspend_state(true);
- 318:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //}
- 319:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 320:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //void suspend_wakeup_init_user(void) {
- 321:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    rgb_matrix_set_suspend_state(false);
- 322:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //}
- 323:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** #endif
- 324:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 325:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 326:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** void keyboard_post_init_user(void) {
- 913              		.loc 1 326 36 is_stmt 1 view -0
+ 299:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //LED SLEEP 210809 remarked
+ 300:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //void suspend_power_down_user(void) {
+ 301:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    rgb_matrix_set_suspend_state(true);
+ 302:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //}
+ 303:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
+ 304:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //void suspend_wakeup_init_user(void) {
+ 305:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //    rgb_matrix_set_suspend_state(false);
+ 306:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     //}
+ 307:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** #endif
+ 308:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
+ 309:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
+ 310:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** void keyboard_post_init_user(void) {
+ 913              		.loc 1 310 36 is_stmt 1 view -0
  914              		.cfi_startproc
  915              		@ args = 0, pretend = 0, frame = 0
  916              		@ frame_needed = 0, uses_anonymous_args = 0
- 327:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 328:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (IS_HOST_LED_ON(USB_LED_NUM_LOCK)) { // turn on Num lock by default so that the numpad layer
- 917              		.loc 1 328 5 view .LVU213
- 326:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
- 918              		.loc 1 326 36 is_stmt 0 view .LVU214
+ 311:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
+ 312:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     if (IS_HOST_LED_ON(USB_LED_NUM_LOCK)) { // turn on Num lock by default so that the numpad layer
+ 917              		.loc 1 312 5 view .LVU213
+ 310:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** 
+ 918              		.loc 1 310 36 is_stmt 0 view .LVU214
  919 0000 08B5     		push	{r3, lr}
  920              		.cfi_def_cfa_offset 8
  921              		.cfi_offset 3, -8
  922              		.cfi_offset 14, -4
- 923              		.loc 1 328 9 view .LVU215
+ 923              		.loc 1 312 9 view .LVU215
  924 0002 FFF7FEFF 		bl	host_keyboard_leds
  925              	.LVL82:
- 926              		.loc 1 328 8 view .LVU216
+ 926              		.loc 1 312 8 view .LVU216
  927 0006 C307     		lsls	r3, r0, #31
  928 0008 02D5     		bpl	.L113
- 329:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         tap_code(KC_NUMLOCK);
- 929              		.loc 1 329 9 is_stmt 1 view .LVU217
+ 313:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         tap_code(KC_NUMLOCK);
+ 929              		.loc 1 313 9 is_stmt 1 view .LVU217
  930 000a 5320     		movs	r0, #83
  931 000c FFF7FEFF 		bl	tap_code
  932              	.LVL83:
  933              	.L113:
- 330:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     }
- 331:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     timeout_timer = timer_read(); // set inital time for ide timeout
- 934              		.loc 1 331 5 view .LVU218
- 935              		.loc 1 331 21 is_stmt 0 view .LVU219
+ 314:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     }
+ 315:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     timeout_timer = timer_read(); // set inital time for ide timeout
+ 934              		.loc 1 315 5 view .LVU218
+ 935              		.loc 1 315 21 is_stmt 0 view .LVU219
  936 0010 FFF7FEFF 		bl	timer_read
  937              	.LVL84:
- 332:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     #ifdef RGB_MATRIX_ENABLE
- 333:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         rgb_matrix_set_color_all(RGB_NAUTILUS); // Default startup colour
- 938              		.loc 1 333 9 is_stmt 1 view .LVU220
- 334:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     #endif
- 335:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** }
- 939              		.loc 1 335 1 is_stmt 0 view .LVU221
+ 316:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     #ifdef RGB_MATRIX_ENABLE
+ 317:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****         rgb_matrix_set_color_all(RGB_NAUTILUS); // Default startup colour
+ 938              		.loc 1 317 9 is_stmt 1 view .LVU220
+ 318:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     #endif
+ 319:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c **** }
+ 939              		.loc 1 319 1 is_stmt 0 view .LVU221
  940 0014 BDE80840 		pop	{r3, lr}
  941              		.cfi_restore 14
  942              		.cfi_restore 3
  943              		.cfi_def_cfa_offset 0
- 333:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     #endif
- 944              		.loc 1 333 9 view .LVU222
+ 317:keyboards/gmmk/pro/ansi/keymaps/mykey/keymap.c ****     #endif
+ 944              		.loc 1 317 9 view .LVU222
  945 0018 A922     		movs	r2, #169
  946 001a A421     		movs	r1, #164
  947 001c 0020     		movs	r0, #0
@@ -1507,7 +1491,7 @@
  1063              		.align	1
  1066              	keymaps:
  1067 0000 E100     		.short	225
- 1068 0002 625D     		.short	23906
+ 1068 0002 615D     		.short	23905
  1069 0004 0000     		.short	0
  1070 0006 5000     		.short	80
  1071 0008 E701     		.short	487
@@ -1597,35 +1581,35 @@
  1155 00b0 0100     		.short	1
  1156 00b2 0100     		.short	1
  1157 00b4 0000     		.short	0
- 1158 00b6 CD5C     		.short	23757
+ 1158 00b6 CC5C     		.short	23756
  1159 00b8 0100     		.short	1
- 1160 00ba CC5C     		.short	23756
+ 1160 00ba CB5C     		.short	23755
  1161 00bc 0100     		.short	1
  1162 00be AC00     		.short	172
  1163 00c0 0100     		.short	1
  1164 00c2 0100     		.short	1
  1165 00c4 0100     		.short	1
- 1166 00c6 685D     		.short	23912
+ 1166 00c6 675D     		.short	23911
  1167 00c8 0100     		.short	1
  1168 00ca 4A00     		.short	74
  1169 00cc 0100     		.short	1
- 1170 00ce 045D     		.short	23812
- 1171 00d0 CA5C     		.short	23754
+ 1170 00ce 035D     		.short	23811
+ 1171 00d0 C95C     		.short	23753
  1172 00d2 0258     		.short	22530
- 1173 00d4 CB5C     		.short	23755
+ 1173 00d4 CA5C     		.short	23754
  1174 00d6 0000     		.short	0
- 1175 00d8 C65C     		.short	23750
+ 1175 00d8 C55C     		.short	23749
  1176 00da 4D00     		.short	77
  1177 00dc B300     		.short	179
- 1178 00de 055D     		.short	23813
+ 1178 00de 045D     		.short	23812
  1179 00e0 0100     		.short	1
  1180 00e2 B200     		.short	178
  1181 00e4 0100     		.short	1
  1182 00e6 AF00     		.short	175
  1183 00e8 0100     		.short	1
- 1184 00ea C45C     		.short	23748
+ 1184 00ea C35C     		.short	23747
  1185 00ec B500     		.short	181
- 1186 00ee 075D     		.short	23815
+ 1186 00ee 065D     		.short	23814
  1187 00f0 0100     		.short	1
  1188 00f2 0100     		.short	1
  1189 00f4 0100     		.short	1
@@ -1633,7 +1617,7 @@
  1191 00f8 0100     		.short	1
  1192 00fa 0100     		.short	1
  1193 00fc 0100     		.short	1
- 1194 00fe 085D     		.short	23816
+ 1194 00fe 075D     		.short	23815
  1195 0100 4600     		.short	70
  1196 0102 0100     		.short	1
  1197 0104 0100     		.short	1
@@ -1646,15 +1630,15 @@
  1204 0112 0100     		.short	1
  1205 0114 0100     		.short	1
  1206 0116 AB00     		.short	171
- 1207 0118 665D     		.short	23910
- 1208 011a C35C     		.short	23747
+ 1207 0118 655D     		.short	23909
+ 1208 011a C25C     		.short	23746
  1209 011c 0100     		.short	1
  1210 011e 0100     		.short	1
  1211 0120 4800     		.short	72
  1212 0122 AE00     		.short	174
  1213 0124 0100     		.short	1
- 1214 0126 C55C     		.short	23749
- 1215 0128 655D     		.short	23909
+ 1214 0126 C45C     		.short	23748
+ 1215 0128 645D     		.short	23908
  1216 012a 0100     		.short	1
  1217 012c AD00     		.short	173
  1218 012e 0100     		.short	1
@@ -1666,7 +1650,7 @@
  1224 013a 0100     		.short	1
  1225 013c 0100     		.short	1
  1226 013e 0100     		.short	1
- 1227 0140 645D     		.short	23908
+ 1227 0140 635D     		.short	23907
  1228 0142 0100     		.short	1
  1229 0144 0100     		.short	1
  1230 0146 0100     		.short	1
@@ -1677,11 +1661,11 @@
  1235 0150 0000     		.short	0
  1236 0152 0100     		.short	1
  1237 0154 005C     		.short	23552
- 1238 0156 075D     		.short	23815
+ 1238 0156 065D     		.short	23814
  1239 0158 0100     		.short	1
- 1240 015a 085D     		.short	23816
- 1241 015c 045D     		.short	23812
- 1242 015e 055D     		.short	23813
+ 1240 015a 075D     		.short	23815
+ 1241 015c 035D     		.short	23811
+ 1242 015e 045D     		.short	23812
  1243 0160 0100     		.short	1
  1244 0162 0100     		.short	1
  1245 0164 0000     		.short	0
@@ -1734,7 +1718,7 @@
  1292 01c2 0100     		.short	1
  1293 01c4 5A00     		.short	90
  1294 01c6 0100     		.short	1
- 1295 01c8 635D     		.short	23907
+ 1295 01c8 625D     		.short	23906
  1296 01ca 0100     		.short	1
  1297 01cc 5700     		.short	87
  1298 01ce 6000     		.short	96
@@ -1881,51 +1865,51 @@
  1439              		.file 20 "quantum/sequencer/sequencer.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keymap.c
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:18     .text.timeout_reset_timer:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:26     .text.timeout_reset_timer:0000000000000000 timeout_reset_timer
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:42     .text.timeout_update_threshold:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:49     .text.timeout_update_threshold:0000000000000000 timeout_update_threshold
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:109    .text.timeout_update_threshold:000000000000001c $d
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:119    .text.process_record_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:126    .text.process_record_user:0000000000000000 process_record_user
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:166    .text.process_record_user:0000000000000032 $d
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:172    .text.process_record_user:0000000000000038 $t
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:385    .text.process_record_user:0000000000000100 $d
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:396    .text.matrix_scan_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:403    .text.matrix_scan_user:0000000000000000 matrix_scan_user
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:416    .text.encoder_update_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:423    .text.encoder_update_user:0000000000000000 encoder_update_user
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:583    .text.encoder_update_user:000000000000007c $d
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:590    .text.rgb_matrix_indicators_advanced_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:597    .text.rgb_matrix_indicators_advanced_user:0000000000000000 rgb_matrix_indicators_advanced_user
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:894    .text.rgb_matrix_indicators_advanced_user:0000000000000190 $d
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:904    .text.keyboard_post_init_user:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:911    .text.keyboard_post_init_user:0000000000000000 keyboard_post_init_user
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:1066   .rodata.keymaps:0000000000000000 keymaps
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:980    .bss._isWinKeyDisabled:0000000000000000 _isWinKeyDisabled
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:1006   .data.tap_dance_actions:0000000000000000 tap_dance_actions
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:986    .bss.nob_layer_state:0000000000000000 nob_layer_state
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:1060   .rodata.LED_SIDE_RIGHT:0000000000000000 LED_SIDE_RIGHT
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:1055   .rodata.LED_SIDE_LEFT:0000000000000000 LED_SIDE_LEFT
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:1039   .rodata.LED_LIST_NUMPAD:0000000000000000 LED_LIST_NUMPAD
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:1045   .rodata.LED_LIST_NUMROW:0000000000000000 LED_LIST_NUMROW
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:1033   .rodata.LED_LIST_FUNCROW:0000000000000000 LED_LIST_FUNCROW
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:1027   .rodata.LED_LIST_ARROWS:0000000000000000 LED_LIST_ARROWS
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:1050   .rodata.LED_LIST_WASD:0000000000000000 LED_LIST_WASD
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:968    .bss.Caps_Pressed:0000000000000000 Caps_Pressed
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:969    .bss.Caps_Pressed:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:974    .bss.Shift_Pressed:0000000000000000 Shift_Pressed
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:975    .bss.Shift_Pressed:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:981    .bss._isWinKeyDisabled:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:987    .bss.nob_layer_state:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:989    .data.__compound_literal.0:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:992    .data.__compound_literal.0:0000000000000000 __compound_literal.0
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:996    .data.__compound_literal.1:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:999    .data.__compound_literal.1:0000000000000000 __compound_literal.1
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:1003   .data.tap_dance_actions:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:1018   .data.timeout_threshold:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:1022   .data.timeout_threshold:0000000000000000 timeout_threshold
-C:\Users\lhanj\AppData\Local\Temp\ccL7lDyI.s:1063   .rodata.keymaps:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:18     .text.timeout_reset_timer:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:26     .text.timeout_reset_timer:0000000000000000 timeout_reset_timer
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:42     .text.timeout_update_threshold:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:49     .text.timeout_update_threshold:0000000000000000 timeout_update_threshold
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:109    .text.timeout_update_threshold:000000000000001c $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:119    .text.process_record_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:126    .text.process_record_user:0000000000000000 process_record_user
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:166    .text.process_record_user:0000000000000032 $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:172    .text.process_record_user:0000000000000038 $t
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:385    .text.process_record_user:0000000000000100 $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:396    .text.matrix_scan_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:403    .text.matrix_scan_user:0000000000000000 matrix_scan_user
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:416    .text.encoder_update_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:423    .text.encoder_update_user:0000000000000000 encoder_update_user
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:583    .text.encoder_update_user:000000000000007c $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:590    .text.rgb_matrix_indicators_advanced_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:597    .text.rgb_matrix_indicators_advanced_user:0000000000000000 rgb_matrix_indicators_advanced_user
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:894    .text.rgb_matrix_indicators_advanced_user:0000000000000190 $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:904    .text.keyboard_post_init_user:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:911    .text.keyboard_post_init_user:0000000000000000 keyboard_post_init_user
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:1066   .rodata.keymaps:0000000000000000 keymaps
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:980    .bss._isWinKeyDisabled:0000000000000000 _isWinKeyDisabled
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:1006   .data.tap_dance_actions:0000000000000000 tap_dance_actions
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:986    .bss.nob_layer_state:0000000000000000 nob_layer_state
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:1060   .rodata.LED_SIDE_RIGHT:0000000000000000 LED_SIDE_RIGHT
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:1055   .rodata.LED_SIDE_LEFT:0000000000000000 LED_SIDE_LEFT
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:1039   .rodata.LED_LIST_NUMPAD:0000000000000000 LED_LIST_NUMPAD
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:1045   .rodata.LED_LIST_NUMROW:0000000000000000 LED_LIST_NUMROW
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:1033   .rodata.LED_LIST_FUNCROW:0000000000000000 LED_LIST_FUNCROW
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:1027   .rodata.LED_LIST_ARROWS:0000000000000000 LED_LIST_ARROWS
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:1050   .rodata.LED_LIST_WASD:0000000000000000 LED_LIST_WASD
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:968    .bss.Caps_Pressed:0000000000000000 Caps_Pressed
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:969    .bss.Caps_Pressed:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:974    .bss.Shift_Pressed:0000000000000000 Shift_Pressed
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:975    .bss.Shift_Pressed:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:981    .bss._isWinKeyDisabled:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:987    .bss.nob_layer_state:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:989    .data.__compound_literal.0:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:992    .data.__compound_literal.0:0000000000000000 __compound_literal.0
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:996    .data.__compound_literal.1:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:999    .data.__compound_literal.1:0000000000000000 __compound_literal.1
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:1003   .data.tap_dance_actions:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:1018   .data.timeout_threshold:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:1022   .data.timeout_threshold:0000000000000000 timeout_threshold
+C:\Users\lhanj\AppData\Local\Temp\ccuGNBKL.s:1063   .rodata.keymaps:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 timer_read
@@ -1937,7 +1921,7 @@ printf_
 tap_code16
 host_keyboard_leds
 rgb_matrix_set_color
-biton32
+biton
 layer_state
 rgb_matrix_set_color_all
 qk_tap_dance_pair_on_each_tap

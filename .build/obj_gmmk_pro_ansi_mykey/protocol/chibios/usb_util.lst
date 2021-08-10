@@ -106,12 +106,12 @@
   89              		.file 12 "./lib/chibios/os/hal/ports/STM32/LLD/USBv1/hal_usb_lld.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 usb_util.c
-C:\Users\lhanj\AppData\Local\Temp\cc58HtuU.s:18     .text.usb_disconnect:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc58HtuU.s:26     .text.usb_disconnect:0000000000000000 usb_disconnect
-C:\Users\lhanj\AppData\Local\Temp\cc58HtuU.s:41     .text.usb_disconnect:0000000000000008 $d
-C:\Users\lhanj\AppData\Local\Temp\cc58HtuU.s:46     .text.usb_connected_state:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc58HtuU.s:53     .text.usb_connected_state:0000000000000000 usb_connected_state
-C:\Users\lhanj\AppData\Local\Temp\cc58HtuU.s:73     .text.usb_connected_state:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccN3Y2wh.s:18     .text.usb_disconnect:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccN3Y2wh.s:26     .text.usb_disconnect:0000000000000000 usb_disconnect
+C:\Users\lhanj\AppData\Local\Temp\ccN3Y2wh.s:41     .text.usb_disconnect:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccN3Y2wh.s:46     .text.usb_connected_state:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccN3Y2wh.s:53     .text.usb_connected_state:0000000000000000 usb_connected_state
+C:\Users\lhanj\AppData\Local\Temp\ccN3Y2wh.s:73     .text.usb_connected_state:000000000000000c $d
 
 UNDEFINED SYMBOLS
 usbStop
