@@ -45,7 +45,6 @@ enum custom_keycodes {
     KC_WINLCK,  // Toggles Win key on and off
     RGB_TOI,    // Timeout idle time up
     RGB_TOD,    // Timeout idle time down
-    MY_KNOBFNKEY,
     MY_SLEEP,
 };
 
@@ -138,7 +137,7 @@ void timeout_update_threshold(bool increase) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    //All of keycodes need return true or false (meaning of send origin keycode after action)
+    //keycodes need return true or false (meaning of send origin keycode after action)
     switch (keycode) {
     case KC_00:
         if (record->event.pressed) {
@@ -183,16 +182,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_LSFT:  // FOR LSFT KNOB VOLUME
         record->event.pressed ? (Shift_Pressed = true) : (Shift_Pressed = false);
         return true;
-    case MY_KNOBFNKEY:  // 210809 test
-        if (record->event.pressed) {
-            tap_code(KC_PSCR);
-            printf("CALC");
-        } else {
-            (Shift_Pressed = false);
-            printf("CALC");
-        }
-        return false;
-        //break;
     case MY_SLEEP:
         if (record->event.pressed) tap_code(KC_SLEP);
         return false;
