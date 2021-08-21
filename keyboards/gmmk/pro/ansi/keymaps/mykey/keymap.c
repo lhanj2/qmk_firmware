@@ -213,13 +213,13 @@ void matrix_scan_user(void) {
     if (!Shift_Pressed && !Caps_Pressed) {
         switch (nob_layer_state) {
         case _WHEEL:
-            clockwise ? tap_code(KC_WH_D) : tap_code(KC_WH_U);
+            clockwise ? tap_code(KC_WH_D) : tap_code(KC_WH_U);      //Wheel scroll
             break;
         case _MUSIC:
-            clockwise ? tap_code16(KC_MNXT) : tap_code16(KC_MPRV);
+            clockwise ? tap_code16(KC_MNXT) : tap_code16(KC_MPRV);  //Skip Music
             break;
         case _VOLUME:  // 210807 not use
-            clockwise ? tap_code(KC_VOLU) : tap_code(KC_VOLD);
+            clockwise ? tap_code(KC_VOLU) : tap_code(KC_VOLD);      //Spare
             break;
         }
     }

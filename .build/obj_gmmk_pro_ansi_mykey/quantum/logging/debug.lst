@@ -26,7 +26,7 @@
   28              		.file 4 "quantum/logging/debug.c"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 debug.c
-C:\Users\lhanj\AppData\Local\Temp\ccj5p5sX.s:21     .bss.debug_config:0000000000000000 debug_config
-C:\Users\lhanj\AppData\Local\Temp\ccj5p5sX.s:22     .bss.debug_config:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccgnzOkY.s:21     .bss.debug_config:0000000000000000 debug_config
+C:\Users\lhanj\AppData\Local\Temp\ccgnzOkY.s:22     .bss.debug_config:0000000000000000 $d
 
 NO UNDEFINED SYMBOLS

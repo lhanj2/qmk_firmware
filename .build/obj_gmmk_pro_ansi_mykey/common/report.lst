@@ -1105,34 +1105,34 @@
  786              		.file 11 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 report.c
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:18     .text.has_anykey:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:26     .text.has_anykey:0000000000000000 has_anykey
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:101    .text.has_anykey:0000000000000034 $d
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:107    .text.get_first_key:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:114    .text.get_first_key:0000000000000000 get_first_key
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:194    .text.get_first_key:000000000000003c $d
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:200    .text.is_key_pressed:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:207    .text.is_key_pressed:0000000000000000 is_key_pressed
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:296    .text.is_key_pressed:000000000000004c $d
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:302    .text.add_key_byte:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:309    .text.add_key_byte:0000000000000000 add_key_byte
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:382    .text.del_key_byte:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:389    .text.del_key_byte:0000000000000000 del_key_byte
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:439    .text.add_key_bit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:446    .text.add_key_bit:0000000000000000 add_key_bit
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:505    .text.add_key_bit:000000000000002c $d
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:514    .text.del_key_bit:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:521    .text.del_key_bit:0000000000000000 del_key_bit
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:579    .text.del_key_bit:000000000000002c $d
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:585    .text.add_key_to_report:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:592    .text.add_key_to_report:0000000000000000 add_key_to_report
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:648    .text.add_key_to_report:000000000000002c $d
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:654    .text.del_key_from_report:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:661    .text.del_key_from_report:0000000000000000 del_key_from_report
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:717    .text.del_key_from_report:000000000000002c $d
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:723    .text.clear_keys_from_report:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:730    .text.clear_keys_from_report:0000000000000000 clear_keys_from_report
-C:\Users\lhanj\AppData\Local\Temp\cc3XBTTz.s:770    .text.clear_keys_from_report:0000000000000028 $d
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:18     .text.has_anykey:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:26     .text.has_anykey:0000000000000000 has_anykey
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:101    .text.has_anykey:0000000000000034 $d
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:107    .text.get_first_key:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:114    .text.get_first_key:0000000000000000 get_first_key
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:194    .text.get_first_key:000000000000003c $d
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:200    .text.is_key_pressed:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:207    .text.is_key_pressed:0000000000000000 is_key_pressed
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:296    .text.is_key_pressed:000000000000004c $d
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:302    .text.add_key_byte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:309    .text.add_key_byte:0000000000000000 add_key_byte
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:382    .text.del_key_byte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:389    .text.del_key_byte:0000000000000000 del_key_byte
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:439    .text.add_key_bit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:446    .text.add_key_bit:0000000000000000 add_key_bit
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:505    .text.add_key_bit:000000000000002c $d
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:514    .text.del_key_bit:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:521    .text.del_key_bit:0000000000000000 del_key_bit
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:579    .text.del_key_bit:000000000000002c $d
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:585    .text.add_key_to_report:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:592    .text.add_key_to_report:0000000000000000 add_key_to_report
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:648    .text.add_key_to_report:000000000000002c $d
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:654    .text.del_key_from_report:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:661    .text.del_key_from_report:0000000000000000 del_key_from_report
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:717    .text.del_key_from_report:000000000000002c $d
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:723    .text.clear_keys_from_report:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:730    .text.clear_keys_from_report:0000000000000000 clear_keys_from_report
+C:\Users\lhanj\AppData\Local\Temp\ccC4vvTK.s:770    .text.clear_keys_from_report:0000000000000028 $d
 
 UNDEFINED SYMBOLS
 keyboard_protocol

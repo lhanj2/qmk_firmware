@@ -54,8 +54,10 @@
   33              		@ link register save eliminated.
   23:quantum/bootmagic/bootmagic_lite.c **** #if defined(VIA_ENABLE)
   24:quantum/bootmagic/bootmagic_lite.c ****     via_eeprom_reset();
-  34              		.loc 1 24 5 view .LVU1
-  35 0000 FFF7FEBF 		b	via_eeprom_reset
+  25:quantum/bootmagic/bootmagic_lite.c **** #else
+  26:quantum/bootmagic/bootmagic_lite.c ****     eeconfig_disable();
+  34              		.loc 1 26 5 view .LVU1
+  35 0000 FFF7FEBF 		b	eeconfig_disable
   36              	.LVL0:
   37              		.cfi_endproc
   38              	.LFE291:
@@ -68,8 +70,6 @@
   46              		.fpu fpv4-sp-d16
   48              	bootmagic_lite:
   49              	.LFB292:
-  25:quantum/bootmagic/bootmagic_lite.c **** #else
-  26:quantum/bootmagic/bootmagic_lite.c ****     eeconfig_disable();
   27:quantum/bootmagic/bootmagic_lite.c **** #endif
   28:quantum/bootmagic/bootmagic_lite.c **** }
   29:quantum/bootmagic/bootmagic_lite.c **** 
@@ -198,18 +198,18 @@
  136              		.file 5 "quantum/matrix.h"
  137              		.file 6 "./lib/chibios/os/rt/include/chthreads.h"
  138              		.file 7 "tmk_core/common/bootloader.h"
- 139              		.file 8 "quantum/via.h"
+ 139              		.file 8 "tmk_core/common/eeconfig.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 bootmagic_lite.c
-C:\Users\lhanj\AppData\Local\Temp\ccaI8UZ3.s:18     .text.bootmagic_lite_reset_eeprom:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccaI8UZ3.s:26     .text.bootmagic_lite_reset_eeprom:0000000000000000 bootmagic_lite_reset_eeprom
-C:\Users\lhanj\AppData\Local\Temp\ccaI8UZ3.s:41     .text.bootmagic_lite:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccaI8UZ3.s:48     .text.bootmagic_lite:0000000000000000 bootmagic_lite
-C:\Users\lhanj\AppData\Local\Temp\ccaI8UZ3.s:104    .text.bootmagic:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccaI8UZ3.s:111    .text.bootmagic:0000000000000000 bootmagic
+C:\Users\lhanj\AppData\Local\Temp\ccJROoAg.s:18     .text.bootmagic_lite_reset_eeprom:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccJROoAg.s:26     .text.bootmagic_lite_reset_eeprom:0000000000000000 bootmagic_lite_reset_eeprom
+C:\Users\lhanj\AppData\Local\Temp\ccJROoAg.s:41     .text.bootmagic_lite:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccJROoAg.s:48     .text.bootmagic_lite:0000000000000000 bootmagic_lite
+C:\Users\lhanj\AppData\Local\Temp\ccJROoAg.s:104    .text.bootmagic:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccJROoAg.s:111    .text.bootmagic:0000000000000000 bootmagic
 
 UNDEFINED SYMBOLS
-via_eeprom_reset
+eeconfig_disable
 matrix_scan
 chThdSleep
 matrix_get_row

@@ -671,7 +671,7 @@
  642              		.file 7 "quantum/sequencer/sequencer.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ansi.c
-C:\Users\lhanj\AppData\Local\Temp\ccMlyQJh.s:241    .rodata.g_aw_leds:0000000000000000 g_aw_leds
-C:\Users\lhanj\AppData\Local\Temp\ccMlyQJh.s:22     .data.g_led_config:0000000000000000 g_led_config
+C:\Users\lhanj\AppData\Local\Temp\ccSczDUG.s:241    .rodata.g_aw_leds:0000000000000000 g_aw_leds
+C:\Users\lhanj\AppData\Local\Temp\ccSczDUG.s:22     .data.g_led_config:0000000000000000 g_led_config
 
 NO UNDEFINED SYMBOLS

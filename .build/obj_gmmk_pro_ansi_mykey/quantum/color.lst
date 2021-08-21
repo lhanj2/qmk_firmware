@@ -499,16 +499,16 @@
  326              		.file 5 "quantum/led_tables.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 color.c
-C:\Users\lhanj\AppData\Local\Temp\ccz2l15M.s:18     .text.hsv_to_rgb_impl:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccz2l15M.s:26     .text.hsv_to_rgb_impl:0000000000000000 hsv_to_rgb_impl
-C:\Users\lhanj\AppData\Local\Temp\ccz2l15M.s:168    .text.hsv_to_rgb_impl:00000000000000a0 $d
-C:\Users\lhanj\AppData\Local\Temp\ccz2l15M.s:255    .text.hsv_to_rgb_impl:00000000000000dc $d
-C:\Users\lhanj\AppData\Local\Temp\ccz2l15M.s:260    .text.hsv_to_rgb:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccz2l15M.s:267    .text.hsv_to_rgb:0000000000000000 hsv_to_rgb
-C:\Users\lhanj\AppData\Local\Temp\ccz2l15M.s:291    .text.hsv_to_rgb_nocie:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccz2l15M.s:298    .text.hsv_to_rgb_nocie:0000000000000000 hsv_to_rgb_nocie
-C:\Users\lhanj\AppData\Local\Temp\ccz2l15M.s:175    .text.hsv_to_rgb_impl:00000000000000a7 $d
-C:\Users\lhanj\AppData\Local\Temp\ccz2l15M.s:175    .text.hsv_to_rgb_impl:00000000000000a8 $t
+C:\Users\lhanj\AppData\Local\Temp\cchW18Zv.s:18     .text.hsv_to_rgb_impl:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cchW18Zv.s:26     .text.hsv_to_rgb_impl:0000000000000000 hsv_to_rgb_impl
+C:\Users\lhanj\AppData\Local\Temp\cchW18Zv.s:168    .text.hsv_to_rgb_impl:00000000000000a0 $d
+C:\Users\lhanj\AppData\Local\Temp\cchW18Zv.s:255    .text.hsv_to_rgb_impl:00000000000000dc $d
+C:\Users\lhanj\AppData\Local\Temp\cchW18Zv.s:260    .text.hsv_to_rgb:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cchW18Zv.s:267    .text.hsv_to_rgb:0000000000000000 hsv_to_rgb
+C:\Users\lhanj\AppData\Local\Temp\cchW18Zv.s:291    .text.hsv_to_rgb_nocie:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\cchW18Zv.s:298    .text.hsv_to_rgb_nocie:0000000000000000 hsv_to_rgb_nocie
+C:\Users\lhanj\AppData\Local\Temp\cchW18Zv.s:175    .text.hsv_to_rgb_impl:00000000000000a7 $d
+C:\Users\lhanj\AppData\Local\Temp\cchW18Zv.s:175    .text.hsv_to_rgb_impl:00000000000000a8 $t
 
 UNDEFINED SYMBOLS
 CIE1931_CURVE

@@ -612,41 +612,41 @@
  514              		.file 10 "lib/printf/printf.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 host.c
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:18     .text.host_set_driver:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:26     .text.host_set_driver:0000000000000000 host_set_driver
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:44     .text.host_set_driver:0000000000000008 $d
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:49     .text.host_get_driver:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:56     .text.host_get_driver:0000000000000000 host_get_driver
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:71     .text.host_get_driver:0000000000000008 $d
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:76     .text.host_keyboard_leds:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:83     .text.host_keyboard_leds:0000000000000000 host_keyboard_leds
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:107    .text.host_keyboard_leds:000000000000000c $d
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:112    .text.host_keyboard_led_state:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:119    .text.host_keyboard_led_state:0000000000000000 host_keyboard_led_state
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:147    .text.host_keyboard_send:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:154    .text.host_keyboard_send:0000000000000000 host_keyboard_send
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:280    .text.host_keyboard_send:0000000000000068 $d
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:291    .text.host_mouse_send:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:298    .text.host_mouse_send:0000000000000000 host_mouse_send
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:327    .text.host_mouse_send:0000000000000010 $d
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:332    .text.host_system_send:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:339    .text.host_system_send:0000000000000000 host_system_send
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:375    .text.host_system_send:0000000000000018 $d
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:381    .text.host_consumer_send:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:388    .text.host_consumer_send:0000000000000000 host_consumer_send
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:424    .text.host_consumer_send:0000000000000018 $d
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:430    .text.host_last_system_report:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:437    .text.host_last_system_report:0000000000000000 host_last_system_report
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:452    .text.host_last_system_report:0000000000000008 $d
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:457    .text.host_last_consumer_report:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:464    .text.host_last_consumer_report:0000000000000000 host_last_consumer_report
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:479    .text.host_last_consumer_report:0000000000000008 $d
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:484    .bss.driver:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:488    .bss.driver:0000000000000000 driver
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:491    .bss.last_consumer_report:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:495    .bss.last_consumer_report:0000000000000000 last_consumer_report
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:498    .bss.last_system_report:0000000000000000 $d
-C:\Users\lhanj\AppData\Local\Temp\ccBxNw87.s:502    .bss.last_system_report:0000000000000000 last_system_report
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:18     .text.host_set_driver:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:26     .text.host_set_driver:0000000000000000 host_set_driver
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:44     .text.host_set_driver:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:49     .text.host_get_driver:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:56     .text.host_get_driver:0000000000000000 host_get_driver
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:71     .text.host_get_driver:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:76     .text.host_keyboard_leds:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:83     .text.host_keyboard_leds:0000000000000000 host_keyboard_leds
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:107    .text.host_keyboard_leds:000000000000000c $d
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:112    .text.host_keyboard_led_state:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:119    .text.host_keyboard_led_state:0000000000000000 host_keyboard_led_state
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:147    .text.host_keyboard_send:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:154    .text.host_keyboard_send:0000000000000000 host_keyboard_send
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:280    .text.host_keyboard_send:0000000000000068 $d
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:291    .text.host_mouse_send:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:298    .text.host_mouse_send:0000000000000000 host_mouse_send
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:327    .text.host_mouse_send:0000000000000010 $d
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:332    .text.host_system_send:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:339    .text.host_system_send:0000000000000000 host_system_send
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:375    .text.host_system_send:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:381    .text.host_consumer_send:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:388    .text.host_consumer_send:0000000000000000 host_consumer_send
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:424    .text.host_consumer_send:0000000000000018 $d
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:430    .text.host_last_system_report:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:437    .text.host_last_system_report:0000000000000000 host_last_system_report
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:452    .text.host_last_system_report:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:457    .text.host_last_consumer_report:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:464    .text.host_last_consumer_report:0000000000000000 host_last_consumer_report
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:479    .text.host_last_consumer_report:0000000000000008 $d
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:484    .bss.driver:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:488    .bss.driver:0000000000000000 driver
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:491    .bss.last_consumer_report:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:495    .bss.last_consumer_report:0000000000000000 last_consumer_report
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:498    .bss.last_system_report:0000000000000000 $d
+C:\Users\lhanj\AppData\Local\Temp\ccYFWEYu.s:502    .bss.last_system_report:0000000000000000 last_system_report
 
 UNDEFINED SYMBOLS
 printf_

@@ -698,14 +698,14 @@
  462              		.file 6 "quantum/keycode_config.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 keycode_config.c
-C:\Users\lhanj\AppData\Local\Temp\cc7IdALz.s:18     .text.keycode_config:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc7IdALz.s:26     .text.keycode_config:0000000000000000 keycode_config
-C:\Users\lhanj\AppData\Local\Temp\cc7IdALz.s:54     .text.keycode_config:0000000000000024 $d
-C:\Users\lhanj\AppData\Local\Temp\cc7IdALz.s:62     .text.keycode_config:000000000000002c $t
-C:\Users\lhanj\AppData\Local\Temp\cc7IdALz.s:275    .text.keycode_config:00000000000000fc $d
-C:\Users\lhanj\AppData\Local\Temp\cc7IdALz.s:280    .text.mod_config:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cc7IdALz.s:287    .text.mod_config:0000000000000000 mod_config
-C:\Users\lhanj\AppData\Local\Temp\cc7IdALz.s:452    .text.mod_config:00000000000000a8 $d
+C:\Users\lhanj\AppData\Local\Temp\ccyUOaEt.s:18     .text.keycode_config:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccyUOaEt.s:26     .text.keycode_config:0000000000000000 keycode_config
+C:\Users\lhanj\AppData\Local\Temp\ccyUOaEt.s:54     .text.keycode_config:0000000000000024 $d
+C:\Users\lhanj\AppData\Local\Temp\ccyUOaEt.s:62     .text.keycode_config:000000000000002c $t
+C:\Users\lhanj\AppData\Local\Temp\ccyUOaEt.s:275    .text.keycode_config:00000000000000fc $d
+C:\Users\lhanj\AppData\Local\Temp\ccyUOaEt.s:280    .text.mod_config:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccyUOaEt.s:287    .text.mod_config:0000000000000000 mod_config
+C:\Users\lhanj\AppData\Local\Temp\ccyUOaEt.s:452    .text.mod_config:00000000000000a8 $d
 
 UNDEFINED SYMBOLS
 keymap_config

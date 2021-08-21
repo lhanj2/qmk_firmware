@@ -1418,41 +1418,41 @@
  1091              		.file 6 "<built-in>"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 eeprom_stm32.c
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:18     .text.EEPROM_Init:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:26     .text.EEPROM_Init:0000000000000000 EEPROM_Init
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:50     .text.EEPROM_Erase:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:57     .text.EEPROM_Erase:0000000000000000 EEPROM_Erase
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:106    .text.EEPROM_Erase:0000000000000020 $d
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:114    .text.EEPROM_WriteDataByte:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:121    .text.EEPROM_WriteDataByte:0000000000000000 EEPROM_WriteDataByte
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:259    .text.EEPROM_WriteDataByte:0000000000000088 $d
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:18     .text.EEPROM_Init:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:26     .text.EEPROM_Init:0000000000000000 EEPROM_Init
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:50     .text.EEPROM_Erase:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:57     .text.EEPROM_Erase:0000000000000000 EEPROM_Erase
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:106    .text.EEPROM_Erase:0000000000000020 $d
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:114    .text.EEPROM_WriteDataByte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:121    .text.EEPROM_WriteDataByte:0000000000000000 EEPROM_WriteDataByte
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:259    .text.EEPROM_WriteDataByte:0000000000000088 $d
                             *COM*:0000000000000800 DataBuf
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:266    .text.EEPROM_ReadDataByte:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:273    .text.EEPROM_ReadDataByte:0000000000000000 EEPROM_ReadDataByte
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:299    .text.eeprom_read_byte:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:306    .text.eeprom_read_byte:0000000000000000 eeprom_read_byte
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:344    .text.eeprom_write_byte:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:351    .text.eeprom_write_byte:0000000000000000 eeprom_write_byte
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:371    .text.eeprom_update_byte:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:378    .text.eeprom_update_byte:0000000000000000 eeprom_update_byte
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:390    .text.eeprom_read_word:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:397    .text.eeprom_read_word:0000000000000000 eeprom_read_word
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:458    .text.eeprom_write_word:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:465    .text.eeprom_write_word:0000000000000000 eeprom_write_word
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:514    .text.eeprom_update_word:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:521    .text.eeprom_update_word:0000000000000000 eeprom_update_word
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:532    .text.eeprom_read_dword:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:539    .text.eeprom_read_dword:0000000000000000 eeprom_read_dword
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:683    .text.eeprom_write_dword:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:690    .text.eeprom_write_dword:0000000000000000 eeprom_write_dword
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:751    .text.eeprom_update_dword:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:758    .text.eeprom_update_dword:0000000000000000 eeprom_update_dword
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:950    .text.eeprom_read_block:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:957    .text.eeprom_read_block:0000000000000000 eeprom_read_block
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:1004   .text.eeprom_write_block:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:1011   .text.eeprom_write_block:0000000000000000 eeprom_write_block
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:1067   .text.eeprom_update_block:0000000000000000 $t
-C:\Users\lhanj\AppData\Local\Temp\cceg05VW.s:1074   .text.eeprom_update_block:0000000000000000 eeprom_update_block
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:266    .text.EEPROM_ReadDataByte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:273    .text.EEPROM_ReadDataByte:0000000000000000 EEPROM_ReadDataByte
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:299    .text.eeprom_read_byte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:306    .text.eeprom_read_byte:0000000000000000 eeprom_read_byte
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:344    .text.eeprom_write_byte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:351    .text.eeprom_write_byte:0000000000000000 eeprom_write_byte
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:371    .text.eeprom_update_byte:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:378    .text.eeprom_update_byte:0000000000000000 eeprom_update_byte
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:390    .text.eeprom_read_word:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:397    .text.eeprom_read_word:0000000000000000 eeprom_read_word
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:458    .text.eeprom_write_word:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:465    .text.eeprom_write_word:0000000000000000 eeprom_write_word
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:514    .text.eeprom_update_word:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:521    .text.eeprom_update_word:0000000000000000 eeprom_update_word
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:532    .text.eeprom_read_dword:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:539    .text.eeprom_read_dword:0000000000000000 eeprom_read_dword
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:683    .text.eeprom_write_dword:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:690    .text.eeprom_write_dword:0000000000000000 eeprom_write_dword
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:751    .text.eeprom_update_dword:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:758    .text.eeprom_update_dword:0000000000000000 eeprom_update_dword
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:950    .text.eeprom_read_block:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:957    .text.eeprom_read_block:0000000000000000 eeprom_read_block
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:1004   .text.eeprom_write_block:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:1011   .text.eeprom_write_block:0000000000000000 eeprom_write_block
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:1067   .text.eeprom_update_block:0000000000000000 $t
+C:\Users\lhanj\AppData\Local\Temp\ccWNaljq.s:1074   .text.eeprom_update_block:0000000000000000 eeprom_update_block
 
 UNDEFINED SYMBOLS
 FLASH_Unlock
